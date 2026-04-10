@@ -1,0 +1,73 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model MemoryNode {
+  id             String   @id @default(cuid())
+  title          String
+  content        String   @default("")
+  level          String   @default("L1")
+  plane          String   @default("memory")
+  category       String   @default("")
+  status         String   @default("scratch")
+  parentId       String?
+  parent         MemoryNode?  @relation("MemoryHierarchy", fields: [parentId], references: [id], onDelete: SetNull)
+  children       MemoryNode[] @relation("MemoryHierarchy")
+  tags           String   @default("[]")
+  healthScore    Float    @default(1.0)
+  conflictCount  Int      @default(0)
+  referenceCount Int      @default(0)
+  lastValidated  DateTime?
+  expiresAt      DateTime?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  feedbacks      Feedback[]
+}
+
+model SkillRun {
+  id            String   @id @default(cuid())
+  skill         String
+  status        String   @default("pending")
+  input         String   @default("")
+  output        String   @default("")
+  memoryRead    String   @default("[]")
+  memoryWritten String   @default("[]")
+  duration      Int      @default(0)
+  error         String   @default("")
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model GovernancePolicy {
+  id        String   @id @default(cuid())
+  name      String
+  type      String
+  config    String   @default("{}")
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Feedback {
+  id        String     @id @default(cuid())
+  nodeId    String
+  node      MemoryNode @relation(fields: [nodeId], references: [id], onDelete: Cascade)
+  type      String
+  reason    String     @default("")
+  createdAt DateTime   @default(now())
+}
+
+model ActivityLog {
+  id        String   @id @default(cuid())
+  action    String
+  target    String   @default("")
+  detail    String   @default("")
+  metadata  String   @default("{}")
+  createdAt DateTime @default(now())
+}
