@@ -404,3 +404,284 @@
   opacity: 0;
   transform: scale(0.96) translateY(-8px);
 }
+
+/* ===== AURORA BORDER EFFECT ===== */
+
+.glass-aurora {
+  position: relative;
+  background: var(--glass);
+  backdrop-filter: blur(20px) saturate(1.4);
+  -webkit-backdrop-filter: blur(20px) saturate(1.4);
+  border: 1px solid transparent;
+  background-clip: padding-box;
+}
+
+.glass-aurora::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    135deg,
+    oklch(0.72 0.22 155 / 50%),
+    oklch(0.68 0.18 260 / 30%),
+    oklch(0.70 0.15 200 / 50%),
+    oklch(0.55 0.16 300 / 30%),
+    oklch(0.72 0.22 155 / 50%)
+  );
+  background-size: 400% 400%;
+  animation: aurora-shimmer 8s ease-in-out infinite;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  z-index: 1;
+}
+
+@keyframes aurora-shimmer {
+  0%, 100% { background-position: 0% 50%; }
+  25% { background-position: 100% 0%; }
+  50% { background-position: 100% 100%; }
+  75% { background-position: 0% 100%; }
+}
+
+/* ===== GRADIENT TEXT (MATRIX) ===== */
+
+.text-gradient-matrix {
+  background: linear-gradient(135deg, var(--matrix-dim), var(--matrix), var(--matrix-dim));
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradient-shift 4s ease-in-out infinite;
+}
+
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* ===== ENHANCED FROST GLASS ===== */
+
+.glass-frost {
+  background: oklch(0.94 0.005 155 / 70%);
+  backdrop-filter: blur(60px) saturate(1.8) brightness(1.05);
+  -webkit-backdrop-filter: blur(60px) saturate(1.8) brightness(1.05);
+  border: 1px solid oklch(0.72 0.22 155 / 10%);
+  box-shadow:
+    inset 0 1px 0 0 oklch(1 0 0 / 12%),
+    inset 0 -1px 0 0 oklch(0 0 0 / 5%),
+    0 4px 24px oklch(0 0 0 / 8%);
+}
+
+.dark .glass-frost {
+  background: oklch(0.08 0.008 155 / 65%);
+  backdrop-filter: blur(60px) saturate(1.8) brightness(0.95);
+  -webkit-backdrop-filter: blur(60px) saturate(1.8) brightness(0.95);
+  border: 1px solid oklch(0.72 0.22 155 / 15%);
+  box-shadow:
+    inset 0 1px 0 0 oklch(1 0 0 / 6%),
+    inset 0 -1px 0 0 oklch(0 0 0 / 15%),
+    0 4px 24px oklch(0 0 0 / 25%);
+}
+
+/* ===== COMMAND PALETTE ===== */
+
+.command-palette {
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(560px, 90vw);
+  max-height: 420px;
+  background: var(--glass);
+  backdrop-filter: blur(40px) saturate(1.6);
+  -webkit-backdrop-filter: blur(40px) saturate(1.6);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  box-shadow:
+    0 0 0 1px oklch(0 0 0 / 5%),
+    0 25px 50px -12px oklch(0 0 0 / 25%),
+    0 0 80px var(--matrix-glow);
+  overflow: hidden;
+  z-index: 100;
+  animation: cmd-enter 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes cmd-enter {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) scale(0.96) translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) scale(1) translateY(0);
+  }
+}
+
+/* ===== PULSE RING (RADAR) ===== */
+
+.pulse-ring {
+  position: relative;
+}
+
+.pulse-ring::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 2px solid var(--matrix);
+  opacity: 0;
+  animation: pulse-ring-expand 2s ease-out infinite;
+}
+
+@keyframes pulse-ring-expand {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(1.8);
+    opacity: 0;
+  }
+}
+
+/* ===== REFINED SCROLLBAR ===== */
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+*:hover {
+  scrollbar-color: var(--glass-border) transparent;
+}
+
+*:active {
+  scrollbar-color: var(--muted-foreground) transparent;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+  transition: width 0.2s, height 0.2s;
+}
+
+*:hover::-webkit-scrollbar-thumb {
+  background: var(--glass-border);
+  border-radius: 10px;
+  transition: background 0.2s;
+}
+
+*:active::-webkit-scrollbar-thumb {
+  background: var(--muted-foreground);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 10px;
+  transition: background 0.2s;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* ===== STATUS INDICATOR DOTS ===== */
+
+.status-indicator {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.status-indicator-live {
+  background: oklch(0.72 0.22 155);
+  box-shadow: 0 0 6px oklch(0.72 0.22 155), 0 0 12px oklch(0.72 0.22 155 / 30%);
+  animation: status-breathe 2s ease-in-out infinite;
+}
+
+.status-indicator-warning {
+  background: oklch(0.75 0.18 85);
+  box-shadow: 0 0 6px oklch(0.75 0.18 85), 0 0 12px oklch(0.75 0.18 85 / 30%);
+  animation: status-breathe 1.5s ease-in-out infinite;
+}
+
+.status-indicator-error {
+  background: oklch(0.65 0.22 25);
+  box-shadow: 0 0 6px oklch(0.65 0.22 25), 0 0 12px oklch(0.65 0.22 25 / 30%);
+  animation: status-breathe 1s ease-in-out infinite;
+}
+
+@keyframes status-breathe {
+  0%, 100% { opacity: 0.7; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.15); }
+}
+
+/* ===== FOCUS VISIBLE (KEYBOARD ACCESSIBILITY) ===== */
+
+:focus-visible {
+  outline: 2px solid var(--matrix);
+  outline-offset: 2px;
+  border-radius: 4px;
+  box-shadow: 0 0 0 4px oklch(0.72 0.22 155 / 15%), 0 0 20px oklch(0.72 0.22 155 / 10%);
+  transition: box-shadow 0.2s ease, outline-color 0.2s ease;
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+  box-shadow: none;
+}
+
+/* ===== REDUCED MOTION ===== */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .glass-aurora::before {
+    animation: none;
+    background-position: 0% 50%;
+  }
+
+  .text-gradient-matrix {
+    animation: none;
+    background-position: 0% 50%;
+  }
+
+  .pulse-ring::after {
+    animation: none;
+    opacity: 0;
+  }
+
+  .status-indicator-live,
+  .status-indicator-warning,
+  .status-indicator-error {
+    animation: none;
+    opacity: 1;
+  }
+
+  .animate-pulse-glow,
+  .animate-fade-in-up,
+  .animate-fade-in,
+  .animate-slide-in-right,
+  .animate-breathe {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
