@@ -1,170 +1,106 @@
-import { db } from '@/lib/db';
-import { NextRequest, NextResponse } from 'next/server';
+// src/app/api/memory/route.ts
+import { NextRequest, NextResponse } from 'next/server'
+import { PrismaClient } from '@prisma/client'
+const prisma = new PrismaClient()
 
-export async function GET() {
-  try {
-    const nodes = await db.memoryNode.findMany({
-      orderBy: { updatedAt: 'desc' },
-      include: { children: true, feedbacks: true },
-    });
+const PAGE_SIZE = 20
 
-    const mapped = nodes.map(n => ({
-      id: n.id,
-      title: n.title,
-      content: n.content,
-      level: n.level,
-      plane: n.plane,
-      category: n.category,
-      status: n.status,
-      parentId: n.parentId,
-      tags: JSON.parse(n.tags),
-      healthScore: n.healthScore,
-      conflictCount: n.conflictCount,
-      referenceCount: n.referenceCount,
-      lastValidated: n.lastValidated?.toISOString() ?? null,
-      expiresAt: n.expiresAt?.toISOString() ?? null,
-      createdAt: n.createdAt.toISOString(),
-      updatedAt: n.updatedAt.toISOString(),
-      children: n.children.map(c => ({
-        id: c.id,
-        title: c.title,
-        content: c.content,
-        level: c.level,
-        plane: c.plane,
-        category: c.category,
-        status: c.status,
-        parentId: c.parentId,
-        tags: JSON.parse(c.tags),
-        healthScore: c.healthScore,
-        conflictCount: c.conflictCount,
-        referenceCount: c.referenceCount,
-        lastValidated: c.lastValidated?.toISOString() ?? null,
-        expiresAt: c.expiresAt?.toISOString() ?? null,
-        createdAt: c.createdAt.toISOString(),
-        updatedAt: c.updatedAt.toISOString(),
-      })),
-      feedbacks: n.feedbacks.map(f => ({
-        id: f.id,
-        nodeId: f.nodeId,
-        type: f.type,
-        reason: f.reason,
-        createdAt: f.createdAt.toISOString(),
-      })),
-    }));
+export async function GET(req: NextRequest) {
+  const { searchParams } = new URL(req.url)
+  const level    = searchParams.get('stratum') as any  // L0 | L1 | L2
+  const state    = searchParams.get('status') as any
+  const q        = searchParams.get('q')
+  const page     = Math.max(1, parseInt(searchParams.get('page') ?? '1'))
+  const pageSize = Math.min(50, parseInt(searchParams.get('pageSize') ?? String(PAGE_SIZE)))
 
-    return NextResponse.json({ nodes: mapped });
-  } catch (error) {
-    return NextResponse.json({ error: String(error) }, { status: 500 });
+  const where = {
+    ...(level ? { level } : {}),
+    ...(state ? { state } : {}),
+    ...(q ? {
+      OR: [
+        { title:   { contains: q, mode: 'insensitive' as const } },
+        { summary: { contains: q, mode: 'insensitive' as const } },
+        { tags:    { has: q } },
+      ],
+    } : {}),
   }
-}
 
-export async function POST(request: NextRequest) {
-  try {
-    const body = await request.json();
-    const { title, content, level, plane, category, status, parentId, tags } = body;
-
-    const node = await db.memoryNode.create({
-      data: {
-        title: title ?? 'Untitled',
-        content: content ?? '',
-        level: level ?? 'L1',
-        plane: plane ?? 'memory',
-        category: category ?? '',
-        status: status ?? 'scratch',
-        parentId: parentId ?? null,
-        tags: JSON.stringify(tags ?? []),
-        healthScore: 1.0,
+  const [nodes, total, levelsRaw, unresolvedConflicts] = await Promise.all([
+    prisma.memoryNode.findMany({
+      where,
+      select: {
+        id: true,
+        shortId: true,
+        slug: true,
+        title: true,
+        summary: true,
+        kind: true,
+        level: true,
+        state: true,
+        tags: true,
+        createdAt: true,
+        updatedAt: true,
+        _count: { select: { conflictsAsSource: true, conflictsAsTarget: true } },
       },
-    });
+      orderBy: { updatedAt: 'desc' },
+      skip: (page - 1) * pageSize,
+      take: pageSize,
+    }),
+    prisma.memoryNode.count({ where }),
+    prisma.memoryNode.groupBy({ by: ['level'], _count: true }),
+    prisma.conflict.count({ where: { status: 'open' } }),
+  ])
 
-    return NextResponse.json({ success: true, id: node.id });
-  } catch (error) {
-    return NextResponse.json({ error: String(error) }, { status: 500 });
-  }
-}
+  const projected = nodes.map(n => ({
+    ...n,
+    stratum: n.level,
+    status: n.state,
+    type: n.kind,
+    content: n.summary ?? '',
+    createdAt: n.createdAt.toISOString(),
+    updatedAt: n.updatedAt.toISOString(),
+    promotedAt: null,
+    expiresAt: null,
+  }))
 
-export async function PUT(request: NextRequest) {
-  try {
-    const body = await request.json();
-
-    if (body.action === 'search') {
-      const { query, filter } = body;
-      const allNodes = await db.memoryNode.findMany({
-        orderBy: { updatedAt: 'desc' },
-      });
-
-      // Simple BM25-like scoring
-      const terms = query.toLowerCase().split(/\s+/);
-      const scored = allNodes
-        .filter(n => filter === 'all' || n.level === filter)
-        .map(node => {
-          const text = `${node.title} ${node.content} ${node.category} ${node.tags}`.toLowerCase();
-          let score = 0;
-          terms.forEach(term => {
-            const matches = text.split(term).length - 1;
-            if (matches > 0) {
-              score += matches * (1 + Math.log(1 + matches));
-            }
-          });
-          // Level bonus
-          if (node.level === 'L2') score *= 1.5;
-          else if (node.level === 'L1') score *= 1.2;
-          // Health bonus
-          score *= 0.5 + node.healthScore * 0.5;
-          return { node, score };
-        })
-        .filter(s => s.score > 0)
-        .sort((a, b) => b.score - a.score)
-        .slice(0, 20);
-
-      const results = scored.map(s => ({
-        id: s.node.id,
-        title: s.node.title,
-        content: s.node.content,
-        level: s.node.level,
-        plane: s.node.plane,
-        category: s.node.category,
-        status: s.node.status,
-        tags: JSON.parse(s.node.tags),
-        healthScore: s.node.healthScore,
-        createdAt: s.node.createdAt.toISOString(),
-        updatedAt: s.node.updatedAt.toISOString(),
-      }));
-
-      return NextResponse.json({ results });
+  const strata = { L0: 0, L1: 0, L2: 0 }
+  for (const s of levelsRaw) {
+    if (s.level === 'L0' || s.level === 'L1' || s.level === 'L2') {
+      strata[s.level] = s._count
     }
-
-    // Update node
-    const { id, ...data } = body;
-    if (!id) return NextResponse.json({ error: 'id required' }, { status: 400 });
-
-    const updateData: Record<string, unknown> = { updatedAt: new Date() };
-    if (data.title !== undefined) updateData.title = data.title;
-    if (data.content !== undefined) updateData.content = data.content;
-    if (data.level !== undefined) updateData.level = data.level;
-    if (data.plane !== undefined) updateData.plane = data.plane;
-    if (data.category !== undefined) updateData.category = data.category;
-    if (data.status !== undefined) updateData.status = data.status;
-    if (data.tags !== undefined) updateData.tags = JSON.stringify(data.tags);
-    if (data.healthScore !== undefined) updateData.healthScore = data.healthScore;
-    if (data.lastValidated !== undefined) updateData.lastValidated = data.lastValidated ? new Date(data.lastValidated) : null;
-
-    await db.memoryNode.update({ where: { id }, data: updateData });
-    return NextResponse.json({ success: true });
-  } catch (error) {
-    return NextResponse.json({ error: String(error) }, { status: 500 });
   }
+
+  return NextResponse.json({
+    nodes: projected,
+    total,
+    page,
+    pageSize,
+    strata,
+    unresolvedConflicts,
+  })
 }
 
-export async function DELETE(request: NextRequest) {
-  try {
-    const { searchParams } = new URL(request.url);
-    const id = searchParams.get('id');
-    if (!id) return NextResponse.json({ error: 'id required' }, { status: 400 });
-
-    await db.memoryNode.delete({ where: { id } });
-    return NextResponse.json({ success: true });
-  } catch (error) {
-    return NextResponse.json({ error: String(error) }, { status: 500 });
+export async function POST(req: NextRequest) {
+  const { title, content, type, tags } = await req.json()
+  if (!title || !content) {
+    return NextResponse.json({ error: 'title and content required' }, { status: 400 })
   }
+
+  const shortId = Math.random().toString(36).substring(2, 8)
+  const node = await prisma.memoryNode.create({
+    data: {
+      shortId,
+      slug: shortId,
+      title,
+      summary: content,
+      kind: type ?? 'artifact',
+      tags: tags ?? [],
+      level: 'L0',
+      plane: 'memory',
+      state: 'draft',
+      createdBy: 'system',
+    },
+  })
+
+  return NextResponse.json({ node: { ...node, content: node.summary } }, { status: 201 })
 }

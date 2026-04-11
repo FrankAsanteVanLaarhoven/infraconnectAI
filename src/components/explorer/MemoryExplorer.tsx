@@ -248,6 +248,8 @@ function TagChips({
               {tag}
               <button
                 onClick={() => removeTag(tag)}
+                title={`Remove ${tag} tag`}
+                aria-label={`Remove ${tag} tag`}
                 className="ml-0.5 text-muted-foreground/50 hover:text-red-400 transition-colors"
               >
                 <X className="w-3 h-3" />
@@ -758,16 +760,21 @@ export function MemoryExplorer({ onSelectNode }: ExplorerProps) {
   const { nodes, selectedNodeId, selectNode } = useMemoryStore();
 
   const [levelFilter, setLevelFilter] = useState<'all' | MemoryLevel>('all');
+  const [planeFilter, setPlaneFilter] = useState<'all' | MemoryPlane>('all');
+  const [kindFilter, setKindFilter] = useState<'all' | MemoryCategory>('all');
   const [searchQuery, setSearchQuery] = useState('');
-  const [expandedFolders, setExpandedFolders] = useState<Record<string, boolean>>({
-    raw: true, wiki: true, canon: true, governance: true,
-  });
 
-  // Filter nodes by level
+  // Filter nodes orthogonally
   const filteredNodes = useMemo(() => {
     let result = nodes;
     if (levelFilter !== 'all') {
       result = result.filter(n => n.level === levelFilter);
+    }
+    if (planeFilter !== 'all') {
+      result = result.filter(n => n.plane === planeFilter);
+    }
+    if (kindFilter !== 'all') {
+      result = result.filter(n => n.category === kindFilter);
     }
     // local search filter
     if (searchQuery.trim()) {
@@ -780,36 +787,7 @@ export function MemoryExplorer({ onSelectNode }: ExplorerProps) {
       );
     }
     return result;
-  }, [nodes, levelFilter, searchQuery]);
-
-  // Compute per-folder counts
-  const folderCounts = useMemo(() => {
-    const counts: Record<string, number> = {};
-    for (const key of Object.keys(FOLDER_CONFIG)) {
-      if (key === 'governance') {
-        counts[key] = filteredNodes.filter(n => n.category === 'standards' || n.category === 'playbooks' || n.category === 'patterns').length;
-      } else {
-        counts[key] = filteredNodes.filter(n => n.level === FOLDER_CONFIG[key].level).length;
-      }
-    }
-    return counts;
-  }, [filteredNodes]);
-
-  // Get nodes for a folder
-  const getFolderNodes = useCallback((folderKey: string) => {
-    const config = FOLDER_CONFIG[folderKey];
-    if (folderKey === 'governance') {
-      return filteredNodes.filter(n =>
-        (n.category === 'standards' || n.category === 'playbooks' || n.category === 'patterns') &&
-        (levelFilter === 'all' || n.level === levelFilter)
-      );
-    }
-    return filteredNodes.filter(n => n.level === config.level);
-  }, [filteredNodes, levelFilter]);
-
-  const toggleFolder = useCallback((key: string) => {
-    setExpandedFolders(prev => ({ ...prev, [key]: !prev[key] }));
-  }, []);
+  }, [nodes, levelFilter, planeFilter, kindFilter, searchQuery]);
 
   const handleSelect = useCallback((node: MemoryNode) => {
     selectNode(node.id);
@@ -830,7 +808,7 @@ export function MemoryExplorer({ onSelectNode }: ExplorerProps) {
           Memory Explorer
         </h3>
         <div className="flex items-center gap-2">
-          <span className="text-mono-xs text-muted-foreground tabular-nums">{nodes.length} nodes</span>
+          <span className="text-mono-xs text-muted-foreground tabular-nums">{filteredNodes.length} nodes</span>
           <CreateNodeDialog
             onSuccess={(newNode) => {
               handleSelect(newNode);
@@ -839,34 +817,60 @@ export function MemoryExplorer({ onSelectNode }: ExplorerProps) {
         </div>
       </div>
 
-      {/* Controls: level filter + search */}
-      <div className="flex items-center gap-2 px-4 pb-3">
-        {/* Level toggles */}
-        <div className="flex items-center gap-1 shrink-0">
-          <LevelFilterButton active={levelFilter === 'all'} onClick={() => setLevelFilter('all')}>All</LevelFilterButton>
-          {LEVEL_OPTIONS.map(l => (
-            <LevelFilterButton
-              key={l}
-              active={levelFilter === l}
-              onClick={() => setLevelFilter(l)}
-              level={l}
-            >
-              {l}
-            </LevelFilterButton>
-          ))}
+      {/* Orthogonal Filters & Search */}
+      <div className="flex flex-col gap-2 px-4 pb-3 border-b border-glass-border">
+        <div className="flex items-center gap-2 overflow-x-auto no-scrollbar">
+          <Select value={levelFilter} onValueChange={(v) => setLevelFilter(v as any)}>
+            <SelectTrigger className="h-7 text-xs border-glass-border w-[100px] shrink-0">
+              <SelectValue placeholder="All Levels" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all" className="text-xs">All Levels</SelectItem>
+              {LEVEL_OPTIONS.map(l => (
+                <SelectItem key={l} value={l} className="text-xs">{l}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+
+          <Select value={planeFilter} onValueChange={(v) => setPlaneFilter(v as any)}>
+            <SelectTrigger className="h-7 text-xs border-glass-border w-[120px] shrink-0">
+              <SelectValue placeholder="All Planes" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all" className="text-xs">All Planes</SelectItem>
+              {PLANE_OPTIONS.map(p => (
+                <SelectItem key={p} value={p} className="text-xs">{PLANE_LABELS[p]}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+
+          <Select value={kindFilter} onValueChange={(v) => setKindFilter(v as any)}>
+            <SelectTrigger className="h-7 text-xs border-glass-border w-[120px] shrink-0">
+              <SelectValue placeholder="All Kinds" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all" className="text-xs">All Kinds</SelectItem>
+              {CATEGORY_OPTIONS.map(c => (
+                <SelectItem key={c} value={c} className="text-xs">{c}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
+
         {/* Search */}
-        <div className="flex-1 relative">
+        <div className="relative mt-1">
           <Search className="absolute left-2 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted-foreground/50" />
           <Input
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Filter nodes…"
+            placeholder="Search nodes by title, content, category, or tags…"
             className="h-7 pl-7 text-xs bg-transparent border-glass-border"
           />
           {searchQuery && (
             <button
               onClick={() => setSearchQuery('')}
+              title="Clear search"
+              aria-label="Clear search"
               className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground/40 hover:text-foreground"
             >
               <X className="w-3 h-3" />
@@ -875,46 +879,25 @@ export function MemoryExplorer({ onSelectNode }: ExplorerProps) {
         </div>
       </div>
 
-      {/* Main content: tree + detail */}
+      {/* Main content: list + detail */}
       <div className="flex-1 flex flex-col lg:flex-row min-h-0 overflow-hidden">
-        {/* LEFT: Folder tree */}
+        {/* LEFT: Node list */}
         <div className="w-full lg:w-[40%] border-r border-glass-border/50 flex flex-col min-h-0">
-          <div className="flex-1 overflow-y-auto max-h-[320px] lg:max-h-none px-2 pb-4">
-            {Object.entries(FOLDER_CONFIG).map(([key, config]) => (
-              <div key={key} className="mb-1">
-                <FolderRow
-                  config={config}
-                  count={folderCounts[key]}
-                  expanded={expandedFolders[key]}
-                  onToggle={() => toggleFolder(key)}
+          <div className="flex-1 overflow-y-auto max-h-[320px] lg:max-h-none p-2 space-y-0.5">
+            {filteredNodes.length > 0 ? (
+              filteredNodes.map(n => (
+                <TreeNode
+                  key={n.id}
+                  node={n}
+                  isSelected={n.id === selectedNodeId}
+                  onSelect={() => handleSelect(n)}
                 />
-                <AnimatePresence initial={false}>
-                  {expandedFolders[key] && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: 'auto', opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-                      className="overflow-hidden"
-                    >
-                      {getFolderNodes(key).map(n => (
-                        <TreeNode
-                          key={n.id}
-                          node={n}
-                          isSelected={n.id === selectedNodeId}
-                          onSelect={() => handleSelect(n)}
-                        />
-                      ))}
-                      {getFolderNodes(key).length === 0 && (
-                        <p className="text-mono-xs text-muted-foreground/30 pl-8 py-1 italic">
-                          {searchQuery ? 'No matches' : 'Empty'}
-                        </p>
-                      )}
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-            ))}
+              ))
+            ) : (
+              <p className="text-xs text-muted-foreground/40 italic py-4 text-center">
+                {searchQuery ? 'No matches' : 'No nodes found in this filter'}
+              </p>
+            )}
           </div>
         </div>
 
@@ -964,7 +947,6 @@ export function MemoryExplorer({ onSelectNode }: ExplorerProps) {
 /* ================================================================
    LEVEL FILTER BUTTON — small toggle for L0/L1/L2
    ================================================================ */
-
 function LevelFilterButton({
   children,
   active,

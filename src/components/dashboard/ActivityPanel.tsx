@@ -5,31 +5,31 @@ import { GlassPanel } from '@/components/glass/GlassPanel';
 import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
 import {
-  Activity, Plus, FileText, ArrowUpCircle, Search, Settings,
-  AlertTriangle, CheckCircle2, Trash2, Zap
+  Activity, Plus, FileText, ArrowUpRight, Search, Settings,
+  AlertTriangle, CheckCircle2, Trash2, Command
 } from 'lucide-react';
 import type { ActivityLog } from '@/lib/memory/types';
 
 const ACTION_ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
   create: Plus,
   update: FileText,
-  promote: ArrowUpCircle,
+  promote: ArrowUpRight,
   search: Search,
   delete: Trash2,
   policy: Settings,
   health: Activity,
-  skill: Zap,
+  skill: Command,
 };
 
 const ACTION_COLORS: Record<string, string> = {
-  create: 'text-matrix',
-  update: 'text-blue-400',
-  promote: 'text-purple-400',
-  search: 'text-muted-foreground',
-  delete: 'text-destructive',
-  policy: 'text-governance',
-  health: 'text-matrix',
-  skill: 'text-execution',
+  create: 'text-foreground',
+  update: 'text-muted-foreground',
+  promote: 'text-foreground',
+  search: 'text-muted-foreground/60',
+  delete: 'text-muted-foreground/50',
+  policy: 'text-foreground',
+  health: 'text-foreground',
+  skill: 'text-muted-foreground',
 };
 
 export function ActivityPanel() {
@@ -41,13 +41,13 @@ export function ActivityPanel() {
   };
 
   return (
-    <GlassPanel variant="strong" className="h-full flex flex-col">
-      <div className="flex items-center justify-between mb-4">
-        <h3 className="text-sm font-semibold tracking-tight flex items-center gap-2">
-          <Activity className="w-4 h-4 text-matrix" />
-          Activity
+    <GlassPanel glow className="h-full flex flex-col pt-5">
+      <div className="flex items-center justify-between mb-4 px-1">
+        <h3 className="text-xs font-semibold uppercase tracking-widest flex items-center gap-2 text-foreground">
+          <Activity className="w-4 h-4 text-foreground" />
+          Activity Log
         </h3>
-        <span className="text-mono-xs text-muted-foreground">{activityLog.length} events</span>
+        <span className="text-[10px] uppercase tracking-widest text-muted-foreground/50">{activityLog.length} events</span>
       </div>
 
       <div className="flex-1 overflow-y-auto max-h-[500px] space-y-1">
@@ -66,20 +66,20 @@ export function ActivityPanel() {
                 initial={{ opacity: 0, x: -8 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: i * 0.02 }}
-                className="flex items-start gap-3 px-3 py-2 rounded-lg hover:bg-glass-hover/50 transition-colors"
+                className="flex items-start gap-3 px-3 py-2 rounded-lg hover:bg-foreground/5 border border-transparent hover:border-border/10 transition-colors"
               >
-                <Icon className={cn('w-3.5 h-3.5 mt-0.5 shrink-0', color)} />
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2">
-                    <span className="text-xs font-medium">{log.detail}</span>
-                  </div>
+                <div className="mt-0.5 shrink-0 bg-foreground/5 w-6 h-6 flex items-center justify-center rounded-md border border-border/10">
+                  <Icon className={cn('w-3.5 h-3.5', color)} />
+                </div>
+                <div className="flex-1 min-w-0 flex flex-col justify-center">
+                  <span className={cn("text-xs font-medium tracking-wide", color === 'text-foreground' ? 'text-foreground' : 'text-muted-foreground/80')}>{log.detail}</span>
                   {log.target && (
-                    <span className="text-mono-xs text-muted-foreground/50 truncate block">
+                    <span className="text-[10px] font-mono text-muted-foreground/40 truncate block mt-0.5">
                       {log.target}
                     </span>
                   )}
                 </div>
-                <span className="text-mono-xs text-muted-foreground/40 tabular-nums shrink-0">
+                <span className="text-[10px] uppercase font-mono tracking-widest text-muted-foreground/30 tabular-nums shrink-0 mt-0.5">
                   {formatTime(log.createdAt)}
                 </span>
               </motion.div>

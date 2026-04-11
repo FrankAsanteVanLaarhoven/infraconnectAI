@@ -23,29 +23,24 @@ export function ThemeToggle() {
 
   const current = resolvedTheme ?? 'dark';
 
-  const modes = [
-    { value: 'light', icon: Sun, label: 'Light' },
-    { value: 'dark', icon: Moon, label: 'Dark' },
-    { value: 'system', icon: Monitor, label: 'System' },
-  ] as const;
-
   return (
-    <div className="glass-subtle rounded-lg flex items-center gap-0.5 p-1">
-      {modes.map(({ value, icon: Icon, label }) => (
-        <button
-          key={value}
-          onClick={() => setTheme(value)}
-          className={cn(
-            'relative flex items-center justify-center w-7 h-7 rounded-md transition-all duration-300',
-            current === value
-              ? 'bg-matrix/20 text-matrix shadow-[0_0_12px_var(--matrix-glow)]'
-              : 'text-muted-foreground hover:text-foreground hover:bg-glass-hover'
-          )}
-          title={label}
-        >
-          <Icon className="w-3.5 h-3.5" />
-        </button>
-      ))}
-    </div>
+    <button
+      onClick={() => {
+        if (current === 'dark') setTheme('light');
+        else if (current === 'light') /* cycle to system */ setTheme('system');
+        else setTheme('dark');
+      }}
+      className="relative flex items-center justify-center w-10 h-10 rounded-xl transition-all duration-300 text-muted-foreground hover:text-foreground hover:bg-foreground/5 focus:outline-none focus:ring-2 focus:ring-foreground/20 glass-subtle border border-border/10 shadow-sm"
+      title={`Current theme: ${current}. Click to change.`}
+      aria-label="Toggle theme"
+    >
+      {current === 'dark' ? (
+        <Moon className="w-4 h-4 text-emerald-400" />
+      ) : current === 'light' ? (
+        <Sun className="w-4 h-4 text-orange-400" />
+      ) : (
+        <Monitor className="w-4 h-4 text-blue-400" />
+      )}
+    </button>
   );
 }

@@ -390,15 +390,35 @@ function PipelineStep({
    ══════════════════════════════════════════════════════════════════ */
 
 export function OverviewPanel() {
-  const { nodes, health, skillRuns, policies, openPanel, setActiveSkill } = useMemoryStore();
+  const { nodes, skillRuns, policies, openPanel, setActiveSkill } = useMemoryStore();
+  
+  const [dashboard, setDashboard] = useState<any>(null);
+  const [health, setHealth] = useState<any>(null);
+
+  const loadProjections = useCallback(async () => {
+    try {
+      const [dashRes, healthRes] = await Promise.all([
+        fetch('/api/projections/dashboard'),
+        fetch('/api/health')
+      ]);
+      if (dashRes.ok) setDashboard(await dashRes.json());
+      if (healthRes.ok) setHealth(await healthRes.json());
+    } catch {}
+  }, []);
+
+  useEffect(() => {
+    loadProjections();
+    const id = setInterval(loadProjections, 15000);
+    return () => clearInterval(id);
+  }, [loadProjections]);
 
   /* ── Derived data ──────────────────────────────────────────── */
-  const l0Count = nodes.filter((n) => n.level === 'L0').length;
-  const l1Count = nodes.filter((n) => n.level === 'L1').length;
-  const l2Count = nodes.filter((n) => n.level === 'L2').length;
+  const l0Count = dashboard?.scratchItems ?? 0;
+  const l1Count = dashboard?.wikiEntries ?? 0;
+  const l2Count = dashboard?.canonicalKnowledge ?? 0;
   const maxLevelCount = Math.max(l0Count, l1Count, l2Count, 1);
-  const completedRuns = skillRuns.filter((r) => r.status === 'completed').length;
-  const totalConflicts = nodes.reduce((sum, n) => sum + n.conflictCount, 0);
+  const completedRuns = dashboard?.completedSkills ?? 0;
+  const totalConflicts = dashboard?.activeConflicts ?? 0;
   const activePolicies = policies.filter((p) => p.active).length;
 
   const planeNodes = useMemo(() => ({
@@ -406,6 +426,8 @@ export function OverviewPanel() {
     memory: nodes.filter((n) => n.plane === 'memory'),
     governance: nodes.filter((n) => n.plane === 'governance'),
   }), [nodes]);
+
+  const totalNodes = dashboard?.totalNodes ?? 0;
 
   const lastRunsBySkill = useMemo(() => {
     const map: Record<SkillName, { status: string; createdAt: string } | null> = {
@@ -426,7 +448,7 @@ export function OverviewPanel() {
       .slice(0, 3);
   }, [nodes]);
 
-  const healthScore = health?.overall ?? 0;
+  const healthScore = health?.health ?? 0;
 
   /* ── Live datetime ─────────────────────────────────────────── */
   const [datetime, setDatetime] = useState('');
@@ -511,7 +533,7 @@ export function OverviewPanel() {
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3">
         <StatCard
           label="Total Nodes"
-          value={nodes.length}
+          value={totalNodes}
           sub="across all planes"
           icon={Database}
           iconBg="bg-l1/15"
@@ -585,9 +607,9 @@ export function OverviewPanel() {
         >
           <span className={cn(
             'text-[10px] font-mono font-medium px-2 py-0.5 rounded-full ml-auto',
-            'bg-matrix/15 text-matrix status-indicator-live'
+            dashboard?.busStatus === 'live' ? 'bg-matrix/15 text-matrix status-indicator-live' : 'bg-destructive/15 text-destructive'
           )}>
-            LIVE
+            {dashboard?.busStatus?.toUpperCase() ?? 'OFFLINE'}
           </span>
         </StatCard>
       </div>
@@ -603,7 +625,7 @@ export function OverviewPanel() {
               key={plane}
               plane={plane}
               nodes={planeNodes[plane]}
-              avgHealth={health?.byPlane[plane]?.avgHealth ?? 0}
+              avgHealth={health?.byPlane?.[plane]?.avgHealth ?? 0}
               delay={0.3 + i * 0.07}
               onClick={() => handlePlaneClick(plane)}
             />

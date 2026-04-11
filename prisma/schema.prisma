@@ -3,71 +3,483 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
-model MemoryNode {
-  id             String   @id @default(cuid())
-  title          String
-  content        String   @default("")
-  level          String   @default("L1")
-  plane          String   @default("memory")
-  category       String   @default("")
-  status         String   @default("scratch")
-  parentId       String?
-  parent         MemoryNode?  @relation("MemoryHierarchy", fields: [parentId], references: [id], onDelete: SetNull)
-  children       MemoryNode[] @relation("MemoryHierarchy")
-  tags           String   @default("[]")
-  healthScore    Float    @default(1.0)
-  conflictCount  Int      @default(0)
-  referenceCount Int      @default(0)
-  lastValidated  DateTime?
-  expiresAt      DateTime?
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+enum MemoryLevel {
+  L0
+  L1
+  L2
+}
 
-  feedbacks      Feedback[]
+enum Plane {
+  execution
+  memory
+  governance
+}
+
+enum NodeKind {
+  artifact
+  project
+  decision
+  concept
+  entity
+  pattern
+  standard
+  playbook
+  policy
+  constraint
+  experiment
+  benchmark_trace
+  report
+  persona_note
+}
+
+enum NodeState {
+  draft
+  active
+  pending_review
+  pending_promotion
+  canonical
+  conflicted
+  stale
+  archived
+  rejected
+}
+
+enum SkillName {
+  spec
+  plan
+  build
+  test
+  review
+  ship
+  constraint_audit
+  deadline_cert
+}
+
+enum RunStatus {
+  queued
+  running
+  passed
+  failed
+  blocked
+  cancelled
+  timed_out
+  recovered
+}
+
+enum PolicyScope {
+  memory
+  governance
+  runtime
+  benchmark
+  persona
+}
+
+enum PolicyStatus {
+  enabled
+  disabled
+  shadow
+}
+
+enum ConflictType {
+  semantic
+  duplicate
+  policy
+  temporal
+  version
+}
+
+enum ConflictStatus {
+  open
+  resolved
+  dismissed
+}
+
+enum InterceptDecision {
+  permit
+  deny
+  shadow_permit
+  shadow_deny
+}
+
+enum PersonaRole {
+  Mission_Commander
+  Safety_Auditor
+  Research_Copilot
+  Executive_Assistant
+}
+
+enum PersonaSessionStatus {
+  idle
+  listening
+  speaking
+  disconnected
+  closed
+}
+
+enum BenchmarkName {
+  CaP_X
+}
+
+enum BenchmarkEpisodeStatus {
+  pending
+  running
+  passed
+  failed
+  blocked
+  recovered
+}
+
+enum AbstractionLayer {
+  S1
+  S2
+  S3
+  S4
+}
+
+enum AggregateType {
+  node
+  edge
+  run
+  policy
+  conflict
+  intercept
+  persona
+  episode
+  health_projection
+  dashboard_projection
+}
+
+model MemoryNode {
+  id               String      @id @default(cuid())
+  shortId          String      @unique
+  slug             String      @unique
+  title            String
+  summary          String?
+  bodyRef          String?
+
+  level            MemoryLevel
+  plane            Plane
+  kind             NodeKind
+  state            NodeState
+
+  confidence       Float?
+  promotionScore   Float?
+  tags             String[]
+  createdBy        String
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @updatedAt
+  lastReviewedAt   DateTime?
+  expiresAt        DateTime?
+
+  sourceNodeIds    String[]
+  externalSourceRefs String[]
+  metadata         Json?
+
+  outgoingEdges    MemoryEdge[] @relation("EdgeFrom")
+  incomingEdges    MemoryEdge[] @relation("EdgeTo")
+
+  targetRuns       SkillRun[]   @relation("RunTargets")
+  readByRuns       SkillRun[]   @relation("RunReads")
+  writtenByRuns    SkillRun[]   @relation("RunWrites")
+
+  derivedPolicies  PolicyRule[] @relation("PolicyDerivedFrom")
+  conflictsAsSource Conflict[]  @relation("ConflictSource")
+  conflictsAsTarget Conflict[]  @relation("ConflictTarget")
+}
+
+model MemoryEdge {
+  id         String   @id @default(cuid())
+  shortId    String   @unique
+  fromNodeId String
+  toNodeId   String
+  type       String
+  createdBy  String
+  createdAt  DateTime @default(now())
+  metadata   Json?
+
+  fromNode   MemoryNode @relation("EdgeFrom", fields: [fromNodeId], references: [id], onDelete: Cascade)
+  toNode     MemoryNode @relation("EdgeTo", fields: [toNodeId], references: [id], onDelete: Cascade)
+
+  @@index([fromNodeId])
+  @@index([toNodeId])
+  @@index([type])
 }
 
 model SkillRun {
-  id            String   @id @default(cuid())
-  skill         String
-  status        String   @default("pending")
-  input         String   @default("")
-  output        String   @default("")
-  memoryRead    String   @default("[]")
-  memoryWritten String   @default("[]")
-  duration      Int      @default(0)
-  error         String   @default("")
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  id            String    @id @default(cuid())
+  shortId       String    @unique
+  skill         SkillName
+  status        RunStatus
+
+  title         String?
+  actorId       String
+  resultSummary String?
+  errorMessage  String?
+
+  startedAt     DateTime
+  finishedAt    DateTime?
+  durationMs    Int?
+
+  metrics       Json?
+  metadata      Json?
+
+  targetNodeIds String[]
+  readNodeIds   String[]
+  writeNodeIds  String[]
+
+  targetNodes   MemoryNode[] @relation("RunTargets")
+  readNodes     MemoryNode[] @relation("RunReads")
+  writeNodes    MemoryNode[] @relation("RunWrites")
+
+  intercepts    RuntimeIntercept[]
+  benchmarkEpisodes BenchmarkEpisode[]
 }
 
-model GovernancePolicy {
-  id        String   @id @default(cuid())
-  name      String
-  type      String
-  config    String   @default("{}")
-  active    Boolean  @default(true)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model PolicyRule {
+  id               String       @id @default(cuid())
+  shortId          String       @unique
+  slug             String       @unique
+  name             String
+  scope            PolicyScope
+  status           PolicyStatus
+  description      String
+
+  appliesToLevels  MemoryLevel[]
+  appliesToPlanes  Plane[]
+  appliesToKinds   NodeKind[]
+
+  params           Json?
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+
+  derivedFromNodeId String?
+  derivedFromNode   MemoryNode? @relation("PolicyDerivedFrom", fields: [derivedFromNodeId], references: [id])
+
+  intercepts        RuntimeIntercept[] @relation("MatchedPolicies")
+
+  @@index([scope, status])
 }
 
-model Feedback {
-  id        String     @id @default(cuid())
-  nodeId    String
-  node      MemoryNode @relation(fields: [nodeId], references: [id], onDelete: Cascade)
-  type      String
-  reason    String     @default("")
-  createdAt DateTime   @default(now())
+model Conflict {
+  id            String         @id @default(cuid())
+  shortId       String         @unique
+  type          ConflictType
+  status        ConflictStatus
+  severity      String
+  explanation   String
+
+  sourceNodeId  String
+  targetNodeId  String
+
+  createdAt     DateTime       @default(now())
+  resolvedAt    DateTime?
+  resolvedBy    String?
+  metadata      Json?
+
+  sourceNode    MemoryNode     @relation("ConflictSource", fields: [sourceNodeId], references: [id], onDelete: Cascade)
+  targetNode    MemoryNode     @relation("ConflictTarget", fields: [targetNodeId], references: [id], onDelete: Cascade)
+
+  @@index([status])
+  @@index([sourceNodeId])
+  @@index([targetNodeId])
 }
 
-model ActivityLog {
-  id        String   @id @default(cuid())
-  action    String
-  target    String   @default("")
-  detail    String   @default("")
-  metadata  String   @default("{}")
-  createdAt DateTime @default(now())
+model RuntimeIntercept {
+  id               String            @id @default(cuid())
+  shortId          String            @unique
+  actorId          String
+  policyProfile    String
+  action           String
+  target           String
+  decision         InterceptDecision
+  matchedPolicyIds String[]
+  matchedPolicies  PolicyRule[]      @relation("MatchedPolicies")
+  reason           String
+  executed         Boolean           @default(false)
+  evidenceRef      String?
+  createdAt        DateTime          @default(now())
+  metadata         Json?
+
+  requestedByRunId String?
+  requestedByRun   SkillRun?         @relation(fields: [requestedByRunId], references: [id])
+
+  @@index([decision])
+  @@index([requestedByRunId])
+}
+
+model PersonaSession {
+  id             String               @id @default(cuid())
+  shortId        String               @unique
+  role           PersonaRole
+  status         PersonaSessionStatus
+  endpoint       String
+  transport      String               @default("ws")
+  actorId        String
+
+  startedAt      DateTime             @default(now())
+  endedAt        DateTime?
+  linkedRunIds   String[]
+  pushedNodeIds  String[]
+  metadata       Json?
+}
+
+model BenchmarkEpisode {
+  id                String                 @id @default(cuid())
+  shortId           String                 @unique
+  benchmark         BenchmarkName
+  suite             String
+  taskId            String
+  abstractionLayer  AbstractionLayer
+  status            BenchmarkEpisodeStatus
+
+  success           Boolean?
+  policyViolationCount Int                 @default(0)
+  recoveryCount     Int                    @default(0)
+
+  traceNodeIds      String[]
+  importedAt        DateTime?
+  metrics           Json?
+  metadata          Json?
+
+  runId             String?
+  run               SkillRun?              @relation(fields: [runId], references: [id])
+
+  @@index([benchmark, suite])
+  @@index([status])
+}
+
+model DomainEvent {
+  id             String        @id @default(cuid())
+  eventType      String
+  aggregateType  AggregateType
+  aggregateId    String
+  actorId        String
+  timestamp      DateTime      @default(now())
+  correlationId  String?
+  causationId    String?
+  payload        Json
+  schemaVersion  Int           @default(1)
+
+  @@index([aggregateType, aggregateId])
+  @@index([eventType])
+  @@index([timestamp])
+}
+
+model HealthProjection {
+  id               String    @id @default("singleton")
+  overall          Float
+  policyVersion    String
+
+  coverage         Float
+  conflictDensity  Float
+  staleness        Float
+  redundancy       Float
+
+  byLevel          Json
+  byPlane          Json
+
+  generatedAt      DateTime  @default(now())
+  sourceEventId    String
+}
+
+model DashboardProjection {
+  id                    String   @id @default("singleton")
+  totalNodes            Int
+  completedSkills       Int
+  canonicalKnowledge    Int
+  scratchItems          Int
+  wikiEntries           Int
+  activeConflicts       Int
+
+  planeCounts           Json
+  levelCounts           Json
+
+  busStatus             String
+  busConnections        Int
+
+  generatedAt           DateTime @default(now())
+  sourceEventId         String
+}
+
+model GovernanceProjection {
+  id                    String   @id @default("singleton")
+  canonCount            Int
+  wikiCount             Int
+  scratchCount          Int
+
+  promotionPipeline     Json
+  pendingPromotions     Json
+  decayTimeline         Json
+
+  generatedAt           DateTime @default(now())
+  sourceEventId         String
+}
+
+model ActivityProjection {
+  id                    String   @id @default("singleton")
+  eventCount            Int
+  recentEvents          Json
+  generatedAt           DateTime @default(now())
+  sourceEventId         String
+}
+
+model AgentBusProjection {
+  id                    String   @id @default("singleton")
+  status                String
+  uptimeSeconds         Int
+  connectionCount       Int
+  topicCount            Int
+  subscriptionCount     Int
+  recentMessages        Json
+  subscriptions         String[]
+  generatedAt           DateTime @default(now())
+  sourceEventId         String
+}
+
+model ExplorerProjection {
+  id                    String   @id @default("singleton")
+  totalNodes            Int
+  nodes                 Json
+  filters               Json
+  generatedAt           DateTime @default(now())
+  sourceEventId         String
+}
+
+model PersonaProjection {
+  id                    String   @id @default("singleton")
+  activeSession         Json?
+  availableRoles        String[]
+  generatedAt           DateTime @default(now())
+  sourceEventId         String
+}
+
+model BenchmarkProjection {
+  id                    String   @id @default("singleton")
+  benchmark             BenchmarkName
+  ablationMode          Boolean  @default(false)
+
+  loaded                Boolean  @default(false)
+  taskSuccess           Float?
+  policyViolations      Float?
+  autoRecovery          Float?
+  abstractionLayer      AbstractionLayer?
+
+  episodes              Json
+  generatedAt           DateTime @default(now())
+  sourceEventId         String
+}
+
+model RuntimeProjection {
+  id                    String   @id @default("singleton")
+  profile               String
+  enforcing             Boolean
+  permittedCount        Int
+  blockedCount          Int
+  recentIntercepts      Json
+  generatedAt           DateTime @default(now())
+  sourceEventId         String
 }

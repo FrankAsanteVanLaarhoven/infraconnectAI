@@ -13,7 +13,7 @@ import type {
 interface MemoryStore {
   nodes: MemoryNode[];
   skillRuns: SkillRun[];
-  health: HealthMetrics | null;
+
   policies: GovernancePolicy[];
   activityLog: ActivityLog[];
   activePanels: string[];
@@ -25,6 +25,9 @@ interface MemoryStore {
   activeSkill: SkillName | null;
   isLoadingMemory: boolean;
   isLoadingHealth: boolean;
+  
+  dashboard: Record<string, any> | null;
+  health: Record<string, any> | null;
 
   setNodes: (nodes: MemoryNode[]) => void;
   addNode: (node: MemoryNode) => void;
@@ -35,7 +38,7 @@ interface MemoryStore {
   addSkillRun: (run: SkillRun) => void;
   updateSkillRun: (id: string, data: Partial<SkillRun>) => void;
   setActiveSkill: (skill: SkillName | null) => void;
-  setHealth: (health: HealthMetrics) => void;
+
   setPolicies: (policies: GovernancePolicy[]) => void;
   addActivity: (log: ActivityLog) => void;
   setActivityLog: (logs: ActivityLog[]) => void;
@@ -47,6 +50,10 @@ interface MemoryStore {
   setIsSearching: (v: boolean) => void;
   setLoadingMemory: (v: boolean) => void;
   setLoadingHealth: (v: boolean) => void;
+  
+  setDashboard: (dashboard: Record<string, any>) => void;
+  setHealth: (health: Record<string, any>) => void;
+
   promoteNode: (id: string, toLevel: MemoryLevel, toStatus: MemoryStatus) => void;
   reset: () => void;
 }
@@ -54,7 +61,6 @@ interface MemoryStore {
 const initialState = {
   nodes: [] as MemoryNode[],
   skillRuns: [] as SkillRun[],
-  health: null as HealthMetrics | null,
   policies: [] as GovernancePolicy[],
   activityLog: [] as ActivityLog[],
   activePanels: ['overview', 'skills'] as string[],
@@ -66,6 +72,8 @@ const initialState = {
   activeSkill: null as SkillName | null,
   isLoadingMemory: false,
   isLoadingHealth: false,
+  dashboard: null as Record<string, any> | null,
+  health: null as Record<string, any> | null,
 };
 
 export const useMemoryStore = create<MemoryStore>((set, get) => ({
@@ -98,6 +106,7 @@ export const useMemoryStore = create<MemoryStore>((set, get) => ({
     })),
   setActiveSkill: (skill) => set({ activeSkill: skill }),
 
+  setDashboard: (dashboard) => set({ dashboard }),
   setHealth: (health) => set({ health }),
   setPolicies: (policies) => set({ policies }),
   addActivity: (log) =>

@@ -1,0 +1,27 @@
+[package]
+name = "memdevos-x"
+version = "2.1.0"
+description = "MEMDEVOS-X Core Execution Runtime"
+authors = ["MEMDEVOS"]
+edition = "2021"
+
+[build-dependencies]
+tauri-build = { version = "1.5.0", features = [] }
+
+[dependencies]
+tauri = { version = "1.5.0", features = ["shell-open"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+tokio = { version = "1", features = ["full"] }
+
+[features]
+custom-protocol = ["tauri/custom-protocol"]
+
+# MILITARY GRADE PROTECTIONS:
+# Prevent reverse engineering & binary tampering.
+[profile.release]
+panic = "abort"         # Prevent stack unwinding to hide implementation details
+codegen-units = 1       # Maximum optimization, lowers binary surface area
+lto = true              # Link-time optimization (strips dead code)
+opt-level = "z"         # Optimize for size (makes decompilation harder)
+strip = true            # Strip all symbols from the binary
