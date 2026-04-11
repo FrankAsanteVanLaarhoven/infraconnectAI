@@ -6,7 +6,7 @@ import { toast } from 'sonner';
 import { useMemoryStore } from '@/store/memory-store';
 import { cn } from '@/lib/utils';
 
-export function PersonaPlexDuplex({ onClose }: { onClose: () => void }) {
+export function PersonaPlexDuplex({ onClose, autoOpen = true }: { onClose: () => void, autoOpen?: boolean }) {
   const [isListening, setIsListening] = useState(false);
   const [pulse, setPulse] = useState(0);
   const [isMiniature, setIsMiniature] = useState(false);

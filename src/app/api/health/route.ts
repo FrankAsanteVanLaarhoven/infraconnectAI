@@ -12,13 +12,17 @@ export async function GET() {
         return NextResponse.json({ error: 'No health projection available' }, { status: 404 });
     }
 
+    const totalNodes = await db.memoryNode.count({
+      where: { state: { in: ['draft', 'active', 'canonical'] } }
+    });
+
     const payload: HealthProjection = {
       status: health.overall >= 80 ? 'ok' : health.overall >= 50 ? 'degraded' : 'critical',
       timestamp: health.generatedAt.toISOString(),
       health: Math.round(health.overall),
       memory: {
-        totalNodes: (health.byLevel as any)?.[`L1`]?.count + (health.byLevel as any)?.[`L2`]?.count + (health.byLevel as any)?.[`L0`]?.count || 0,
-        l2CanonNodes: (health.byLevel as any)?.[`L2`]?.count || 0,
+        totalNodes: totalNodes,
+        l2CanonNodes: (health.byLevel as any)?.[`L2`] || 0,
         conflicts: health.conflictDensity * 10,
         unresolvedConflicts: Math.round(health.conflictDensity * 10),
         memHealth: Math.round(health.coverage * 100)

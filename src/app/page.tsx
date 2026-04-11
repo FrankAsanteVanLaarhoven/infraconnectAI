@@ -232,7 +232,7 @@ export default function Dashboard() {
 
             {activePanels.has('persona') && (
               <motion.div key="persona" layout {...panelMotion}>
-                <PersonaPlexPanel onClose={() => togglePanel('persona')} />
+                <PersonaPlexPanel autoOpen={false} onClose={() => togglePanel('persona')} />
               </motion.div>
             )}
 
