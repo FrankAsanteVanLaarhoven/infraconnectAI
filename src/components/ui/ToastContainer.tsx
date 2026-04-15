@@ -26,7 +26,7 @@ const BG = {
 export function ToastContainer() {
   const [toasts, setToasts] = useState<ToastItem[]>([])
 
-  useBusEvent('memdevos:toast', ({ message, type, durationMs = 3500 }) => {
+  useBusEvent('infraconnect:toast', ({ message, type, durationMs = 3500 }) => {
     const id = crypto.randomUUID()
     setToasts(prev => [...prev.slice(-4), { id, message, type, durationMs }])
     setTimeout(() => setToasts(prev => prev.filter(t => t.id !== id)), durationMs)

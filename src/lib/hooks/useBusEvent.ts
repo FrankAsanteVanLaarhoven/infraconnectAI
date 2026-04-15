@@ -12,6 +12,5 @@ export function useBusEvent<K extends MemdevosEventName>(
 ): void {
   useEffect(() => {
     return bus.on(name, handler)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, deps)
 }

@@ -1,0 +1,46 @@
+syntax = "proto3";
+package ingest;
+
+option go_package = "infraconnectai/ingest/proto";
+
+import "google/protobuf/struct.proto";
+
+service IngestService {
+  rpc SendTelemetry(TelemetryBatch) returns (IngestAck);
+  rpc SendHeartbeat(HeartbeatRequest) returns (HeartbeatAck);
+  rpc ReportIncident(IncidentRequest) returns (IngestAck);
+}
+
+message TelemetryFrame {
+  string agentId = 1;
+  int64 tick = 2;
+  int64 tsMs = 3;
+  string deployTier = 4;
+  string modality = 5;
+  google.protobuf.Struct payload = 6;
+  float latencyMs = 7;
+}
+
+message TelemetryBatch {
+  repeated TelemetryFrame frames = 1;
+}
+
+message IngestAck {
+  int32 received = 1;
+}
+
+message HeartbeatRequest {
+  string agentId = 1;
+  int64 tsMs = 2;
+}
+
+message HeartbeatAck {
+  bool ok = 1;
+}
+
+message IncidentRequest {
+  string agentId = 1;
+  string severity = 2;
+  string category = 3;
+  string description = 4;
+}

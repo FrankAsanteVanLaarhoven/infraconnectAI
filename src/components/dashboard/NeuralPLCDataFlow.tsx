@@ -11,7 +11,7 @@ const ForceGraph3D = dynamic(() => import('react-force-graph-3d'), { ssr: false 
 /**
  * ─── Neural PLC Interface Node Generator ─────────────────────────────────────
  * Generates a mock topology combining SOTA PLC Safety Interlocks 
- * with Neural VLA inferencing pipelines.
+ * with industrial agent logic engines.
  */
 function generatePLCNeuralData() {
   const nodes = [
@@ -23,11 +23,11 @@ function generatePLCNeuralData() {
     { id: 'PLC_FAULT_MONITOR', group: 'plc', val: 4, label: 'Feedback Fault Monitor' },
     { id: 'PLC_OUTPUT', group: 'plc', val: 6, label: 'Hardware OSSR' },
 
-    // Core VLA Neural Layer
-    { id: 'NN_VISION', group: 'neural', val: 4, label: 'Vision Foundation Model' },
-    { id: 'NN_PROPRIOCEPTION', group: 'neural', val: 3, label: 'Joint State Encoding' },
-    { id: 'NN_TRANSFORMER', group: 'neural', val: 8, label: 'VLA Action Transformer' },
-    { id: 'NN_GRASP_INFERENCE', group: 'neural', val: 5, label: 'Grasp Pose Regressor' },
+    // Core Agent Logic Layer
+    { id: 'NN_VISION', group: 'neural', val: 4, label: 'Vision Synthesis Model' },
+    { id: 'NN_PROPRIOCEPTION', group: 'neural', val: 3, label: 'State Encoding' },
+    { id: 'NN_TRANSFORMER', group: 'neural', val: 8, label: 'Agent Action Transformer' },
+    { id: 'NN_GRASP_INFERENCE', group: 'neural', val: 5, label: 'Task Regressor' },
     { id: 'NN_POLICY', group: 'neural', val: 7, label: 'Control Policy' },
 
     // Agent Bus / Telemetry
@@ -119,7 +119,7 @@ export function NeuralPLCDataFlow() {
           </span>
           <span className="flex items-center gap-1.5 text-[9px] uppercase tracking-widest font-mono text-muted-foreground/80">
             <span className="w-2 h-2 rounded-full bg-blue-400 shadow-[0_0_8px_rgba(96,165,250,0.8)]" />
-            VLA Neural
+            Agent Logic
           </span>
         </div>
       </div>
@@ -128,7 +128,7 @@ export function NeuralPLCDataFlow() {
         {/* Pulsing indicator */}
         <div className="absolute top-4 left-4 z-10 flex items-center gap-2 bg-background/50 backdrop-blur-md px-3 py-1.5 rounded-full border border-border/20">
           <Activity className="w-3.5 h-3.5 text-foreground animate-pulse" />
-          <span className="text-[10px] uppercase font-mono tracking-widest text-foreground">Live Telemetry</span>
+          <h3 className="text-[11px] font-bold tracking-[0.2em] uppercase text-slate-300">Agent Logic Engine</h3>
         </div>
 
         {dimensions.width > 0 && dimensions.height > 0 && (

@@ -6,7 +6,7 @@ export type MemoryCategory =
   | 'entities' | 'concepts' | 'decisions' | 'projects'
   | 'standards' | 'playbooks' | 'patterns';
 
-export type SkillName = 'spec' | 'plan' | 'build' | 'test' | 'review' | 'ship';
+export type SkillName = 'spec' | 'plan' | 'build' | 'test' | 'review' | 'ship' | 'hardware_audit' | 'safety_stop';
 export type SkillStatus = 'pending' | 'running' | 'completed' | 'failed';
 
 export interface MemoryNode {
@@ -37,6 +37,7 @@ export interface MemoryContract {
   writes: string[];
   constraints: string[];
   description: string;
+  tier?: 'control' | 'edge';
 }
 
 export interface SkillRun {
@@ -146,6 +147,24 @@ export const SKILL_CONTRACTS: Record<SkillName, MemoryContract> = {
     constraints: ['must have completed review gate', 'must validate all release criteria'],
     description: 'Release validated knowledge as canonical, creating official records',
   },
+  hardware_audit: {
+    id: 'contract-hwa',
+    skill: 'hardware_audit',
+    reads: ['canon/standards/*'],
+    writes: ['raw/telemetry/hardware-audits/'],
+    constraints: ['must execute directly on agent hardware', 'must return raw system metrics'],
+    description: 'Audit edge hardware health, temperature, and low-level subsystem logs',
+    tier: 'edge',
+  },
+  safety_stop: {
+    id: 'contract-ss',
+    skill: 'safety_stop',
+    reads: ['canon/standards/safety.md'],
+    writes: ['log.md'],
+    constraints: ['highest priority dispatch', 'must verify hardware cutoff'],
+    description: 'Emergency system-wide safety stop and subsystem isolation',
+    tier: 'edge',
+  },
 };
 
 export const LEVEL_LABELS: Record<MemoryLevel, string> = {
@@ -167,4 +186,6 @@ export const SKILL_LABELS: Record<SkillName, string> = {
   test: 'Testing',
   review: 'Review',
   ship: 'Release',
+  hardware_audit: 'Hardware Audit',
+  safety_stop: 'Safety Stop',
 };

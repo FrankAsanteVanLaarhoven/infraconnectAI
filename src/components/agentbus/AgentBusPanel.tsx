@@ -68,7 +68,7 @@ export function AgentBusPanel() {
     return activityLog.map(log => ({
         id: log.id,
         topic: `system.${log.action}`,
-        sender: 'memdevos-core',
+        sender: 'infraconnect-core',
         payload: { target: log.target, detail: log.detail, ...(log.metadata || {}) },
         timestamp: log.createdAt
     }));

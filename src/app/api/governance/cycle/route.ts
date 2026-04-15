@@ -1,16 +1,18 @@
 // src/app/api/governance/cycle/route.ts
 import { NextResponse } from 'next/server'
-import { GovernanceEngine } from '@/lib/governance/engine'
 
-export async function POST() {
-  try {
-    const engine = new GovernanceEngine()
-    const result = await engine.runPolicyCycle()
-    return NextResponse.json({ ok: true, result })
-  } catch (e) {
-    return NextResponse.json(
-      { ok: false, error: e instanceof Error ? e.message : 'Cycle failed' },
-      { status: 500 }
-    )
-  }
+/**
+ * @deprecated Use /api/governance with { action: 'cycle' } instead
+ */
+export async function POST(req: Request) {
+  const url = new URL(req.url)
+  const base = `${url.protocol}//${url.host}`
+  
+  const res = await fetch(`${base}/api/governance`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ action: 'cycle' })
+  })
+  
+  return NextResponse.json(await res.json())
 }

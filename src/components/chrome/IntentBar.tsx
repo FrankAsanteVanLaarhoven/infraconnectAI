@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef, useCallback, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import {
   Search,
@@ -21,6 +22,7 @@ import {
   Radio,
   PanelLeftOpen,
   Clock,
+  MonitorPlay,
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { toast } from 'sonner';
@@ -49,6 +51,7 @@ const PANEL_SHORTCUTS = [
   { label: 'Search', desc: 'Hybrid semantic search', action: 'open_panel' as const, panel: 'search', icon: Search },
   { label: 'Activity', desc: 'Chronological event log', action: 'open_panel' as const, panel: 'activity', icon: Radio },
   { label: 'Agent Bus', desc: 'Real-time message bus', action: 'open_panel' as const, panel: 'agentbus', icon: Radio },
+  { label: 'Theatre', desc: 'Cinematic demo mode', action: 'theatre' as const, icon: MonitorPlay },
 ];
 
 // ── Waveform Bars Component ─────────────────────────────────────────────────
@@ -95,6 +98,7 @@ interface IntentBarProps {
 }
 
 export function IntentBar({ onIntent, isProcessing }: IntentBarProps) {
+  const router = useRouter();
   // ── State ────────────────────────────────────────────────────────────────
   const [query, setQuery] = useState('');
   const [isRecording, setIsRecording] = useState(false);
@@ -367,8 +371,20 @@ export function IntentBar({ onIntent, isProcessing }: IntentBarProps) {
       });
     });
 
+    // Theatre Mode (Special)
+    items.push({
+      id: 'special-theatre',
+      label: 'Theatre Mode',
+      desc: 'Launch cinematic system demonstration',
+      section: 'commands',
+      icon: MonitorPlay,
+      execute: () => {
+        router.push('/theatre');
+      },
+    });
+
     return items;
-  }, [onIntent]);
+  }, [onIntent, router]);
 
   const paletteItems = buildPaletteItems();
 
@@ -487,7 +503,7 @@ export function IntentBar({ onIntent, isProcessing }: IntentBarProps) {
           <div className="hidden sm:flex items-center gap-2 shrink-0">
             <Brain className="w-4 h-4 text-matrix animate-pulse" />
             <span className="text-premium text-[11px] text-gradient-matrix font-semibold select-none">
-              MEMDEVOS
+              InfraConnect
             </span>
           </div>
 
@@ -690,6 +706,20 @@ export function IntentBar({ onIntent, isProcessing }: IntentBarProps) {
                   )}
                 </motion.div>
               </AnimatePresence>
+            </button>
+
+            {/* Theatre Mode Toggle */}
+            <button
+              type="button"
+              onClick={() => router.push('/theatre')}
+              className={cn(
+                'hidden md:flex shrink-0 items-center justify-center w-9 h-9 rounded-lg transition-all duration-300',
+                'text-muted-foreground/60 hover:text-amber-500 hover:bg-amber-500/10'
+              )}
+              title="Theatre Mode (Demo)"
+              aria-label="Launch Theatre Mode"
+            >
+              <MonitorPlay className="w-4 h-4" />
             </button>
 
             {/* Keyboard shortcut hint */}
@@ -910,7 +940,7 @@ export function IntentBar({ onIntent, isProcessing }: IntentBarProps) {
                 </span>
                 <span className="flex items-center gap-1">
                   <Brain className="w-3 h-3" />
-                  MEMDEVOS
+                  InfraConnect
                 </span>
               </div>
             </motion.div>

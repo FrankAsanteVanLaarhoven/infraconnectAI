@@ -1,0 +1,60 @@
+version: '3.8'
+
+services:
+  nexus-control-plane:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: nexus-core
+    ports:
+      - "3006:3006"
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=postgresql://nexusadmin:sota-password@nexus-db:5432/nexus_db?schema=public
+      - REDIS_URL=redis://nexus-cache:6379
+    depends_on:
+      nexus-db:
+        condition: service_healthy
+      nexus-cache:
+        condition: service_started
+    networks:
+      - humanoid-net
+    restart: always
+
+  nexus-db:
+    image: postgres:15-alpine
+    container_name: nexus-db
+    environment:
+      - POSTGRES_USER=nexusadmin
+      - POSTGRES_PASSWORD=sota-password
+      - POSTGRES_DB=nexus_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - humanoid-net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U nexusadmin"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  nexus-cache:
+    image: redis:7-alpine
+    container_name: nexus-cache
+    ports:
+      - "6379:6379"
+    volumes:
+      - redisdata:/data
+    networks:
+      - humanoid-net
+    command: redis-server --appendonly yes
+
+volumes:
+  pgdata:
+  redisdata:
+
+networks:
+  humanoid-net:
+    driver: bridge

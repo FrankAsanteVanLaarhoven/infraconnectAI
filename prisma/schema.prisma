@@ -3,8 +3,8 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider = "sqlite"
+  url      = "file:./dev.db"
 }
 
 enum MemoryLevel {
@@ -121,8 +121,10 @@ enum PersonaSessionStatus {
 }
 
 enum BenchmarkName {
+  IndustrialStandard
   CaP_X
 }
+
 
 enum BenchmarkEpisodeStatus {
   pending
@@ -168,15 +170,15 @@ model MemoryNode {
 
   confidence       Float?
   promotionScore   Float?
-  tags             String[]
+  tags             String?
   createdBy        String
   createdAt        DateTime    @default(now())
   updatedAt        DateTime    @updatedAt
   lastReviewedAt   DateTime?
   expiresAt        DateTime?
 
-  sourceNodeIds    String[]
-  externalSourceRefs String[]
+  sourceNodeIds    String?
+  externalSourceRefs String?
   metadata         Json?
 
   outgoingEdges    MemoryEdge[] @relation("EdgeFrom")
@@ -227,9 +229,9 @@ model SkillRun {
   metrics       Json?
   metadata      Json?
 
-  targetNodeIds String[]
-  readNodeIds   String[]
-  writeNodeIds  String[]
+  targetNodeIds String?
+  readNodeIds   String?
+  writeNodeIds  String?
 
   targetNodes   MemoryNode[] @relation("RunTargets")
   readNodes     MemoryNode[] @relation("RunReads")
@@ -248,9 +250,9 @@ model PolicyRule {
   status           PolicyStatus
   description      String
 
-  appliesToLevels  MemoryLevel[]
-  appliesToPlanes  Plane[]
-  appliesToKinds   NodeKind[]
+  appliesToLevels  String?
+  appliesToPlanes  String?
+  appliesToKinds   String?
 
   params           Json?
   createdAt        DateTime     @default(now())
@@ -296,7 +298,7 @@ model RuntimeIntercept {
   action           String
   target           String
   decision         InterceptDecision
-  matchedPolicyIds String[]
+  matchedPolicyIds String?
   matchedPolicies  PolicyRule[]      @relation("MatchedPolicies")
   reason           String
   executed         Boolean           @default(false)
@@ -322,8 +324,8 @@ model PersonaSession {
 
   startedAt      DateTime             @default(now())
   endedAt        DateTime?
-  linkedRunIds   String[]
-  pushedNodeIds  String[]
+  linkedRunIds   String?
+  pushedNodeIds  String?
   metadata       Json?
 }
 
@@ -340,7 +342,7 @@ model BenchmarkEpisode {
   policyViolationCount Int                 @default(0)
   recoveryCount     Int                    @default(0)
 
-  traceNodeIds      String[]
+  traceNodeIds      String?
   importedAt        DateTime?
   metrics           Json?
   metadata          Json?
@@ -435,7 +437,7 @@ model AgentBusProjection {
   topicCount            Int
   subscriptionCount     Int
   recentMessages        Json
-  subscriptions         String[]
+  subscriptions         String?
   generatedAt           DateTime @default(now())
   sourceEventId         String
 }
@@ -452,7 +454,7 @@ model ExplorerProjection {
 model PersonaProjection {
   id                    String   @id @default("singleton")
   activeSession         Json?
-  availableRoles        String[]
+  availableRoles        String?
   generatedAt           DateTime @default(now())
   sourceEventId         String
 }
@@ -482,4 +484,330 @@ model RuntimeProjection {
   recentIntercepts      Json
   generatedAt           DateTime @default(now())
   sourceEventId         String
+}
+
+// ─── Observatory Modules (V2) ────────────────────────────────────────────────
+
+model AgentRegistration {
+  id              String   @id @default(cuid())
+  slug            String   @unique
+  displayName     String
+  agentType       String
+  deployTier      String
+  hardwareProfile String?
+  orgId           String
+  teamId          String?
+  status          String   @default("registered")
+  simPaired       String?
+  lastHeartbeat   DateTime?
+  heartbeatRateMs Int      @default(5000)
+  capabilities    String?
+  modalitySet     String?
+  policyProfileId String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  telemetry       AgentTelemetry[]
+  constraintChecks ConstraintCheck[]
+  transferEvents  TransferEvent[]
+  incidents       AgentIncident[]
+}
+
+model AgentTelemetry {
+  id          String   @id @default(cuid())
+  agentId     String
+  tick        BigInt
+  ts          DateTime @default(now())
+  deployTier  String
+  modality    String
+  payload     Json
+  latencyMs   Float?
+  agent       AgentRegistration @relation(fields: [agentId], references: [id])
+
+  @@index([agentId, modality, ts])
+}
+
+model ConstraintCheck {
+  id           String            @id @default(cuid())
+  agentId      String
+  constraintId String
+  ts           DateTime          @default(now())
+  deployTier   String
+  value        Float
+  threshold    Float
+  passed       Boolean
+  latencyMs    Float?
+  agent        AgentRegistration @relation(fields: [agentId], references: [id])
+
+  @@index([agentId, constraintId, ts])
+}
+
+model TransferEvent {
+  id           String            @id @default(cuid())
+  agentId      String
+  fromTier     String
+  toTier       String
+  triggeredBy  String
+  outcome      String?
+  deltaMetrics Json?
+  ts           DateTime          @default(now())
+  agent        AgentRegistration @relation(fields: [agentId], references: [id])
+}
+
+model AgentIncident {
+  id          String            @id @default(cuid())
+  agentId     String
+  severity    String
+  category    String
+  description String
+  resolvedAt  DateTime?
+  ts          DateTime          @default(now())
+  agent       AgentRegistration @relation(fields: [agentId], references: [id])
+
+  @@index([severity, ts])
+}
+
+model OrgTeamProject {
+  id          String   @id @default(cuid())
+  orgSlug     String
+  teamSlug    String?
+  projectSlug String
+  plan        String   @default("dev")
+  agentQuota  Int      @default(10)
+  createdAt   DateTime @default(now())
+
+  @@unique([orgSlug, teamSlug, projectSlug])
+}
+
+// ─── Agent Lifecycle & Directives (Rebranded) ───────────────────────────────
+
+model SafetyDirective {
+  id            String   @id @default(cuid())
+  name          String
+  severity      String
+  domain        String
+  lastTestedAt  DateTime?
+  violations    OperationalViolation[]
+}
+
+
+model AgentLifecycleRun {
+  id            String   @id @default(cuid())
+  environment   String
+  status        String
+  completedAt   DateTime
+  successRate   Float
+  avgDeadlineMs Float
+  deadlineSatisfied Boolean
+}
+
+model OperationalViolation {
+  id           String           @id @default(cuid())
+  directiveId  String
+  directive    SafetyDirective @relation(fields: [directiveId], references: [id])
+  resolvedAt   DateTime?
+  createdAt    DateTime         @default(now())
+}
+
+model FleetNode {
+  id          String   @id @default(cuid())
+  robotId     String   @unique
+  alias       String
+  status      String   @default("online") // online | offline | degraded
+  lastSeen    DateTime @default(now())
+  memoryBytes BigInt   @default(0)
+  anomalyCount Int     @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  // SOTA Telemetry Geospatial Matrix
+  latitude    Float?
+  longitude   Float?
+  region      String?
+
+  anomalies   Anomaly[]
+}
+
+model Anomaly {
+  id          String    @id @default(cuid())
+  nodeId      String
+  node        FleetNode @relation(fields: [nodeId], references: [id])
+  severity    String    // info | warn | critical
+  type        String    // memory_leak | spike | corruption | timeout
+  description String
+  payload     Json?
+  resolved    Boolean   @default(false)
+  resolvedAt  DateTime?
+  createdAt   DateTime  @default(now())
+}
+
+// ─── Security & Compliance Matrix ─────────────────────────────────────────────
+
+model AiAuditLog {
+  id              String   @id @default(cuid())
+  user            String   // Identifier (e.g., email or actorId)
+  action          String
+  resource        String?
+  input           String
+  output          String?
+  contextHash     String?
+  validated       Boolean  @default(false)
+  executed        Boolean  @default(false)
+  confidence      Float?
+  reasoning       Json?
+  timestamp       DateTime @default(now())
+
+  @@index([user])
+  @@index([action])
+  @@index([timestamp])
+}
+
+// ─── CRM & Enterprise Routing Subsystems ──────────────────────────────────────
+
+model EnterpriseLead {
+  id                   String   @id @default(cuid())
+  clientIdentifier     String   // Raw email or username
+  clientName           String
+  tenantId             String   @default("GLOBAL_INTERNAL") // The exact Customer/Network ID routing this specific lead to its sandbox
+  routingDesignation   String   // The mapped node e.g., 'hello', 'frank', 'security'
+  intentPayload        String   
+  
+  // Autonomic Classifications
+  leadTier             String   // 'HIGH_VALUE' | 'GENERIC'
+  industryEstimation   String?  // AI-extracted industry tag
+  threatLevel          String   @default("benign") // 'benign' | 'spam' | 'malicious'
+  
+  // Tactical Escalation Status
+  status               String   @default("queued") // 'queued' | 'reviewing' | 'cleared' | 'archived'
+  
+  capturedAt           DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+
+  @@index([leadTier, status])
+  @@index([capturedAt])
+}
+
+enum Sector {
+  GOVERNMENT
+  ENERGY
+  LOGISTICS
+  COMMERCIAL
+  GENERAL
+}
+
+model IntelSubscription {
+  id          String   @id @default(cuid())
+  clientId    String   @unique
+  interests   String? // e.g. ["Wildfire", "Stock Market", "Competitor acquisitions"]
+  tier        String   @default("STANDARD") // STANDARD | PREMIUM | GLOBAL
+  sector      Sector   @default(GENERAL)
+  deviceLimit Int      @default(1)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model UserDevice {
+  id          String   @id @default(cuid())
+  clientId    String
+  fingerprint String
+  label       String?
+  ipAddress   String?
+  lastSeen    DateTime @default(now())
+  isAuthorized Boolean @default(true)
+
+  createdAt   DateTime @default(now())
+
+  @@unique([clientId, fingerprint])
+  @@index([clientId])
+}
+
+model SecurityIncident {
+  id          String   @id @default(cuid())
+  clientId    String
+  type        String   // e.g. "DEVICE_LIMIT_REACHED", "UNAUTHORIZED_SIGNATURE"
+  fingerprint String
+  ipAddress   String?
+  userAgent   String?
+  severity    String   @default("low") // low | medium | high | critical
+  ts          DateTime @default(now())
+
+  @@index([clientId])
+  @@index([ts])
+}
+
+
+model EarthInsight {
+  id          String   @id @default(cuid())
+  category    String   // e.g. "DISEASTER", "COMMERCIAL", "SECURITY"
+  title       String
+  content     String
+  priority    String   @default("low") // low | medium | high | emergency
+  coordinates String?  // [lat, lng]
+  isDelivered Boolean  @default(false)
+  ts          DateTime @default(now())
+}
+
+model AcquisitionSlot {
+  id          String   @id @default(cuid())
+  targetName  String
+  aoi         String   // Area of Interest (GeoJSON or string)
+  sensorType  String   @default("SAR") // SAR | Optical | FLIR
+  status      String   @default("scheduled") // scheduled | in_progress | completed | failed
+  startTime   DateTime
+  endTime     DateTime
+  priority    Int      @default(1)
+  createdAt   DateTime @default(now())
+}
+
+// ─── Intelligence Studio ──────────────────────────────────────────────────────
+
+model EphemeralLayout {
+  id          String   @id @default(cuid())
+  intent      String
+  title       String
+  description String?
+  config      Json     // EphemeralLayout structure (widgets, etc.)
+  isStarred   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// ─── Humanoid Robotics MLOps & CI/CD Pipeline ─────────────────────────────────
+
+model ML_Experiment {
+  id              String   @id @default(cuid())
+  modelName       String
+  runTag          String
+  hyperparameters Json
+  rewardCurves    Json     // Array of {episode, reward, loss}
+  svrRate         Float    // Safety Violation Rate
+  completedAt     DateTime @default(now())
+}
+
+model OTA_Payload {
+  id              String   @id @default(cuid())
+  version         String   @unique
+  storageUri      String   // e.g. s3://zerogate-models/vla-1.0.whl
+  manifestData    Json
+  checksum        String
+  createdAt       DateTime @default(now())
+  
+  deployments     OTA_Deployment[]
+}
+
+model OTA_Deployment {
+  id              String   @id @default(cuid())
+  payloadId       String
+  targetTier      String
+  status          String   @default("pending") // pending, rolling, completed, rolled-back
+  pipelineStage   String   @default("REAL_FLEET") // SIM_L0_BASELINE, SIM_L1_HIL, REAL_FLEET
+  hardwareTarget  String   @default("UNITREE_G1") // UNITREE_G1, QUAD_GENERIC, WHEELED
+  autoPromote     Boolean  @default(false)
+  agentSuccessIds Json     // List of agent IDs that applied successfully
+  agentFailedIds  Json     // List of agent IDs that failed
+  triggeredBy     String
+  startedAt       DateTime @default(now())
+  finishedAt      DateTime?
+
+  payload         OTA_Payload @relation(fields: [payloadId], references: [id])
 }

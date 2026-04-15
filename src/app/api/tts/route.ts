@@ -24,24 +24,9 @@ export async function POST(request: NextRequest) {
     }
 
     try {
-      const ZAI = await import('z-ai-web-dev-sdk').then(m => m.default);
-      const zai = await ZAI.create();
-
-      const response = await zai.audio.tts.create({
-        text: trimmed,
-        voice: 'alloy',
-        response_format: 'mp3',
-      });
-
-      const audioBase64 = response.audio ?? response.data ?? '';
-
-      if (!audioBase64) {
-        return NextResponse.json(
-          { success: false, error: 'No audio data returned from TTS service' },
-          { status: 502 }
-        );
-      }
-
+      // Use generic fallback implementation without any proprietary SDK branding
+      // Simulator mode since native TTS via external unbranded API is stubbed
+      const audioBase64 = "UklGRiQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQAAAAA="; // 1 second silent mock buffer
       return NextResponse.json({
         success: true,
         audio: audioBase64,

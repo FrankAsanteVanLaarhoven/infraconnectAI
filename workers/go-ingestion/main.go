@@ -28,11 +28,11 @@ type Event struct {
 }
 
 func main() {
-	log.Println("Starting MEMDEVOS Go Ingestion Worker...")
+	log.Println("Starting INFRACONNECTAI Go Ingestion Worker...")
 
 	// 1. Establish strict connection to PostgreSQL
 	// ctx := context.Background()
-	// dbpool, err := pgxpool.New(ctx, "postgres://user:pass@localhost:5432/memdevos")
+	// dbpool, err := pgxpool.New(ctx, "postgres://user:pass@localhost:5432/infraconnectai")
 	// if err != nil {
 	// 	log.Fatalf("Unable to create connection pool: %v\n", err)
 	// }

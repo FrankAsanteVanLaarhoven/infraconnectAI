@@ -1,0 +1,23 @@
+[Unit]
+Description=Grok Edge Node (GEN)
+After=network.target
+
+[Service]
+Type=simple
+User=grok-agent
+Group=grok-agent
+ExecStart=/usr/local/bin/gdsc run
+Restart=always
+RestartSec=10
+LimitNOFILE=65535
+WorkingDirectory=/opt/grok-connector
+Environment="HOME=/var/lib/grok-agent"
+
+# Security hardening
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=strict
+ReadWritePaths=/var/lib/grok-agent
+
+[Install]
+WantedBy=multi-user.target

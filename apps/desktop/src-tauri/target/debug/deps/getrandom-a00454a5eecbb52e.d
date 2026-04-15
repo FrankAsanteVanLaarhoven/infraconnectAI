@@ -1,0 +1,11 @@
+/Users/favl/Downloads/memdevos/apps/desktop/src-tauri/target/debug/deps/getrandom-a00454a5eecbb52e.d: /Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/getrandom-0.3.4/src/lib.rs /Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/getrandom-0.3.4/src/backends.rs /Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/getrandom-0.3.4/src/error.rs /Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/getrandom-0.3.4/src/util.rs /Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/getrandom-0.3.4/src/../README.md /Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/getrandom-0.3.4/src/backends/getentropy.rs /Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/getrandom-0.3.4/src/backends/../util_libc.rs
+
+/Users/favl/Downloads/memdevos/apps/desktop/src-tauri/target/debug/deps/libgetrandom-a00454a5eecbb52e.rmeta: /Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/getrandom-0.3.4/src/lib.rs /Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/getrandom-0.3.4/src/backends.rs /Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/getrandom-0.3.4/src/error.rs /Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/getrandom-0.3.4/src/util.rs /Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/getrandom-0.3.4/src/../README.md /Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/getrandom-0.3.4/src/backends/getentropy.rs /Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/getrandom-0.3.4/src/backends/../util_libc.rs
+
+/Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/getrandom-0.3.4/src/lib.rs:
+/Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/getrandom-0.3.4/src/backends.rs:
+/Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/getrandom-0.3.4/src/error.rs:
+/Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/getrandom-0.3.4/src/util.rs:
+/Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/getrandom-0.3.4/src/../README.md:
+/Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/getrandom-0.3.4/src/backends/getentropy.rs:
+/Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/getrandom-0.3.4/src/backends/../util_libc.rs:

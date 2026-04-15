@@ -1,5 +1,5 @@
 {
-  "name": "memdevos-agent-bus",
+  "name": "infraconnect-agent-bus",
   "version": "1.0.0",
   "private": true,
   "scripts": {

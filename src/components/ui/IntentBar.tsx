@@ -10,7 +10,7 @@ import { useBusEvent } from '@/lib/hooks/useBusEvent'
 const CATEGORY_COLOR: Record<string, string> = {
   skill:      'text-green-400',
   memory:     'text-blue-400',
-  persona:    'text-purple-400',
+  cognitive:  'text-purple-400',
   bench:      'text-yellow-400',
   panel:      'text-gray-400',
   governance: 'text-orange-400',
@@ -45,8 +45,8 @@ export function IntentBar({ activeAgentId, activePersonaId }: IntentBarProps) {
     return () => window.removeEventListener('keydown', handler)
   }, [])
 
-  // Listen for external skill run requests (e.g. from VLAMissionControl buttons)
-  useBusEvent('memdevos:run-skill', async ({ skill, agentId, personaId, input }) => {
+  // Listen for external skill run requests (e.g. from AgentOperationsCenter buttons)
+  useBusEvent('infraconnect:run-skill', async ({ skill, agentId, personaId, input }) => {
     setStatus(`Running skill: ${skill}...`)
     try {
       const res = await fetch('/api/nemoclaw/run', {
@@ -66,61 +66,61 @@ export function IntentBar({ activeAgentId, activePersonaId }: IntentBarProps) {
       })
       const data = await res.json()
       if (data.blocked) {
-        bus.emit('memdevos:toast', { message: `Blocked by policy: ${data.reason}`, type: 'warn' })
+        bus.emit('infraconnect:toast', { message: `Blocked by policy: ${data.reason}`, type: 'warn' })
         setStatus(`Blocked: ${data.reason}`)
       } else {
-        bus.emit('memdevos:toast', { message: `Skill ${skill} completed`, type: 'success' })
+        bus.emit('infraconnect:toast', { message: `Skill ${skill} completed`, type: 'success' })
         setStatus(null)
       }
     } catch {
-      bus.emit('memdevos:toast', { message: `Skill ${skill} failed`, type: 'error' })
+      bus.emit('infraconnect:toast', { message: `Skill ${skill} failed`, type: 'error' })
       setStatus(null)
     }
   }, [activeAgentId, activePersonaId])
 
   // Listen for ingest events
-  useBusEvent('memdevos:ingest', async ({ title, content, type, tags }) => {
+  useBusEvent('infraconnect:ingest', async ({ title, content, type, tags }) => {
     setStatus(`Ingesting: "${title}"...`)
     await fetch('/api/memory', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ title, content, type, tags }),
     })
-    bus.emit('memdevos:toast', { message: `Ingested: "${title}"`, type: 'success' })
+    bus.emit('infraconnect:toast', { message: `Ingested: "${title}"`, type: 'success' })
     setStatus(null)
   }, [])
 
-  // Listen for persona switch events
-  useBusEvent('memdevos:switch-persona', async ({ slug }) => {
-    await fetch('/api/personaplex', {
+  // Listen for cognitive core switch events
+  useBusEvent('infraconnect:switch-persona', async ({ slug }) => {
+    await fetch('/api/cognitive', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ action: 'switch', slug }),
     })
-    bus.emit('memdevos:toast', { message: `Persona → ${slug}`, type: 'success' })
+    bus.emit('infraconnect:toast', { message: `Cognitive Core → ${slug}`, type: 'success' })
   }, [])
 
-  // Listen for benchmark events
-  useBusEvent('memdevos:run-benchmark', async ({ runTag, agentId, agentType }) => {
-    setStatus(`Running benchmark: ${runTag}...`)
-    const res = await fetch('/api/capx', {
+  // Listen for model performance benchmark events
+  useBusEvent('infraconnect:run-benchmark', async ({ runTag, agentId, agentType }) => {
+    setStatus(`Running performance validation: ${runTag}...`)
+    const res = await fetch('/api/model-perf', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ action: 'run', runTag, model: 'gpt-4o', agentId, agentType, environment: 'cap-gym' }),
+      body: JSON.stringify({ action: 'run', runTag, model: 'gpt-4o', agentId, agentType, environment: 'sim-ops' }),
     })
     const data = await res.json()
-    bus.emit('memdevos:toast', {
-      message: `Benchmark done: ${(data.passRate * 100).toFixed(1)}% pass rate`,
+    bus.emit('infraconnect:toast', {
+      message: `Validation complete: ${(data.passRate * 100).toFixed(1)}% pass rate`,
       type: 'success',
     })
     setStatus(null)
   }, [])
 
   // Listen for governance cycle events
-  useBusEvent('memdevos:run-cycle', async () => {
+  useBusEvent('infraconnect:run-cycle', async () => {
     setStatus('Running governance cycle...')
     await fetch('/api/governance/cycle', { method: 'POST' })
-    bus.emit('memdevos:toast', { message: 'Governance cycle complete', type: 'success' })
+    bus.emit('infraconnect:toast', { message: 'Governance cycle complete', type: 'success' })
     setStatus(null)
   }, [])
 
@@ -139,8 +139,8 @@ export function IntentBar({ activeAgentId, activePersonaId }: IntentBarProps) {
     if (resolved) {
       resolved.command.execute(resolved.args, { activeAgentId, activePersonaId })
     } else if (input.trim()) {
-      // Free-text: treat as a natural-language intent (emit for future LLM routing)
-      bus.emit('memdevos:toast', { message: `Intent: "${input.trim()}"`, type: 'info' })
+      // Free-text: treat as a natural-language intent mapped to the Ephemeral UI generation engine
+      bus.emit('infraconnect:generate-ephemeral-ui', { query: input.trim() })
     }
     setValue('')
     setSuggestions([])

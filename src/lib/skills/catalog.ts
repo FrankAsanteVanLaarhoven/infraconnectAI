@@ -205,9 +205,38 @@ Document before launch: what metrics trigger an immediate rollback?
 ## Verification
 Checklist complete, rollback procedure tested, monitoring confirms healthy metrics at each rollout stage.
 `,
+
+  hardware_audit: `
+# Edge Hardware Audit
+Collect low-level system metrics directly from the connected agent.
+
+## Workflow
+1. INGEST → READ CPU/RAM → READ SENSORS → LOG RECENT FAILURES
+2. Surface any temperature or voltage anomalies.
+3. Compare against canonical hardware standards.
+
+## Verification
+- CPU/RAM metrics retrieved
+- Sensor state validated
+- Audit log entry created
+`,
+
+  safety_stop: `
+# System Safety Stop
+Emergency isolation of edge hardware subsystems.
+
+## Workflow
+1. STOP ALL MOVEMENTS → ISOLATE MOTORS → LOG INCIDENT → NOTIFY OPS
+2. This skill takes precedence over all other active tasks.
+
+## Verification
+- Hardware cutoff confirmed
+- Subsystems isolated
+- P0 incident recorded
+`,
 }
 
-// Maps MEMDEVOS SkillName to catalog key
+// Maps InfraConnect SkillName to catalog key
 export const SKILL_NAME_MAP: Record<string, string> = {
   spec: 'spec',
   plan: 'plan',
@@ -216,4 +245,6 @@ export const SKILL_NAME_MAP: Record<string, string> = {
   review: 'review',
   'code-simplify': 'code-simplify',
   ship: 'ship',
+  hardware_audit: 'hardware_audit',
+  safety_stop: 'safety_stop',
 }

@@ -147,7 +147,7 @@ export async function POST(request: NextRequest) {
                 code: execError.code
             };
             
-            // Auto-recovery trigger for CaP-X benchmarks
+            // Auto-recovery trigger for Industrial Standard validation
             recoveryInvoked = true;
             violations.push('Runtime execution failure detected. Handing state to recovery system.');
         }

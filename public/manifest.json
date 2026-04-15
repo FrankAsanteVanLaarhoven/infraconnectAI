@@ -1,6 +1,6 @@
 {
-  "name": "MEMDEVOS-X Mission Control",
-  "short_name": "MEMDEVOS-X",
+  "name": "InfraConnect AI Mission Control",
+  "short_name": "InfraConnect AI",
   "description": "Governed Autonomy SOTA Robotics Stack",
   "start_url": "/",
   "display": "standalone",

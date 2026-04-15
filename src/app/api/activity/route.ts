@@ -1,20 +1,20 @@
 import { db } from '@/lib/db';
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET() {
   try {
-    const logs = await db.activityLog.findMany({
-      orderBy: { createdAt: 'desc' },
+    const logs = await db.aiAuditLog.findMany({
+      orderBy: { timestamp: 'desc' },
       take: 100,
     });
 
     const mapped = logs.map(l => ({
       id: l.id,
       action: l.action,
-      target: l.target,
-      detail: l.detail,
-      metadata: JSON.parse(l.metadata),
-      createdAt: l.createdAt.toISOString(),
+      target: l.resource,
+      detail: l.input,
+      metadata: l.reasoning,
+      createdAt: l.timestamp.toISOString(),
     }));
 
     return NextResponse.json({ logs: mapped });
@@ -26,14 +26,16 @@ export async function GET() {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { action, target, detail, metadata } = body;
+    const { action, target, detail, metadata, user } = body;
 
-    const log = await db.activityLog.create({
+    const log = await db.aiAuditLog.create({
       data: {
+        user: user ?? 'system',
         action: action ?? 'unknown',
-        target: target ?? '',
-        detail: detail ?? '',
-        metadata: JSON.stringify(metadata ?? {}),
+        resource: target ?? '',
+        input: detail ?? '',
+        reasoning: metadata ?? {},
+        timestamp: new Date(),
       },
     });
 
@@ -42,3 +44,4 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: String(error) }, { status: 500 });
   }
 }
+

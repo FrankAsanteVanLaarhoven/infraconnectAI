@@ -1,7 +1,7 @@
 ---
 Task ID: 1
 Agent: Main Architect
-Task: Build complete MEMDEVOS — Memory DevOps Platform with ephemeral UI
+Task: Build complete InfraConnect — Memory DevOps Platform with ephemeral UI
 
 Work Log:
 - Assessed project state: Next.js 16 + Tailwind CSS 4 + shadcn/ui + Prisma/SQLite
@@ -12,7 +12,7 @@ Work Log:
 - Built GlassPanel + GlassCard reusable glassmorphism containers with Framer Motion animations
 - Built ThemeToggle component with Sun/Moon/System modes and glow indicators
 - Built IntentBar — central ephemeral input with slash command parsing, voice input (ASR), autocomplete suggestions
-- Built StatusBar — fixed bottom bar with live status, node count, health %, panel count, MEMDEVOS branding
+- Built StatusBar — fixed bottom bar with live status, node count, health %, panel count, InfraConnect branding
 - Built HealthPanel — animated SVG ring gauge, 4 metric bars (coverage/conflict/staleness/redundancy), by-level and by-plane breakdowns
 - Built SkillLifecycle — 6-step pipeline (/spec→/plan→/build→/test→/review→/ship) with expandable memory contracts (reads/writes/constraints)
 - Built MemoryExplorer — folder ontology browser (raw/wiki/canon), tree view, node selection, detail panel

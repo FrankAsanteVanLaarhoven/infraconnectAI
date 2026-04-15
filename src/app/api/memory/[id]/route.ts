@@ -1,7 +1,6 @@
 // src/app/api/memory/[id]/route.ts
 import { NextRequest, NextResponse } from 'next/server'
-import { PrismaClient } from '@prisma/client'
-const prisma = new PrismaClient()
+import { db as prisma } from '@/lib/db'
 
 export async function GET(
   _req: NextRequest,

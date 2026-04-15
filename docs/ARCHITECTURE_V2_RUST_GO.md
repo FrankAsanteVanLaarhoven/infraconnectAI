@@ -1,6 +1,6 @@
-# MEMDEVOS-X: V2 Event-Sourced Architecture (Rust, Go, Tauri)
+# InfraConnect AI: V2 Event-Sourced Architecture (Rust, Go, Tauri)
 
-This document dictates the complete implementation package for migrating MEMDEVOS-X from a Next.js API monolith to a high-performance, event-sourced, "iron cloud" foundation using **Rust (Core & Tauri), Go (Ingestion & Stream), and PostgreSQL**.
+This document dictates the complete implementation package for migrating InfraConnect AI from a Next.js API monolith to a high-performance, event-sourced, "iron cloud" foundation using **Rust (Core & Tauri), Go (Ingestion & Stream), and PostgreSQL**.
 
 ## 1. System Topology
 
@@ -100,7 +100,7 @@ To answer your direct question, here is the exact data payload model that the Go
   "agent": {
       "type": "cap-agent-nemoclaw",
       "model": "gpt-4o",
-      "orchestrator_version": "memdevos-v2.1"
+      "orchestrator_version": "infraconnect-v2.1"
   },
   "terminal_state": {
       "success": true,

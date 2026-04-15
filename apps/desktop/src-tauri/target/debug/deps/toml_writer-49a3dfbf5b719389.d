@@ -1,0 +1,10 @@
+/Users/favl/Downloads/memdevos/apps/desktop/src-tauri/target/debug/deps/toml_writer-49a3dfbf5b719389.d: /Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml_writer-1.1.1+spec-1.1.0/src/lib.rs /Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml_writer-1.1.1+spec-1.1.0/src/integer.rs /Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml_writer-1.1.1+spec-1.1.0/src/key.rs /Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml_writer-1.1.1+spec-1.1.0/src/string.rs /Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml_writer-1.1.1+spec-1.1.0/src/value.rs /Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml_writer-1.1.1+spec-1.1.0/src/write.rs
+
+/Users/favl/Downloads/memdevos/apps/desktop/src-tauri/target/debug/deps/libtoml_writer-49a3dfbf5b719389.rmeta: /Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml_writer-1.1.1+spec-1.1.0/src/lib.rs /Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml_writer-1.1.1+spec-1.1.0/src/integer.rs /Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml_writer-1.1.1+spec-1.1.0/src/key.rs /Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml_writer-1.1.1+spec-1.1.0/src/string.rs /Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml_writer-1.1.1+spec-1.1.0/src/value.rs /Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml_writer-1.1.1+spec-1.1.0/src/write.rs
+
+/Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml_writer-1.1.1+spec-1.1.0/src/lib.rs:
+/Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml_writer-1.1.1+spec-1.1.0/src/integer.rs:
+/Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml_writer-1.1.1+spec-1.1.0/src/key.rs:
+/Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml_writer-1.1.1+spec-1.1.0/src/string.rs:
+/Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml_writer-1.1.1+spec-1.1.0/src/value.rs:
+/Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/toml_writer-1.1.1+spec-1.1.0/src/write.rs:

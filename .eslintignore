@@ -1,0 +1,4 @@
+src/lib/cognitive
+test_api.ts
+node_modules
+.next

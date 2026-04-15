@@ -386,7 +386,7 @@ function PipelineStep({
 }
 
 /* ══════════════════════════════════════════════════════════════════
-   OverviewPanel — VLA Development Lifecycle Command Center
+   OverviewPanel — Mission Control & Agent Lifecycle Summary
    ══════════════════════════════════════════════════════════════════ */
 
 export function OverviewPanel() {
@@ -496,7 +496,7 @@ export function OverviewPanel() {
       <div className="space-y-3">
         <div className="flex items-center justify-between">
           <span className="text-mono-xs text-premium text-matrix/60 tracking-[0.2em]">
-            MEMDEVOS
+            InfraConnect
           </span>
           <span className="text-mono-xs text-muted-foreground/40">{datetime}</span>
         </div>
@@ -522,10 +522,10 @@ export function OverviewPanel() {
 
         <div className="flex items-center gap-2">
           <span className="text-mono-xs text-premium text-muted-foreground tracking-widest uppercase">
-            VLA Development Lifecycle
+            Industrial Agent Lifecycle
           </span>
           <span className="text-muted-foreground/30">·</span>
-          <span className="text-mono-xs text-muted-foreground/50">Autonomous Systems</span>
+          <span className="text-mono-xs text-muted-foreground/50">Future DevOps Mission Control</span>
         </div>
       </div>
 
@@ -685,10 +685,10 @@ export function OverviewPanel() {
         </div>
       </div>
 
-      {/* ═══ VLA Lifecycle Pipeline ═══ */}
+      {/* ═══ Agent Lifecycle Pipeline ═══ */}
       <div className="space-y-3">
         <h3 className="text-[10px] text-premium text-muted-foreground tracking-widest uppercase">
-          VLA Lifecycle Pipeline
+          Agent Lifecycle Pipeline
         </h3>
         <div className="glass-subtle rounded-xl p-4">
           <div className="flex items-center justify-between relative">
@@ -713,8 +713,8 @@ export function OverviewPanel() {
       <div className="glass-frost rounded-xl p-4 space-y-3">
         <div className="flex items-center gap-2">
           <Zap className="w-3.5 h-3.5 text-execution" />
-          <span className="text-xs font-semibold">VLA Development Lifecycle</span>
-          <span className="text-mono-xs text-muted-foreground/50 ml-auto">Command Center</span>
+          <span className="text-xs font-semibold">Agent Lifecycle Management</span>
+          <span className="text-mono-xs text-muted-foreground/50 ml-auto">Mission Command Center</span>
         </div>
 
         {/* Key metrics row */}

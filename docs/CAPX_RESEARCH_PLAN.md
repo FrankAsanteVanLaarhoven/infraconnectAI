@@ -1,19 +1,19 @@
-# MEMDEVOS-X: Governed Autonomy Research Evaluation Plan
+# InfraConnect AI: Governed Autonomy Research Evaluation Plan
 
-This document outlines the evaluation architecture and publication narrative for positioning MEMDEVOS-X as the state-of-the-art (SOTA) governed autonomy stack, anchored by the CaP-X benchmark.
+This document outlines the evaluation architecture and publication narrative for positioning InfraConnect AI as the state-of-the-art (SOTA) governed autonomy stack, anchored by the CaP-X benchmark.
 
 ## 1. The Core Scientific Claim
 Current frontier agents (like native LLM-based autonomous systems) fail at long-horizon embodied tasks not because they cannot generate code, but because they lack **governed memory** and **runtime policy scopes**. 
 
-**The Claim:** By stratifying memory into L0 (Execution/Sensory), L1 (Tactical/Wiki), and L2 (Canon/Governance) planes, and strictly enforcing intercepts via NemoClaw, MEMDEVOS-X substantially improves zero-shot transfer, task success rates across distinct abstraction levels (S2-S4), and autonomous recovery compared to standard prompt-based agents.
+**The Claim:** By stratifying memory into L0 (Execution/Sensory), L1 (Tactical/Wiki), and L2 (Canon/Governance) planes, and strictly enforcing intercepts via NemoClaw, InfraConnect AI substantially improves zero-shot transfer, task success rates across distinct abstraction levels (S2-S4), and autonomous recovery compared to standard prompt-based agents.
 
 ## 2. Benchmark Substrate: Integrating CaP-X
-CaP-X defines the arena: 100+ manipulation tasks across Libero, Robosuite, and Behavior. To ground our SOTA claim, MEMDEVOS-X will execute a formal **Ablation Study** using CaP-X scenarios as the substrate.
+CaP-X defines the arena: 100+ manipulation tasks across Libero, Robosuite, and Behavior. To ground our SOTA claim, InfraConnect AI will execute a formal **Ablation Study** using CaP-X scenarios as the substrate.
 
 ### Methodological Setup
 *   **Domain Selection:** We will select 20 heavily constrained tasks from the CaP-X library (e.g., rigid body manipulation avoiding kinematic singularities).
 *   **The Baseline (System A):** CaP-Agent (Standard Code Generation VM). No memory tiering, no NemoClaw intercepts.
-*   **The Target (System B - MEMDEVOS-X):** CaP-Agent wrapped inside the MEMDEVOS-X execution shell.
+*   **The Target (System B - InfraConnect AI):** CaP-Agent wrapped inside the InfraConnect AI execution shell.
     *   L2 Canon enforcing movement safety guardrails via *NemoClaw*.
     *   L0/L1 Memory capturing failed execution logs to fuel *Autonomous Auto-Recovery*.
     *   PersonaPlex acting as the *Adaptive Teaming Loop* for multi-turn human correction.
@@ -33,7 +33,7 @@ To make this publishable, the "Upload Traces" feature in the CaP-X panel must ma
 ## 4. The Publication Narrative
 The resulting paper (target: CoRL, ICRA, or NeurIPS Datasets & Benchmarks) will be structured as follows:
 
-*   **Abstract:** Standard coding agents degrade on long embodied horizons. We introduce MEMDEVOS-X, an operating system for agents that enforces policy and stratifies memory.
+*   **Abstract:** Standard coding agents degrade on long embodied horizons. We introduce InfraConnect AI, an operating system for agents that enforces policy and stratifies memory.
 *   **Architecture:** Formal specification of the Execution (NemoClaw), Orchestration, Governance, and Interaction (PersonaPlex) planes.
 *   **Experiments:** Validating on the CaP-X benchmark. We demonstrate that memory stratification (L0->L1->L2) improves zero-shot transfer by `[X]%` at the `S4` abstraction tier. 
 *   **Ablation Studies:** What happens when we turn off NemoClaw? Policy violations spike. What happens when we disable L1 Wiki? Auto-recovery drops to baseline.

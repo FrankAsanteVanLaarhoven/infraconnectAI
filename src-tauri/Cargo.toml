@@ -1,8 +1,8 @@
 [package]
-name = "memdevos-x"
+name = "infraconnectai-x"
 version = "2.1.0"
-description = "MEMDEVOS-X Core Execution Runtime"
-authors = ["MEMDEVOS"]
+description = "InfraConnectAI Core Execution Runtime"
+authors = ["INFRACONNECTAI"]
 edition = "2021"
 
 [build-dependencies]

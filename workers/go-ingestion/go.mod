@@ -1,4 +1,4 @@
-module memdevos-go-ingestion
+module infraconnectai-go-ingestion
 
 go 1.26.2
 

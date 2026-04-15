@@ -1,0 +1,23 @@
+{
+  "productName": "InfraConnect AI",
+  "version": "0.1.0",
+  "identifier": "com.infraconnect.app",
+  "build": {
+    "beforeDevCommand": "",
+    "beforeBuildCommand": "",
+    "frontendDist": "../../../public"
+  },
+  "app": {
+    "withGlobalTauri": true,
+    "security": {
+      "csp": null
+    },
+    "windows": [
+      {
+        "title": "InfraConnect AI Desktop",
+        "width": 1200,
+        "height": 800
+      }
+    ]
+  }
+}

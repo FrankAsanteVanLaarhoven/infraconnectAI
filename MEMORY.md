@@ -1,10 +1,10 @@
 # MEMORY.md
-# MEMDEVOS — Memory DevOps Schema v2.0
-# Place this file at the root of any project to declare it a MEMDEVOS workspace.
+# InfraConnect — Memory DevOps Schema v2.0
+# Place this file at the root of any project to declare it a InfraConnect workspace.
 # Agents (Claude Code, Codex, Cursor, Windsurf) read this file at session start.
 
 ## Project
-name: MEMDEVOS
+name: InfraConnect
 version: 2.0.0
 description: Memory-governed agent workspace with tiered knowledge and skill contracts.
 
@@ -177,13 +177,13 @@ Do not edit these manually — they are regenerated on every governance cycle.
 
 ## MCP Server
 
-MEMDEVOS exposes an MCP server for direct LLM tool use:
+InfraConnect exposes an MCP server for direct LLM tool use:
 
 ```
 Endpoint:  http://localhost:3004 (Socket.IO)
 HTTP emit: http://localhost:3005/emit (POST)
-Bootstrap: http://localhost:3000/api/bootstrap (POST)
-Search:    http://localhost:3000/api/memory?search=<query> (GET)
+Bootstrap: http://localhost:3006/api/bootstrap (POST)
+Search:    http://localhost:3006/api/memory?search=<query> (GET)
 ```
 
 ---

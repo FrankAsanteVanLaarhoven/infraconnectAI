@@ -2,9 +2,9 @@ export type EventType =
   | 'memory.node.created'
   | 'memory.node.promoted'
   | 'runtime.intercepted'
-  | 'capx.episode.imported'
-  | 'persona.session.started'
-  | 'persona.l0.pushed';
+  | 'telemetry.signal.imported'
+  | 'cognitive.session.started'
+  | 'cognitive.memory.pushed';
 
 export interface BaseEvent {
   eventId: string;
@@ -20,9 +20,9 @@ export interface BaseEvent {
   schemaVersion: number;
 }
 
-export interface CapxImportedEvent extends BaseEvent {
-  eventType: 'capx.episode.imported';
-  aggregateType: 'capx_episode';
+export interface TelemetryImportedEvent extends BaseEvent {
+  eventType: 'telemetry.signal.imported';
+  aggregateType: 'telemetry_signal';
   payload: {
     success: boolean;
     policyViolations: number;
@@ -59,11 +59,11 @@ export interface RuntimeInterceptedEvent extends BaseEvent {
   };
 }
 
-export type DomainEvent = CapxImportedEvent | MemoryNodeCreatedEvent | RuntimeInterceptedEvent;
+export type DomainEvent = TelemetryImportedEvent | MemoryNodeCreatedEvent | RuntimeInterceptedEvent;
 
 // COMMANDS
-export interface ImportCapxCommand {
-  command: 'ImportCapxTrace';
+export interface SyncTelemetryCommand {
+  command: 'SyncTelemetryTrace';
   payload: {
     filePath: string;
     overrideExisting: boolean;

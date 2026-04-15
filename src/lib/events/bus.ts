@@ -3,25 +3,28 @@
 
 export type MemdevosEventMap = {
   // Skill execution
-  'memdevos:run-skill':       { skill: string; agentId?: string; personaId?: string; input?: Record<string, unknown> }
+  'infraconnect:run-skill':       { skill: string; agentId?: string; personaId?: string; input?: Record<string, unknown> }
   // Memory
-  'memdevos:promote-node':    { nodeId: string; actor?: string }
-  'memdevos:archive-node':    { nodeId: string }
-  'memdevos:ingest':          { title: string; content: string; type?: string; tags?: string[] }
+  'infraconnect:promote-node':    { nodeId: string; actor?: string }
+  'infraconnect:archive-node':    { nodeId: string }
+  'infraconnect:ingest':          { title: string; content: string; type?: string; tags?: string[] }
   // Persona
-  'memdevos:switch-persona':  { slug: string }
+  'infraconnect:switch-persona':  { slug: string }
   // Navigation / panel
-  'memdevos:open-panel':      { panel: string }
-  'memdevos:close-panel':     { panel: string }
-  'memdevos:toggle-panel':    { panel: string }
-  // CaP-X
-  'memdevos:run-benchmark':   { runTag: string; agentId: string; agentType: string }
+  'infraconnect:open-panel':      { panel: string }
+  'infraconnect:close-panel':     { panel: string }
+  'infraconnect:toggle-panel':    { panel: string }
+  // Industrial Standard Validation
+  'infraconnect:run-benchmark':   { runTag: string; agentId: string; agentType: string }
   // Governance
-  'memdevos:run-cycle':       Record<string, never>
+  'infraconnect:run-cycle':       Record<string, never>
   // Toast / notification
-  'memdevos:toast':           { message: string; type: 'info' | 'success' | 'warn' | 'error'; durationMs?: number }
+  'infraconnect:toast':           { message: string; type: 'info' | 'success' | 'warn' | 'error'; durationMs?: number }
   // Agent bus relay
-  'memdevos:bus-message':     { topic: string; payload: unknown; sender: string }
+  'infraconnect:bus-message':     { topic: string; payload: unknown; sender: string }
+  // Ephemeral UI
+  'infraconnect:generate-ephemeral-ui': { query: string }
+  'infraconnect:render-ephemeral-ui':   { layout: any }
 }
 
 export type MemdevosEventName = keyof MemdevosEventMap

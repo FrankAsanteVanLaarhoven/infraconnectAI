@@ -1,6 +1,6 @@
 // src/lib/governance/engine.ts
 // 6-signal health scoring + decay + promotion + conflict detection
-// Inspired by AI-Context-OS scoring architecture, simplified for MEMDEVOS
+// Inspired by AI-Context-OS scoring architecture, simplified for InfraConnect
 
 import { db as prisma } from '@/lib/db'
 
@@ -75,7 +75,6 @@ export class GovernanceEngine {
   }
 
   private scoreConflict(conflictCount: number): number {
-    // Inverse: 0 conflicts = 1.0, many conflicts = low score
     if (conflictCount === 0) return 1.0
     if (conflictCount === 1) return 0.7
     if (conflictCount === 2) return 0.4
@@ -83,17 +82,16 @@ export class GovernanceEngine {
   }
 
   private scoreRedundancy(node: { title: string; content: string }, peers: Array<{ title: string; content: string }>): number {
-    // Approximate uniqueness via character-level Jaccard similarity
     const nodeWords = new Set(node.content.toLowerCase().split(/\W+/).filter((w) => w.length > 4))
     let maxSimilarity = 0
     for (const peer of peers) {
-      const peerWords = new Set(peer.content.toLowerCase().split(/\W+/).filter((w) => w.length > 4))
+      const peerWords = new Set(peer.content.toLowerCase().split(/\W+/).filter((w) => peerWords.has(w)))
       const intersection = [...nodeWords].filter((w) => peerWords.has(w)).length
       const union = new Set([...nodeWords, ...peerWords]).size
       const similarity = union > 0 ? intersection / union : 0
       if (similarity > maxSimilarity) maxSimilarity = similarity
     }
-    return 1 - maxSimilarity  // unique = high score
+    return 1 - maxSimilarity
   }
 
   private scoreCoverage(node: { category: string }, canonCategories: Set<string>): number {
@@ -126,10 +124,14 @@ export class GovernanceEngine {
     }
   }
 
-  public async runPolicyCycle(): Promise<GovernanceCycleResult> {
+  public async runPolicyCycle(autonomous: boolean = false): Promise<GovernanceCycleResult> {
     const nodesRaw = await prisma.memoryNode.findMany({
       where: { state: { in: ['draft', 'active', 'canonical'] } },
-      select: { id: true, title: true, summary: true, level: true, state: true, kind: true, lastReviewedAt: true, createdAt: true, _count: { select: { targetRuns: true, conflictsAsSource: true, conflictsAsTarget: true } } }
+      select: { 
+        id: true, title: true, summary: true, level: true, state: true, kind: true, 
+        lastReviewedAt: true, createdAt: true, 
+        _count: { select: { targetRuns: true, conflictsAsSource: true, conflictsAsTarget: true } } 
+      }
     });
 
     const nodes = nodesRaw.map(n => ({
@@ -152,8 +154,8 @@ export class GovernanceEngine {
     const actionsApplied: string[] = []
 
     let totalScore = 0
-    const byLevelSum: Record<string, number> = { l0: 0, l1: 0, l2: 0 }
-    const byLevelCount: Record<string, number> = { l0: 0, l1: 0, l2: 0 }
+    const byLevelSum: Record<string, number> = { l0: 0, l1: 0, l2: 0, L0: 0, L1: 0, L2: 0 }
+    const byLevelCount: Record<string, number> = { l0: 0, l1: 0, l2: 0, L0: 0, L1: 0, L2: 0 }
 
     for (const node of nodes) {
       const peers = nodes.filter(n => n.id !== node.id && n.category === node.category)
@@ -164,7 +166,6 @@ export class GovernanceEngine {
 
       const ageMs = Date.now() - node.createdAt.getTime()
 
-      // Active Policies
       if (node.level.toLowerCase() === 'l0' && score >= PROMOTION_THRESHOLDS.scratch_to_wiki) {
         recommendation = 'promote'
         reason = `High score (${score.toFixed(2)}) qualifies L0 scratch node for L1 wiki.`
@@ -186,21 +187,76 @@ export class GovernanceEngine {
       scored.push({ id: node.id, title: node.title, level: node.level, status: node.status, score, signals, recommendation, reason })
       
       totalScore += score
-      const lvl = node.level.toLowerCase()
+      const lvl = node.level.toUpperCase()
       if (byLevelSum[lvl] !== undefined) {
         byLevelSum[lvl] += score
         byLevelCount[lvl] += 1
       }
     }
 
+    // --- Autonomous Actions Cycle ---
+    if (autonomous) {
+      for (const candidate of [...promotionCandidates, ...decayCandidates]) {
+        if (candidate.recommendation === 'promote') {
+          const nextLevel = candidate.level.toLowerCase() === 'l0' ? 'L1' : 'L2'
+          const nextState = nextLevel === 'L1' ? 'active' : 'canonical'
+          
+          await prisma.memoryNode.update({
+            where: { id: candidate.id },
+            data: { 
+              level: nextLevel as any, 
+              state: nextState as any,
+              lastReviewedAt: new Date()
+            }
+          })
+          
+          const actionMsg = `AUTONOMOUS_PROMOTION: ${candidate.title} -> ${nextLevel} (${candidate.reason})`
+          actionsApplied.push(actionMsg)
+          await this.logActivity('promote', candidate.id, actionMsg)
+        } else if (candidate.recommendation === 'archive') {
+          await prisma.memoryNode.update({
+            where: { id: candidate.id },
+            data: { state: 'archived' as any }
+          })
+          const actionMsg = `AUTONOMOUS_ARCHIVE: ${candidate.title} (${candidate.reason})`
+          actionsApplied.push(actionMsg)
+          await this.logActivity('archive', candidate.id, actionMsg)
+        }
+      }
+    }
+
     const healthSummary = {
       overall: totalScore / Math.max(nodes.length, 1),
       byLevel: {
-        l0: byLevelCount.l0 > 0 ? byLevelSum.l0 / byLevelCount.l0 : 0,
-        l1: byLevelCount.l1 > 0 ? byLevelSum.l1 / byLevelCount.l1 : 0,
-        l2: byLevelCount.l2 > 0 ? byLevelSum.l2 / byLevelCount.l2 : 0,
+        l0: byLevelCount.L0 > 0 ? byLevelSum.L0 / byLevelCount.L0 : 0,
+        l1: byLevelCount.L1 > 0 ? byLevelSum.L1 / byLevelCount.L1 : 0,
+        l2: byLevelCount.L2 > 0 ? byLevelSum.L2 / byLevelCount.L2 : 0,
       }
     }
+
+    // --- Persist Governance Projection ---
+    await prisma.governanceProjection.upsert({
+      where: { id: 'singleton' },
+      create: {
+        id: 'singleton',
+        canonCount:   nodes.filter(n => n.level === 'L2').length,
+        wikiCount:    nodes.filter(n => n.level === 'L1').length,
+        scratchCount: nodes.filter(n => n.level === 'L0').length,
+        promotionPipeline: promotionCandidates as any,
+        pendingPromotions: promotionCandidates.length as any,
+        decayTimeline:     decayCandidates as any,
+        sourceEventId:     `cycle-${Date.now()}`
+      },
+      update: {
+        canonCount:   nodes.filter(n => n.level === 'L2').length,
+        wikiCount:    nodes.filter(n => n.level === 'L1').length,
+        scratchCount: nodes.filter(n => n.level === 'L0').length,
+        promotionPipeline: promotionCandidates as any,
+        pendingPromotions: promotionCandidates.length as any,
+        decayTimeline:     decayCandidates as any,
+        sourceEventId:     `cycle-${Date.now()}`
+      }
+    })
 
     return {
       timestamp: new Date(),
@@ -212,5 +268,20 @@ export class GovernanceEngine {
       healthSummary,
       actionsApplied
     }
+  }
+
+  private async logActivity(action: string, nodeId: string, detail: string) {
+    await prisma.aiAuditLog.create({
+      data: {
+        user: 'system:governance',
+        action,
+        resource: nodeId,
+        input: detail,
+        timestamp: new Date(),
+        validated: true,
+        executed: true,
+        confidence: 1.0
+      }
+    }).catch(() => {})
   }
 }

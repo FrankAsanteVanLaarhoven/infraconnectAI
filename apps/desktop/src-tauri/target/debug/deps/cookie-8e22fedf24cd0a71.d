@@ -1,0 +1,12 @@
+/Users/favl/Downloads/memdevos/apps/desktop/src-tauri/target/debug/deps/cookie-8e22fedf24cd0a71.d: /Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cookie-0.18.1/src/lib.rs /Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cookie-0.18.1/src/builder.rs /Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cookie-0.18.1/src/parse.rs /Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cookie-0.18.1/src/jar.rs /Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cookie-0.18.1/src/delta.rs /Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cookie-0.18.1/src/same_site.rs /Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cookie-0.18.1/src/expiration.rs /Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cookie-0.18.1/src/prefix.rs
+
+/Users/favl/Downloads/memdevos/apps/desktop/src-tauri/target/debug/deps/libcookie-8e22fedf24cd0a71.rmeta: /Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cookie-0.18.1/src/lib.rs /Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cookie-0.18.1/src/builder.rs /Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cookie-0.18.1/src/parse.rs /Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cookie-0.18.1/src/jar.rs /Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cookie-0.18.1/src/delta.rs /Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cookie-0.18.1/src/same_site.rs /Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cookie-0.18.1/src/expiration.rs /Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cookie-0.18.1/src/prefix.rs
+
+/Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cookie-0.18.1/src/lib.rs:
+/Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cookie-0.18.1/src/builder.rs:
+/Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cookie-0.18.1/src/parse.rs:
+/Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cookie-0.18.1/src/jar.rs:
+/Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cookie-0.18.1/src/delta.rs:
+/Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cookie-0.18.1/src/same_site.rs:
+/Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cookie-0.18.1/src/expiration.rs:
+/Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/cookie-0.18.1/src/prefix.rs:

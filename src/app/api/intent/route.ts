@@ -13,7 +13,7 @@ interface IntentResult {
   display: string;
 }
 
-const SYSTEM_PROMPT = `You are an Intent Parser for MEMDEVOS — a Memory DevOps Platform for VLA autonomous systems development.
+const SYSTEM_PROMPT = `You are an Intent Parser for InfraConnect — a production-grade Memory DevOps Platform for industrial agent orchestration and mission control.
 
 Parse the user's natural language into ONE structured action. Return ONLY valid JSON, no explanation.
 
@@ -25,7 +25,7 @@ Rules:
 - "open/show <panel>" → open_panel with panel field
 - "/<skill> ..." → run_skill with skill field, query = rest
 - "find/search/look for ..." → search with query field
-- "promote/upgrade ..." → promote with optional params
+- "promote/upgrade/ship/release ..." → promote with optional params (Memory Contract)
 - Navigate phrases → navigate with panel
 - Anything else → unknown
 - Display is a short confirmation message.
@@ -152,21 +152,12 @@ export async function POST(request: NextRequest) {
 
     // Try LLM-based intent parsing
     try {
-      const ZAI = await import('z-ai-web-dev-sdk').then(m => m.default);
-      const zai = await ZAI.create();
-
-      const response = await zai.chat.completions.create({
-        model: 'gpt-4o-mini',
-        messages: [
-          { role: 'system', content: SYSTEM_PROMPT },
-          { role: 'user', content: trimmed },
-        ],
-        temperature: 0,
-        max_tokens: 200,
-        response_format: { type: 'json_object' },
-      });
-
-      const content = response.choices?.[0]?.message?.content;
+      const { GoogleGenerativeAI } = await import('@google/generative-ai');
+      const genAI = new GoogleGenerativeAI(process.env.GOOGLE_GENAI_API_KEY || '');
+      const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash', generationConfig: { responseMimeType: "application/json" } });
+      const prompt = `\${SYSTEM_PROMPT}\n\nUser Input: \${trimmed}`;
+      const response = await model.generateContent(prompt);
+      const content = response.response.text();
       if (content) {
         const parsed = JSON.parse(content);
         const validActions: ActionType[] = ['open_panel', 'run_skill', 'search', 'create_node', 'promote', 'navigate', 'unknown'];

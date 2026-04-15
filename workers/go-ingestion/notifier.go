@@ -15,7 +15,7 @@ func NotifyIAMSubscribers(ctx context.Context, severity string, message string) 
 	dispatchTwilioSMS("+15550102030", message)
 
 	// 2. Dispatch Slack / Internal Messaging
-	dispatchSlackWebhook("#memdevos-mission-control", message)
+	dispatchSlackWebhook("#infraconnectai-mission-control", message)
 
 	// 3. Dispatch Email Trace
 	dispatchSendGridEmail("auditor@example.com", severity, message)

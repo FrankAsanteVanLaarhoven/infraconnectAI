@@ -5,7 +5,7 @@
 ### `/home/z/my-project/src/app/api/intent/route.ts`
 - **POST** endpoint accepting `{ text: string }`
 - Uses `z-ai-web-dev-sdk` LLM (chat completions) to parse natural language into structured `IntentResult`
-- Compact system prompt (~700 chars) describing MEMDEVOS context, actions, panels, skills
+- Compact system prompt (~700 chars) describing InfraConnect context, actions, panels, skills
 - Returns JSON: `{ action, panel?, skill?, query?, params?, display }`
 - Validates all returned fields against typed enums (ActionType, PanelType, SkillType)
 - Comprehensive keyword fallback covering:
@@ -29,4 +29,4 @@
 - Pre-existing error in `AgentBusPanel.tsx` (react-hooks/static-components) — not introduced by this task
 
 ## Dev Server
-- Confirmed running on port 3000, all existing routes compiling successfully
+- Confirmed running on port 3006, all existing routes compiling successfully

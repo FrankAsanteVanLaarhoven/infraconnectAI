@@ -64,7 +64,7 @@ export function StatusBar() {
         {/* Right cluster */}
         <div className="flex items-center gap-4 text-muted-foreground">
           <span className="text-premium text-[10px] tracking-widest text-matrix/60">
-            MEMDEVOS
+            InfraConnect
           </span>
           <span className="text-foreground tabular-nums">{time}</span>
         </div>

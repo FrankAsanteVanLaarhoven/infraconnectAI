@@ -41,5 +41,5 @@ fn main() {
     tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![validate_os_command])
         .run(tauri::generate_context!())
-        .expect("error while running memdevos tauri application");
+        .expect("error while running infraconnectai tauri application");
 }

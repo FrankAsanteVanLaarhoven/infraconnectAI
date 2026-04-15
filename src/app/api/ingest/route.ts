@@ -19,51 +19,51 @@ interface IngestRequest {
 
 // Domain-specific extraction prompts
 const EXTRACTION_PROMPTS: Record<IngestSourceType, string> = {
-  paper: `You are extracting structured knowledge from a research paper for a VLA robotics knowledge base.
+  paper: `You are extracting structured knowledge from a technical specification or research paper for an industrial agent orchestration knowledge base.
 Extract:
 1. CLAIMS: 3-5 key claims made by the paper (one sentence each)
 2. METHODS: Technical methods/algorithms introduced
-3. RELEVANCE: How this relates to safe VLA models, constrained learning, or hospital robotics
-4. CONTRADICTIONS: Any claims that might conflict with standard practice
+3. RELEVANCE: How this relates to Memory DevOps, agent consistency, or enterprise infrastructure
+4. CONTRADICTIONS: Any claims that might conflict with established canonical patterns
 5. ENTITIES: Named models, datasets, metrics, institutions mentioned
 Return as structured markdown with these exact headings.`,
 
-  ros2_log: `You are extracting structured knowledge from a ROS2 log for a robotics memory base.
+  ros2_log: `You are extracting structured knowledge from an operational log for a Memory DevOps base.
 Extract:
-1. TOPICS: Active ROS2 topics and their message types
-2. LATENCIES: Any timing or latency data observed
+1. TOPICS: Active event topics and their message types
+2. LATENCIES: Any timing or latency data observed in the orchestration loop
 3. ERRORS: Error messages or warnings
 4. DECISIONS: Any configuration decisions implied by the log
-5. ENTITIES: Node names, hardware components, environments mentioned
+5. ENTITIES: Node names, agent IDs, virtual hardware components, environments mentioned
 Return as structured markdown with these exact headings.`,
 
-  sim_telemetry: `You are extracting structured knowledge from a simulation run log for a SafeVLA project.
+  sim_telemetry: `You are extracting structured knowledge from an agent behavior trace for a Future DevOps project.
 Extract:
-1. METRICS: Numerical performance metrics (success rate, deadline compliance, etc.)
-2. CONSTRAINT_VIOLATIONS: Any safety constraint violations observed
-3. EDGE_CASES: Unusual scenarios encountered
-4. SIM_REAL_DELTA: Any notes on sim-to-real transferability
-5. LESSONS: Key takeaways for the real robot deployment
+1. METRICS: Numerical performance metrics (validation rate, pattern match, etc.)
+2. CONSTRAINT_VIOLATIONS: Any behavioral or security violations observed
+3. EDGE_CASES: Unusual scenarios encountered in the build-log
+4. RECOVERY_PATH: Notes on auto-recovery or cycle recovery success
+5. LESSONS: Key takeaways for the canonical promotion loop
 Return as structured markdown with these exact headings.`,
 
-  meeting_note: `You are extracting structured knowledge from a supervision meeting note.
+  meeting_note: `You are extracting structured knowledge from a project orchestration meeting note.
 Extract:
-1. DECISIONS: Decisions made during the meeting
-2. ACTION_ITEMS: Tasks assigned (with owner if mentioned)
-3. OPEN_QUESTIONS: Unresolved questions raised
-4. THESIS_UPDATES: Any changes to research direction or thesis framing
-5. DEADLINES: Any dates or deadlines mentioned
+1. DECISIONS: Mission decisions made during the meeting
+2. ACTION_ITEMS: Tasks assigned for agent execution
+3. OPEN_QUESTIONS: Unresolved questions for the human-in-the-loop
+4. ARCHITECTURE_UPDATES: Any changes to the Future IDE or mission control framing
+5. DEADLINES: Any dates or milestones mentioned
 Return as structured markdown with these exact headings.`,
 
-  url: `You are extracting structured knowledge from a web article for a robotics knowledge base.
+  url: `You are extracting structured knowledge from an enterprise article for an industrial agent orchestration knowledge base.
 Extract:
 1. SUMMARY: 2-3 sentence summary of the article
 2. KEY_POINTS: 3-5 key points
-3. RELEVANCE: How this relates to VLA models, safe robotics, or hospital automation
-4. ENTITIES: People, organisations, products, papers mentioned
+3. RELEVANCE: How this relates to Memory DevOps, agent orchestration, or industrial automation
+4. ENTITIES: People, organizations, products, patterns mentioned
 Return as structured markdown with these exact headings.`,
 
-  generic: `You are extracting structured knowledge from a document for a robotics memory base.
+  generic: `You are extracting structured knowledge from a document for a mission control memory base.
 Extract:
 1. SUMMARY: What this document is about
 2. KEY_POINTS: Most important information
@@ -74,20 +74,15 @@ Return as structured markdown with these exact headings.`,
 
 async function extractKnowledge(content: string, type: IngestSourceType, title: string): Promise<string> {
   try {
-    const { default: zai } = await import('z-ai-web-dev-sdk')
-    const completion = await zai.chat.completions.create({
-      model: 'gpt-4o-mini',
-      messages: [
-        { role: 'system', content: EXTRACTION_PROMPTS[type] },
-        {
-          role: 'user',
-          content: `Title: ${title}\n\nContent:\n${content.slice(0, 6000)}`,
-        },
-      ],
-      max_tokens: 1200,
-      temperature: 0.1,
-    })
-    return completion.choices[0]?.message?.content ?? fallbackExtraction(content, title)
+    // Unbranded LLM Provider implementation
+    const { GoogleGenerativeAI } = await import('@google/generative-ai')
+    const genAI = new GoogleGenerativeAI(process.env.GOOGLE_GENAI_API_KEY || "")
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" })
+
+    const prompt = `${EXTRACTION_PROMPTS[type]}\n\nTitle: ${title}\n\nContent:\n${content.slice(0, 6000)}`
+    const result = await model.generateContent(prompt)
+    
+    return result.response.text() ?? fallbackExtraction(content, title)
   } catch {
     return fallbackExtraction(content, title)
   }
@@ -134,16 +129,19 @@ export async function POST(req: Request) {
     }
 
     // 1. Save raw L0 scratch node
+    const shortId = Math.random().toString(36).substring(2, 8)
     const rawNode = await prisma.memoryNode.create({
       data: {
+        shortId,
+        slug: `raw-${type}-${shortId}`,
         title: `[RAW] ${title}`,
         content: content.slice(0, 10000),
         level: 'L0',
         plane: 'memory',
-        category: `raw-${type}`,
-        status: 'scratch',
-        tags: JSON.stringify([type, 'raw', 'ingest', ...tags]),
-        healthScore: 0.5,
+        kind: 'artifact',
+        state: 'draft',
+        tags: [type, 'raw', 'ingest', ...tags],
+        createdBy: 'system',
         ...(url ? { content: `Source: ${url}\n\n${content.slice(0, 10000)}` } : {}),
       },
     })

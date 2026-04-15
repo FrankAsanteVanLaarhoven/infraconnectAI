@@ -1,0 +1,13 @@
+/Users/favl/Downloads/memdevos/apps/desktop/src-tauri/target/debug/deps/jsonptr-24bd263005f8b498.d: /Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/jsonptr-0.6.3/src/lib.rs /Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/jsonptr-0.6.3/src/assign.rs /Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/jsonptr-0.6.3/src/delete.rs /Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/jsonptr-0.6.3/src/resolve.rs /Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/jsonptr-0.6.3/src/pointer.rs /Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/jsonptr-0.6.3/src/token.rs /Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/jsonptr-0.6.3/src/index.rs /Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/jsonptr-0.6.3/src/component.rs /Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/jsonptr-0.6.3/src/../README.md
+
+/Users/favl/Downloads/memdevos/apps/desktop/src-tauri/target/debug/deps/libjsonptr-24bd263005f8b498.rmeta: /Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/jsonptr-0.6.3/src/lib.rs /Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/jsonptr-0.6.3/src/assign.rs /Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/jsonptr-0.6.3/src/delete.rs /Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/jsonptr-0.6.3/src/resolve.rs /Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/jsonptr-0.6.3/src/pointer.rs /Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/jsonptr-0.6.3/src/token.rs /Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/jsonptr-0.6.3/src/index.rs /Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/jsonptr-0.6.3/src/component.rs /Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/jsonptr-0.6.3/src/../README.md
+
+/Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/jsonptr-0.6.3/src/lib.rs:
+/Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/jsonptr-0.6.3/src/assign.rs:
+/Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/jsonptr-0.6.3/src/delete.rs:
+/Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/jsonptr-0.6.3/src/resolve.rs:
+/Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/jsonptr-0.6.3/src/pointer.rs:
+/Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/jsonptr-0.6.3/src/token.rs:
+/Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/jsonptr-0.6.3/src/index.rs:
+/Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/jsonptr-0.6.3/src/component.rs:
+/Users/favl/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/jsonptr-0.6.3/src/../README.md:

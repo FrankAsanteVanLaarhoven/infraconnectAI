@@ -25,21 +25,21 @@ export interface HealthProjection {
     activeAgents: number
   }
 
-  personaplex: {
-    activePersona: string | null
-    activePersonaDisplay: string | null
+  cognitiveCore: {
+    activeDirective: string | null
+    activeDirectiveDisplay: string | null
   }
 
-  capx: {
-    latestRunTag: string | null
-    latestPassRate: number | null
+  modelPerf: {
+    latestBuildTag: string | null
+    latestValidationRate: number | null
   }
 
-  vla: {
-    hardConstraintViolations24h: number
-    avgRecentSuccessRate: number
-    constraintHealth: number
-    robotHealth: number
+  agentOps: {
+    systemViolations24h: number
+    avgCycleSuccessRate: number
+    governanceHealth: number
+    operationalHealth: number
   }
 }
 

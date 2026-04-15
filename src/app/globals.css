@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@import "mapbox-gl/dist/mapbox-gl.css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -140,17 +141,17 @@
   --sidebar-ring: oklch(0.4 0 0);
 
   /* Memory DevOps palette - Dark (Galaxy Black / Minimal) */
-  --matrix: oklch(1 0 0);
-  --matrix-dim: oklch(0.6 0 0);
-  --matrix-glow: oklch(1 0 0 / 8%);
-  --l0-color: oklch(0.7 0 0);
-  --l1-color: oklch(0.8 0 0);
-  --l2-color: oklch(0.9 0 0);
-  --execution-color: oklch(0.6 0 0);
-  --governance-color: oklch(0.8 0 0);
+  --matrix: oklch(0.8 0.1 240);
+  --matrix-dim: oklch(0.4 0.05 240);
+  --matrix-glow: oklch(0.6 0.15 250 / 8%);
+  --l0-color: oklch(0.7 0.05 240);
+  --l1-color: oklch(0.8 0.05 240);
+  --l2-color: oklch(0.9 0.05 240);
+  --execution-color: oklch(0.6 0.05 240);
+  --governance-color: oklch(0.8 0.05 240);
   --glass: oklch(0.05 0 0 / 40%);
-  --glass-border: oklch(1 0 0 / 8%);
-  --glass-hover: oklch(0.1 0 0 / 50%);
+  --glass-border: oklch(1 0 0 / 3%);
+  --glass-hover: oklch(0.1 0.05 240 / 30%);
 }
 
 @layer base {
@@ -684,4 +685,49 @@
     opacity: 1;
     transform: none;
   }
+}
+
+/* =========================================================================
+   SOTA CINEMATIC OVERRIDES
+   Forcefully strip third-party telemetry branding from the DOM to ensure 
+   absolute white-label intelligence dashboard aesthetics for the GTM trailer.
+   ========================================================================= */
+
+/* Strip Mapbox Watermarks (Wordmark and Data Attribution) */
+.mapboxgl-ctrl-bottom-left, 
+.mapboxgl-ctrl-bottom-right, 
+.mapboxgl-ctrl-logo, 
+.mapboxgl-ctrl-attrib {
+    display: none !important;
+}
+
+/* Strip Vercel / Next.js Dev Environment Hot-Reload Compilation Indicator */
+nextjs-portal,
+[data-nextjs-toast] {
+    display: none !important;
+}
+
+/* =========================================================================
+   SOTA ACTIVE STYLES (WORLDVIEW)
+   CSS Post-Processing Filters applied directly over the Mapbox Engine
+   ========================================================================= */
+.map-style-crt {
+    filter: sepia(0.5) hue-rotate(180deg) blur(0.5px) contrast(1.2) brightness(0.8) drop-shadow(0 0 10px rgba(0, 255, 255, 0.4));
+}
+
+.map-style-nvg {
+    filter: sepia(1) hue-rotate(80deg) saturate(3) brightness(1.2) contrast(1.3);
+}
+
+.map-style-flir {
+    filter: invert(1) hue-rotate(180deg) contrast(1.8) saturate(2);
+}
+
+.map-style-anime {
+    filter: sepia(0.2) contrast(1.5) saturate(2.5) hue-rotate(-20deg);
+}
+
+.map-style-sar {
+    /* Synthetic Aperture Radar Simulation: Absolute greyscale, violently high contrast, slightly dampened baseline metallic reflection */
+    filter: grayscale(1) contrast(3) brightness(0.9);
 }

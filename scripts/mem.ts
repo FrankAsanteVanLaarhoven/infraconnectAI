@@ -1,6 +1,6 @@
 #!/usr/bin/env tsx
 // scripts/mem.ts
-// MEMDEVOS CLI — mem <command> [options]
+// InfraConnect CLI — mem <command> [options]
 // Usage: npx tsx scripts/mem.ts <command> //
 // Commands:
 //   mem init              Scaffold memory folder structure + MEMORY.md
@@ -14,7 +14,7 @@
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'fs'
 import { join } from 'path'
 
-const BASE_URL = process.env.MEMDEVOS_URL ?? 'http://localhost:3000'
+const BASE_URL = process.env.InfraConnect_URL ?? 'http://localhost:3006'
 const args = process.argv.slice(2)
 const command = args[0]
 
@@ -56,13 +56,13 @@ async function cmdInit() {
 
   // Write starter index.md
   if (!existsSync('memory/index.md')) {
-    writeFileSync('memory/index.md', `# Memory Index\n*Auto-maintained by MEMDEVOS. Do not edit manually.*\n\n## L2 Canon\n\n## L1 Wiki\n\n## L0 Raw\n`)
+    writeFileSync('memory/index.md', `# Memory Index\n*Auto-maintained by InfraConnect. Do not edit manually.*\n\n## L2 Canon\n\n## L1 Wiki\n\n## L0 Raw\n`)
     log('Created memory/index.md')
   }
 
   // Write starter log.md
   if (!existsSync('memory/log.md')) {
-    writeFileSync('memory/log.md', `# Memory Log\n*Append-only. Each entry: ## [YYYY-MM-DD] action | description*\n\n## ${new Date().toISOString().slice(0,10)} init | MEMDEVOS workspace initialised\n`)
+    writeFileSync('memory/log.md', `# Memory Log\n*Append-only. Each entry: ## [YYYY-MM-DD] action | description*\n\n## ${new Date().toISOString().slice(0,10)} init | InfraConnect workspace initialised\n`)
     log('Created memory/log.md')
   }
 
@@ -71,7 +71,7 @@ async function cmdInit() {
     warn('MEMORY.md not found — copy the schema spec from docs/MEMORY.md to project root')
   }
 
-  log('✅ MEMDEVOS workspace initialised. Run `mem status` to check system health.')
+  log('✅ InfraConnect workspace initialised. Run `mem status` to check system health.')
 }
 
 async function cmdIngest(filePath: string) {
@@ -219,7 +219,7 @@ async function cmdLint() {
       if (errors.length > 0) process.exit(1)
     }
   } catch (e) {
-    err(`Lint failed — is MEMDEVOS running at ${BASE_URL}?`)
+    err(`Lint failed — is InfraConnect running at ${BASE_URL}?`)
     err(e instanceof Error ? e.message : String(e))
     process.exit(1)
   }
@@ -279,7 +279,7 @@ async function cmdStatus() {
       api('/api/vla-dashboard').catch(() => null),
     ])
 
-    console.log('\n\x1b[1m─── MEMDEVOS Status ───────────────────────────────\x1b[0m')
+    console.log('\n\x1b[1m─── InfraConnect Status ───────────────────────────────\x1b[0m')
     console.log(`\n  Overall health:      \x1b[${health.overall > 0.7 ? '32' : health.overall > 0.4 ? '33' : '31'}m${(health.overall * 100 || 0).toFixed(0)}%\x1b[0m`)
     console.log(`  L0 (raw):            ${(health.byLevel?.l0?.avgHealth * 100 ?? 0).toFixed(0)}%`)
     console.log(`  L1 (wiki):           ${(health.byLevel?.l1?.avgHealth * 100 ?? 0).toFixed(0)}%`)
@@ -302,7 +302,7 @@ async function cmdStatus() {
     }
     console.log('\n\x1b[1m───────────────────────────────────────────────────\x1b[0m\n')
   } catch (e) {
-    err(`Status failed — is MEMDEVOS running at ${BASE_URL}?`)
+    err(`Status failed — is InfraConnect running at ${BASE_URL}?`)
     err(e instanceof Error ? e.message : String(e))
     process.exit(1)
   }
@@ -330,7 +330,7 @@ async function cmdCycle() {
 
 function cmdHelp() {
   console.log(`
-\x1b[1mMEMDEVOS CLI — mem <command>\x1b[0m
+\x1b[1mInfraConnect CLI — mem <command>\x1b[0m
 
   \x1b[32mmem init\x1b[0m                     Scaffold memory folder structure
   \x1b[32mmem ingest <file|url>\x1b[0m        Ingest source into memory (L0→L1)
@@ -341,7 +341,7 @@ function cmdHelp() {
   \x1b[32mmem cycle\x1b[0m                    Trigger governance cycle immediately
 
 \x1b[90mEnvironment:
-  MEMDEVOS_URL  Base URL of running MEMDEVOS instance (default: http://localhost:3000)\x1b[0m
+  InfraConnect_URL  Base URL of running InfraConnect instance (default: http://localhost:3006)\x1b[0m
 `)
 }
 

@@ -85,14 +85,15 @@ export function IngestPanel() {
             <button
               key={type}
               onClick={() => setSelectedType(type)}
-              className={\`flex flex-col items-center gap-1 p-2 rounded-lg border transition-all text-xs \${
+              className={`flex flex-col items-center gap-1 p-2 rounded-lg border transition-all text-xs ${
                 selectedType === type
                   ? 'border-white/40 bg-white/10'
                   : 'border-white/10 hover:border-white/20'
-              }\`}
+              }`}
             >
-              <Icon className={\`w-5 h-5 \${color}\`} />
+              <Icon className={`w-5 h-5 ${color}`} />
               {label}
+
             </button>
           ))}
         </div>
