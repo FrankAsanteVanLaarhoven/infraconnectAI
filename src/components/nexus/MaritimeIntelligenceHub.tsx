@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Satellite, Ship, AlertCircle, Radio, MapPin, Eye, SatelliteEye } from 'lucide-react';
 import { fetchChokepointIntel, MaritimeAlert } from '@/lib/nexus/osint-fusion';
 
-export function MaritimeIntelligenceHub() {
+export function MaritimeIntelligenceHub({ isEmbedded = false }: { isEmbedded?: boolean }) {
   const [sarLogs, setSarLogs] = useState<MaritimeAlert[]>([]);
 
   useEffect(() => {

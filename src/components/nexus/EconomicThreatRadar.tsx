@@ -13,7 +13,7 @@ const mockData = Array.from({ length: 20 }).map((_, i) => ({
    velocity: 8 + Math.random() * 4,
 }));
 
-export function EconomicThreatRadar() {
+export function EconomicThreatRadar({ isEmbedded = false }: { isEmbedded?: boolean }) {
   const [threatLevel, setThreatLevel] = useState(6.8);
 
   useEffect(() => {

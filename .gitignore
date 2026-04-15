@@ -54,3 +54,4 @@ server.log
 /skills/
 # Z-AI Configurations
 .z-ai-config
+sota-release.tar.gz

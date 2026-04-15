@@ -24,6 +24,17 @@ import { IntelligenceGlobe }   from '@/components/dashboard/IntelligenceGlobe'
 import { NeuralTopology }      from '@/components/dashboard/NeuralTopology'
 import { NemoClawPanel }       from '@/components/dashboard/NemoClawPanel'
 import { FleetObservatory }    from '@/components/dashboard/FleetObservatory'
+// Nexus Intelligence Hubs
+import { MaritimeIntelligenceHub } from '@/components/nexus/MaritimeIntelligenceHub'
+import { EconomicThreatRadar }    from '@/components/nexus/EconomicThreatRadar'
+import { SwarmOrchestrator }       from '@/components/nexus/SwarmOrchestrator'
+import { AssetIntelligenceHub }    from '@/components/nexus/AssetIntelligenceHub'
+import { EnergySectorLens }        from '@/components/nexus/EnergySectorLens'
+import { LegalIntelligenceHub }    from '@/components/nexus/LegalIntelligenceHub'
+import { StrategicReportView }     from '@/components/nexus/StrategicReportView'
+import { ValidationReport }        from '@/components/nexus/ValidationReport'
+import { StrategicNexusHub }       from '@/components/nexus/StrategicNexusHub'
+
 import { EphemeralZone }       from '@/components/dashboard/EphemeralZone'
 import TrustPanel            from '@/components/operator/TrustPanel'
 import { useActivityBridge } from '@/lib/hooks/useActivityBridge'
@@ -45,11 +56,13 @@ type PanelId =
   | 'health' | 'memory' | 'skills' | 'governance'
   | 'bus'    | 'log'    | 'search' | 'agent-ops'
   | 'cognitive'| 'nemoclaw' | 'model-perf' | 'ota' | 'sim2real' | 'fleet' | 'trust' | 'compliance' | 'atlas' | 'topology'
+  | 'maritime' | 'economic' | 'swarm' | 'asset' | 'energy' | 'legal' | 'strategic-report' | 'validation-report' | 'nexus-core'
 
 const PANEL_KEYS: Record<string, PanelId> = {
   '1': 'health', '2': 'memory',   '3': 'skills',     '4': 'governance',
   '5': 'bus',    '6': 'log',      '7': 'search',     '8': 'agent-ops',
   '9': 'cognitive','0': 'nemoclaw', '-': 'model-perf', '_': 'ota', '+': 'sim2real', '=': 'fleet', 'p': 'trust', 'c': 'compliance', 'A': 'atlas', 'N': 'topology',
+  'm': 'maritime', 'e': 'economic', 's': 'swarm', 'b': 'asset', 'g': 'energy', 'l': 'legal', 'r': 'strategic-report', 'v': 'validation-report', 'x': 'nexus-core',
 }
 
 const DEFAULT_PANELS: PanelId[] = ['health', 'memory', 'skills', 'bus', 'agent-ops', 'model-perf', 'cognitive', 'fleet']
@@ -291,6 +304,61 @@ export default function Dashboard() {
             {activePanels.has('trust') && (
               <motion.div key="trust" layout {...panelMotion}>
                 <TrustPanel isEmbedded />
+              </motion.div>
+            )}
+
+            {/* Strategic Nexus Hubs */}
+            {activePanels.has('maritime') && (
+              <motion.div key="maritime" layout {...panelMotion} className="lg:col-span-2">
+                <MaritimeIntelligenceHub isEmbedded />
+              </motion.div>
+            )}
+
+            {activePanels.has('economic') && (
+              <motion.div key="economic" layout {...panelMotion}>
+                <EconomicThreatRadar isEmbedded />
+              </motion.div>
+            )}
+
+            {activePanels.has('swarm') && (
+              <motion.div key="swarm" layout {...panelMotion} className="lg:col-span-2">
+                <SwarmOrchestrator />
+              </motion.div>
+            )}
+
+            {activePanels.has('asset') && (
+              <motion.div key="asset" layout {...panelMotion}>
+                <AssetIntelligenceHub />
+              </motion.div>
+            )}
+
+            {activePanels.has('energy') && (
+              <motion.div key="energy" layout {...panelMotion}>
+                <EnergySectorLens />
+              </motion.div>
+            )}
+
+            {activePanels.has('legal') && (
+              <motion.div key="legal" layout {...panelMotion}>
+                <LegalIntelligenceHub />
+              </motion.div>
+            )}
+
+            {activePanels.has('strategic-report') && (
+              <motion.div key="strategic-report" layout {...panelMotion} className="lg:col-span-2">
+                <StrategicReportView />
+              </motion.div>
+            )}
+
+            {activePanels.has('validation-report') && (
+              <motion.div key="validation-report" layout {...panelMotion}>
+                <ValidationReport />
+              </motion.div>
+            )}
+
+            {activePanels.has('nexus-core') && (
+              <motion.div key="nexus-core" layout {...panelMotion} className="lg:col-span-2">
+                <StrategicNexusHub />
               </motion.div>
             )}
 

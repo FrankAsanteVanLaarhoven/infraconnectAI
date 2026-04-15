@@ -226,6 +226,52 @@ export const COMMAND_REGISTRY: Command[] = [
       bus.emit('infraconnect:toggle-panel', { panel: 'sim2real' })
     },
   },
+  {
+    id: 'nexus-toggle',
+    trigger: '/nexus',
+    label: 'Toggle Nexus Hub',
+    description: 'Activate specialized intelligence nexus',
+    args: '<maritime|economic|swarm|asset|energy|legal>',
+    category: 'panel',
+    execute(args) {
+      const panel = args.trim()
+      if (!panel) { bus.emit('infraconnect:toast', { message: 'Usage: /nexus <hub-name>', type: 'warn' }); return }
+      bus.emit('infraconnect:toggle-panel', { panel })
+    },
+  },
+  {
+    id: 'maritime-toggle',
+    trigger: '/maritime',
+    label: 'Maritime Intel',
+    description: 'Toggle RADARSAT-3 / AIS tracking hub',
+    args: '',
+    category: 'panel',
+    execute() {
+      bus.emit('infraconnect:toggle-panel', { panel: 'maritime' })
+    },
+  },
+  {
+    id: 'swarm-toggle',
+    trigger: '/swarm',
+    label: 'Swarm Control',
+    description: 'Toggle Swarm Orchestration matrix',
+    args: '',
+    category: 'panel',
+    execute() {
+      bus.emit('infraconnect:toggle-panel', { panel: 'swarm' })
+    },
+  },
+  {
+    id: 'economic-toggle',
+    trigger: '/economic',
+    label: 'Economic Radar',
+    description: 'Toggle Economic Threat Radar',
+    args: '',
+    category: 'panel',
+    execute() {
+      bus.emit('infraconnect:toggle-panel', { panel: 'economic' })
+    },
+  },
 ]
 
 // Lookup by trigger prefix

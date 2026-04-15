@@ -7,6 +7,9 @@ import { DemoEngine } from '@/lib/engine/demoEngine';
 import { InfraConnectLogo } from '@/components/ui/InfraConnectLogo';
 import TrustPanel from '@/components/operator/TrustPanel';
 import { useFleetStream } from '@/lib/hooks/useFleetStream';
+import { EconomicThreatRadar } from '@/components/nexus/EconomicThreatRadar';
+import { CognitiveOrchestrationMatrix } from '@/components/core/CognitiveOrchestrationMatrix';
+import { SwarmOrchestrator } from '@/components/nexus/SwarmOrchestrator';
 
 // --- Act-specific Sub-components ---
 
@@ -77,16 +80,17 @@ export default function EpicTheatre() {
 
   const advanceAct = () => {
     if (act === 1) setAct(2);
-    else if (act === 2) {
-      setAct(3);
+    else if (act === 2) setAct(3);
+    else if (act === 3) {
+      setAct(4);
       runInstallSimulation();
     }
-    else if (act === 3 && !isInstalling) {
-      setAct(4);
+    else if (act === 4 && !isInstalling) {
+      setAct(5);
       runWowSimulation();
     }
-    else if (act === 4) setAct(5);
     else if (act === 5) setAct(6);
+    else if (act === 6) setAct(7);
   };
 
   const runInstallSimulation = () => {
@@ -153,7 +157,68 @@ export default function EpicTheatre() {
         </div>
       )}
 
+      {act === 2 && (
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="w-full max-w-6xl px-6 grid grid-cols-1 lg:grid-cols-2 gap-8 relative z-10">
+           <div className="space-y-6">
+              <div className="space-y-2">
+                 <h2 className="text-2xl font-black uppercase tracking-tighter text-white">Synthesizing Systemic Intelligence</h2>
+                 <p className="text-xs text-slate-500 uppercase tracking-[0.3em] font-bold">Act 2: The Cognitive Layer</p>
+              </div>
+              <div className="bg-slate-900/20 border border-slate-800 p-6 rounded-xl backdrop-blur-sm">
+                 <p className="text-sm text-slate-400 font-mono leading-relaxed mb-6">
+                    Raw data is noise. InfraConnect leverages a tiered memory architecture to filter, score, and promote fragments into canonical strategic intelligence.
+                 </p>
+                 <div className="flex flex-col gap-4">
+                    <div className="flex items-center gap-3 text-[10px] text-cyan-400 font-bold uppercase tracking-widest">
+                       <Zap className="w-4 h-4" /> Autonomic Synthesis: ACTIVE
+                    </div>
+                    <div className="flex items-center gap-3 text-[10px] text-slate-500 font-bold uppercase tracking-widest">
+                       <ShieldAlert className="w-4 h-4" /> Governance Entropy: 4.2% [OPTIMAL]
+                    </div>
+                 </div>
+              </div>
+              <button onClick={advanceAct} className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-white bg-blue-600 hover:bg-blue-500 px-6 py-3 rounded transition-all shadow-[0_0_20px_rgba(37,99,235,0.2)]">
+                 Synchronize Context <ArrowRight className="w-4 h-4" />
+              </button>
+           </div>
+
+           <div className="relative group">
+              <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-xl blur opacity-25 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
+              <div className="relative h-[500px] overflow-hidden rounded-xl border border-slate-800/50">
+                 <div className="absolute inset-0 bg-black/60 backdrop-blur-xl z-10 p-6 flex flex-col gap-6 overflow-y-auto custom-scrollbar">
+                    <div className="h-[280px] shrink-0">
+                       <EconomicThreatRadar />
+                    </div>
+                    <div className="h-[300px] shrink-0">
+                       <CognitiveOrchestrationMatrix />
+                    </div>
+                 </div>
+              </div>
+           </div>
+        </motion.div>
+      )}
+
       {act === 3 && (
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="w-full h-full max-w-7xl mx-auto flex flex-col items-center p-6 relative z-10">
+           <div className="text-center mb-8 space-y-2">
+              <h2 className="text-3xl font-black uppercase tracking-tighter text-white">Adaptive Swarm Orchestration</h2>
+              <p className="text-xs text-slate-500 uppercase tracking-[0.4em] font-bold">Act 3: The Mission Intent</p>
+           </div>
+           
+           <div className="flex-1 w-full border border-slate-800/50 rounded-2xl overflow-hidden bg-black/40 backdrop-blur-3xl shadow-[0_0_100px_rgba(99,102,241,0.05)] relative group">
+              <SwarmOrchestrator />
+              
+              {/* Overlay Prompt */}
+              <div className="absolute bottom-12 right-12 z-[80]">
+                 <button onClick={advanceAct} className="group bg-indigo-600 hover:bg-indigo-500 text-white px-8 py-3 rounded-full font-bold uppercase tracking-widest text-[10px] flex items-center gap-3 transition-all shadow-[0_0_30px_rgba(99,102,241,0.3)]">
+                    Commit To Infrastructure <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                 </button>
+              </div>
+           </div>
+        </motion.div>
+      )}
+
+      {act === 4 && (
         <div className="w-full max-w-4xl p-8 border border-slate-800 bg-[#0a0b0c] rounded shadow-2xl relative">
            <div className="text-slate-400 mb-8 border-b border-slate-800 pb-4 uppercase tracking-[0.3em] text-xs font-bold">Node Discovery Console</div>
            <div className="h-[300px] overflow-y-auto space-y-2">
@@ -163,7 +228,7 @@ export default function EpicTheatre() {
         </div>
       )}
 
-      {act === 4 && (
+      {act === 5 && (
         <div className="w-full max-w-6xl p-8 animate-in slide-in-from-bottom">
            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 h-[500px]">
              <div className="border border-slate-800 bg-[#050505] p-6 rounded flex flex-col justify-between">
@@ -199,9 +264,9 @@ export default function EpicTheatre() {
         </div>
       )}
 
-      {act === 5 && <TrustPanel />}
+      {act === 6 && <TrustPanel />}
       
-      {act === 6 && (
+      {act === 7 && (
          <Act6ClosePanel nodeCount={events.filter(e => e.type === 'heartbeat').length || 42} />
       )}
     </div>

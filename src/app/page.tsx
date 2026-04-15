@@ -526,14 +526,15 @@ export default function LandingPage() {
       </main>
 
       {/* SOTA FOOTER */}
-      <footer className="relative z-10 w-full px-12 py-8 mt-auto border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] uppercase tracking-[0.2em] font-black text-slate-800">
+      <footer className="relative z-10 w-full px-12 py-8 mt-auto border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] uppercase tracking-[0.2em] font-black text-slate-500">
         <div className="flex items-center gap-2">
-          <div className="w-1.5 h-1.5 rounded-full bg-slate-900" />
+          <div className="w-1.5 h-1.5 rounded-full bg-slate-500" />
           <span>© 2026 INFRACONNECT // INFRA-SYNC SYNDICATE</span>
         </div>
-        <div className="flex items-center gap-6 text-slate-900">
-           <span className="hover:text-cyan-500/40 cursor-pointer transition-colors">Operational_Clearance</span>
-           <span className="hover:text-cyan-500/40 cursor-pointer transition-colors">Data_Latency_Matrix</span>
+        <div className="flex items-center gap-6 text-slate-500">
+           <a href="/sdk/infraconnect-client-sdk.zip" download className="hover:text-cyan-500/40 cursor-pointer transition-colors flex items-center gap-1"><span className="text-cyan-600/50">↓</span> Edge_Client_SDK</a>
+           <span className="hover:text-cyan-500/40 cursor-pointer transition-colors hidden md:inline">Operational_Clearance</span>
+           <span className="hover:text-cyan-500/40 cursor-pointer transition-colors hidden md:inline">Data_Latency_Matrix</span>
         </div>
       </footer>
     </div>

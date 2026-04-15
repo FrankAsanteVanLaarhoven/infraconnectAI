@@ -19,13 +19,23 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+export const viewport = {
+  themeColor: "#050505",
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+};
+
 export const metadata: Metadata = {
   title: "InfraConnect — Enterprise Mission Control",
   description: "The state-of-the-art Memory DevOps and Agent Orchestration Layer. Industrial situational awareness for automated workflows as human-in-the-loop mission control.",
   keywords: ["Memory DevOps", "Agent Orchestration", "Mission Control", "Enterprise AI", "Industrial Situation Awareness"],
   icons: {
-    icon: '/brand/logo-symbol.png'
-  }
+    icon: '/brand/logo-symbol.png',
+    apple: '/icons/icon-192x192.png',
+  },
+  manifest: "/manifest.json",
 };
 
 export default function RootLayout({
@@ -39,6 +49,11 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground`}
         suppressHydrationWarning
       >
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `if ('serviceWorker' in navigator) { navigator.serviceWorker.register('/sw.js'); }`,
+          }}
+        />
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
