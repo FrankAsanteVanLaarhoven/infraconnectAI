@@ -8,6 +8,7 @@ import NextAuthProvider from "@/components/providers/NextAuthProvider";
 import OperatorPanel from "@/components/operator/OperatorPanel";
 import { LocalizationProvider } from "@/components/providers/LocalizationProvider";
 import { NeuralHUD } from "@/components/ui/NeuralHUD";
+import { GlobalSecurityGuard } from "@/components/ui/GlobalSecurityGuard";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -60,14 +61,16 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <NextAuthProvider>
-            <LocalizationProvider>
-              {children}
-              <NeuralHUD />
-              <OperatorPanel />
-              <Toaster />
-            </LocalizationProvider>
-          </NextAuthProvider>
+          <GlobalSecurityGuard>
+            <NextAuthProvider>
+              <LocalizationProvider>
+                {children}
+                <NeuralHUD />
+                <OperatorPanel />
+                <Toaster />
+              </LocalizationProvider>
+            </NextAuthProvider>
+          </GlobalSecurityGuard>
         </ThemeProvider>
       </body>
     </html>

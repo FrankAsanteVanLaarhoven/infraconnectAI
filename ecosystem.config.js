@@ -12,7 +12,7 @@ module.exports = {
         NODE_ENV: "production",
         // Force the application to bridge to port 3006 securely
         PORT: 3006,
-        HOSTNAME: "127.0.0.1"
+        HOSTNAME: "0.0.0.0"
       }
     }
   ]

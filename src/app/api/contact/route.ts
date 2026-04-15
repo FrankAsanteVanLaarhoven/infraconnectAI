@@ -68,8 +68,8 @@ export async function POST(req: Request) {
              : `InfraConnect - Transmission Received`;
              
         const responderBody = leadTier === 'HIGH_VALUE'
-             ? `Hello ${clientName},\n\nYour deployment intent has been registered by the InfraConnect autonomy engine.\n\nOur system detected high-priority parameters in your request regarding enterprise deployment. A mission commander has been assigned to your packet and is reviewing your specifications right now.\n\nWe will initiate contact shortly to map your architecture.\n\nSecurely,\nInfraConnect System Control`
-             : `Hello ${clientName},\n\nWe have successfully received your transmission.\n\nInfraConnect operates on a strict compliance standard. Our internal node has logged your query, and we will route it to the appropriate team when bandwidth is allocated for non-critical deployment paths.\n\nThank you for reaching out.\n\nInfraConnect AI`;
+             ? `Hello ${clientName},\n\nThank you for reaching out.\n\nYour deployment intent has been registered by the InfraConnect autonomy engine. A senior member will get back to you shortly after reviewing your specifications with our qualifying team.\n\nPlease note that the full platform is scheduled to go-live in the 1st week of May 2026.\n\nSecurely,\nFrank Van Laarhoven, Founder\nInfraConnect AI`
+             : `Hello ${clientName},\n\nWe have successfully received your transmission.\n\nA senior member will get back to you shortly after reviewing your request with the qualifying team. Please be advised that the full site is ready to go-live in the 1st week of May 2026.\n\nThank you for reaching out.\n\nFrank Van Laarhoven, Founder\nInfraConnect AI`;
 
         const responderPromise = resend.emails.send({
           from: 'onboarding@resend.dev',

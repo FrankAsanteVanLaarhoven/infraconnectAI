@@ -19,25 +19,35 @@ bun run build
 
 # 2. Package the artifact securely
 echo "\n[2/4] Packaging architectural artifacts..."
-tar -czf sota-release.tar.gz .next/standalone .next/static public package.json ecosystem.config.js .env
-
+# We explicitly include .next to ensure hidden folder preservation
+# Use -C to change directory and avoid path prefix confusion
+tar -czf sota-release.tar.gz -C . .next/standalone .next/static public package.json ecosystem.config.js .env
 
 # 3. Securely transfer to Cloud Compute Engine (Using gcloud SSH)
 echo "\n[3/4] Transmitting encrypted payload to Edge Node..."
-# Ensure target directory exists
-gcloud compute ssh nava-web-server-e2-small --zone=us-central1-a --command="mkdir -p ~/deploy"
-# Change the path '/home/user/infraconnect' to match the VM's active deployment directory
-gcloud compute scp sota-release.tar.gz nava-web-server-e2-small:~/deploy/ --zone=us-central1-a
+GCLOUD="/opt/homebrew/bin/gcloud"
+# Ensure target directory exists and is clean
+$GCLOUD compute ssh nava-web-server-e2-small --zone=us-central1-a --command="mkdir -p ~/deploy && rm -rf ~/deploy/.next"
+$GCLOUD compute scp sota-release.tar.gz nava-web-server-e2-small:~/deploy/ --zone=us-central1-a
 
 
 # 4. Remote Execution and Zero-Downtime Swap
 echo "\n[4/4] Executing remote node restart..."
-gcloud compute ssh nava-web-server-e2-small --zone=us-central1-a --command="
+$GCLOUD compute ssh nava-web-server-e2-small --zone=us-central1-a --command="
   cd ~/deploy &&
   tar -xzf sota-release.tar.gz &&
+  
+  # Verify extraction
+  if [ ! -f .next/standalone/server.js ]; then
+    echo 'ERROR: server.js not found after extraction!'
+    ls -laR .next || echo '.next folder missing'
+    exit 1
+  fi
+
   # Sync static assets properly mapping the standalone server expectations
   cp -r public .next/standalone/ &&
   cp -r .next/static .next/standalone/.next/ &&
+  
   # Utilize PM2 ecosystem config to securely bind to internal Port 3006 
   echo 'Restarting Application Cluster via PM2...' &&
   pm2 start ecosystem.config.js --update-env || pm2 restart infraconnect-engine
