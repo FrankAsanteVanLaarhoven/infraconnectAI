@@ -417,10 +417,58 @@ export default function LandingPage() {
                  Without APIs. Without exposure.
               </motion.p>
 
-              <motion.div initial={{ opacity: 0 }} animate={{ opacity: act >= 1 ? 1 : 0 }} transition={{ duration: 1, delay: 0.5 }} className="flex flex-col sm:flex-row items-center justify-center pt-8 w-full max-w-xs mx-auto relative z-20">
-                  <Button onClick={handleInitiate} disabled={act !== 1} size="lg" className={`w-full h-14 rounded-none text-[12px] uppercase tracking-widest font-black transition-all duration-700 ${act === 1 ? 'bg-white text-black hover:bg-slate-300 shadow-[0_0_30px_rgba(255,255,255,0.3)]' : 'bg-green-600 text-white shadow-[0_0_40px_rgba(34,197,94,0.4)] cursor-default'}`}>
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: act >= 1 ? 1 : 0 }} transition={{ duration: 1, delay: 0.5 }} className="flex flex-col sm:flex-row items-center justify-center pt-8 w-full max-w-md mx-auto relative z-20 gap-4">
+                  <Button onClick={handleInitiate} disabled={act !== 1} size="lg" className={`flex-1 w-full h-14 rounded-none text-[12px] uppercase tracking-widest font-black transition-all duration-700 ${act === 1 ? 'bg-white text-black hover:bg-slate-300 shadow-[0_0_30px_rgba(255,255,255,0.3)]' : 'bg-green-600 text-white shadow-[0_0_40px_rgba(34,197,94,0.4)] cursor-default'}`}>
                     {act === 1 ? 'INITIATE' : 'AUTHORISED'}
                   </Button>
+                  
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <Button size="lg" className="flex-1 w-full h-14 bg-transparent border border-white/20 text-white hover:bg-white/5 rounded-none text-[12px] uppercase tracking-widest font-black shadow-[0_0_15px_rgba(255,255,255,0.05)]">
+                        WATCH DEMO
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent className="bg-[#050505] border border-slate-800 text-white font-mono rounded-none max-w-4xl max-h-[90vh] overflow-y-auto p-0 gap-0">
+                      <div className="w-full relative aspect-video bg-black border-b border-white/10">
+                        <video controls autoPlay className="w-full h-full object-cover">
+                          <source src="/cinematic-trailer-4k.mp4" type="video/mp4" />
+                          Your browser does not support the video tag.
+                        </video>
+                      </div>
+                      <div className="p-6 md:p-8 bg-gradient-to-b from-[#0a0a0a] to-[#050505]">
+                        <DialogHeader>
+                          <DialogTitle className="text-xl font-bold uppercase tracking-widest border-b border-slate-800 pb-2 text-cyan-400">Enterprise Access Clearance</DialogTitle>
+                          <DialogDescription className="text-xs uppercase text-slate-400 tracking-widest pt-2 leading-relaxed">
+                            To deploy autonomous infrastructure across your fleet, verification is required. Lodge your request below to establish a secure bridge with our engineering governance node.
+                          </DialogDescription>
+                        </DialogHeader>
+                        <form onSubmit={sendEnterpriseRequest} className="flex flex-col gap-4 mt-6">
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                              <label className="text-[10px] uppercase text-slate-400 tracking-widest mb-1 block">Authentication Identifier</label>
+                              <input required type="email" placeholder="EXECUTIVE@DOMAIN.COM" className="w-full bg-black border border-slate-800 p-3 text-xs uppercase focus:border-cyan-500 outline-none transition-colors" value={contactState.email} onChange={e => setContactState({...contactState, email: e.target.value})} />
+                            </div>
+                            <div>
+                              <label className="text-[10px] uppercase text-slate-400 tracking-widest mb-1 block">Routing Designation</label>
+                              <select className="w-full bg-black border border-slate-800 p-3 text-xs uppercase focus:border-cyan-500 outline-none text-slate-300 transition-colors" value={contactState.department} onChange={e => setContactState({...contactState, department: e.target.value})}>
+                                 <option value="hello">Deployment (General)</option>
+                                 <option value="frank">Executive Node</option>
+                                 <option value="security">Compliance Firewall</option>
+                                 <option value="support">Technical Bridge</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div>
+                            <label className="text-[10px] uppercase text-slate-400 tracking-widest mb-1 block">Deployment Specification</label>
+                            <textarea required placeholder="OUTLINE YOUR INFRASTRUCTURE TARGETS..." className="w-full bg-black border border-slate-800 p-3 text-xs uppercase focus:border-cyan-500 outline-none min-h-[80px] transition-colors" value={contactState.intent} onChange={e => setContactState({...contactState, intent: e.target.value})} />
+                          </div>
+                          <Button type="submit" disabled={emailStatus==='sending'} className={`text-white rounded-none uppercase text-xs tracking-[0.2em] h-12 transition-all duration-500 font-bold ${emailStatus === 'sending' ? 'bg-cyan-600' : emailStatus === 'sent' ? 'bg-green-600 shadow-[0_0_20px_rgba(34,197,94,0.3)]' : 'bg-cyan-900 hover:bg-cyan-700 shadow-[0_0_15px_rgba(6,182,212,0.2)]'}`}>
+                             {emailStatus === 'sending' ? 'TRANSMITTING...' : emailStatus === 'sent' ? 'CLEARANCE LOGGED' : 'REQUEST FLEET ACCESS'}
+                          </Button>
+                        </form>
+                      </div>
+                    </DialogContent>
+                  </Dialog>
               </motion.div>
               
               {act === 2 && (
