@@ -319,22 +319,62 @@ export default function LandingPage() {
                       </DialogContent>
                     </Dialog>
 
-                    <button 
-                      onClick={() => router.push("/auth/command")}
-                      className="group relative px-6 py-2 border border-cyan-500/30 bg-cyan-500/5 hover:bg-cyan-500/10 transition-all flex items-center gap-3"
-                    >
-                      <UserCheck className="w-3.5 h-3.5 text-cyan-400" />
-                      <span className="text-[10px] font-black uppercase text-cyan-400 tracking-[0.25em]">Elevate</span>
-                      <div className="absolute top-0 right-0 w-1.5 h-1.5 bg-cyan-500 animate-pulse border border-black" />
-                    </button>
+                    <Dialog>
+                      <DialogTrigger asChild>
+                        <button 
+                          className="group relative px-6 py-2 border border-cyan-500/30 bg-cyan-500/5 hover:bg-cyan-500/10 transition-all flex items-center gap-3"
+                        >
+                          <UserCheck className="w-3.5 h-3.5 text-cyan-400" />
+                          <span className="text-[10px] font-black uppercase text-cyan-400 tracking-[0.25em]">Elevate</span>
+                          <div className="absolute top-0 right-0 w-1.5 h-1.5 bg-cyan-500 animate-pulse border border-black" />
+                        </button>
+                      </DialogTrigger>
+                      <DialogContent className="bg-[#050505] border border-slate-800 text-white font-mono rounded-none sm:max-w-md">
+                        <DialogHeader>
+                          <DialogTitle className="text-sm font-bold uppercase tracking-widest border-b border-slate-800 pb-2 text-cyan-500">Security Verification</DialogTitle>
+                          <DialogDescription className="text-[10px] uppercase text-slate-500 tracking-widest pt-2">
+                             Access to Elevate requires manual review and approval by the governance committee.
+                          </DialogDescription>
+                        </DialogHeader>
+                        <form onSubmit={sendEnterpriseRequest} className="flex flex-col gap-4 mt-2">
+                          <div>
+                            <label className="text-[10px] uppercase text-slate-400 tracking-widest mb-1 block">Corporate Email</label>
+                            <input required type="email" placeholder="EXECUTIVE@DOMAIN.COM" className="w-full bg-black border border-slate-800 p-2 text-xs uppercase focus:border-cyan-500 outline-none" value={contactState.email} onChange={e => setContactState({...contactState, email: e.target.value})} />
+                          </div>
+                          <Button type="submit" disabled={emailStatus==='sending'} className={`text-white rounded-none uppercase text-xs tracking-widest transition-colors duration-500 ${emailStatus === 'sending' ? 'bg-cyan-600' : emailStatus === 'sent' ? 'bg-green-600' : 'bg-cyan-800 hover:bg-cyan-700'}`}>
+                             {emailStatus === 'sending' ? 'VERIFYING...' : emailStatus === 'sent' ? 'PENDING REVIEW' : 'REQUEST ELEVATION'}
+                          </Button>
+                        </form>
+                      </DialogContent>
+                    </Dialog>
 
-                    <button 
-                      onClick={() => router.push("/dashboard")}
-                      className="px-6 py-2 bg-slate-900 border border-white/5 text-slate-400 hover:text-white hover:bg-slate-800 transition-all flex items-center gap-2.5"
-                    >
-                      <Terminal className="w-3 h-3 opacity-50" />
-                      <span className="text-[10px] font-black uppercase tracking-[0.2em]">Sandbox</span>
-                    </button>
+                    <Dialog>
+                      <DialogTrigger asChild>
+                        <button 
+                          className="px-6 py-2 bg-slate-900 border border-white/5 text-slate-400 hover:text-white hover:bg-slate-800 transition-all flex items-center gap-2.5"
+                        >
+                          <Terminal className="w-3 h-3 opacity-50" />
+                          <span className="text-[10px] font-black uppercase tracking-[0.2em]">Sandbox</span>
+                        </button>
+                      </DialogTrigger>
+                      <DialogContent className="bg-[#050505] border border-slate-800 text-white font-mono rounded-none sm:max-w-md">
+                        <DialogHeader>
+                          <DialogTitle className="text-sm font-bold uppercase tracking-widest border-b border-slate-800 pb-2 text-slate-400">Sandbox Waitlist</DialogTitle>
+                          <DialogDescription className="text-[10px] uppercase text-slate-500 tracking-widest pt-2">
+                             The interactive sandbox is not currently open to the public. Join the waitlist.
+                          </DialogDescription>
+                        </DialogHeader>
+                        <form onSubmit={sendEnterpriseRequest} className="flex flex-col gap-4 mt-2">
+                          <div>
+                            <label className="text-[10px] uppercase text-slate-400 tracking-widest mb-1 block">Work Email</label>
+                            <input required type="email" placeholder="YOUR@DOMAIN.COM" className="w-full bg-black border border-slate-800 p-2 text-xs uppercase focus:border-slate-500 outline-none" value={contactState.email} onChange={e => setContactState({...contactState, email: e.target.value})} />
+                          </div>
+                          <Button type="submit" disabled={emailStatus==='sending'} className={`text-white rounded-none uppercase text-xs tracking-widest transition-colors duration-500 ${emailStatus === 'sending' ? 'bg-slate-600' : emailStatus === 'sent' ? 'bg-green-600' : 'bg-slate-800 hover:bg-slate-700'}`}>
+                             {emailStatus === 'sending' ? 'TRANSMITTING...' : emailStatus === 'sent' ? 'SECURED ON WAITLIST' : 'JOIN WAITLIST'}
+                          </Button>
+                        </form>
+                      </DialogContent>
+                    </Dialog>
                   </motion.div>
                 )}
               </AnimatePresence>
