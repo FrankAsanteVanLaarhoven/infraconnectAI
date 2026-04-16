@@ -31,6 +31,14 @@ self.addEventListener('activate', event => {
 });
 
 self.addEventListener('fetch', event => {
+  // Bypass API routes and Server-Sent Events (SSE) entirely
+  if (
+    event.request.url.includes('/api/') || 
+    (event.request.headers.get('accept') && event.request.headers.get('accept').includes('text/event-stream'))
+  ) {
+    return;
+  }
+  
   if (event.request.method !== 'GET') return;
   event.respondWith(
     caches.match(event.request)
