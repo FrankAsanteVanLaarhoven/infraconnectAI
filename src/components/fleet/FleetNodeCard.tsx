@@ -1,8 +1,8 @@
-"use client";
-
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { formatDistanceToNow } from "date-fns";
+import React, { useState, useEffect } from "react";
+import { ShieldCheck, ShieldAlert, Activity } from "lucide-react";
 
 interface Anomaly {
   id: string;
@@ -36,7 +36,22 @@ const severityVariant: Record<string, "default" | "destructive" | "secondary"> =
 };
 
 export function FleetNodeCard({ node }: { node: FleetNode }) {
+  const [stability, setStability] = useState<any>(null);
   const memMB = (Number(BigInt(node.memoryBytes)) / 1024 / 1024).toFixed(1);
+
+  useEffect(() => {
+    async function fetchStability() {
+      try {
+        const res = await fetch('/api/fleet/stability');
+        const json = await res.json();
+        const myMetric = json.metrics?.find((m: any) => m.nodeId === node.id);
+        if (myMetric) setStability(myMetric);
+      } catch (err) {}
+    }
+    fetchStability();
+    const inv = setInterval(fetchStability, 5000);
+    return () => clearInterval(inv);
+  }, [node.id]);
 
   return (
     <Card className="border border-border hover:border-primary/50 transition-colors">
@@ -59,10 +74,19 @@ export function FleetNodeCard({ node }: { node: FleetNode }) {
             <p className="font-semibold">{memMB} MB</p>
           </div>
           <div>
-            <p className="text-muted-foreground">Anomalies</p>
-            <p className="font-semibold text-amber-500">{node.anomalyCount}</p>
+            <p className="text-muted-foreground">Stability Index</p>
+            <div className="flex items-center gap-1.5">
+               <span className={`font-semibold ${stability?.svr > 0.05 ? 'text-red-500' : 'text-cyan-500'}`}>
+                 {stability ? `${((1 - stability.svr) * 100).toFixed(1)}%` : '---'}
+               </span>
+               {stability?.overrideActive ? <ShieldAlert className="w-3 h-3 text-red-500" /> : <ShieldCheck className="w-3 h-3 text-cyan-500" />}
+            </div>
           </div>
-          <div className="col-span-2">
+          <div>
+            <p className="text-muted-foreground">SVR Benchmark</p>
+            <p className="font-semibold text-slate-300">{stability ? `${(stability.svr * 100).toFixed(3)}%` : '---'}</p>
+          </div>
+          <div>
             <p className="text-muted-foreground">Last seen</p>
             <p className="font-semibold">
               {formatDistanceToNow(new Date(node.lastSeen), { addSuffix: true })}

@@ -71,7 +71,7 @@ export function IntelligenceGlobe() {
         {[0, 30, 60, 90, 120, 150].map(deg => (
           <ellipse
             key={`lat-${deg}`}
-            cx="0" cy="0" rx={120} ry={120 * Math.cos(deg * Math.PI / 180)}
+            cx="0" cy="0" rx={120} ry={Math.abs(120 * Math.cos(deg * Math.PI / 180))}
             fill="none" stroke="rgba(6,182,212,0.08)" strokeWidth="0.5"
             transform={`rotate(${rotation})`}
           />
@@ -79,7 +79,7 @@ export function IntelligenceGlobe() {
 
         {/* Horizontal Rings */}
         {[-60, -30, 0, 30, 60].map(lat => {
-          const r = 120 * Math.cos(lat * Math.PI / 180);
+          const r = Math.abs(120 * Math.cos(lat * Math.PI / 180));
           const y = 120 * Math.sin(lat * Math.PI / 180);
           return (
             <ellipse
@@ -95,7 +95,7 @@ export function IntelligenceGlobe() {
 
         {/* Presence Nodes */}
         {projection.map(node => (
-          <motion.g key={node.id} animate={{ opacity: node.visible ? 1 : 0.1 }}>
+          <motion.g key={node.id} initial={{ opacity: 0.1 }} animate={{ opacity: node.visible ? 1 : 0.1 }}>
             <circle
               cx={node.x} cy={node.y}
               r={node.id === selectedNodeId ? 4 : 2}

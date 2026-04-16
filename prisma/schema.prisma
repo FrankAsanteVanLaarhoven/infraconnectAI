@@ -687,6 +687,58 @@ model EnterpriseLead {
   @@index([capturedAt])
 }
 
+model Lead {
+  id              String   @id @default(cuid())
+  email           String   @unique
+  company         String?
+  role            String?
+  message         String?
+
+  score           Int      @default(0)
+  status          String   @default("new") // new, qualified, meeting, closed
+  source          String?  // landing, demo, direct
+  intent          String?  // high, medium, low
+
+  // Behavioral & Firmographic Tracking
+  companySize     String?
+  industry        String?
+  visitedDemo     Boolean  @default(false)
+  viewedSecurity  Boolean  @default(false)
+  replied         Boolean  @default(false)
+
+  // AI Generated Metadata
+  aiNotes         String?
+  lastEmailSent   DateTime?
+  nextAction      String?
+
+  // Financials & Strategic
+  projectedValue  Float?
+  notes           String?
+  strategicBrief  String?
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  sector          String? // e.g. 'Energy', 'Gov', 'Tech'
+  region          String? // e.g. 'EMEA', 'APAC', 'US_EAST'
+  lat             Float?
+  lng             Float?
+  activities      DealActivity[]
+
+  @@index([score])
+  @@index([status])
+}
+
+model DealActivity {
+  id          String   @id @default(cuid())
+  leadId      String
+  lead        Lead     @relation(fields: [leadId], references: [id])
+  type        String   // email, demo, security_view, tactical_adjustment, manual_note
+  description String
+  timestamp   DateTime @default(now())
+
+  @@index([leadId])
+}
+
 enum Sector {
   GOVERNMENT
   ENERGY

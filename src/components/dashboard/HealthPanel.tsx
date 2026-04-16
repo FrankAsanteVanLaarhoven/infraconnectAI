@@ -55,20 +55,7 @@ export function HealthPanel() {
       const res = await fetch('/api/health')
       const json = await res.json()
       
-      // Structural Guard: Sovereign Baseline Fallback
-      const safeData: HealthProjection = {
-        status: json?.status || 'ok',
-        timestamp: json?.timestamp || new Date().toISOString(),
-        health: json?.health ?? 98,
-        memory: json?.memory || { totalNodes: 240, l2CanonNodes: 85, conflicts: 0, unresolvedConflicts: 0, memHealth: 100 },
-        skills: json?.skills || { totalRuns: 10580, passedRuns: 10500, successRate: 0.99, skillHealth: 100 },
-        nemoclaw: json?.nemoclaw || { activeAgents: 1 },
-        cognitiveCore: json?.cognitiveCore || { activeDirective: 'command-logic-alpha', activeDirectiveDisplay: 'Mission Commander' },
-        modelPerf: json?.modelPerf || { latestBuildTag: 'build-stable-04', latestValidationRate: 1.0 },
-        agentOps: json?.agentOps || { systemViolations24h: 0, avgCycleSuccessRate: 0.99, governanceHealth: 100, operationalHealth: 98 }
-      }
-      
-      setData(safeData)
+      setData(json)
       setLastFetch(new Date())
       setError(null)
     } catch (e: any) {
@@ -130,6 +117,37 @@ export function HealthPanel() {
             <ScoreBar value={data.skills.skillHealth}  label="Skill Execution" />
             <ScoreBar value={data.agentOps.governanceHealth} label="Agent Constraints" />
             <ScoreBar value={data.agentOps.operationalHealth} label="Operational Health" />
+          </div>
+
+          {/* Swarm Resilience Section */}
+          <div className="mb-6 p-4 bg-indigo-500/5 border border-indigo-500/20 rounded-xl space-y-4">
+            <div className="flex items-center justify-between">
+               <div className="text-[10px] text-indigo-400 font-black uppercase tracking-widest">Swarm Resilience</div>
+               {data.swarm && (
+                 <div className={`text-[9px] font-black uppercase px-2 py-0.5 rounded ${data.swarm.predictiveHealth > 90 ? 'bg-emerald-500/20 text-emerald-400' : 'bg-amber-500/20 text-amber-400'}`}>
+                    Predictive: {data.swarm.predictiveHealth.toFixed(1)}%
+                 </div>
+               )}
+            </div>
+            
+            <div className="mb-4">
+              <div className="flex justify-between text-[8px] mb-1 font-bold uppercase tracking-wider">
+                <span className="text-slate-500">Regulatory Health</span>
+                <span className="text-indigo-400">{(data?.swarm?.governanceScore || 98).toFixed(1)}%</span>
+              </div>
+              <div className="w-full h-1 bg-slate-800 rounded-full overflow-hidden">
+                <motion.div 
+                  initial={{ width: 0 }}
+                  animate={{ width: `${data?.swarm?.governanceScore || 98}%` }}
+                  className="h-full bg-indigo-500 shadow-[0_0_10px_#6366f1]"
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+               <ScoreBar value={data.swarm?.cognitiveLoad || 0} label="Cognitive Load" />
+               <ScoreBar value={(1 - (data.swarm?.governanceDrift || 0)) * 100} label="Policy Alignment" />
+            </div>
           </div>
 
           {/* Stat grid */}

@@ -38,6 +38,16 @@ export default function PricingPage() {
           </p>
         </motion.div>
 
+        {/* Interactive ROI Intelligence */}
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1, delay: 0.2 }}
+          className="w-full mb-24"
+        >
+           <InteractiveROICalc />
+        </motion.div>
+
         {/* Pricing Matrix */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 w-full">
           

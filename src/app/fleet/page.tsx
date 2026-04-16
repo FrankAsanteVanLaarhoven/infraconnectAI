@@ -2,6 +2,7 @@ import { db as prisma } from "@/lib/db";
 import { FleetNodeCard } from "@/components/fleet/FleetNodeCard";
 import { AnomalyFeed } from "@/components/fleet/AnomalyFeed";
 import { InfraConnectLogo } from "@/components/ui/InfraConnectLogo";
+import { StabilityVisualizer } from "@/components/fleet/StabilityVisualizer";
 
 export const dynamic = "force-dynamic";
 
@@ -42,7 +43,6 @@ export default async function FleetPage() {
   const online = nodes.filter((n) => n.status === "online").length;
   const degraded = nodes.filter((n) => n.status === "degraded").length;
   const offline = nodes.filter((n) => n.status === "offline").length;
-  const totalAnomalies = nodes.reduce((acc, n) => acc + n.anomalyCount, 0);
 
   return (
     <div className="min-h-screen bg-[#050505] text-slate-200 selection:bg-blue-500/30">
@@ -53,34 +53,39 @@ export default async function FleetPage() {
         </div>
       </header>
 
-      <div className="container mx-auto p-6 space-y-6 max-w-6xl mt-4">
-        <div>
-          <h1 className="text-2xl font-bold tracking-tight text-white font-mono uppercase">Fleet Monitor</h1>
-          <p className="text-sm text-slate-400 font-mono tracking-widest mt-1">
-            Real-time memory health across all registered robot nodes
+      <div className="container mx-auto p-8 space-y-12 max-w-6xl">
+        <div className="space-y-2">
+          <h1 className="text-2xl font-semibold tracking-tight text-white">Fleet Monitor</h1>
+          <p className="text-xs text-white/50 tracking-widest uppercase">
+            Real-time locomotion stability across all registered robot nodes
           </p>
         </div>
 
+        {/* Cinematic Discovery: Stability Visualizer */}
+        <div className="w-full">
+           <StabilityVisualizer />
+        </div>
+
       {/* Summary bar */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
         {[
           { label: "Total Nodes", value: nodes.length },
-          { label: "Online", value: online, color: "text-emerald-500" },
-          { label: "Degraded / Offline", value: `${degraded} / ${offline}`, color: "text-amber-500" },
+          { label: "Online", value: online, color: "text-emerald-400" },
+          { label: "Degraded / Offline", value: `${degraded} / ${offline}`, color: "text-amber-400" },
           { label: "Total Memory", value: `${totalMemGB} GB` },
         ].map((stat) => (
-          <div key={stat.label} className="rounded-lg border border-border p-4">
-            <p className="text-xs text-muted-foreground">{stat.label}</p>
-            <p className={`text-2xl font-bold ${stat.color ?? ""}`}>{stat.value}</p>
+          <div key={stat.label} className="bg-white/5 backdrop-blur-2xl border border-white/10 shadow-[0_10px_40px_rgba(0,0,0,0.4)] rounded-xl p-6 transition-all hover:bg-white/10 cursor-default">
+            <p className="text-xs text-white/50 tracking-widest uppercase mb-4">{stat.label}</p>
+            <p className={`text-2xl font-medium tracking-tight ${stat.color ? stat.color : "text-white/90"}`}>{stat.value}</p>
           </div>
         ))}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Node grid */}
-        <div className="lg:col-span-2 space-y-4">
-          <h2 className="text-lg font-semibold tracking-tight">Active Nodes</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="lg:col-span-2 space-y-6">
+          <h2 className="text-lg font-medium text-white tracking-tight">Active Nodes</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {nodes.map(node => (
               <FleetNodeCard key={node.id} node={node as any} />
             ))}
@@ -88,9 +93,11 @@ export default async function FleetPage() {
         </div>
         
         {/* Feed side */}
-        <div className="space-y-4">
-          <h2 className="text-lg font-semibold tracking-tight">Live Anomaly Feed</h2>
-          <AnomalyFeed />
+        <div className="space-y-6">
+          <h2 className="text-lg font-medium text-white tracking-tight">Live Anomaly Feed</h2>
+          <div className="bg-white/5 backdrop-blur-2xl border border-white/10 shadow-[0_10px_40px_rgba(0,0,0,0.4)] rounded-xl p-6 h-full min-h-[400px]">
+             <AnomalyFeed />
+          </div>
         </div>
       </div>
     </div>

@@ -8,11 +8,49 @@ import { DEAL_PIPELINE, Deal } from '@/lib/nexus/swarm';
 const STAGES = ['ALL', 'PROSPECTING', 'QUALIFICATION', 'PROPOSAL', 'NEGOTIATION', 'CLOSED WON', 'CLOSED LOST'];
 
 export function DealPipelineHub() {
+  const [leads, setLeads] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('ALL');
+
+  useEffect(() => {
+    async function fetchLeads() {
+      try {
+        const res = await fetch('/api/crm/leads');
+        const data = await res.json();
+        setLeads(data.leads || []);
+      } catch (err) {
+        console.error("PIPELINE_FETCH_FAIL", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchLeads();
+  }, []);
+
+  // Map database status to pipeline stages
+  const getStageFromStatus = (status: string) => {
+    const map: Record<string, string> = {
+      'new': 'QUALIFICATION',
+      'qualified': 'PROPOSAL',
+      'meeting': 'NEGOTIATION',
+      'closed': 'CLOSED WON',
+      'lost': 'CLOSED LOST'
+    };
+    return map[status] || 'PROSPECTING';
+  };
+
+  const processedLeads = leads.map(l => ({
+    id: l.id,
+    name: l.company || l.email.split('@')[0],
+    value: l.projectedValue || (l.score * 1200), // Default heuristic if no value set
+    stage: getStageFromStatus(l.status),
+    agent: 'alpha-prime',
+    probability: l.score
+  }));
   
   const filteredDeals = activeTab === 'ALL' 
-    ? DEAL_PIPELINE 
-    : DEAL_PIPELINE.filter(d => d.stage === activeTab);
+    ? processedLeads 
+    : processedLeads.filter(d => d.stage === activeTab);
 
   const totalValue = filteredDeals.reduce((acc, d) => acc + d.value, 0);
 

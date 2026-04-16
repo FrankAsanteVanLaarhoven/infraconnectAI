@@ -41,6 +41,13 @@ export interface HealthProjection {
     governanceHealth: number
     operationalHealth: number
   }
+  swarm?: {
+    cognitiveLoad: number
+    governanceDrift: number
+    predictiveHealth: number
+    activeAgents: number
+    unverifiedTasks: number
+  }
 }
 
 export function parseHealthProjection(raw: unknown): HealthProjection | null {

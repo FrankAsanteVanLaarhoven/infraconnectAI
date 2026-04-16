@@ -15,14 +15,24 @@ const mockData = Array.from({ length: 20 }).map((_, i) => ({
 
 export function EconomicThreatRadar({ isEmbedded = false }: { isEmbedded?: boolean }) {
   const [threatLevel, setThreatLevel] = useState(6.8);
+  const [data, setData] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setThreatLevel(prev => {
-        const delta = Math.random() * 0.4 - 0.2;
-        return Math.min(Math.max(prev + delta, 0), 10);
-      });
-    }, 3000);
+    async function fetchIntel() {
+      try {
+        const res = await fetch('/api/nexus/osint');
+        const json = await res.json();
+        setData(json);
+        setThreatLevel(json.systemRisk / 10);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchIntel();
+    const interval = setInterval(fetchIntel, 30000); // 30s refresh
     return () => clearInterval(interval);
   }, []);
 
@@ -40,27 +50,27 @@ export function EconomicThreatRadar({ isEmbedded = false }: { isEmbedded?: boole
          <Activity className="w-4 h-4 text-amber-900" />
       </div>
 
-      {/* Main Stats */}
+      {/* Main Stats (Live Data) */}
       <div className="grid grid-cols-3 p-4 gap-4 border-b border-amber-500/10">
          <div className="bg-slate-900/40 p-3 rounded border border-slate-800">
-            <p className="text-[8px] text-slate-500 uppercase mb-1">Global Debt</p>
-            <p className="text-sm font-black text-white">$64.2T</p>
-            <p className="text-[8px] text-red-500 flex items-center gap-1 mt-1">
-               <TrendingUp className="w-2.5 h-2.5" /> +2.4% MoM
+            <p className="text-[8px] text-slate-500 uppercase mb-1">Revenue at Risk</p>
+            <p className="text-sm font-black text-red-500">£{data?.atRiskMagnitude?.toLocaleString() || '0'}</p>
+            <p className="text-[8px] text-slate-600 flex items-center gap-1 mt-1 uppercase font-bold">
+               <TrendingUp className="w-2.5 h-2.5" /> High Exposure
             </p>
          </div>
          <div className="bg-slate-900/40 p-3 rounded border border-slate-800">
-            <p className="text-[8px] text-slate-500 uppercase mb-1">Brent Crude</p>
-            <p className="text-sm font-black text-white">$112.4</p>
-            <p className="text-[8px] text-cyan-500 flex items-center gap-1 mt-1">
-               <TrendingDown className="w-2.5 h-2.5" /> -0.8% INT
+            <p className="text-[8px] text-slate-500 uppercase mb-1">System Risk</p>
+            <p className="text-sm font-black text-white">{data?.systemRisk?.toFixed(1) || '0'}%</p>
+            <p className="text-[8px] text-cyan-500 flex items-center gap-1 mt-1 uppercase font-bold">
+               <Activity className="w-2.5 h-2.5" /> Weighted Pulse
             </p>
          </div>
          <div className="bg-slate-900/40 p-3 rounded border border-slate-800">
-            <p className="text-[8px] text-slate-500 uppercase mb-1">Debt Velocity</p>
-            <p className="text-sm font-black text-white">12.8</p>
-            <p className="text-[8px] text-amber-500 flex items-center gap-1 mt-1">
-               <Zap className="w-2.5 h-2.5" /> PRIME FLOW
+            <p className="text-[8px] text-slate-500 uppercase mb-1">Critical Leads</p>
+            <p className="text-sm font-black text-white">{data?.threatenedLeads?.filter((l:any) => l.riskScore > 70).length || 0}</p>
+            <p className="text-[8px] text-amber-500 flex items-center gap-1 mt-1 uppercase font-bold">
+               <Zap className="w-2.5 h-2.5" /> DEFENSIVE ACT.
             </p>
          </div>
       </div>
@@ -93,20 +103,30 @@ export function EconomicThreatRadar({ isEmbedded = false }: { isEmbedded?: boole
       {/* Probability Gauge */}
       <div className="p-4 bg-amber-950/10 border-t border-amber-900/30">
          <div className="flex justify-between items-center mb-2">
-            <span className="text-[10px] text-slate-300 uppercase tracking-widest font-black">Economic Collapse Probability</span>
+            <span className="text-[10px] text-slate-300 uppercase tracking-widest font-black">System Weighted Risk Pulse</span>
             <span className={`text-xs font-black ${threatLevel > 8 ? 'text-red-500' : 'text-amber-500'}`}>{(threatLevel * 10).toFixed(1)}%</span>
          </div>
          <div className="w-full h-2 bg-slate-900 rounded-full overflow-hidden border border-slate-800">
             <motion.div 
-              initial={{ width: 0 }}
-              animate={{ width: `${threatLevel * 10}%` }}
-              className={`h-full transition-colors duration-1000 ${threatLevel > 8 ? 'bg-red-500 shadow-[0_0_15px_#ef4444]' : 'bg-amber-500 shadow-[0_0_15px_#f59e0b]'}`}
+               initial={{ width: 0 }}
+               animate={{ width: `${threatLevel * 10}%` }}
+               className={`h-full transition-colors duration-1000 ${threatLevel > 8 ? 'bg-red-500 shadow-[0_0_15px_#ef4444]' : 'bg-amber-500 shadow-[0_0_15px_#f59e0b]'}`}
             />
          </div>
-         <div className="mt-3 flex justify-between text-[8px] text-slate-600 uppercase font-black">
-            <span>SMR Offset: -1.2%</span>
-            <span>US Debt Peak: $64T Proj</span>
-            <span>Hormuz Risk: EXTREME</span>
+         
+         {/* Live Risk Breakdown */}
+         <div className="mt-4 space-y-2 max-h-[120px] overflow-y-auto custom-scrollbar-mini">
+            {data?.threatenedLeads?.slice(0, 3).map((lead: any) => (
+               <div key={lead.leadId} className="p-2 bg-slate-900/40 border border-slate-800/60 rounded flex justify-between items-center">
+                  <div className="flex flex-col">
+                     <span className="text-[8px] text-white font-black uppercase">{lead.email}</span>
+                     <span className="text-[7px] text-slate-500 font-bold uppercase">{lead.threats[0] || 'Market Saturation'}</span>
+                  </div>
+                  <div className="text-right">
+                     <span className={`text-[9px] font-black ${lead.riskScore > 70 ? 'text-red-500' : 'text-amber-500'}`}>{lead.riskScore}% Risk</span>
+                  </div>
+               </div>
+            ))}
          </div>
 
          {/* OSINT Market Pulse */}

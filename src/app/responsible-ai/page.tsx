@@ -5,98 +5,66 @@ export default function ResponsibleAIPage() {
       <div className="absolute inset-0 z-0 pointer-events-none bg-[linear-gradient(rgba(59,130,246,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(59,130,246,0.02)_1px,transparent_1px)] bg-[size:32px_32px]" />
 
       <main className="relative z-10 max-w-5xl mx-auto px-6 py-24 pb-32">
-        <header className="mb-20 animate-fade-in-up">
+        <header className="mb-20">
           <div className="inline-flex items-center justify-center px-3 py-1 mb-6 text-xs font-bold uppercase tracking-widest text-emerald-400 border border-emerald-900/50 bg-emerald-950/20 rounded-full">
             Autonomous Trust Standard
           </div>
-          <h1 className="text-4xl md:text-6xl font-black mb-6 tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-emerald-400 to-indigo-400 uppercase">
-            Responsible AI at InfraConnect
+          <h1 className="text-4xl md:text-6xl font-black mb-6 tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-emerald-400 to-indigo-400 uppercase leading-tight">
+            Responsible AI
           </h1>
           <p className="text-xl text-slate-400 leading-relaxed font-mono tracking-tight max-w-3xl">
-            Built for Control, Not Guesswork. InfraConnect uses AI to assist decisions—not replace them. 
-            All system actions remain verifiable, permissioned, and entirely under your explicit control.
+            InfraConnect is built on a foundation of safety and accountability. We ensure every action is verified, controlled, and auditable.
           </p>
         </header>
 
-        <section className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-20 animate-fade-in-up" style={{animationDelay: '100ms'}}>
-          <div>
-            <h2 className="text-2xl font-bold mb-6 text-white uppercase tracking-wider border-b border-white/10 pb-4">Operator Principles</h2>
-            <ul className="space-y-8">
-              <li>
-                <h3 className="text-lg font-bold text-emerald-300">1. Grounded Intelligence</h3>
-                <p className="text-sm text-slate-400 mt-2 leading-relaxed">
-                  AI responses are strictly derived from verified system context. If data is not available, the system will explicitly state so. Zero hallucinations.
-                </p>
-              </li>
-              <li>
-                <h3 className="text-lg font-bold text-emerald-300">2. Controlled Autonomy</h3>
-                <p className="text-sm text-slate-400 mt-2 leading-relaxed">
-                  AI can suggest and automate low-risk actions. Critical commercial actions <i>always</i> require human execution and MFA verification.
-                </p>
-              </li>
-              <li>
-                <h3 className="text-lg font-bold text-emerald-300">3. Full Transparency</h3>
-                <p className="text-sm text-slate-400 mt-2 leading-relaxed">
-                  Every AI decision is logged with Inputs, Outputs, System Confidence, and Contextual Reasoning into your tamper-proof Data Controller suite.
-                </p>
-              </li>
-            </ul>
+        <section className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
+          <div className="bg-[#0A0F1A]/50 border border-emerald-900/30 p-8 rounded-xl backdrop-blur-sm">
+            <h2 className="text-lg font-bold text-emerald-400 uppercase tracking-widest mb-4">Human-in-the-loop</h2>
+            <p className="text-sm text-slate-400 leading-relaxed">
+              Execution requires manual authorization for high-stakes actions. AI as an assistant, humans as the authority.
+            </p>
           </div>
+          <div className="bg-[#0A0F1A]/50 border border-emerald-900/30 p-8 rounded-xl backdrop-blur-sm">
+            <h2 className="text-lg font-bold text-emerald-400 uppercase tracking-widest mb-4">Deterministic guardrails</h2>
+            <p className="text-sm text-slate-400 leading-relaxed">
+              Hard constraints on system capabilities. Proactive enforcement ensures AI operates within strict operational bounds.
+            </p>
+          </div>
+          <div className="bg-[#0A0F1A]/50 border border-emerald-900/30 p-8 rounded-xl backdrop-blur-sm">
+            <h2 className="text-lg font-bold text-emerald-400 uppercase tracking-widest mb-4">Full auditability</h2>
+            <p className="text-sm text-slate-400 leading-relaxed">
+              Every decision trace is logged and sealed. Tamper-proof logs provide total transparency into autonomous behavior.
+            </p>
+          </div>
+        </section>
 
-          <div>
-             <div className="glass-frost p-8 rounded-xl border border-emerald-900/40 relative overflow-hidden group">
-               <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                 {/* Visual decoration */}
-                 <div className="w-32 h-32 border border-emerald-500 rounded-full animate-ping" style={{animationDuration: '4s'}} />
-               </div>
-               
-               <h3 className="text-sm font-bold tracking-widest text-emerald-400 uppercase mb-4">Human-in-the-Loop By Default</h3>
-               <p className="text-sm text-slate-300 mb-6">InfraConnect enforces strict human approval gateways for:</p>
-               
-               <ul className="space-y-3 font-mono text-xs">
-                 <li className="flex items-center gap-3">
-                   <div className="w-1.5 h-1.5 rounded-full bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.8)]" /> Pricing & Commercial Operations
-                 </li>
-                 <li className="flex items-center gap-3">
-                   <div className="w-1.5 h-1.5 rounded-full bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.8)]" /> Automated External Communications
-                 </li>
-                 <li className="flex items-center gap-3">
-                   <div className="w-1.5 h-1.5 rounded-full bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.8)]" /> Broad IAM Role Modification
-                 </li>
-                 <li className="flex items-center gap-3">
-                   <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)]" /> Infrastructure Telemetry Analysis <span className="text-[9px] text-slate-500 uppercase tracking-widest ml-auto">White-listed</span>
-                 </li>
+        <section className="glass-frost p-12 rounded-2xl border border-white/5 bg-white/5 backdrop-blur-xl">
+           <h3 className="text-2xl font-black text-white uppercase tracking-tighter mb-8">Our Commitment to Safety</h3>
+           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+             <div className="space-y-6">
+               <p className="text-slate-300 leading-relaxed">
+                 We believe infrastructure should be intelligent, but never unpredictable. Our architecture is designed to prevent autonomous drift and ensure systemic stability.
+               </p>
+               <ul className="space-y-4 font-mono text-xs text-slate-400">
+                 <li className="flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-full bg-emerald-500" /> Automated bias detection in memory nodes</li>
+                 <li className="flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-full bg-emerald-500" /> Context-isolated decision environments</li>
+                 <li className="flex items-center gap-3"><div className="w-1.5 h-1.5 rounded-full bg-emerald-500" /> Real-time safety kernel monitoring</li>
                </ul>
              </div>
-          </div>
+             <div className="bg-black/40 border border-white/5 p-6 rounded-lg font-mono text-[10px] text-emerald-500/70">
+                <div className="mb-2 border-b border-emerald-900/30 pb-2 flex justify-between">
+                  <span>SAFETY_LOG_STREAM</span>
+                  <span className="animate-pulse">● LIVE</span>
+                </div>
+                <div>[09:22:15] CHECKING_GUARDRAIL_CONSTRAINT... OK</div>
+                <div>[09:22:16] VERIFYING_OPERATOR_PRESENCE... OK</div>
+                <div>[09:22:18] DECISION_TRACE_COMMITTED_TO_ELASTIC</div>
+                <div>[09:23:01] HEARTBEAT_STABLE</div>
+             </div>
+           </div>
         </section>
-
-        <section className="mb-20 animate-fade-in-up" style={{animationDelay: '200ms'}}>
-          <h2 className="text-2xl font-bold mb-6 text-white uppercase tracking-wider border-b border-white/10 pb-4">Data Processing & Compliance</h2>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div className="bg-[#0A0F1A]/80 border border-slate-800 p-6 rounded-lg">
-              <h4 className="text-indigo-400 font-bold mb-2">GDPR Ready</h4>
-              <p className="text-xs text-slate-400 leading-relaxed">
-                You remain the Data Controller. InfraConnect operates purely as a Processor. Native APIs support instant Data Export and Right to Erasure workflows.
-              </p>
-            </div>
-            <div className="bg-[#0A0F1A]/80 border border-slate-800 p-6 rounded-lg">
-              <h4 className="text-indigo-400 font-bold mb-2">Edge Minimization</h4>
-              <p className="text-xs text-slate-400 leading-relaxed">
-                Processing occurs deeply embedded inside your perimeter. Telemetry payload extraction is configurable (Metadata Only vs Full Text).
-              </p>
-            </div>
-            <div className="bg-[#0A0F1A]/80 border border-slate-800 p-6 rounded-lg">
-              <h4 className="text-indigo-400 font-bold mb-2">Instant Kill Switches</h4>
-              <p className="text-xs text-slate-400 leading-relaxed">
-                Total control rests with your security operations center. Cryptographic identities for Edge agents can be revoked arbitrarily, killing tunnels.
-              </p>
-            </div>
-          </div>
-        </section>
-
       </main>
     </div>
   );
 }
+

@@ -16,28 +16,42 @@ import '@xyflow/react/dist/style.css';
 import { Database, Zap, Cpu, Network } from 'lucide-react';
 import { ConnectorNode } from '@/components/blueprint/nodes/ConnectorNode';
 import { AINode } from '@/components/blueprint/nodes/AINode';
+import { HardwareNode } from '@/components/blueprint/nodes/HardwareNode';
 import { Omnibar } from '@/components/ui/omnibar';
 import { IntentTopology } from '@/lib/dag-engine';
 import { InfraConnectLogo } from '@/components/ui/InfraConnectLogo';
 
-const initialNodes = [
-  { id: '1', position: { x: 50, y: 150 }, data: { label: 'Universal Connector Agent', status: 'connected' }, type: 'connector' },
-  { id: '2', position: { x: 450, y: 150 }, data: { label: 'Semantic Transition', mode: 'embedding' }, type: 'ai' },
-];
-const initialEdges = [{ id: 'e1-2', source: '1', target: '2', animated: true, style: { stroke: '#a855f7', strokeWidth: 2 } }];
-
 export default function BlueprintCanvas() {
-  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
-  const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
+  const [nodes, setNodes, onNodesChange] = useNodesState([]);
+  const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [isInstalling, setIsInstalling] = useState(false);
   const [logs, setLogs] = useState<string[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchTopology() {
+      try {
+        const res = await fetch('/api/nexus/blueprint');
+        const json = await res.json();
+        setNodes(json.nodes);
+        setEdges(json.edges);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchTopology();
+    const interval = setInterval(fetchTopology, 30000); // 30s re-discovery
+    return () => clearInterval(interval);
+  }, []);
 
   const onConnect = useCallback(
     (params: Connection | Edge) => setEdges((eds) => addEdge(params, eds)),
     [setEdges]
   );
 
-  const nodeTypes = useMemo(() => ({ connector: ConnectorNode, ai: AINode }), []);
+  const nodeTypes = useMemo(() => ({ connector: ConnectorNode, ai: AINode, hardware: HardwareNode }), []);
 
   const addNode = (type: string, label: string, extraData: any = {}) => {
     const newNode = {

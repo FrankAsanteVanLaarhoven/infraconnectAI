@@ -11,6 +11,20 @@ export function SwarmOrchestrator() {
   const { t, isRtl } = useTranslation();
   const [agents, setAgents] = useState<StrategicAgent[]>(STRATEGIC_AGENTS);
   const [phase, setPhase] = useState<'RESEARCH' | 'SYNTHESIS' | 'BOARDROOM'>('RESEARCH');
+  const [risk, setRisk] = useState(0);
+
+  useEffect(() => {
+    async function fetchRisk() {
+       try {
+          const res = await fetch('/api/nexus/osint');
+          const data = await res.json();
+          setRisk(data.systemRisk || 0);
+       } catch {}
+    }
+    fetchRisk();
+    const inv = setInterval(fetchRisk, 15000);
+    return () => clearInterval(inv);
+  }, []);
 
   useEffect(() => {
     // Start parallel research simulation
@@ -67,7 +81,7 @@ export function SwarmOrchestrator() {
     <div className="w-full h-full bg-black/60 backdrop-blur-3xl overflow-hidden flex flex-col font-mono p-6 select-none relative" dir={isRtl ? 'rtl' : 'ltr'}>
       
       {/* Background Grid VFX */}
-      <div className="absolute inset-0 opacity-[0.03] pointer-events-none" 
+      <div className={`absolute inset-0 opacity-[0.03] pointer-events-none transition-colors duration-1000 ${risk > 75 ? 'bg-red-500/10' : ''}`} 
            style={{ backgroundImage: 'radial-gradient(#fff 1px, transparent 1px)', backgroundSize: '30px 30px' }} />
 
       {/* Top Section: Strategic Mandate */}
@@ -75,9 +89,12 @@ export function SwarmOrchestrator() {
          <motion.div 
            initial={{ x: isRtl ? -50 : 50, opacity: 0 }}
            animate={{ x: 0, opacity: 1 }}
-           className="w-96 bg-white/5 border border-white/10 backdrop-blur-xl p-6 rounded-2xl shadow-2xl"
+           className={`w-96 backdrop-blur-xl p-6 rounded-2xl shadow-2xl transition-all duration-1000 ${risk > 75 ? 'bg-red-500/5 border-red-500/40 shadow-red-500/10' : 'bg-white/5 border border-white/10'}`}
          >
-            <h4 className="text-[10px] text-slate-500 uppercase tracking-[0.2em] font-black mb-2">{t('swarm.overall_plan')}</h4>
+            <div className="flex justify-between items-center mb-2">
+               <h4 className="text-[10px] text-slate-500 uppercase tracking-[0.2em] font-black">{t('swarm.overall_plan')}</h4>
+               {risk > 75 && <span className="text-[8px] bg-red-500/20 text-red-500 px-2 py-0.5 rounded font-black animate-pulse uppercase">Defensive Posture Active</span>}
+            </div>
             <p className="text-xs text-slate-200 leading-relaxed">
                {t('swarm.exec_desc')}
             </p>

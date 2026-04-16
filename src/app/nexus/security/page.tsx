@@ -15,18 +15,27 @@ import {
 } from 'lucide-react';
 import { MatrixRain } from '@/components/ui/matrix-rain';
 import { useTranslation } from '@/components/providers/LocalizationProvider';
+import { InferenceMonitor } from '@/components/nexus/InferenceMonitor';
 
 export default function SecurityPortal() {
   const { t } = useTranslation();
   const [data, setData] = useState<any>(null);
+  const [aiData, setAiData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [deauthorizing, setDeauthorizing] = useState<string | null>(null);
 
   const fetchData = async () => {
     try {
-      const res = await fetch('/api/security/stats');
-      const json = await res.json();
-      setData(json);
+      const [secRes, aiRes] = await Promise.all([
+        fetch('/api/security/stats'),
+        fetch('/api/security/ai')
+      ]);
+      const [secJson, aiJson] = await Promise.all([
+        secRes.json(),
+        aiRes.json()
+      ]);
+      setData(secJson);
+      setAiData(aiJson);
     } catch (e) {
       console.error(e);
     } finally {
@@ -36,6 +45,8 @@ export default function SecurityPortal() {
 
   useEffect(() => {
     fetchData();
+    const inv = setInterval(fetchData, 10000);
+    return () => clearInterval(inv);
   }, []);
 
   const handleDeauthorize = async (id: string) => {
@@ -94,8 +105,12 @@ export default function SecurityPortal() {
 
       <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8 relative z-10">
         
-        {/* Device Management */}
+        {/* Device Management & Inference HUD */}
         <div className="lg:col-span-2 space-y-6">
+          <div className="w-full">
+             <InferenceMonitor />
+          </div>
+
           <div className="bg-slate-950/40 backdrop-blur-xl border border-slate-900 p-6 rounded-xl">
              <div className="flex items-center justify-between mb-8">
                 <div className="flex items-center gap-3">
@@ -174,6 +189,21 @@ export default function SecurityPortal() {
            </div>
            
            <div className="p-4 space-y-4 max-h-[600px] overflow-y-auto custom-scrollbar">
+              {/* Cognitive Intercepts (Live AI Security) */}
+              {aiData?.incidents?.map((incident: any) => (
+                <div key={incident.id} className="p-3 bg-indigo-950/20 border border-indigo-500/30 rounded-lg">
+                   <div className="flex items-center justify-between mb-2">
+                      <span className="text-[8px] font-black px-1.5 py-0.5 rounded bg-indigo-500 text-white">
+                        AI_{incident.type}
+                      </span>
+                      <span className="text-[8px] text-slate-600 font-mono">{new Date(incident.timestamp).toLocaleTimeString()}</span>
+                   </div>
+                   <p className="text-[10px] font-bold text-indigo-200 mb-1">INTERCEPT: {incident.snippet}</p>
+                   <p className="text-[9px] text-indigo-400 font-mono uppercase font-black">Countermeasure: Blocked</p>
+                </div>
+              ))}
+
+              {/* Hardware Monitoring Logs */}
               {incidents.map((incident: any) => (
                 <div key={incident.id} className="p-3 bg-black/40 border border-red-900/20 rounded-lg">
                    <div className="flex items-center justify-between mb-2">

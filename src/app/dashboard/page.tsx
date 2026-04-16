@@ -3,6 +3,8 @@
 import { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useSession } from 'next-auth/react'
+import { useLiveEvents } from '@/lib/hooks/useLiveEvents'
+import { useCinemaEngine } from '@/lib/hooks/useCinemaEngine'
 
 // Core Mission Control Engines
 import { AgentOperationsCenter as AgentOpsPanel } from '@/components/core/AgentOperationsCenter'
@@ -34,6 +36,15 @@ import { LegalIntelligenceHub }    from '@/components/nexus/LegalIntelligenceHub
 import { StrategicReportView }     from '@/components/nexus/StrategicReportView'
 import { ValidationReport }        from '@/components/nexus/ValidationReport'
 import { StrategicNexusHub }       from '@/components/nexus/StrategicNexusHub'
+import { RevenueControlHub }        from '@/components/revenue/RevenueControlHub'
+import { AuditHub }               from '@/components/nexus/AuditHub'
+import { VesselMapOverlay }       from '@/components/nexus/VesselOverlay'
+import { CivilizationalPulseLens } from '@/components/nexus/CivilizationalPulseLens'
+import { RevenueVictoryHub }     from '@/components/revenue/RevenueVictoryHub'
+import { ControlPlaneGrid }      from '@/components/nexus/ControlPlaneGrid'
+import { SARDiscoveryEngine }    from '@/components/nexus/SARDiscoveryEngine'
+import { FutureWaveVisualizer }  from '@/components/nexus/FutureWaveVisualizer'
+import { RoboticsStackVisualizer } from '@/components/nexus/RoboticsStackVisualizer'
 
 import { EphemeralZone }       from '@/components/dashboard/EphemeralZone'
 import TrustPanel            from '@/components/operator/TrustPanel'
@@ -56,22 +67,22 @@ type PanelId =
   | 'health' | 'memory' | 'skills' | 'governance'
   | 'bus'    | 'log'    | 'search' | 'agent-ops'
   | 'cognitive'| 'nemoclaw' | 'model-perf' | 'ota' | 'sim2real' | 'fleet' | 'trust' | 'compliance' | 'atlas' | 'topology'
-  | 'maritime' | 'economic' | 'swarm' | 'asset' | 'energy' | 'legal' | 'strategic-report' | 'validation-report' | 'nexus-core'
+  | 'maritime' | 'economic' | 'swarm' | 'asset' | 'energy' | 'legal' | 'strategic-report' | 'validation-report' | 'nexus-core' | 'revenue' | 'audit' | 'robotics'
 
 const PANEL_KEYS: Record<string, PanelId> = {
   '1': 'health', '2': 'memory',   '3': 'skills',     '4': 'governance',
-  '5': 'bus',    '6': 'log',      '7': 'search',     '8': 'agent-ops',
+  '5': 'bus',    '6': 'log',      '7': 'maritime', '8': 'robotics',
   '9': 'cognitive','0': 'nemoclaw', '-': 'model-perf', '_': 'ota', '+': 'sim2real', '=': 'fleet', 'p': 'trust', 'c': 'compliance', 'A': 'atlas', 'N': 'topology',
-  'm': 'maritime', 'e': 'economic', 's': 'swarm', 'b': 'asset', 'g': 'energy', 'l': 'legal', 'r': 'strategic-report', 'v': 'validation-report', 'x': 'nexus-core',
+  'm': 'maritime', 'e': 'economic', 's': 'swarm', 'b': 'asset', 'g': 'energy', 'l': 'legal', 'r': 'strategic-report', 'v': 'validation-report', 'x': 'nexus-core', '$': 'revenue-victory', 'u': 'audit', 'E': 'environment', 'C': 'control-plane', 'O': 'space', 'W': 'simulation', 'M': 'mesh'
 }
 
 const DEFAULT_PANELS: PanelId[] = ['health', 'memory', 'skills', 'bus', 'agent-ops', 'model-perf', 'cognitive', 'fleet']
 
 const panelMotion = {
-  initial:   { opacity: 0, scale: 0.98, y: 12 },
-  animate:   { opacity: 1, scale: 1,    y: 0 },
-  exit:      { opacity: 0, scale: 0.98, y: 12 },
-  transition: { duration: 0.2, ease: [0.23, 1, 0.32, 1] },
+  initial:   { opacity: 0, scale: 0.98, y: 12, filter: "blur(12px)" },
+  animate:   { opacity: 1, scale: 1,    y: 0,  filter: "blur(0px)" },
+  exit:      { opacity: 0, scale: 0.98, y: 12, filter: "blur(12px)" },
+  transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] },
 }
 
 // ── Status bar ────────────────────────────────────────────────────────────────
@@ -143,6 +154,21 @@ export default function Dashboard() {
   // Real-time Event Bridging
   useActivityBridge()
 
+  const { controls, triggerEventBeat } = useCinemaEngine()
+
+  // The Dashboard listens to the universal Event Spine
+  useLiveEvents((event) => {
+    triggerEventBeat(event.type)
+
+    if (event.type === 'ANOMALY_DETECTED') {
+      openPanel('robotics');
+      openPanel('trust');
+    }
+    if (event.type === 'DEPLOY_COMPLETE') {
+      openPanel('trust');
+    }
+  })
+
   // Event Orchestration
   useBusEvent('infraconnect:open-panel',   ({ panel }) => openPanel(panel as PanelId),   [openPanel])
   useBusEvent('infraconnect:close-panel',  ({ panel }) => closePanel(panel as PanelId),  [closePanel])
@@ -177,25 +203,31 @@ export default function Dashboard() {
 
         <div className="flex items-center gap-1.5 shrink-0 pl-4 border-l border-white/5">
           {(Object.entries(PANEL_KEYS) as [string, PanelId][]).map(([key, id]) => (
-            <button
+            <motion.button
               key={id}
-              onClick={() => togglePanel(id)}
+              onClick={() => setTimeout(() => togglePanel(id), 80)}
+              whileHover={{ scale: 1.02, transition: { duration: 0.2, ease: [0.25, 0.8, 0.25, 1] } }}
+              whileTap={{ scale: 0.97 }}
               title={`Toggle ${id.replace('-', ' ')} (${key})`}
-              className={`w-7 h-7 rounded-lg text-[9px] font-black font-mono transition-all border shadow-sm ${
+              className={`w-8 h-8 rounded-lg text-xs tracking-widest font-mono transition-all border shadow-[0_10px_40px_rgba(0,0,0,0.4)] ${
                 activePanels.has(id)
-                  ? 'bg-cyan-500/10 border-cyan-500/40 text-cyan-400 shadow-cyan-500/10'
-                  : 'bg-transparent border-white/5 text-slate-600 hover:text-slate-400 hover:border-white/10'
+                  ? 'bg-white/10 backdrop-blur-2xl border-white/20 text-white shadow-[0_10px_40px_rgba(255,255,255,0.1)]'
+                  : 'bg-white/5 backdrop-blur-2xl border-white/5 text-white/50 hover:bg-white/10 hover:text-white/80'
               }`}
             >
               {key}
-            </button>
+            </motion.button>
           ))}
         </div>
       </header>
 
       {/* ── Intelligence Grid ── */}
-      <main className="flex-1 p-4 overflow-x-hidden overflow-y-auto custom-scrollbar">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 auto-rows-min max-w-[1800px] mx-auto">
+      <motion.main animate={controls} className="flex-1 p-8 overflow-x-hidden overflow-y-auto custom-scrollbar">
+        <div className="mb-12 text-sm text-white/50 font-mono tracking-widest uppercase flex items-center gap-2 px-1">
+          <div className="w-2 h-2 rounded-full bg-green-500/80 animate-pulse" />
+          Live system connected via InfraConnect Node
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 auto-rows-min max-w-[1800px] mx-auto">
           <AnimatePresence mode="popLayout">
             {activePanels.has('atlas') && (
               <motion.div key="atlas" layout {...panelMotion} className="lg:col-span-2 xl:col-span-2">
@@ -362,6 +394,60 @@ export default function Dashboard() {
               </motion.div>
             )}
 
+            {activePanels.has('revenue') && (
+              <motion.div key="revenue" layout {...panelMotion}>
+                <RevenueControlHub />
+              </motion.div>
+            )}
+
+            {activePanels.has('audit') && (
+              <motion.div key="audit" layout {...panelMotion}>
+                <AuditHub />
+              </motion.div>
+            )}
+
+            {activePanels.has('maritime') && (
+              <motion.div key="maritime" layout {...panelMotion}>
+                <VesselMapOverlay />
+              </motion.div>
+            )}
+
+            {activePanels.has('environment') && (
+              <motion.div key="environment" layout {...panelMotion}>
+                <CivilizationalPulseLens />
+              </motion.div>
+            )}
+
+            {activePanels.has('revenue-victory') && (
+              <motion.div key="revenue-victory" layout {...panelMotion}>
+                <RevenueVictoryHub />
+              </motion.div>
+            )}
+
+            {activePanels.has('control-plane') && (
+              <motion.div key="control-plane" layout {...panelMotion}>
+                <ControlPlaneGrid />
+              </motion.div>
+            )}
+
+            {activePanels.has('space') && (
+              <motion.div key="space" layout {...panelMotion}>
+                <SARDiscoveryEngine />
+              </motion.div>
+            )}
+
+            {activePanels.has('war-room') && (
+              <motion.div key="war-room" layout {...panelMotion}>
+                <FutureWaveVisualizer />
+              </motion.div>
+            )}
+
+            {activePanels.has('robotics') && (
+              <motion.div key="robotics" layout {...panelMotion}>
+                <RoboticsStackVisualizer />
+              </motion.div>
+            )}
+
           </AnimatePresence>
         </div>
       </main>
@@ -379,6 +465,7 @@ export default function Dashboard() {
       </footer>
 
       <ToastContainer />
+      <NotificationHub />
       <EphemeralZone />
     </div>
   )

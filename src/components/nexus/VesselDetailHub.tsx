@@ -7,11 +7,11 @@ import { motion } from 'framer-motion';
 export function VesselDetailHub({ name = "ADVANTAGE VITAL", type = "VLCC TANKER" }) {
   const specs = [
     { label: 'STATUS', value: 'UNDERWAY [ENGINE]', color: 'text-green-500' },
-    { label: 'FLAG', value: 'MARSHALL ISLANDS [MH]', color: 'text-white' },
+    { label: 'LOCOMOTION STABILITY', value: '98.42% [OPTIMAL]', color: 'text-cyan-400' },
+    { label: 'SVR BENCHMARK', value: '0.002% [SOTA]', color: 'text-emerald-500' },
     { label: 'SPEED / COURSE', value: '12.4 KN / 310°', color: 'text-white' },
-    { label: 'DRAUGHT', value: '18.1m FULL LOAD', color: 'text-cyan-400' },
     { label: 'DESTINATION', value: 'HORMUZ PORT [HAP]', color: 'text-amber-500' },
-    { label: 'ETA', value: 'APR 14, 04:30 UTC', color: 'text-white' },
+    { label: 'SAFETY KERNEL', value: 'LOCKED [ORIN-NX]', color: 'text-indigo-400' },
   ];
 
   return (

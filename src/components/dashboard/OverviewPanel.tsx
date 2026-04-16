@@ -14,6 +14,7 @@ import {
   Eye, Ship, AlertTriangle, Radio, ChevronRight,
   BookOpen, Clock
 } from 'lucide-react';
+import { RevenueIntelligencePanel } from '@/components/revenue/RevenueIntelligencePanel';
 
 /* ── Plane icons & colors ──────────────────────────────────────── */
 
@@ -613,6 +614,9 @@ export function OverviewPanel() {
           </span>
         </StatCard>
       </div>
+      
+      {/* ═══ Revenue Intelligence ═══ */}
+      <RevenueIntelligencePanel />
 
       {/* ═══ Three Planes Visualization ═══ */}
       <div className="space-y-3">

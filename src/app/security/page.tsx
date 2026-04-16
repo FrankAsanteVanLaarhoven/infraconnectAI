@@ -1,11 +1,20 @@
-'use client';
-
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ShieldAlert, Net, Network, Lock, Cpu, Server, Database, ArrowRight, CheckCircle2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { InfraConnectLogo } from '@/components/ui/InfraConnectLogo';
 
 export default function SecurityPortal() {
+  // Behavioral Tracking
+  useEffect(() => {
+    const email = localStorage.getItem('ic_lead_email');
+    if (email) {
+      fetch('/api/lead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, viewedSecurity: true })
+      }).catch(err => console.error("[TRACK_FAIL]", err));
+    }
+  }, []);
   return (
     <div className="min-h-screen bg-[#050505] text-[#f8fafc] font-mono selection:bg-blue-500/30 overflow-hidden relative">
       {/* Background gradients */}
@@ -23,17 +32,17 @@ export default function SecurityPortal() {
       </nav>
 
       <main className="relative z-10 max-w-6xl mx-auto px-6 py-24 flex flex-col items-center">
-        <div className="animate-in fade-in slide-in-from-bottom duration-1000 text-center w-full max-w-4xl">
+        <div className="text-center w-full max-w-4xl">
           <div className="inline-flex items-center justify-center px-3 py-1 mb-6 text-xs font-bold uppercase tracking-widest text-blue-400 border border-blue-900/50 bg-blue-950/20 rounded-full">
             <Lock className="w-3 h-3 mr-2" />
             Zero-Trust Connectivity
           </div>
-          <h1 className="text-4xl md:text-6xl font-black mb-8 tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-indigo-400 to-slate-200 uppercase">
-            Security by Architecture,<br />Not Afterthought
+          <h1 className="text-4xl md:text-6xl font-black mb-8 tracking-tighter text-white uppercase">
+            Security by Architecture
           </h1>
-          <p className="text-xl text-slate-400 leading-relaxed font-mono tracking-tight bg-slate-900/50 p-6 rounded border-l-2 border-blue-500/50 shadow-[0_0_30px_rgba(59,130,246,0.1)]">
-            InfraConnect operates <span className="text-blue-400 font-bold">inside your environment</span>. Your data never leaves your control unless explicitly permitted. 
-            All connections operate as purely outbound, end-to-end encrypted tunnels.
+          <p className="text-xl text-slate-400 font-mono tracking-tight bg-slate-900/50 p-6 rounded border-l-2 border-blue-500/50 shadow-[0_0_30px_rgba(59,130,246,0.1)]">
+            InfraConnect runs inside your environment. No inbound access. No data exposure. Full control. 
+            We ensure your infrastructure remains secure by design, not by patch.
           </p>
         </div>
 

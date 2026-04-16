@@ -11,6 +11,25 @@ import { InfraConnectLogo } from "@/components/ui/InfraConnectLogo";
 import { spatial } from "@/lib/spatialAudio";
 import { haptic } from "@/lib/haptics";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import Link from "next/link";
+
+const features = [
+  {
+    title: "See everything",
+    desc: "Real-time visibility into your infrastructure, no pipelines required",
+    icon: <Activity className="w-6 h-6 text-blue-400" />
+  },
+  {
+    title: "Understand instantly",
+    desc: "AI explains what’s happening and why",
+    icon: <Database className="w-6 h-6 text-indigo-400" />
+  },
+  {
+    title: "Act safely",
+    desc: "Every action is verified, controlled, and auditable",
+    icon: <ShieldAlert className="w-6 h-6 text-green-400" />
+  }
+];
 
 function MiniDashboardPreview({ act }: { act: number }) {
   const [anomalyCount, setAnomalyCount] = useState(0);
@@ -218,8 +237,16 @@ export default function LandingPage() {
     e.preventDefault();
     setEmailStatus('sending');
     try {
-      const res = await fetch('/api/contact', { method: 'POST', body: JSON.stringify(contactState) });
+      const res = await fetch('/api/lead', { 
+        method: 'POST', 
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(contactState) 
+      });
       if (!res.ok) throw new Error("Payload delivery rejected");
+      
+      // Persist email for behavioral tracking across other pages (Theatre, Security)
+      localStorage.setItem('ic_lead_email', contactState.email);
+      
       setEmailStatus('sent');
       setTimeout(() => setEmailStatus('idle'), 3000);
     } catch {
@@ -393,133 +420,145 @@ export default function LandingPage() {
         )}
       </AnimatePresence>
 
-      <main className="relative z-10 flex-1 flex flex-col items-center justify-center px-4 pt-16 pb-32 text-center w-full h-full">
-        <AnimatePresence mode="wait">
-          {act <= 2 && (
-            <motion.div key="hero-text" initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20, filter: 'blur(10px)' }} transition={{ duration: 1, ease: "easeOut" }} className="w-full max-w-5xl mx-auto space-y-6 flex flex-col items-center">
-              <Badge variant="outline" className="border-slate-800 text-slate-400 bg-black/40 px-3 py-1 rounded-none text-[10px] uppercase tracking-widest mb-4">
-                <Activity className="w-3 h-3 mr-2 inline-block animate-pulse text-slate-300" />
-                Infrastructure Online
-              </Badge>
-              
-              <div className="w-full flex items-center justify-center -mt-4 mb-2">
-                {act === 0 ? (
-                   <h1 className="text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.4)] text-3xl md:text-[5rem] tracking-tight font-bold">INFRASTRUCTURE ONLINE</h1>
-                ) : (
-                   <motion.h1 initial={{ scale: 0.95, opacity: 0, filter: 'blur(10px)' }} animate={{ scale: 1, opacity: 1, filter: 'blur(0px)' }} transition={{ duration: 1.5, type: 'spring' }} className="text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.4)] text-4xl leading-tight md:text-[5rem] tracking-tight font-extrabold max-w-[1200px]">
-                     Autonomous Infrastructure Control
-                   </motion.h1>
-                )}
-              </div>
+      <main className="relative z-10 flex-1 flex flex-col items-center px-4 w-full h-full overflow-y-auto overflow-x-hidden custom-scrollbar">
+        <div className="flex-1 flex flex-col items-center justify-center min-h-[90vh] text-center pt-16">
+          <AnimatePresence mode="wait">
+            {act <= 2 && (
+              <motion.div key="hero-text" initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20, filter: 'blur(10px)' }} transition={{ duration: 1, ease: "easeOut" }} className="w-full max-w-5xl mx-auto space-y-6 flex flex-col items-center">
+                <Badge variant="outline" className="border-slate-800 text-slate-400 bg-black/40 px-3 py-1 rounded-none text-[10px] uppercase tracking-widest mb-4">
+                  <Activity className="w-3 h-3 mr-2 inline-block animate-pulse text-slate-300" />
+                  Infrastructure Online
+                </Badge>
+                
+                <div className="w-full flex flex-col items-center justify-center -mt-4 mb-2">
+                  <h1 className="text-white drop-shadow-[0_0_25px_rgba(255,255,255,0.2)] text-5xl leading-tight md:text-[6rem] tracking-tighter font-black max-w-[1200px] uppercase">
+                    Connect. <br /> See. <br /> Act.
+                  </h1>
+                </div>
 
-              <motion.p initial={{ opacity: 0 }} animate={{ opacity: act >= 1 ? 1 : 0 }} transition={{ duration: 1 }} className="mt-8 text-lg font-mono text-slate-400 max-w-2xl mx-auto leading-relaxed pl-4 pb-4">
-                 <span className="text-white font-bold block mb-2">Observe. Decide. Act.</span>
-                 Without APIs. Without exposure.
-              </motion.p>
+                <motion.p initial={{ opacity: 0 }} animate={{ opacity: act >= 1 ? 1 : 0 }} transition={{ duration: 1 }} className="mt-8 text-lg md:text-xl font-mono text-slate-400 max-w-2xl mx-auto leading-relaxed pb-4">
+                   <span className="text-white font-bold block mb-4 uppercase tracking-[0.2em]">Real-time Infrastructure Intelligence</span>
+                   InfraConnect lets you see, understand, and act on your infrastructure in real time — without rebuilding your stack.
+                </motion.p>
 
-              <motion.div initial={{ opacity: 0 }} animate={{ opacity: act >= 1 ? 1 : 0 }} transition={{ duration: 1, delay: 0.5 }} className="flex flex-col sm:flex-row items-center justify-center pt-8 w-full max-w-md mx-auto relative z-20 gap-4">
-                  <Button onClick={handleInitiate} disabled={act !== 1} size="lg" className={`flex-1 w-full h-14 rounded-none text-[12px] uppercase tracking-widest font-black transition-all duration-700 ${act === 1 ? 'bg-white text-black hover:bg-slate-300 shadow-[0_0_30px_rgba(255,255,255,0.3)]' : 'bg-green-600 text-white shadow-[0_0_40px_rgba(34,197,94,0.4)] cursor-default'}`}>
-                    {act === 1 ? 'INITIATE' : 'AUTHORISED'}
-                  </Button>
-                  
-                  <Dialog>
-                    <DialogTrigger asChild>
-                      <Button size="lg" className="flex-1 w-full h-14 bg-transparent border border-white/20 text-white hover:bg-white/5 rounded-none text-[12px] uppercase tracking-widest font-black shadow-[0_0_15px_rgba(255,255,255,0.05)]">
-                        WATCH DEMO
-                      </Button>
-                    </DialogTrigger>
-                    <DialogContent className="bg-[#050505] border border-slate-800 text-white font-mono rounded-none max-w-4xl max-h-[90vh] overflow-y-auto p-0 gap-0">
-                      <div className="w-full relative aspect-video bg-black border-b border-white/10">
-                        <video controls autoPlay className="w-full h-full object-cover">
-                          <source src="/cinematic-trailer-4k.mp4" type="video/mp4" />
-                          Your browser does not support the video tag.
-                        </video>
-                      </div>
-                      <div className="p-6 md:p-8 bg-gradient-to-b from-[#0a0a0a] to-[#050505]">
+                <motion.div initial={{ opacity: 0 }} animate={{ opacity: act >= 1 ? 1 : 0 }} transition={{ duration: 1, delay: 0.5 }} className="flex flex-col sm:flex-row items-center justify-center pt-8 w-full max-w-md mx-auto relative z-20 gap-4">
+                    <Button onClick={handleInitiate} disabled={act !== 1} size="lg" className={`flex-1 w-full h-16 rounded-none text-[14px] uppercase tracking-widest font-black transition-all duration-700 ${act === 1 ? 'bg-white text-black hover:bg-slate-300 shadow-[0_0_40px_rgba(255,255,255,0.3)]' : 'bg-green-600 text-white shadow-[0_0_50px_rgba(34,197,94,0.4)] cursor-default'}`}>
+                      {act === 1 ? '▶ Watch Demo' : 'AUTHORISED'}
+                    </Button>
+                    
+                    <Dialog>
+                      <DialogTrigger asChild>
+                        <Button size="lg" variant="secondary" className="flex-1 w-full h-16 bg-transparent border border-white/20 text-white hover:bg-white/5 rounded-none text-[14px] uppercase tracking-widest font-black">
+                          Request Access
+                        </Button>
+                      </DialogTrigger>
+                      <DialogContent className="bg-[#050505] border border-slate-800 text-white font-mono rounded-none sm:max-w-md">
                         <DialogHeader>
-                          <DialogTitle className="text-xl font-bold uppercase tracking-widest border-b border-slate-800 pb-2 text-cyan-400">Enterprise Access Clearance</DialogTitle>
-                          <DialogDescription className="text-xs uppercase text-slate-400 tracking-widest pt-2 leading-relaxed">
-                            To deploy autonomous infrastructure across your fleet, verification is required. Lodge your request below to establish a secure bridge with our engineering governance node.
-                          </DialogDescription>
+                          <DialogTitle className="text-sm font-bold uppercase tracking-widest border-b border-slate-800 pb-2">Central Routing</DialogTitle>
+                          <DialogDescription className="text-[10px] uppercase text-slate-500 tracking-widest pt-2">Establish a secure connection.</DialogDescription>
                         </DialogHeader>
-                        <form onSubmit={sendEnterpriseRequest} className="flex flex-col gap-4 mt-6">
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div>
-                              <label className="text-[10px] uppercase text-slate-400 tracking-widest mb-1 block">Authentication Identifier</label>
-                              <input required type="email" placeholder="EXECUTIVE@DOMAIN.COM" className="w-full bg-black border border-slate-800 p-3 text-xs uppercase focus:border-cyan-500 outline-none transition-colors" value={contactState.email} onChange={e => setContactState({...contactState, email: e.target.value})} />
-                            </div>
-                            <div>
-                              <label className="text-[10px] uppercase text-slate-400 tracking-widest mb-1 block">Routing Designation</label>
-                              <select className="w-full bg-black border border-slate-800 p-3 text-xs uppercase focus:border-cyan-500 outline-none text-slate-300 transition-colors" value={contactState.department} onChange={e => setContactState({...contactState, department: e.target.value})}>
-                                 <option value="hello">Deployment (General)</option>
-                                 <option value="frank">Executive Node</option>
-                                 <option value="security">Compliance Firewall</option>
-                                 <option value="support">Technical Bridge</option>
-                              </select>
-                            </div>
-                          </div>
-                          <div>
-                            <label className="text-[10px] uppercase text-slate-400 tracking-widest mb-1 block">Deployment Specification</label>
-                            <textarea required placeholder="OUTLINE YOUR INFRASTRUCTURE TARGETS..." className="w-full bg-black border border-slate-800 p-3 text-xs uppercase focus:border-cyan-500 outline-none min-h-[80px] transition-colors" value={contactState.intent} onChange={e => setContactState({...contactState, intent: e.target.value})} />
-                          </div>
-                          <Button type="submit" disabled={emailStatus==='sending'} className={`text-white rounded-none uppercase text-xs tracking-[0.2em] h-12 transition-all duration-500 font-bold ${emailStatus === 'sending' ? 'bg-cyan-600' : emailStatus === 'sent' ? 'bg-green-600 shadow-[0_0_20px_rgba(34,197,94,0.3)]' : 'bg-cyan-900 hover:bg-cyan-700 shadow-[0_0_15px_rgba(6,182,212,0.2)]'}`}>
-                             {emailStatus === 'sending' ? 'TRANSMITTING...' : emailStatus === 'sent' ? 'CLEARANCE LOGGED' : 'REQUEST FLEET ACCESS'}
+                        <form onSubmit={sendEnterpriseRequest} className="flex flex-col gap-4 mt-2">
+                          <div><label className="text-[10px] uppercase text-slate-400">Authentication</label><input required type="email" placeholder="YOU@COMPANY.COM" className="w-full bg-black border border-slate-800 p-2 text-xs" value={contactState.email} onChange={e => setContactState({...contactState, email: e.target.value})} /></div>
+                          <Button type="submit" disabled={emailStatus==='sending'} className="bg-white text-black rounded-none uppercase text-xs font-black h-12">
+                             {emailStatus === 'sending' ? 'TRANSMITTING...' : 'Get Access'}
                           </Button>
                         </form>
-                      </div>
-                    </DialogContent>
-                  </Dialog>
+                      </DialogContent>
+                    </Dialog>
+                </motion.div>
+                
+                {act === 2 && (
+                  <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-[10px] text-slate-500 uppercase tracking-[0.3em] font-mono mt-8 animate-pulse text-center">CONNECTING TO SYSTEMS…</motion.div>
+                )}
               </motion.div>
-              
-              {act === 2 && (
-                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-[10px] text-slate-500 uppercase tracking-[0.3em] font-mono mt-8 animate-pulse">CONNECTING TO SYSTEMS…</motion.div>
-              )}
-            </motion.div>
-          )}
-        </AnimatePresence>
+            )}
+          </AnimatePresence>
 
-        <AnimatePresence>
-          {act >= 2 && act < 6 && (
-            <motion.div key="demo-container" initial={{ opacity: 0, y: 100, scale: 0.9, filter: 'blur(20px)' }} animate={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }} exit={{ opacity: 0, scale: 1.1, filter: 'blur(10px)' }} transition={{ duration: 1.8, delay: act === 2 ? 1 : 0, ease: [0.16, 1, 0.3, 1] }} className="w-full absolute inset-0 flex flex-col items-center justify-center pointer-events-none mt-20">
-               <motion.div className="w-full px-4" animate={{ scale: act >= 4 ? 0.95 : 1, y: act >= 4 ? -40 : 0 }} transition={{ duration: 2 }}>
-                 <MiniDashboardPreview act={act} />
-               </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+          <AnimatePresence>
+            {act >= 2 && act < 6 && (
+              <motion.div key="demo-container" initial={{ opacity: 0, y: 100, scale: 0.9, filter: 'blur(20px)' }} animate={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }} exit={{ opacity: 0, scale: 1.1, filter: 'blur(10px)' }} transition={{ duration: 1.8, delay: act === 2 ? 1 : 0, ease: [0.16, 1, 0.3, 1] }} className="w-full flex-1 flex flex-col items-center justify-center pointer-events-none">
+                 <motion.div className="w-full px-4" animate={{ scale: act >= 4 ? 0.95 : 1, y: act >= 4 ? -40 : 0 }} transition={{ duration: 2 }}>
+                   <MiniDashboardPreview act={act} />
+                 </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
 
+        {/* --- Post-Cinematic Product Sections --- */}
         <AnimatePresence>
-          {act === 6 && (
-            <motion.div key="final-close" initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 2 }} className="absolute inset-0 flex flex-col items-center justify-center z-50 bg-[#020202]/90 backdrop-blur-sm">
-               <motion.p initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1 }} className="text-2xl md:text-4xl text-white font-bold tracking-tight mb-12">
-                  Your infrastructure is now autonomous.
-               </motion.p>
-               
-               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 3 }}>
-                 <Dialog>
-                   <DialogTrigger asChild>
-                     <Button className="h-14 px-12 bg-white text-black hover:bg-slate-200 rounded-none text-xs uppercase tracking-[0.2em] font-black shadow-[0_0_30px_rgba(255,255,255,0.2)]">Request Access</Button>
-                   </DialogTrigger>
-                   <DialogContent className="bg-[#050505] border border-slate-800 text-white font-mono rounded-none sm:max-w-md">
-                     <DialogHeader>
-                       <DialogTitle className="text-sm font-bold uppercase tracking-widest border-b border-slate-800 pb-2">Central Routing</DialogTitle>
-                       <DialogDescription className="text-[10px] uppercase text-slate-500 tracking-widest pt-2">Establish a secure connection.</DialogDescription>
-                     </DialogHeader>
-                     <form onSubmit={sendEnterpriseRequest} className="flex flex-col gap-4 mt-2">
-                       <div><label className="text-[10px] uppercase text-slate-400">Authentication</label><input required type="email" placeholder="EXECUTIVE@DOMAIN.COM" className="w-full bg-black border border-slate-800 p-2 text-xs" value={contactState.email} onChange={e => setContactState({...contactState, email: e.target.value})} /></div>
-                       <div><label className="text-[10px] uppercase text-slate-400">Routing Designation</label><select className="w-full bg-black border border-slate-800 p-2 text-xs" value={contactState.department} onChange={e => setContactState({...contactState, department: e.target.value})}><option value="hello">General (hello@)</option><option value="frank">Executive (frank@)</option><option value="security">Compliance (security@)</option><option value="support">Technical (support@)</option></select></div>
-                       <div><label className="text-[10px] uppercase text-slate-400">Secure Payload</label><textarea required placeholder="ENTER REQUIREMENTS..." className="w-full bg-black border border-slate-800 p-2 text-xs min-h-[100px]" value={contactState.intent} onChange={e => setContactState({...contactState, intent: e.target.value})} /></div>
-                       <Button type="submit" disabled={emailStatus==='sending'} className={`text-white rounded-none uppercase text-xs transition-colors duration-500 ${emailStatus === 'sending' ? 'bg-amber-600 hover:bg-amber-700' : emailStatus === 'sent' ? 'bg-green-600 hover:bg-green-700' : 'bg-red-600 hover:bg-red-700'}`}>
-                         {emailStatus === 'sending' ? 'TRANSMITTING...' : emailStatus === 'sent' ? 'SECURED' : 'DISPATCH PAYLOAD'}
-                       </Button>
-                     </form>
-                   </DialogContent>
-                 </Dialog>
-               </motion.div>
-               
-               <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 4 }} className="mt-6 text-[10px] text-slate-500 uppercase tracking-widest font-mono">
-                  Private deployment for qualified teams only.
-               </motion.p>
+          {act >= 5 && (
+            <motion.div 
+              initial={{ opacity: 0, y: 100 }} 
+              animate={{ opacity: 1, y: 0 }} 
+              transition={{ duration: 2, delay: 1 }}
+              className="w-full"
+            >
+              {/* Blunt Line Strip */}
+              <section className="text-center py-24 text-2xl md:text-3xl text-slate-500 font-black uppercase tracking-tighter max-w-4xl mx-auto border-t border-white/5">
+                We don’t replace your stack.
+                <br />
+                <span className="text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]">
+                  We make it intelligent, controllable, and provable.
+                </span>
+              </section>
+
+              {/* What We Actually Do (3 Cards) */}
+              <section className="grid grid-cols-1 md:grid-cols-3 gap-8 py-24 max-w-6xl mx-auto border-t border-white/5">
+                {features.map((f, i) => (
+                  <div key={i} className="bg-[#0a0b0c]/50 border border-slate-800 p-8 rounded-xl backdrop-blur-sm group hover:border-slate-600 transition-colors">
+                    <div className="mb-6">{f.icon}</div>
+                    <h3 className="text-xl font-bold text-white uppercase tracking-widest mb-4">{f.title}</h3>
+                    <p className="text-sm text-slate-500 leading-relaxed font-mono">{f.desc}</p>
+                  </div>
+                ))}
+              </section>
+
+              {/* Trust Strip (Critical for Enterprise) */}
+              <section className="py-24 border-t border-white/5 max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-12">
+                <div className="flex-1 space-y-6">
+                  <h2 className="text-3xl font-black uppercase tracking-widest text-white leading-tight">Built for secure environments</h2>
+                  <p className="text-slate-500 font-mono text-sm leading-relaxed">
+                    InfraConnect was designed from the ground up for high-trust infrastructure. Data never leaves your VPC. Control remains in your hands.
+                  </p>
+                </div>
+                <ul className="flex-1 space-y-4 font-mono text-[11px] text-slate-400 uppercase tracking-widest">
+                  <li className="flex items-center gap-4 bg-black/40 border border-white/5 p-4 rounded"><div className="w-1.5 h-1.5 bg-blue-500" /> No inbound ports</li>
+                  <li className="flex items-center gap-4 bg-black/40 border border-white/5 p-4 rounded"><div className="w-1.5 h-1.5 bg-blue-500" /> Runs inside your VPC</li>
+                  <li className="flex items-center gap-4 bg-black/40 border border-white/5 p-4 rounded"><div className="w-1.5 h-1.5 bg-blue-500" /> Data never leaves your control</li>
+                </ul>
+              </section>
+
+              {/* Demo Entry */}
+              <section className="text-center py-32 border-t border-white/5">
+                 <h2 className="text-4xl font-black uppercase tracking-tighter text-white mb-6">See it in action</h2>
+                 <p className="text-slate-500 font-mono tracking-widest uppercase text-sm mb-12">Watch InfraConnect connect to a live system in seconds</p>
+                 <Link href="/theatre?auto=true">
+                   <Button size="lg" className="h-16 px-12 bg-blue-600 hover:bg-blue-500 text-white font-black uppercase tracking-[0.2em] rounded-none shadow-[0_0_30px_rgba(37,99,235,0.3)]">
+                     Launch Demo
+                   </Button>
+                 </Link>
+              </section>
+
+              {/* Final CTA */}
+              <section className="text-center py-48 border-t border-white/5">
+                <h2 className="text-5xl font-black uppercase tracking-tighter text-white mb-8">Request Access</h2>
+                <p className="text-slate-500 font-mono tracking-widest uppercase text-sm mb-12">
+                  Private deployment for qualified teams.
+                </p>
+
+                <div className="max-w-md mx-auto flex gap-2">
+                  <input 
+                    placeholder="you@company.com" 
+                    className="flex-1 bg-black border border-slate-800 px-6 font-mono text-xs uppercase tracking-widest outline-none focus:border-white transition-colors h-14"
+                    value={contactState.email}
+                    onChange={e => setContactState({...contactState, email: e.target.value})}
+                  />
+                  <Button onClick={sendEnterpriseRequest} className="bg-white text-black px-8 font-black uppercase text-xs tracking-widest hover:bg-slate-200 h-14 rounded-none">
+                    Get Access
+                  </Button>
+                </div>
+              </section>
             </motion.div>
           )}
         </AnimatePresence>

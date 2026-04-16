@@ -17,6 +17,7 @@ import { VV_CHECKLIST, generateLiveTelemetry, ResourceTelemetry, SUPER_AGENT_PRE
 
 export function ValidationReport() {
   const [telemetry, setTelemetry] = useState<ResourceTelemetry>(generateLiveTelemetry());
+  const [isMissionComplete, setIsMissionComplete] = useState(false);
   
   useEffect(() => {
     const interval = setInterval(() => {
@@ -24,6 +25,67 @@ export function ValidationReport() {
     }, 2500);
     return () => clearInterval(interval);
   }, []);
+
+  const handleFinishMission = () => {
+     setIsMissionComplete(true);
+  };
+
+  if (isMissionComplete) {
+     return (
+        <motion.div 
+           initial={{ opacity: 0, scale: 0.95 }}
+           animate={{ opacity: 1, scale: 1 }}
+           className="w-full h-full bg-slate-950 border-2 border-emerald-500/50 rounded-2xl p-12 flex flex-col items-center justify-center text-center font-mono relative overflow-hidden"
+        >
+           {/* Background Seal */}
+           <div className="absolute inset-0 opacity-[0.03] pointer-events-none flex items-center justify-center">
+              <ShieldCheck className="w-[400px] h-[400px] text-emerald-500" />
+           </div>
+
+           <div className="relative z-10 space-y-6">
+              <motion.div 
+                 initial={{ y: 20 }}
+                 animate={{ y: 0 }}
+                 className="p-4 bg-emerald-500/10 border border-emerald-500/30 rounded-full inline-block mb-4"
+              >
+                 <CheckCircle2 className="w-12 h-12 text-emerald-400" />
+              </motion.div>
+              
+              <div>
+                 <h2 className="text-3xl font-black text-white uppercase tracking-[0.5em] mb-2 font-mono">Mission Accomplished</h2>
+                 <p className="text-xs text-emerald-500 font-black uppercase tracking-widest">Sovereign Validation // Cycle 821-X-PHI</p>
+              </div>
+
+              <div className="w-64 h-[2px] bg-emerald-500/20 mx-auto" />
+
+              <div className="grid grid-cols-3 gap-8 max-w-lg">
+                 <div className="text-center">
+                    <span className="text-[10px] text-slate-500 uppercase font-black">ROI Delta</span>
+                    <p className="text-xl font-black text-white">+420%</p>
+                 </div>
+                 <div className="text-center">
+                    <span className="text-[10px] text-slate-500 uppercase font-black">Resilience</span>
+                    <p className="text-xl font-black text-white">99.8%</p>
+                 </div>
+                 <div className="text-center">
+                    <span className="text-[10px] text-slate-500 uppercase font-black">Audit Stance</span>
+                    <p className="text-xl font-black text-white">IMMUTABLE</p>
+                 </div>
+              </div>
+
+              <div className="pt-8 flex gap-4 justify-center">
+                 <button className="px-6 py-2 bg-emerald-600 hover:bg-emerald-500 text-black text-[10px] font-black uppercase tracking-widest rounded transition-all">Download Audit Report</button>
+                 <button 
+                  onClick={() => setIsMissionComplete(false)}
+                  className="px-6 py-2 bg-transparent border border-white/10 hover:border-white/20 text-slate-400 text-[10px] font-black uppercase tracking-widest rounded transition-all"
+                 >
+                    Return to Mission Control
+                 </button>
+              </div>
+           </div>
+        </motion.div>
+     );
+  }
 
   return (
     <div className="w-full h-full bg-slate-950/90 backdrop-blur-3xl border border-emerald-500/30 rounded-2xl overflow-hidden flex flex-col font-mono relative">
@@ -35,9 +97,12 @@ export function ValidationReport() {
                <p className="text-[8px] text-slate-500 font-bold uppercase tracking-widest leading-none">Verification // Validation // Telemetry</p>
             </div>
          </div>
-         <div className="px-3 py-1 bg-emerald-500/10 rounded border border-emerald-500/30 text-[9px] font-black text-emerald-400 animate-pulse">
-            AUDIT: PASSED
-         </div>
+         <button 
+            onClick={handleFinishMission}
+            className="px-3 py-1 bg-emerald-500/10 rounded border border-emerald-500/30 text-[9px] font-black text-emerald-400 hover:bg-emerald-500/20 transition-all"
+         >
+            SYNTHESIZE MISSION
+         </button>
       </div>
 
       <div className="flex-1 flex overflow-hidden p-6 gap-6 relative z-10">

@@ -6,11 +6,17 @@ import { useHUDStore } from '@/store/hud-store';
 import { useFleetStream } from '@/lib/hooks/useFleetStream';
 import { useBusEvent } from '@/lib/hooks/useBusEvent';
 import { Activity, ShieldAlert, Cpu, Zap, Radio, Target } from 'lucide-react';
+import { initializeControlPlane } from '@/lib/nexus/orchestrator/init';
 
 export function NeuralHUD() {
   const { isActive, toggleHUD, focusMode } = useHUDStore();
   const { events, lastTelemetry, lastIncident } = useFleetStream();
   const [glitchTrigger, setGlitchTrigger] = useState(false);
+
+  // Initialize Sovereign Orchestration Loop
+  useEffect(() => {
+    initializeControlPlane();
+  }, []);
 
   // Sync /hud command from bus
   useBusEvent('infraconnect:toggle-panel', ({ panel }) => {

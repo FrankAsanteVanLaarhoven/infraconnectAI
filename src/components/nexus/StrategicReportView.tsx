@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ShieldCheck, TrendingUp, Cpu, Database, Users, Settings, Zap, ChevronLeft, ChevronRight, BarChart4, Factory } from 'lucide-react';
+import { ShieldCheck, TrendingUp, Cpu, Database, Users, Settings, Zap, ChevronLeft, ChevronRight, BarChart4, Factory, Brain } from 'lucide-react';
 import { FIVE_FACTORS } from '@/lib/nexus/swarm';
 import { useTranslation } from '@/components/providers/LocalizationProvider';
 

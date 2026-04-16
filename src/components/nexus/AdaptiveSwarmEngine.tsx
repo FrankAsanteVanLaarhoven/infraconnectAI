@@ -20,16 +20,29 @@ import {
 } from 'lucide-react';
 import { WORKER_STACK, SHARED_ARCHITECTURE, COGNITIVE_MODEL } from '@/lib/nexus/swarm';
 import { useTranslation } from '@/components/providers/LocalizationProvider';
+import { getShortFingerprint, generateAgentFingerprint } from '@/lib/security/fingerprint';
 
 export function AdaptiveSwarmEngine() {
   const { t } = useTranslation();
   const [activeStep, setActiveStep] = useState(0);
   const [viewMode, setViewMode] = useState<'ORCHESTRATION' | 'CHAIN'>('ORCHESTRATION');
+  const [logs, setLogs] = useState<string[]>(["[SYSTEM] Neural Grid Primary Logic Initializing..."]);
   const steps = ['DECOMPOSE', 'MAP DEPS', 'SEQUENCE', 'ALLOCATE', 'EXECUTE'];
+
+  // Fingerprinted Agent Stack
+  const fingerprintedWorkers = WORKER_STACK.map(w => ({
+    ...w,
+    fingerprint: generateAgentFingerprint(w.role)
+  }));
 
   useEffect(() => {
     const interval = setInterval(() => {
       setActiveStep(prev => (prev + 1) % steps.length);
+      
+      // Dynamic log generation
+      const agent = fingerprintedWorkers[Math.floor(Math.random() * fingerprintedWorkers.length)];
+      const newLog = `[${new Date().toLocaleTimeString()}] ${agent.role} (${getShortFingerprint(agent.fingerprint.hash)}) ${agent.capability === 'Writing Code' ? 'Committing' : 'Validating'} node fragment...`;
+      setLogs(prev => [newLog, ...prev].slice(0, 15));
     }, 4000);
     return () => clearInterval(interval);
   }, []);
@@ -103,12 +116,12 @@ export function AdaptiveSwarmEngine() {
 
                     {/* Worker Stack */}
                     <div className="flex-1 w-full space-y-3 overflow-y-auto pr-2 custom-scrollbar">
-                       {WORKER_STACK.map(worker => (
+                       {fingerprintedWorkers.map(worker => (
                           <motion.div 
                             key={worker.id}
                             initial={{ opacity: 0, x: -20 }}
                             animate={{ opacity: 1, x: 0 }}
-                            className="p-3 bg-slate-900/40 rounded-lg border border-slate-800/50 flex flex-col gap-2 group hover:border-indigo-500/20 transition-all"
+                            className="p-3 bg-slate-900/40 rounded-lg border border-slate-800/50 flex flex-col gap-2 group hover:border-indigo-500/20 transition-all font-mono"
                           >
                              <div className="flex justify-between items-center">
                                 <div className="flex items-center gap-2">
@@ -121,7 +134,12 @@ export function AdaptiveSwarmEngine() {
                                       {worker.role === 'DEPLOYMENT' && <Globe className="w-3 h-3 text-emerald-400" />}
                                    </div>
                                    <div>
-                                      <p className="text-[9px] font-black text-white tracking-widest uppercase">{worker.role}</p>
+                                      <p className="text-[9px] font-black text-white tracking-widest uppercase flex items-center gap-2">
+                                         {worker.role} 
+                                         <span className="text-[7px] text-indigo-600 bg-indigo-950/40 px-1 rounded">
+                                            ID:{getShortFingerprint(worker.fingerprint.hash)}
+                                         </span>
+                                      </p>
                                       <p className="text-[7px] text-slate-500 font-bold uppercase">{worker.capability}</p>
                                    </div>
                                 </div>
@@ -142,6 +160,22 @@ export function AdaptiveSwarmEngine() {
                              </div>
                           </motion.div>
                        ))}
+                    </div>
+
+                    {/* Live Swarm Terminal */}
+                    <div className="w-full h-40 bg-black/60 border border-indigo-900/40 rounded-xl p-3 font-mono overflow-hidden flex flex-col group">
+                       <div className="flex items-center justify-between mb-2">
+                          <span className="text-[8px] font-black text-indigo-400 uppercase tracking-widest">Live Swarm Trace</span>
+                          <span className="text-[7px] text-indigo-900 font-bold uppercase group-hover:text-indigo-600 transition-colors">Verifying IDs...</span>
+                       </div>
+                       <div className="flex-1 space-y-1 overflow-y-auto custom-scrollbar-mini">
+                          {logs.map((log, i) => (
+                             <p key={i} className="text-[8px] text-slate-500 leading-tight">
+                                <span className="text-indigo-900 opacity-50 mr-2">{'>'}</span>
+                                {log}
+                             </p>
+                          ))}
+                       </div>
                     </div>
                  </div>
 

@@ -37,11 +37,43 @@ interface PanelInfo {
     description: string;
 }
 
+import { tacticalBus } from '@/lib/events/bus';
+import { broadcastAlert } from '@/lib/notifications/notificationEngine';
+
 export function TacticalSettingsBar({ onReset }: { onReset?: () => void }) {
-  const [sharpen, setSharpen] = useState([49]);
+  const [sharpen, setSharpen] = useState([49]); // AI Aggression %
+  const [isArmed, setIsArmed] = useState(false);
   const [activeLayout, setActiveLayout] = useState('Sovereign_09');
   const [isSyncing, setIsSyncing] = useState(false);
   const { t } = useTranslation();
+
+  const handleArmToggle = () => {
+     const nextState = !isArmed;
+     setIsArmed(nextState);
+     
+     if (nextState) {
+        tacticalBus.dispatch({ type: 'MISSION_ARM', payload: { level: 'YELLOW' } });
+        broadcastAlert({
+           category: 'SECURITY',
+           severity: 'HIGH',
+           title: 'SYSTEM ARMED',
+           message: 'Autonomous agents are now authorized for external mission engagement.'
+        });
+     } else {
+        tacticalBus.dispatch({ type: 'MISSION_DISARM', payload: {} });
+        broadcastAlert({
+           category: 'SECURITY',
+           severity: 'MEDIUM',
+           title: 'SYSTEM DISARMED',
+           message: 'External mission engagement has been locked to PASSIVE mode.'
+        });
+     }
+  };
+
+  useEffect(() => {
+     // Broadcast aggression changes
+     tacticalBus.dispatch({ type: 'MISSION_PIVOT', payload: { sector: 'STRATEGY', reason: `Aggression recalibrated to ${sharpen}%` } });
+  }, [sharpen]);
 
   const panels: PanelInfo[] = [
     { id: 'awareness', label: t('p.awareness'), icon: Monitor, status: 'SYNC', description: 'Core Layout' },
@@ -125,12 +157,40 @@ export function TacticalSettingsBar({ onReset }: { onReset?: () => void }) {
          </div>
       </div>
 
-      {/* 2. RESONANCE FREQUENCY (TECHNICAL SLIDER) */}
+      {/* 2. MISSION INTERLOCK (ARM/DISARM) */}
+      <div className="flex flex-col gap-4">
+         <button 
+           onClick={handleArmToggle}
+           className={cn(
+             "w-full p-4 rounded-2xl border transition-all duration-500 relative overflow-hidden group/arm",
+             isArmed 
+               ? "bg-red-950/20 border-red-500/50 shadow-[0_0_30px_rgba(239,68,68,0.2)]" 
+               : "bg-emerald-950/10 border-emerald-500/30 hover:bg-emerald-500/10"
+           )}
+         >
+            <div className="flex items-center justify-between relative z-10">
+               <div className="flex items-center gap-3">
+                  <div className={cn("p-1.5 rounded-lg border", isArmed ? "bg-red-500/20 border-red-500/40" : "bg-emerald-500/20 border-emerald-500/40")}>
+                     <Crosshair className={cn("w-4 h-4", isArmed ? "text-red-500 animate-pulse" : "text-emerald-500")} />
+                  </div>
+                  <div className="text-left">
+                     <span className={cn("text-[10px] font-black uppercase tracking-[0.3em]", isArmed ? "text-red-500" : "text-emerald-500")}>
+                        {isArmed ? 'System Armed' : 'System Disarmed'}
+                     </span>
+                     <p className="text-[7px] text-slate-500 font-bold uppercase tracking-tighter">Autonomous Engagement Interlock</p>
+                  </div>
+               </div>
+               <div className={cn("w-2 h-2 rounded-full", isArmed ? "bg-red-500 shadow-[0_0_10px_#ef4444]" : "bg-emerald-900")} />
+            </div>
+         </button>
+      </div>
+
+      {/* 3. AI AGGRESSION (STRATEGIC MODULATOR) */}
       <div className="flex flex-col bg-black/40 border border-white/5 p-5 rounded-2xl backdrop-blur-md shadow-2xl space-y-5">
          <div className="flex items-center justify-between mb-1">
             <div className="flex items-center gap-3">
                <Settings2 className="w-4 h-4 text-amber-500" />
-               <span className="text-[10px] uppercase tracking-[0.3em] text-slate-300 font-black">{t('panel.resonance_freq')}</span>
+               <span className="text-[10px] uppercase tracking-[0.3em] text-slate-300 font-black">AI Aggression</span>
             </div>
             <span className="text-[10px] text-amber-500 font-mono font-black tabular-nums">{sharpen}%</span>
          </div>
@@ -146,9 +206,9 @@ export function TacticalSettingsBar({ onReset }: { onReset?: () => void }) {
          </div>
          
          <div className="flex justify-between items-center text-[7px] text-slate-700 font-black uppercase tracking-[0.2em] pt-1">
-            <span>Minimum_Peak</span>
-            <span>Optimal_Band</span>
-            <span>Delta_X_99</span>
+            <span>Merciful</span>
+            <span>Balanced</span>
+            <span>Ruthless</span>
          </div>
       </div>
 

@@ -1,6 +1,7 @@
 import { db } from '@/lib/db';
 import { NextResponse } from 'next/server';
 import { HealthProjection } from '@/lib/projections/health';
+import { generateSwarmVitals } from '@/lib/nexus/swarmHealth';
 
 export async function GET() {
   try {
@@ -16,7 +17,8 @@ export async function GET() {
           health: 98,
           memory: { totalNodes: 240, l2CanonNodes: 85, conflicts: 0, unresolvedConflicts: 0, memHealth: 100 },
           skills: { totalRuns: 10580, passedRuns: 10500, successRate: 0.99, skillHealth: 99 },
-          nemoclaw: { activeAgents: 1 },
+          swarm: generateSwarmVitals(),
+          nemoclaw: { activeAgents: 12 },
           cognitiveCore: { activeDirective: 'command-logic-alpha', activeDirectiveDisplay: 'Mission Commander' },
           modelPerf: { latestBuildTag: 'build-stable-04', latestValidationRate: 1.0 },
           agentOps: { systemViolations24h: 0, avgCycleSuccessRate: 0.99, governanceHealth: 100, operationalHealth: 98 }
@@ -33,7 +35,9 @@ export async function GET() {
     });
     const successRate = totalRuns > 0 ? passedRuns / totalRuns : 1;
 
-    const payload: HealthProjection = {
+    const swarm = generateSwarmVitals();
+
+    const payload: HealthProjection & { swarm: any } = {
       status: health.overall >= 80 ? 'ok' : health.overall >= 50 ? 'degraded' : 'critical',
       timestamp: health.generatedAt.toISOString(),
       health: Math.round(health.overall),
@@ -50,7 +54,8 @@ export async function GET() {
         successRate: successRate,
         skillHealth: Math.round(successRate * 100)
       },
-      nemoclaw: { activeAgents: 1 },
+      swarm,
+      nemoclaw: { activeAgents: swarm.activeAgents },
       cognitiveCore: { activeDirective: 'command-logic-alpha', activeDirectiveDisplay: 'Mission Commander' },
       modelPerf: { latestBuildTag: 'build-stable-04', latestValidationRate: 1.0 },
       agentOps: { systemViolations24h: 0, avgCycleSuccessRate: 0.99, governanceHealth: 100, operationalHealth: 98 }

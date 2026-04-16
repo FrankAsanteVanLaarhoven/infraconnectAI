@@ -13,7 +13,7 @@ import {
   Area,
   ReferenceLine
 } from 'recharts';
-import { Activity, TrendingUp } from 'lucide-react';
+import { Activity, TrendingUp, ShieldAlert, Zap } from 'lucide-react';
 
 const data = [
   { time: '00:00', price: 72.5 },
@@ -26,6 +26,25 @@ const data = [
 ];
 
 export function MetricLensChart({ title = "PRICE INDEX", unit = "USD/BBL" }) {
+  const [auditMarkers, setAuditMarkers] = React.useState<any[]>([]);
+
+  React.useEffect(() => {
+    async function fetchMarkers() {
+      try {
+        const res = await fetch('/api/nexus/audit?limit=5');
+        const json = await res.json();
+        // Map markers to the nearest 'time' in our chart data
+        setAuditMarkers(json.events.map((e: any) => ({
+           id: e.id,
+           time: '16:00', // Mocking mapping for the demo
+           title: e.title,
+           category: e.category
+        })));
+      } catch {}
+    }
+    fetchMarkers();
+  }, []);
+
   return (
     <div className="w-full h-full flex flex-col p-4 font-mono">
       {/* Metric Header */}
@@ -78,6 +97,25 @@ export function MetricLensChart({ title = "PRICE INDEX", unit = "USD/BBL" }) {
               fill="url(#colorPrice)" 
               strokeWidth={2}
             />
+            
+            {/* Tactical Action Markers */}
+            {auditMarkers.map((marker, idx) => (
+              <ReferenceLine 
+                key={marker.id}
+                x={marker.time} 
+                stroke={marker.category === 'SECURITY' ? '#ef4444' : '#6366f1'} 
+                strokeWidth={1} 
+                strokeDasharray="2 2"
+                label={{ 
+                  value: 'ACTION', 
+                  position: 'top', 
+                  fill: marker.category === 'SECURITY' ? '#ef4444' : '#6366f1', 
+                  fontSize: 7,
+                  fontWeight: 'black'
+                }} 
+              />
+            ))}
+
             {/* Playback Lens Focus Line */}
             <ReferenceLine x="16:00" stroke="#f59e0b" strokeWidth={2} label={{ value: 'FOCUS', position: 'top', fill: '#f59e0b', fontSize: 8 }} />
           </AreaChart>

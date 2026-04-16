@@ -52,7 +52,7 @@ export default function TrustPanel({ isEmbedded = false }: { isEmbedded?: boolea
         </div>
         <div className={`text-[10px] mt-1.5 flex items-center gap-1.5 uppercase tracking-wider font-bold ${verified ? 'text-green-400' : 'text-slate-500 animate-pulse'}`}>
           <div className={`w-1.5 h-1.5 rounded-full ${verified ? 'bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.8)]' : 'bg-slate-500'}`} />
-          {verified ? "Verified System State" : "Listening..."}
+          {verified ? "✔ Verified" : "Verification Pending..."}
         </div>
       </div>
 
@@ -62,7 +62,7 @@ export default function TrustPanel({ isEmbedded = false }: { isEmbedded?: boolea
           <Crosshair className="w-16 h-16 text-slate-500" />
         </div>
         
-        <div className="text-[10px] uppercase text-slate-500 mb-2 font-bold tracking-widest">Active Hypothesis</div>
+        <div className="text-[10px] uppercase text-slate-500 mb-2 font-bold tracking-widest">AI Decision</div>
 
         {decision ? (
           <div className="animate-in fade-in duration-500 relative z-10">

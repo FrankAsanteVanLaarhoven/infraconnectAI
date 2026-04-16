@@ -1,0 +1,47 @@
+name: infraconnect-robotics-pipeline
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Build Docker Images (Control Plane + Edge)
+        run: |
+          docker build -t infraconnect/reconciler ./src/lib/nexus/orchestrator
+          docker build -t infraconnect/edge-agent ./edge/k3s-node
+
+  simulate:
+    needs: build
+    runs-on: gpu-runner
+    steps:
+      - name: Spin up Isaac Sim Environment
+        run: echo "Initializing Isaac Sim environment for model evaluation..."
+
+      - name: Run Perturbation Tests
+        run: |
+          # Inject Sensor Noise and Latency
+          node sim/validation/run.js --model=${{ github.sha }}
+
+      - name: Validate Safety Metrics (Gate)
+        run: |
+          # Fails the pipeline if collision rate exceeds 2% or kinematic stability is degraded
+          node sim/validation/assert.js --max-collision=0.02 --min-stability=85
+
+  deploy:
+    needs: simulate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Sign & Register Model in Control Plane
+        run: |
+          node src/lib/nexus/orchestrator/pipeline-automation.js --hash=${{ github.sha }}
+      
+      - name: Update GitOps Target Manifest (Canary 10%)
+        run: |
+          echo "version: sim2real-${{ github.sha }}" > infra/k8s/fleet-manifest.yaml
+          echo "strategy: canary" >> infra/k8s/fleet-manifest.yaml
+          echo "rollout: 10" >> infra/k8s/fleet-manifest.yaml

@@ -34,6 +34,7 @@ export function EnergySectorLens() {
         { id: 'suez', label: 'SUEZ CANAL', flow: 4.5, status: 'OPERATIONAL', type: 'CHOKEPOINT', lat: 29.9, lng: 32.5 },
         { id: 'ghawar', label: 'GHAWAR FIELD', flow: 0, status: 'PARALYZED', type: 'PRODUCTION', lat: 25.5, lng: 49.3 },
     ]);
+    const [leads, setLeads] = useState<any[]>([]);
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -42,6 +43,23 @@ export function EnergySectorLens() {
         }, 5000);
         return () => clearInterval(interval);
     }, [price]);
+
+    useEffect(() => {
+        async function fetchLeads() {
+            try {
+                const res = await fetch('/api/crm/leads');
+                const data = await res.json();
+                // Filter for Energy sector or just high-value leads with coordinates
+                const energyLeads = (data.leads || []).filter((l: any) => 
+                   (l.sector === 'Energy' || l.score > 80) && l.lat != null && l.lng != null
+                );
+                setLeads(energyLeads);
+            } catch (err) {
+                console.error(err);
+            }
+        }
+        fetchLeads();
+    }, []);
 
     return (
         <div className="w-full h-full bg-[#030712] border border-slate-900 rounded-3xl p-8 flex flex-col font-mono relative overflow-hidden group shadow-[0_0_80px_rgba(0,0,0,0.9)]">
@@ -92,6 +110,38 @@ export function EnergySectorLens() {
                         <div className="text-center opacity-30 flex flex-col items-center gap-4">
                             <Globe className="w-24 h-24 text-slate-800" />
                             <span className="text-[8px] text-slate-800 uppercase font-black tracking-[1em]">Geospatial Substrate Mapping...</span>
+                        </div>
+
+                        {/* Lead Markers (Live CRM Data) */}
+                        <div className="absolute inset-0 pointer-events-none">
+                            {leads.map((lead) => (
+                                <motion.div 
+                                    key={lead.id}
+                                    style={{ 
+                                        left: `${(lead.lng + 180) * (100 / 360)}%`, 
+                                        top: `${(90 - lead.lat) * (100 / 180)}%` 
+                                    }}
+                                    className="absolute -translate-x-1/2 -translate-y-1/2 group/lead"
+                                >
+                                    <div className="p-1.5 rounded-full bg-blue-500/20 border border-blue-500 animate-[pulse_3s_infinite] pointer-events-auto cursor-help relative shadow-[0_0_15px_rgba(59,130,246,0.3)]">
+                                        <Navigation className="w-2.5 h-2.5 text-blue-400 rotate-45" />
+                                        
+                                        {/* Lead Detail Card */}
+                                        <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-48 bg-slate-950 border border-blue-500/30 rounded-xl p-3 opacity-0 group-hover/lead:opacity-100 transition-opacity z-50 backdrop-blur-xl">
+                                            <p className="text-[7px] text-blue-500 font-black uppercase tracking-widest mb-1">Live Revenue Target</p>
+                                            <h4 className="text-[10px] font-black text-white uppercase mb-1">{lead.company || lead.email}</h4>
+                                            <div className="flex justify-between items-center text-[7px] text-slate-500 uppercase font-black tracking-widest border-b border-white/5 pb-1 mb-2">
+                                                <span>Sector: {lead.sector}</span>
+                                                <span className="text-blue-400">Score: {lead.score}</span>
+                                            </div>
+                                            <div className="flex items-center gap-2">
+                                                <TrendingUp className="w-2.5 h-2.5 text-emerald-400" />
+                                                <span className="text-[8px] text-white font-black uppercase">£{lead.projectedValue?.toLocaleString()} Magnitude</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </motion.div>
+                            ))}
                         </div>
 
                         {/* Node Tooltips (Absolute Pos based on Lng/Lat) */}

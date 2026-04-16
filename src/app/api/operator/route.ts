@@ -1,118 +1,80 @@
-import { buildContext } from "@/lib/operator/context";
-import { buildPrompt } from "@/lib/operator/prompt";
-import { runAction } from "@/lib/operator/actions";
-import { db } from "@/lib/db";
-import crypto from "crypto";
+import { NextResponse } from "next/server";
+import OpenAI from "openai";
 
-function validateAction(action: string | null) {
-  if (!action || action === "null") return true;
-  // Hardcoded restricted actions that require approval or block
-  if (action === "send_pricing" || action.includes("restricted")) {
-    return false;
-  }
-  return true;
-}
-
-function hashContext(context: any) {
-  return crypto.createHash("sha256").update(JSON.stringify(context)).digest("hex");
-}
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY || "dummy",
+});
 
 export async function POST(req: Request) {
   try {
-    const { input } = await req.json();
-    // In real app, user-id-demo comes from auth
-    const userId = "user-id-demo";
-    const context = await buildContext(userId);
-    const prompt = buildPrompt(input, context);
+    const { input, lead } = await req.json();
 
-    let parsed = null;
-
-    if (process.env.OPENAI_API_KEY) {
-      try {
-        const ai = await fetch("https://api.openai.com/v1/chat/completions", {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            model: "gpt-4o-mini",
-            response_format: { type: "json_object" },
-            messages: [
-              { role: "system", content: prompt + "\nYou MUST return JSON including fields: reply (string), action (string), reasoning (string array), confidence (float 0.0-1.0)." },
-            ],
-          }),
-        });
-
-        if (ai.ok) {
-          const result = await ai.json();
-          parsed = JSON.parse(result.choices[0].message.content);
-        } else {
-          console.error("[Operator] OpenAI error:", await ai.text());
-        }
-      } catch (err) {
-        console.error("[Operator] Failed to fetch OpenAI:", err);
-      }
+    if (!input || !lead) {
+      return NextResponse.json({ error: "Input and Lead data required" }, { status: 400 });
     }
 
-    // Deterministic Mock Fallback matching the AI spec
-    if (!parsed) {
-      const lower = input.toLowerCase();
-      if (lower.includes("systems") && lower.includes("connected")) {
-        parsed = { reply: "Fleet telemetry streams are active across primary DB and edge.", action: "null", params: {}, reasoning: ["Active fleet node found", "System heartbeat stable"], confidence: 0.98 };
-      } else if (lower.includes("failed payments") || lower.includes("anomalies")) {
-        parsed = { reply: "Displaying critical active anomalies.", action: "show_anomalies", params: {}, reasoning: ["Critical warnings match query", "Resolving constraints"], confidence: 0.94 };
-      } else if (lower.includes("deals") && lower.includes("close")) {
-        parsed = { reply: "Focus on closing Mission Control validation specs.", action: "highlight_deal", params: {}, reasoning: ["Memory Node updated recently", "L2 classification signals priority"], confidence: 0.85 };
-      } else if (lower.includes("follow-up") || lower.includes("follow up")) {
-        parsed = { reply: "Drafting follow-up based on standard playbook.", action: "send_followup", params: { email: "team@acme.com" }, reasoning: ["Pattern matching requests follow up", "Targeting closest active contact"], confidence: 0.88 };
-      } else if (lower.includes("pricing")) {
-         parsed = { reply: "I cannot execute pricing updates without explicit Human approval.", action: "send_pricing", params: {}, reasoning: ["Pricing command detected", "Hard rule restricts modification via AI", "Tier 3 restricted action triggered"], confidence: 0.99 };
-      } else {
-        parsed = { reply: "Command acknowledged. Standing by.", action: "null", params: {}, reasoning: ["Empty or unknown query", "Awaiting specific intent"], confidence: 0.95 };
-      }
-    }
+    // 1. Rewrite Engine
+    const rewritePrompt = `
+You are a master strategic deal closer. Rewrite this email to be sharper, more confident, and tailored to the buyer's profile.
 
-    const isValid = validateAction(parsed.action);
-    let executed = false;
+Context:
+- Company: ${lead.company || "Enterprise Target"}
+- Role: ${lead.role || "Executive Decision Maker"}
+- Score: ${lead.score}
+- Behavior: ${lead.visitedDemo ? "Has seen demo" : "No demo"}, ${lead.viewedSecurity ? "Has seen security" : "No security"}
 
-    // Execute if valid and an action exists
-    if (isValid && parsed.action && parsed.action !== "null") {
-      await runAction(parsed.action, parsed.params || {});
-      executed = true;
-    } else if (!isValid) {
-      parsed.reply += " [ACTION BLOCKED: Policy Restriction]";
-    }
+Original Message:
+${input}
 
-    // Non-Repudiation Audit Log
-    try {
-      await db.aiAuditLog.create({
-        data: {
-          user: userId,
-          action: parsed.action || "null",
-          input: input,
-          output: parsed.reply,
-          contextHash: hashContext(context),
-          validated: isValid,
-          executed: executed,
-          confidence: parsed.confidence || 0,
-          reasoning: parsed.reasoning || [],
-        }
+Rewrite it to be under 100 words, surgically precise, and focus on the value of autonomous control.
+`;
+
+    // 2. Buyer Simulation
+    const simulatePrompt = `
+You are the buyer (Role: ${lead.role || 'Executive'}, Company: ${lead.company || 'Enterprise Target'}).
+You are evaluating infrastructure and AI orchestration tools.
+
+Read the rewritten email below and provide:
+1. Likelihood to reply (0-100)
+2. Likely reaction (1-2 sentences)
+3. One potential objection we should prepare for.
+
+Email:
+[CONTENT_WILL_BE_REWRITTEN_VERSION]
+`;
+
+    if (!process.env.OPENAI_API_KEY || process.env.OPENAI_API_KEY === "dummy") {
+      return NextResponse.json({
+        rewrite: "Mock Rewrite: This is a surgical, high-end version of your message focused on security and control.",
+        simulation: {
+          likelihood: 75,
+          reaction: "The buyer is intrigued by the VPC-native approach but concerned about legacy compatibility.",
+          objection: "How does this integrate with our current air-gapped systems?"
+        },
+        final: "Final Optimized Version: Ready for dispatch."
       });
-    } catch (auditErr) {
-      console.error("[Operator] Failed to write Audit Log:", auditErr);
     }
 
-    return Response.json({
-      reply: parsed.reply,
-      action: parsed.action,
-      params: parsed.params,
-      reasoning: parsed.reasoning || [],
-      confidence: parsed.confidence || null,
-      validated: isValid
+    const rewriteRes = await openai.chat.completions.create({
+      model: "gpt-4o",
+      messages: [{ role: "user", content: rewritePrompt }],
     });
+    const rewriteContent = rewriteRes.choices[0].message.content;
+
+    const simulateRes = await openai.chat.completions.create({
+      model: "gpt-4o",
+      messages: [{ role: "user", content: simulatePrompt.replace("[CONTENT_WILL_BE_REWRITTEN_VERSION]", rewriteContent || "") }],
+    });
+    const simulationContent = simulateRes.choices[0].message.content;
+
+    return NextResponse.json({
+      rewrite: rewriteContent,
+      simulation: simulationContent,
+      final: rewriteContent // For now, the final version is the rewritten content
+    });
+
   } catch (error) {
-    console.error("[Operator] Fatal error:", error);
-    return Response.json({ reply: "System critical error. Fallback activated." }, { status: 500 });
+    console.error("[API_OPERATOR_ERROR]", error);
+    return NextResponse.json({ error: "Decision engine failure" }, { status: 500 });
   }
 }

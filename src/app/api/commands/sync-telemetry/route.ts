@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 import { v4 as uuidv4 } from 'uuid';
 import { SyncTelemetryCommand, TelemetryImportedEvent } from '@/lib/memory/events';
+import { broadcastAlert } from '@/lib/notifications/notificationEngine';
 
 export async function POST(req: Request) {
   try {
@@ -77,6 +78,14 @@ export async function POST(req: Request) {
         recoveryCount: eventPayload.payload.recoveryCount,
         durationSec: eventPayload.payload.durationSec,
       }
+    });
+
+    // 2. Broadcast Tactical Success Alert
+    await broadcastAlert({
+      category: 'TELEMETRY',
+      severity: 'MEDIUM',
+      title: 'Global State Synchronized',
+      message: `Successfully imported mission trace [${eventPayload.payload.taskName}] with ${eventPayload.payload.recoveryCount} autonomous recoveries.`
     });
 
     return NextResponse.json({ success: true, eventId });
