@@ -24,6 +24,9 @@ export default function RLHFFoundryPage() {
   const [epochs, setEpochs] = useState(150);
   const [batchSize, setBatchSize] = useState(64);
   const [rewardPenalty, setRewardPenalty] = useState(0.01);
+  const [schedulerType, setSchedulerType] = useState('cosine');
+  const [warmupRatio, setWarmupRatio] = useState(0.1);
+  const [weightDecay, setWeightDecay] = useState(0.01);
   
   const [status, setStatus] = useState<'IDLE' | 'WARMUP' | 'TRAINING' | 'SYNCING' | 'COMPLETED'>('IDLE');
   const [progress, setProgress] = useState(0);
@@ -69,6 +72,9 @@ export default function RLHFFoundryPage() {
         epochs,
         batchSize,
         rewardPenalty,
+        schedulerType,
+        warmupRatio,
+        weightDecay
       },
       curves: generatedCurves,
       finalSvrRate: 0.001 // Target Safety Violation Rate after tuning
@@ -154,6 +160,30 @@ export default function RLHFFoundryPage() {
                     <div>
                        <label className="text-[8px] text-slate-500 font-black uppercase tracking-widest mb-1 block">KL Penalty</label>
                        <input type="number" step="0.01" value={rewardPenalty} onChange={e => setRewardPenalty(Number(e.target.value))} className="w-full bg-black border border-slate-800 focus:border-indigo-500 rounded p-2 text-xs text-white" />
+                    </div>
+                 </div>
+
+                 {/* SOTA Hardening Parameters */}
+                 <div className="grid grid-cols-2 gap-4 pt-4 border-t border-white/5 bg-red-950/20 p-4 rounded-xl border border-red-900/30">
+                    <div className="col-span-2 flex items-center justify-between mb-2">
+                       <span className="text-[8px] text-red-500 font-black uppercase tracking-widest flex items-center gap-1"><Target className="w-2.5 h-2.5" /> SOTA PEFT Parameters</span>
+                       <span className="text-[6px] text-red-400 bg-red-950 px-1 py-0.5 rounded border border-red-900/50 uppercase">Strict Enforcement</span>
+                    </div>
+                    <div className="col-span-2">
+                       <label className="text-[8px] text-slate-400 font-black uppercase tracking-widest mb-1 block">LR Scheduler (Prevents Gradient Collapse)</label>
+                       <select value={schedulerType} onChange={e => setSchedulerType(e.target.value)} className="w-full bg-black border border-slate-800 focus:border-red-500 rounded p-2 text-xs text-red-300 font-bold focus:outline-none appearance-none">
+                          <option value="cosine">Cosine w/ Restarts (Recommended)</option>
+                          <option value="linear">Linear Decay (Danger)</option>
+                          <option value="constant">Constant</option>
+                       </select>
+                    </div>
+                    <div>
+                       <label className="text-[8px] text-slate-400 font-black uppercase tracking-widest mb-1 block">Warmup Ratio</label>
+                       <input type="number" step="0.01" min="0" max="0.5" value={warmupRatio} onChange={e => setWarmupRatio(Number(e.target.value))} className="w-full bg-black border border-slate-800 focus:border-red-500 rounded p-2 text-xs text-white" />
+                    </div>
+                    <div>
+                       <label className="text-[8px] text-slate-400 font-black uppercase tracking-widest mb-1 block">Weight Decay (AdamW)</label>
+                       <input type="number" step="0.001" value={weightDecay} onChange={e => setWeightDecay(Number(e.target.value))} className="w-full bg-black border border-slate-800 focus:border-red-500 rounded p-2 text-xs text-white" />
                     </div>
                  </div>
 

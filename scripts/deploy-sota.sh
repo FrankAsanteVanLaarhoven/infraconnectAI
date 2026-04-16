@@ -21,13 +21,14 @@ bun run build
 echo "\n[2/4] Packaging architectural artifacts..."
 # We explicitly include .next to ensure hidden folder preservation
 # Use -C to change directory and avoid path prefix confusion
-tar -czf sota-release.tar.gz -C . .next/standalone .next/static public package.json ecosystem.config.js .env
+# Disable macOS extended attributes to prevent Linux corruption
+COPYFILE_DISABLE=1 tar -czf sota-release.tar.gz -C . .next/standalone .next/static public package.json ecosystem.config.js .env
 
 # 3. Securely transfer to Cloud Compute Engine (Using gcloud SSH)
 echo "\n[3/4] Transmitting encrypted payload to Edge Node..."
 GCLOUD="/opt/homebrew/bin/gcloud"
 # Ensure target directory exists and is clean
-$GCLOUD compute ssh nava-web-server-e2-small --zone=us-central1-a --command="pm2 stop all || true && mkdir -p ~/deploy && sudo rm -rf ~/deploy/.next"
+$GCLOUD compute ssh nava-web-server-e2-small --zone=us-central1-a --command="pm2 kill || true && mkdir -p ~/deploy && sudo rm -rf ~/deploy/.next"
 $GCLOUD compute scp sota-release.tar.gz nava-web-server-e2-small:~/deploy/ --zone=us-central1-a
 
 
