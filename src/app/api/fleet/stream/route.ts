@@ -1,12 +1,15 @@
 import { serverHub } from '@/lib/agent-ops/ServerHub';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
+  const encoder = new TextEncoder();
   const stream = new ReadableStream({
     start(controller) {
       const onMessage = ({ event, data }: { event: string; data: any }) => {
         try {
           const payload = JSON.stringify(data);
-          controller.enqueue(`event: ${event}\ndata: ${payload}\n\n`);
+          controller.enqueue(encoder.encode(`event: ${event}\ndata: ${payload}\n\n`));
         } catch (e) {
           console.error('[SSE_STREAM_ERR] Failed to enqueue message', e);
         }
