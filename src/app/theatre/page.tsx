@@ -65,6 +65,7 @@ export default function EpicTheatre() {
   const [terminalText, setTerminalText] = useState("");
   const [logs, setLogs] = useState<string[]>([]);
   const [isLive, setIsLive] = useState(false);
+  const { lastIncident } = useFleetStream();
   
   const { controls, triggerEventBeat } = useCinemaEngine();
 
