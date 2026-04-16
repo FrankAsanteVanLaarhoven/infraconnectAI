@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 import { CheckCircle2, ShieldAlert, Zap, Network, Lock, Cpu, Server, Activity } from 'lucide-react';
 import { MatrixRain } from "@/components/ui/matrix-rain";
 import { InfraConnectLogo } from '@/components/ui/InfraConnectLogo';
+import { InteractiveROICalc } from '@/components/revenue/InteractiveROICalc';
 
 export default function PricingPage() {
   return (
