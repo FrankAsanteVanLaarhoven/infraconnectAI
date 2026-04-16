@@ -55,6 +55,7 @@ function Act6ClosePanel({ nodeCount }: { nodeCount: number }) {
             </motion.div>
          )}
        </div>
+     </div>
     </motion.div>
   );
 }

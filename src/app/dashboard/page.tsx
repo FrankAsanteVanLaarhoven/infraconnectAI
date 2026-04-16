@@ -170,9 +170,21 @@ export default function Dashboard() {
   })
 
   // Event Orchestration
-  useBusEvent('infraconnect:open-panel',   ({ panel }) => openPanel(panel as PanelId),   [openPanel])
-  useBusEvent('infraconnect:close-panel',  ({ panel }) => closePanel(panel as PanelId),  [closePanel])
-  useBusEvent('infraconnect:toggle-panel', ({ panel }) => togglePanel(panel as PanelId), [togglePanel])
+  useEffect(() => {
+    const handleOpen = (e: any) => openPanel(e.detail?.panel as PanelId);
+    const handleClose = (e: any) => closePanel(e.detail?.panel as PanelId);
+    const handleToggle = (e: any) => togglePanel(e.detail?.panel as PanelId);
+    
+    window.addEventListener('infraconnect:open-panel', handleOpen);
+    window.addEventListener('infraconnect:close-panel', handleClose);
+    window.addEventListener('infraconnect:toggle-panel', handleToggle);
+    
+    return () => {
+      window.removeEventListener('infraconnect:open-panel', handleOpen);
+      window.removeEventListener('infraconnect:close-panel', handleClose);
+      window.removeEventListener('infraconnect:toggle-panel', handleToggle);
+    };
+  }, [openPanel, closePanel, togglePanel]);
 
   // Tactical Keybindings
   useEffect(() => {
@@ -450,7 +462,7 @@ export default function Dashboard() {
 
           </AnimatePresence>
         </div>
-      </main>
+      </motion.main>
 
       {/* ── Status Telemetry ── */}
       <footer className="px-4 py-2 border-t border-white/5 bg-[#050505]/90 backdrop-blur-xl sticky bottom-0 z-40">

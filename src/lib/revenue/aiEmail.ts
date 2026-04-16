@@ -89,10 +89,3 @@ function generateFallbackEmail(lead: any, tacticalContext: string) {
   
   return `Hello,\n\nThank you for reaching out regarding InfraConnect.${behaviorBonus}${tacticalLine}\n\nWe are building the next generation of autonomous infrastructure control, launching in May 2026. I've flagged your interest for our technical team to review.\n\nBest,\nFrank Van Laarhoven\nFounder, InfraConnect`;
 }
-
-  if (lead.score > 70) {
-    return `Hello,\n\nI noticed your interest in InfraConnect.${behaviorBonus}${securityFocus}\n\nWe are currently onboarding a select group of enterprise partners for our May 2026 deployment cycle. Given your focus, I'd like to ensure your environment is cleared for our initial rollout.\n\nAre you available for a brief technical walkthrough this week?\n\nBest,\nFrank Van Laarhoven\nFounder, InfraConnect`;
-  }
-  
-  return `Hello,\n\nThank you for reaching out regarding InfraConnect.${behaviorBonus}\n\nWe are building the next generation of autonomous infrastructure control, launching in May 2026. I've flagged your interest for our technical team to review.\n\nIn the meantime, feel free to reach out with any specific architecture questions.\n\nBest,\nFrank Van Laarhoven\nFounder, InfraConnect`;
-}

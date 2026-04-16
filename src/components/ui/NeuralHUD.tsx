@@ -4,7 +4,6 @@ import React, { useEffect, useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useHUDStore } from '@/store/hud-store';
 import { useFleetStream } from '@/lib/hooks/useFleetStream';
-import { useBusEvent } from '@/lib/hooks/useBusEvent';
 import { Activity, ShieldAlert, Cpu, Zap, Radio, Target } from 'lucide-react';
 import { initializeControlPlane } from '@/lib/nexus/orchestrator/init';
 
@@ -19,8 +18,12 @@ export function NeuralHUD() {
   }, []);
 
   // Sync /hud command from bus
-  useBusEvent('infraconnect:toggle-panel', ({ panel }) => {
-    if (panel === 'hud') toggleHUD();
+  useEffect(() => {
+    const handler = (e: any) => {
+      if (e.detail?.panel === 'hud') toggleHUD();
+    };
+    window.addEventListener('infraconnect:toggle-panel', handler);
+    return () => window.removeEventListener('infraconnect:toggle-panel', handler);
   }, [toggleHUD]);
 
   // Keybinding: Cmd+H

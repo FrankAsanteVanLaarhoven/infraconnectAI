@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect } from 'react';
 import { ShieldAlert, Net, Network, Lock, Cpu, Server, Database, ArrowRight, CheckCircle2 } from 'lucide-react';
 import { motion } from 'framer-motion';
