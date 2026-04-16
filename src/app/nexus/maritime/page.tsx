@@ -15,7 +15,8 @@ import {
   Compass,
   Zap,
   ChevronRight,
-  TrendingUp
+  TrendingUp,
+  Target
 } from 'lucide-react';
 import { Vessel, vesselFleetEngine } from '@/lib/nexus/vesselFleetEngine';
 import { MaritimeIntelligenceHub } from '@/components/nexus/MaritimeIntelligenceHub';
