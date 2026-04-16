@@ -7,7 +7,9 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useSearchParams } from 'next/navigation';
 
-export default function OperatorPage() {
+import { Suspense } from 'react';
+
+function OperatorPageContent() {
   const searchParams = useSearchParams();
   const leadId = searchParams.get('leadId');
   
@@ -192,5 +194,13 @@ export default function OperatorPage() {
 
       </div>
     </div>
+  );
+}
+
+export default function OperatorPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-[#050505] text-slate-500 flex items-center justify-center font-mono tracking-widest uppercase">Initializing Operator...</div>}>
+      <OperatorPageContent />
+    </Suspense>
   );
 }
