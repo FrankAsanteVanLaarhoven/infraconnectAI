@@ -47,3 +47,30 @@ class TacticalBus {
 }
 
 export const tacticalBus = TacticalBus.getInstance();
+
+export type MemdevosEventMap = {
+  'infraconnect:open-panel': { panel: string };
+  'infraconnect:close-panel': { panel: string };
+  'infraconnect:toggle-panel': { panel: string };
+  'infraconnect:toast': { title?: string, message?: string, type?: string, description?: string };
+  [key: string]: any;
+};
+
+export type MemdevosEventName = keyof MemdevosEventMap;
+
+class UIEventBus {
+  on<K extends MemdevosEventName>(name: K, handler: (detail: MemdevosEventMap[K]) => void) {
+    if (typeof window === 'undefined') return () => {};
+    const fn = (e: any) => handler(e.detail);
+    window.addEventListener(name as string, fn);
+    return () => window.removeEventListener(name as string, fn);
+  }
+
+  emit<K extends MemdevosEventName>(name: K, detail?: MemdevosEventMap[K]) {
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent(name as string, { detail }));
+    }
+  }
+}
+
+export const bus = new UIEventBus();
