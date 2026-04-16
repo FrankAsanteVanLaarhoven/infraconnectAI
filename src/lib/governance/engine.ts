@@ -194,6 +194,35 @@ export class GovernanceEngine {
       }
     }
 
+    // --- Swarm Substrate SOTA Validation ---
+    // The Sovereign Swarm refuses to promote memories if unaligned models are running.
+    const allExperiments = await prisma.mL_Experiment.findMany();
+    const toxicModels = allExperiments.filter(m => {
+       try {
+         const hp = m.hyperparameters as any;
+         if (!hp) return false;
+         
+         // Intercept completely unaligned variables
+         if (hp.schedulerType === 'linear' || hp.schedulerType === 'constant') return true;
+         if (hp.warmupRatio === 0 || hp.warmupRatio === "0") return true;
+         if (hp.weightDecay === 0 || hp.weightDecay === "0") return true;
+         
+         return false;
+       } catch(e) {
+         return false;
+       }
+    });
+
+    if (toxicModels.length > 0 && autonomous) {
+       const toxicNames = toxicModels.map(m => m.runTag || m.modelName).join(', ');
+       console.error(`\n[GOVERNANCE FATAL ENTRY] Toxic LoRA alignment detected: ${toxicNames}`);
+       console.error(`[GOVERNANCE FATAL ENTRY] Global Swarm Promotions FROZEN to isolate fleet.\n`);
+       
+       promotionCandidates.length = 0; // Destroy pipeline arrays
+       actionsApplied.push(`SWARM_LOCKDOWN: Unaligned PEFT weights detected (${toxicNames}). Autonomous promotions blocked to preserve SOTA integrity.`);
+       await this.logActivity('fleet_lockdown', 'SYSTEM', `FROZEN: Unaligned SOTA bounds intercepted.`);
+    }
+
     // --- Autonomous Actions Cycle ---
     if (autonomous) {
       for (const candidate of [...promotionCandidates, ...decayCandidates]) {
