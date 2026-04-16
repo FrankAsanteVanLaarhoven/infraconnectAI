@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Network, Database, Brain, Cpu, Search, Activity, ChevronRight, Zap, Target } from 'lucide-react';
+import { Network, Database, Brain, Cpu, Search, Activity, ChevronRight, Zap, Target, Wrench, ShieldPlus, Component } from 'lucide-react';
 import { STRATEGIC_AGENTS, StrategicAgent } from '@/lib/nexus/swarm';
 import { StrategicReportView } from './StrategicReportView';
 import { useTranslation } from '@/components/providers/LocalizationProvider';
@@ -118,9 +118,42 @@ export function SwarmOrchestrator() {
                      <div className={`p-1.5 rounded-sm ${agent.status === 'completed' ? 'bg-indigo-500/20 text-indigo-400' : 'bg-slate-800 text-slate-500'}`}>
                         <Brain className="w-3 h-3" />
                      </div>
-                     <span className="text-[8px] text-slate-500 font-bold uppercase">{agent.timeElapsed}</span>
+                     <div className="flex items-center gap-2">
+                        {agent.rlOptimized && (
+                           <div className="bg-purple-900/30 text-purple-400 border border-purple-500/30 px-1 py-0.5 rounded text-[6px] font-black tracking-widest uppercase animate-pulse flex items-center gap-1">
+                              <Zap className="w-2 h-2" /> RL
+                           </div>
+                        )}
+                        {agent.selfHealing && (
+                           <div className="bg-emerald-900/30 text-emerald-400 border border-emerald-500/30 p-0.5 rounded text-[6px] animate-pulse">
+                              <ShieldPlus className="w-2 h-2" />
+                           </div>
+                        )}
+                        <span className="text-[8px] text-slate-500 font-bold uppercase ml-1">{agent.timeElapsed}</span>
+                     </div>
                   </div>
-                  <h5 className="text-[9px] font-black text-white uppercase mb-2 leading-tight h-6 line-clamp-2">{t(`swarm.agent.${agent.id.replace('agent-', '')}`)}</h5>
+                  <h5 className="text-[10px] font-black text-white uppercase mb-1 leading-tight line-clamp-2">{t(`swarm.agent.${agent.id.replace('agent-', '')}`)}</h5>
+                  
+                  {/* SOTA Benchmark Pill */}
+                  <div className="bg-blue-950/20 border border-blue-900/40 rounded px-1.5 py-0.5 mb-2 inline-flex items-center gap-1">
+                     <Target className="w-2 h-2 text-blue-500" />
+                     <span className="text-[6px] text-blue-400 uppercase font-black tracking-tighter truncate max-w-[120px]">{agent.benchmark}</span>
+                  </div>
+
+                  {/* Domain Tools */}
+                  <div className="space-y-1 mb-3">
+                     {agent.tools.slice(0, 2).map((tool, idx) => (
+                        <div key={idx} className="flex items-center gap-1.5 text-[7px] text-slate-400 font-bold uppercase tracking-wide">
+                           <Wrench className="w-2 h-2 text-slate-600 shrink-0" />
+                           <span className="truncate">{tool}</span>
+                        </div>
+                     ))}
+                     {agent.tools.length > 2 && (
+                        <div className="text-[6px] text-slate-600 font-black uppercase tracking-widest pl-3.5 mt-0.5">
+                           + {agent.tools.length - 2} ENGINES
+                        </div>
+                     )}
+                  </div>
                   
                   {/* Progress Bar */}
                   <div className="w-full h-1 bg-slate-800 rounded-full overflow-hidden mb-1">
@@ -130,8 +163,8 @@ export function SwarmOrchestrator() {
                      />
                   </div>
                   <div className="flex justify-between text-[7px] font-bold">
-                     <span className={agent.status === 'completed' ? 'text-indigo-400' : 'text-slate-600'}>
-                        {agent.status === 'completed' ? t('status.done') : t('status.in_progress')}
+                     <span className={agent.status === 'completed' ? 'text-indigo-400 flex items-center gap-1' : 'text-slate-600'}>
+                        {agent.status === 'completed' && <Component className="w-2 h-2" />} {agent.status === 'completed' ? t('status.done') : t('status.in_progress')}
                      </span>
                      <span className="text-slate-600">{Math.floor(agent.progress)}%</span>
                   </div>

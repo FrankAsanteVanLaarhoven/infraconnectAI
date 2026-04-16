@@ -21,6 +21,10 @@ export interface StrategicAgent {
     targetBusiness?: string;
     nodeUrn: string;
   };
+  tools: string[];
+  benchmark: string;
+  rlOptimized: boolean;
+  selfHealing: boolean;
 }
 
 export const STRATEGIC_AGENTS: StrategicAgent[] = [
@@ -42,7 +46,11 @@ export const STRATEGIC_AGENTS: StrategicAgent[] = [
       lng: -0.113,
       targetBusiness: 'NEURO_GEN SYSTEMS',
       nodeUrn: 'urn:asset:node:frank-station'
-    }
+    },
+    tools: ['OT/IT Telemetry Scraper', 'SCADA Vulnerability Mapper', 'Digital Twin Physics Sim'],
+    benchmark: 'SOVEREIGN 2035 (Gemini 3.1 Pro)',
+    rlOptimized: true,
+    selfHealing: true
   },
   { 
     id: 'agent-support', 
@@ -61,7 +69,11 @@ export const STRATEGIC_AGENTS: StrategicAgent[] = [
       lng: 139.767,
       targetBusiness: 'SMR_QUANTUM FLEET',
       nodeUrn: 'urn:asset:node:edge-01'
-    }
+    },
+    tools: ['Sentiment Analyzer', 'CRM NLP Engine', 'Semantic Workflow E-Bridge'],
+    benchmark: 'JITRO-CLASS (GPT-4o/Claude 3.5)',
+    rlOptimized: true,
+    selfHealing: false
   },
   { 
     id: 'agent-dev', 
@@ -79,7 +91,11 @@ export const STRATEGIC_AGENTS: StrategicAgent[] = [
       lng: -122.419,
       targetBusiness: 'BIOME_INTEL CORE',
       nodeUrn: 'urn:asset:node:frank-station'
-    }
+    },
+    tools: ['Generative CAD Models', 'Material Science Ontology', 'Fluid Dynamics Predictor'],
+    benchmark: 'DEEPSEEK-V5 SPECIFIC',
+    rlOptimized: true,
+    selfHealing: true
   }
 ];
 

@@ -27,7 +27,7 @@ tar -czf sota-release.tar.gz -C . .next/standalone .next/static public package.j
 echo "\n[3/4] Transmitting encrypted payload to Edge Node..."
 GCLOUD="/opt/homebrew/bin/gcloud"
 # Ensure target directory exists and is clean
-$GCLOUD compute ssh nava-web-server-e2-small --zone=us-central1-a --command="mkdir -p ~/deploy && rm -rf ~/deploy/.next"
+$GCLOUD compute ssh nava-web-server-e2-small --zone=us-central1-a --command="pm2 stop all || true && mkdir -p ~/deploy && sudo rm -rf ~/deploy/.next"
 $GCLOUD compute scp sota-release.tar.gz nava-web-server-e2-small:~/deploy/ --zone=us-central1-a
 
 
