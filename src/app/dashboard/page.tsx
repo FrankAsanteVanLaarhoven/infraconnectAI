@@ -477,7 +477,6 @@ export default function Dashboard() {
       </footer>
 
       <ToastContainer />
-      <NotificationHub />
       <EphemeralZone />
     </div>
   )
