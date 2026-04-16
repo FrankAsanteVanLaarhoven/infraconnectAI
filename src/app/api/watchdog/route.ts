@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { db as prisma } from '@/lib/db';
+import { serverHub } from '@/lib/agent-ops/ServerHub';
 
 export async function POST(req: Request) {
   try {
@@ -36,6 +37,15 @@ export async function POST(req: Request) {
 
     // In a fully meshed environment, the Server-Sent Event (SSE) stream will pick this `incident` up on the next cycle,
     // firing the Tactical Bus `MISSION_DISARM` override globally across all active dashboards.
+    serverHub.broadcast('tactical_override', {
+      type: 'HARDWARE_ANOMALY',
+      payload: { nodeId: data.nodeId, temp: data.temperature, vram: data.memory_percent }
+    });
+    
+    serverHub.broadcast('tactical_override', {
+      type: 'MISSION_DISARM',
+      payload: {}
+    });
     
     return NextResponse.json({ success: true, message: 'Node Isolated successfully.' });
     

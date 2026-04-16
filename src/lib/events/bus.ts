@@ -11,7 +11,9 @@ export type TacticalCommand =
   | { type: 'MISSION_ARM'; payload: { level: 'GREEN' | 'YELLOW' | 'RED' } }
   | { type: 'MISSION_DISARM'; payload: {} }
   | { type: 'MISSION_PIVOT'; payload: { sector: string; reason: string } }
-  | { type: 'MISSION_PURGE'; payload: { bufferId: string } };
+  | { type: 'MISSION_PURGE'; payload: { bufferId: string } }
+  | { type: 'HARDWARE_ANOMALY'; payload: { nodeId: string; temp: number; vram: number } }
+  | { type: 'SWARM_GOVERNANCE_LOCKDOWN'; payload: { toxicModels: string } };
 
 class TacticalBus {
   private static instance: TacticalBus;

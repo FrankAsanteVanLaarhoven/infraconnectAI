@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { formatDistanceToNow } from "date-fns";
 import React, { useState, useEffect } from "react";
 import { ShieldCheck, ShieldAlert, Activity } from "lucide-react";
+import { tacticalBus } from "@/lib/events/bus";
 
 interface Anomaly {
   id: string;
@@ -51,19 +52,32 @@ export function FleetNodeCard({ node }: { node: FleetNode }) {
     }
     fetchStability();
     const inv = setInterval(fetchStability, 5000);
-    return () => clearInterval(inv);
+    
+    // Tactical Event Bus Subscriptions for live-flashing hardware anomalies
+    const unsub = tacticalBus.subscribe('MISSION_DISARM', () => {
+      setStability((prev: any) => ({ ...prev, overrideActive: true, svr: 0.99 }));
+    });
+    
+    return () => {
+        clearInterval(inv);
+        unsub();
+    };
   }, [node.id]);
 
+  const overrideActive = stability?.overrideActive;
+  const cardBorder = overrideActive ? "border-red-500 animate-pulse bg-red-950/20" : "border-border hover:border-primary/50 transition-colors";
+  const displayStatus = overrideActive ? "degraded" : node.status;
+
   return (
-    <Card className="border border-border hover:border-primary/50 transition-colors">
+    <Card className={`border ${cardBorder}`}>
       <CardHeader className="pb-2">
         <div className="flex items-center justify-between">
           <CardTitle className="text-sm font-mono">{node.alias}</CardTitle>
           <div className="flex items-center gap-2">
             <span
-              className={`h-2 w-2 rounded-full ${statusColor[node.status] ?? "bg-gray-400"}`}
+              className={`h-2 w-2 rounded-full ${statusColor[displayStatus] ?? "bg-gray-400"}`}
             />
-            <span className="text-xs text-muted-foreground capitalize">{node.status}</span>
+            <span className={`text-xs capitalize ${overrideActive ? 'text-red-500 font-bold' : 'text-muted-foreground'}`}>{overrideActive ? 'LOCKED' : displayStatus}</span>
           </div>
         </div>
         <p className="text-xs text-muted-foreground font-mono">{node.robotId}</p>

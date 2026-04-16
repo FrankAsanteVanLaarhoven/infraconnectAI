@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { tacticalBus } from '../events/bus'
 
 export type FleetEvent = {
   type: string
@@ -34,6 +35,10 @@ export function useFleetStream() {
       skill_report: (e: MessageEvent) => {
         const data = JSON.parse(e.data)
         setEvents(prev => [{ type: 'skill_report', data, ts: new Date().toISOString() }, ...prev].slice(0, 50))
+      },
+      tactical_override: (e: MessageEvent) => {
+        const command = JSON.parse(e.data)
+        tacticalBus.dispatch(command)
       }
     }
 

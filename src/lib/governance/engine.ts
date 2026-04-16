@@ -3,6 +3,7 @@
 // Inspired by AI-Context-OS scoring architecture, simplified for InfraConnect
 
 import { db as prisma } from '@/lib/db'
+import { serverHub } from '@/lib/agent-ops/ServerHub'
 
 // === Signal weights (intent-adaptive — safety domain profile) ===
 const SIGNAL_WEIGHTS = {
@@ -221,6 +222,16 @@ export class GovernanceEngine {
        promotionCandidates.length = 0; // Destroy pipeline arrays
        actionsApplied.push(`SWARM_LOCKDOWN: Unaligned PEFT weights detected (${toxicNames}). Autonomous promotions blocked to preserve SOTA integrity.`);
        await this.logActivity('fleet_lockdown', 'SYSTEM', `FROZEN: Unaligned SOTA bounds intercepted.`);
+       
+       serverHub.broadcast('tactical_override', {
+         type: 'SWARM_GOVERNANCE_LOCKDOWN',
+         payload: { toxicModels: toxicNames }
+       });
+       
+       serverHub.broadcast('tactical_override', {
+         type: 'MISSION_DISARM',
+         payload: {}
+       });
     }
 
     // --- Autonomous Actions Cycle ---
