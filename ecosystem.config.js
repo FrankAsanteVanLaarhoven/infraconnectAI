@@ -17,8 +17,8 @@ module.exports = {
     },
     {
       name: "hardware-watchdog",
-      script: "python3",
-      args: "./scripts/watchdog_daemon.py",
+      script: "bun",
+      args: "run ./scripts/watchdog_daemon.ts",
       autorestart: true,
       watch: false,
       max_memory_restart: "200M",
@@ -33,14 +33,6 @@ module.exports = {
       autorestart: true,
       watch: false,
       max_memory_restart: "500M"
-    },
-    {
-      name: "wandb-telemetry",
-      script: "python3",
-      args: "./scripts/wandb_sync.py",
-      autorestart: true,
-      watch: false,
-      max_memory_restart: "300M"
     }
   ]
 };
