@@ -66,9 +66,7 @@ import { DigitalMoneyMatrix } from '@/components/nexus/DigitalMoneyMatrix';
 import { TerafabComputeLens } from '@/components/nexus/TerafabComputeLens';
 import { SovereignBankMonitor } from '@/components/nexus/SovereignBankMonitor';
 import { SARDiscoveryEngine } from '@/components/nexus/SARDiscoveryEngine';
-import { QuantResearchTrader } from '@/components/nexus/QuantResearchTrader';
 import { SovereignIdentity } from '@/components/nexus/SovereignIdentity';
-import { VisualBacktestHub } from '@/components/nexus/VisualBacktestHub';
 import { NexusScalper } from '@/components/nexus/NexusScalper';
 import { Users, User, DollarSign, Cpu, Landmark, TrendingUp, History, CreditCard, Home, GitBranch, Droplets, Share2, Binary, Waves, Box, Layers } from 'lucide-react';
 import { useTranslation } from '@/components/providers/LocalizationProvider';
@@ -110,7 +108,6 @@ const PANEL_KEYS: Record<string, string> = {
   'v': 'backtest',
   'z': 'disruptor',
   'x': 'discovery',
-  'q': 'quant',
   'n': 'scalper',
   'u': 'utility'
 };
@@ -141,7 +138,6 @@ const getDefaultLayout = (winW: number, winH: number) => ({
   government: { x: 20, y: 120, width: 1200, height: 750, isCollapsed: false },
   disruptor: { x: 20, y: 120, width: 1200, height: 750, isCollapsed: false },
   discovery: { x: 20, y: 120, width: 1200, height: 750, isCollapsed: false },
-  quant: { x: 20, y: 120, width: 1200, height: 800, isCollapsed: false },
   rehearsal: { x: 20, y: 120, width: 1200, height: 750, isCollapsed: false },
   briefing: { x: winW / 2 - 400, y: winH / 2 - 300, width: 800, height: 600, isCollapsed: false },
   energy: { x: 20, y: 120, width: 1200, height: 750, isCollapsed: false },
@@ -1252,23 +1248,7 @@ export default function NexusDashboard() {
               </NexusWindowPrimitive>
             )}
 
-            {/* QUANT RESEARCH TRADER HUB */}
-            {visibleWidgets.includes('quant') && (
-              <NexusWindowPrimitive 
-                id="quant" 
-                title={t('panel.quant_research')} 
-                icon={<TrendingUp className="w-3 h-3 text-emerald-500" />}
-                defaultPos={layout.quant || { x: 100, y: 300, width: 400, height: 300 }}
-                isCollapsed={layout.quant?.isCollapsed ?? false}
-                onClose={closeWidget}
-                onLayoutChange={updateLayout}
-                onFocus={setFocusedId}
-                zIndex={focusedId === 'quant' ? 170 : 100}
-                layoutMode={layoutMode}
-              >
-                <QuantResearchTrader />
-              </NexusWindowPrimitive>
-            )}
+
 
             {/* NEXUS SCALPER HUB */}
             {visibleWidgets.includes('scalper') && (
@@ -1306,23 +1286,7 @@ export default function NexusDashboard() {
               </NexusWindowPrimitive>
             )}
 
-            {/* VISUAL BACKTEST HUB */}
-            {visibleWidgets.includes('backtest') && (
-              <NexusWindowPrimitive 
-                id="backtest" 
-                title={t('panel.backtest_hub')} 
-                icon={<TrendingUp className="w-3 h-3 text-indigo-400" />}
-                defaultPos={layout.backtest || { x: 100, y: 100, width: 1200, height: 800 }}
-                isCollapsed={layout.backtest?.isCollapsed ?? false}
-                onClose={closeWidget}
-                onLayoutChange={updateLayout}
-                onFocus={setFocusedId}
-                zIndex={focusedId === 'backtest' ? 180 : 110}
-                layoutMode={layoutMode}
-              >
-                <VisualBacktestHub />
-              </NexusWindowPrimitive>
-            )}
+
 
             {/* SAR DISCOVERY ENGINE */}
 
