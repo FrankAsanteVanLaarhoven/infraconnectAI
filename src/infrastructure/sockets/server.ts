@@ -78,7 +78,7 @@ async function streamListener() {
   }
 }
 
-const PORT = 3007;
+const PORT = process.env.PORT || 3007;
 httpServer.listen(PORT, () => {
   console.log(`\n================================`);
   console.log(`🚀 SOTA Websocket Gateway Active`);
