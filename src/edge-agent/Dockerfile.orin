@@ -1,0 +1,16 @@
+# Nvidia Jetson Orin NX (ARM64 / L4T) Edge Deployment
+# Built for ROS2 Humble + TensorRT Native Acceleration
+
+FROM dustynv/ros:humble-pytorch-l4t-r35.3.1
+# Alternatively, if running newer JetPack 6: dustynv/ros:humble-pytorch-l4t-r36.2.0
+
+WORKDIR /edge-agent
+
+# Install dependencies needed by the python bridge
+RUN pip3 install --no-cache-dir redis rclpy python-dotenv
+
+# Copy the synchronization node logic
+COPY ros2_bridge.py .
+
+# Source ROS2 and execute the bridge directly
+CMD ["/bin/bash", "-c", "source /opt/ros/humble/setup.bash && python3 ros2_bridge.py"]

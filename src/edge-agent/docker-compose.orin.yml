@@ -1,0 +1,29 @@
+version: "3.9"
+
+services:
+  edge-agent:
+    container_name: infraconnect-edge-daemon
+    build:
+      context: .
+      dockerfile: Dockerfile.orin
+    restart: unless-stopped
+    env_file:
+      - .env.edge
+    
+    # 1. Bypass virtual networks so ROS2 DDS connects natively to the chassis hardware
+    network_mode: "host"
+    
+    # 2. Grant hardware access so the script can map physical I2C/SPI motors bounds
+    privileged: true
+    volumes:
+      - /dev:/dev
+      
+    # 3. Nvidia Jetson Native GPU Acceleration Passthrough
+    runtime: nvidia
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu, compute, video, utility]
