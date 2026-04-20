@@ -25,12 +25,15 @@ export default withAuth(
     callbacks: {
       authorized: ({ req, token }) => {
         const path = req.nextUrl.pathname;
-        // Protected paths require a valid session token
-        if (path.startsWith('/nexus') || path.startsWith('/dashboard')) {
-          return !!token;
+        
+        // Zero-Trust Architecture: 
+        // The ONLY public pathways are the explicit Auth interfaces and NextAuth systems
+        if (path.startsWith('/auth') || path.startsWith('/api/auth')) {
+          return true;
         }
-        // Public paths are granted access (WAF runs afterwards)
-        return true;
+        
+        // EVERYTHING else (especially the root '/' landing page) is completely locked out.
+        return !!token;
       }
     },
     pages: {
