@@ -5,7 +5,7 @@ services:
     container_name: infraconnect-app
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.next
     restart: always
     ports:
       - "3006:3006"
