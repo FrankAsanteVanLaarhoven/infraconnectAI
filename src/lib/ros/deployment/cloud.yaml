@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: infraconnect-api
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: infraconnect-api
+  template:
+    metadata:
+      labels:
+        app: infraconnect-api
+    spec:
+      containers:
+        - name: api
+          image: infraconnect/api:latest
+          ports:
+            - containerPort: 3000
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ws-gateway
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ws-gateway
+  template:
+    metadata:
+      labels:
+        app: ws-gateway
+    spec:
+      containers:
+        - name: ws
+          image: infraconnect/ws:latest
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis
+  template:
+    metadata:
+      labels:
+        app: redis
+    spec:
+      containers:
+        - name: redis
+          image: redis:alpine
+          ports:
+            - containerPort: 6379

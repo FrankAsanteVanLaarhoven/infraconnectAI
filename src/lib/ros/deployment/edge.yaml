@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fleet-agent-node
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: fleet-node
+    spec:
+      containers:
+        - name: edge-agent
+          image: infraconnect/robot-agent:latest
+          env:
+            - name: REDIS_HOST
+              value: "EDGE_REDIS_URL"
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "100m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"

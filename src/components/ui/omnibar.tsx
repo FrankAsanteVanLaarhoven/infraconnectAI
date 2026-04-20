@@ -30,6 +30,55 @@ export function Omnibar({ onExecuteTopology }: { onExecuteTopology: (t: IntentTo
   }, [query]);
 
   const handleExecute = () => {
+    // Intercept explicit command executions for the Control Plane (e.g. "> restart humanoid-02")
+    if (query.startsWith('>')) {
+      const parts = query.slice(1).trim().split(" ");
+      const action = parts[0]?.toUpperCase() || 'UNKNOWN';
+      const target = parts[1] || 'global';
+      
+      fetch('/api/command', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          command_id: `cmd-ux-${Date.now()}`,
+          robot_id: target,
+          action: action,
+          parameters: { raw_query: query },
+          issued_by: "operator:ux",
+          timestamp: Date.now()
+        })
+      }).catch(err => console.warn('[OMNIBAR] Command dispatch failure', err));
+      
+      setOpen(false);
+      setQuery("");
+      return;
+    }
+
+    // Intercept explicit agent triggers (e.g. "! stabilize fleet")
+    if (query.startsWith('!')) {
+      const payload = query.slice(1).trim();
+      
+      // We route this through the identical API for simplicity, 
+      // but target the agent stream exclusively
+      fetch('/api/command', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: { 
+          // Inject custom backend flag to route this payload down 'stream:agent.actions' 
+          overrideTopic: "stream:agent.actions",
+          agent: "ux-orchestrator", 
+          decision: payload, 
+          reason: "Manual operator trigger",
+          target: "global",
+          timestamp: Date.now()
+        } as any
+      });
+
+      setOpen(false);
+      setQuery("");
+      return;
+    }
+
     if (topologyPreview) {
       onExecuteTopology(topologyPreview);
       setOpen(false);
@@ -99,14 +148,39 @@ export function Omnibar({ onExecuteTopology }: { onExecuteTopology: (t: IntentTo
                   </div>
                 ) : (
                   <div className="text-slate-600 text-sm flex flex-col items-center gap-3">
-                    {query.length > 0 ? (
+                    {query.length > 0 && !query.startsWith('>') && !query.startsWith('!') ? (
                       <span className="animate-pulse">Analyzing semantic intent...</span>
+                    ) : query.startsWith('>') ? (
+                      <div className="flex flex-col gap-2 w-full max-w-sm text-left p-4 bg-[#0B0D0F] border border-[#1A1D21] rounded">
+                         <div className="text-[#4CC9F0] font-mono text-[10px] tracking-widest font-black uppercase flex items-center gap-2 mb-1">
+                            <TerminalSquare className="w-4 h-4 animate-pulse" /> COMMAND MODE
+                         </div>
+                         <div className="text-[11px] text-white/80 font-mono">
+                            <span className="text-[#6B7280]">Executing:</span> {query.slice(1).trim().split(" ")[0]?.toUpperCase() || '...'}
+                         </div>
+                         <div className="text-[11px] text-white/80 font-mono">
+                            <span className="text-[#6B7280]">Target:</span> {query.slice(1).trim().split(" ")[1] || 'global'}
+                         </div>
+                      </div>
+                    ) : query.startsWith('!') ? (
+                      <div className="flex flex-col gap-2 w-full max-w-sm text-left p-4 bg-[#2e1065]/20 border border-purple-500/30 rounded">
+                         <div className="text-purple-400 font-mono text-[10px] tracking-widest font-black uppercase flex items-center gap-2 mb-1">
+                            <Cpu className="w-4 h-4 animate-pulse" /> AUTONOMOUS AGENT MODE
+                         </div>
+                         <div className="text-[11px] text-purple-200/80 font-mono">
+                            <span className="text-purple-500/50">Workflow:</span> {query.slice(1).trim() || '...'}
+                         </div>
+                      </div>
                     ) : (
                       <>
-                        <span>Type an intent to generate an autonomous workflow pipeline.</span>
-                        <div className="flex gap-4 mt-2">
-                           <span className="text-[10px] bg-slate-900 border border-slate-800 px-2 py-1 rounded text-slate-400 cursor-pointer hover:bg-slate-800" onClick={() => setQuery("Connect legacy as400 to AI index")}>"Connect legacy as400 to AI index"</span>
-                           <span className="text-[10px] bg-slate-900 border border-slate-800 px-2 py-1 rounded text-slate-400 cursor-pointer hover:bg-slate-800" onClick={() => setQuery("Stream Postgres users to Semantic embedding")}>"Stream Postgres users to Semantic embedding"</span>
+                        <div className="flex flex-col items-center text-center gap-1 mb-2">
+                           <span className="text-[#E6EDF3]">Enter natural language or command prefixes</span>
+                           <span className="text-[10px] text-[#6B7280]">{`Use [>] for operations, [!] for agents`}</span>
+                        </div>
+                        <div className="flex flex-wrap justify-center gap-2 mt-2 max-w-lg">
+                           <span className="text-[10px] bg-[#0a0a0a] border border-[#1F1F1F] px-2 py-1 flex items-center gap-1.5 rounded text-[#9AA4AF] cursor-pointer hover:bg-white/5 transition-colors" onClick={() => setQuery("> restart humanoid-02")}><span className="text-[#4CC9F0]">CMD</span> {"> restart humanoid-02"}</span>
+                           <span className="text-[10px] bg-[#0a0a0a] border border-[#1F1F1F] px-2 py-1 flex items-center gap-1.5 rounded text-[#9AA4AF] cursor-pointer hover:bg-white/5 transition-colors" onClick={() => setQuery("! stabilize fleet")}><span className="text-purple-400">AGENT</span> {"! stabilize fleet"}</span>
+                           <span className="text-[10px] bg-[#0a0a0a] border border-[#1F1F1F] px-2 py-1 flex items-center gap-1.5 rounded text-[#9AA4AF] cursor-pointer hover:bg-white/5 transition-colors" onClick={() => setQuery("Stream Postgres users")}><span className="text-[#22C55E]">DAG</span> {"Stream Postgres users"}</span>
                         </div>
                       </>
                     )}

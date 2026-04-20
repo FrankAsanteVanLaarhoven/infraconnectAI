@@ -1,0 +1,21 @@
+name: Deploy InfraConnect Matrix
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Build K8s Execution Bounds
+        run: docker build -t infraconnect/api .
+
+      - name: Synchronous Registry Loop 
+        run: docker push infraconnect/api
+
+      - name: Deploy Cluster
+        run: kubectl apply -f k8s/

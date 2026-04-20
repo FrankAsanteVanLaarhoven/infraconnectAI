@@ -50,13 +50,37 @@ const config: Config = {
   				'3': 'hsl(var(--chart-3))',
   				'4': 'hsl(var(--chart-4))',
   				'5': 'hsl(var(--chart-5))'
-  			}
+  			},
+  			bg: 'var(--bg)',
+  			panel: 'var(--panel)',
+  			cyan: 'var(--cyan)',
+  			green: 'var(--green)',
+  			red: 'var(--red)',
+  			yellow: 'var(--yellow)'
   		},
   		borderRadius: {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
   			sm: 'calc(var(--radius) - 4px)'
-  		}
+  		},
+        animation: {
+            pulseSlow: "pulseSlow 2s infinite",
+            fadeIn: "fadeIn 0.2s ease-out",
+        },
+        boxShadow: {
+            glow: "0 0 12px rgba(76, 201, 240, 0.4)",
+            glowRed: "0 0 12px rgba(239, 68, 68, 0.5)",
+        },
+        keyframes: {
+            pulseSlow: {
+                "0%, 100%": { opacity: "1" },
+                "50%": { opacity: "0.5" },
+            },
+            fadeIn: {
+                "0%": { opacity: "0", transform: "translateY(10px)" },
+                "100%": { opacity: "1", transform: "translateY(0)" },
+            }
+        }
   	}
   },
   plugins: [tailwindcssAnimate],

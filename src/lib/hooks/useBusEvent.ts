@@ -3,11 +3,11 @@
 
 import { useEffect } from 'react'
 import { bus } from '@/lib/events/bus'
-import type { MemdevosEventName, MemdevosEventMap } from '@/lib/events/bus'
+import type { InfraConnectEventName, InfraConnectEventMap } from '@/lib/events/bus'
 
-export function useBusEvent<K extends MemdevosEventName>(
+export function useBusEvent<K extends InfraConnectEventName>(
   name: K,
-  handler: (detail: MemdevosEventMap[K]) => void,
+  handler: (detail: InfraConnectEventMap[K]) => void,
   deps: React.DependencyList = []
 ): void {
   useEffect(() => {

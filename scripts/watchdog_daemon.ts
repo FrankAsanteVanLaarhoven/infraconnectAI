@@ -1,11 +1,12 @@
 import { exec } from 'child_process';
 import os from 'os';
+import { THRESHOLDS } from '../src/services/agents/anomalyAgent';
 
 const NODE_NAME = os.hostname();
 const PORT = process.env.PORT || "3006"; // Target the native PM2 bridge
 const WEBHOOK_URL = `http://localhost:${PORT}/api/watchdog`;
 
-const MAX_TEMP_C = 85;
+const MAX_TEMP_C = THRESHOLDS.TEMP_MAX;
 const MAX_VRAM_PERCENT = 95;
 
 let NVIDIA_AVAILABLE = false;

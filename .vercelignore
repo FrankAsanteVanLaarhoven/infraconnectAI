@@ -1,0 +1,9 @@
+sota-release.tar.gz
+.next/
+node_modules/
+dist/
+.DS_Store
+*.sst
+*.log
+.git/
+.vercel/

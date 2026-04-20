@@ -110,7 +110,7 @@ export default function OperatorPanel() {
               <div className="flex items-center gap-2">
                 <div className="status-indicator status-indicator-live"></div>
                 <Terminal className="w-4 h-4 text-white/70 ml-1" />
-                <span className="text-premium text-[11px] text-white/90">MemDevOS Operator</span>
+                <span className="text-premium text-[11px] text-white/90">InfraConnect Operator</span>
               </div>
               <button onClick={() => setOpen(false)} className="text-white/40 hover:text-white/90 transition-colors">
                 <X className="w-4 h-4" />

@@ -611,6 +611,7 @@ model OperationalViolation {
 
 model FleetNode {
   id          String   @id @default(cuid())
+  tenantId    String   @default("SYSTEM_ROOT")
   robotId     String   @unique
   alias       String
   status      String   @default("online") // online | offline | degraded
@@ -630,6 +631,7 @@ model FleetNode {
 
 model Anomaly {
   id          String    @id @default(cuid())
+  tenantId    String    @default("SYSTEM_ROOT")
   nodeId      String
   node        FleetNode @relation(fields: [nodeId], references: [id])
   severity    String    // info | warn | critical
@@ -639,6 +641,16 @@ model Anomaly {
   resolved    Boolean   @default(false)
   resolvedAt  DateTime?
   createdAt   DateTime  @default(now())
+}
+
+model Memory {
+  id          String   @id @default(cuid())
+  tenantId    String   @default("SYSTEM_ROOT")
+  type        String   // "incident", "decision", "sim_vs_real_gap"
+  content     Json
+  createdAt   DateTime @default(now())
+
+  @@index([type])
 }
 
 // ─── Security & Compliance Matrix ─────────────────────────────────────────────
