@@ -16,8 +16,7 @@ type FleetStore = {
  */
 export const useFleetStore = create<FleetStore>((set) => ({
   robots: [
-    { id: "humanoid-01", position: [0, 0, 0], path: [] },
-    { id: "humanoid-02", position: [2, 0, 2], path: [] },
+    { id: "yahboom-m3-pro", position: [-2, 0, 1], path: [] }
   ],
 
   updateRobot: (id, data) =>

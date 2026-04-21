@@ -4,7 +4,7 @@ export type CameraMode = "free" | "follow" | "cinematic" | "overview";
 
 export const cinematicShots = [
     { pos: [10, 10, 10], lookAt: [0, 0, 0] },
-    { pos: [2, 2, 2], targetId: "humanoid-01" }, // Locks mapping
+    { pos: [2, 2, 2], targetId: "yahboom-m3-pro" }, // Locks mapping
 ];
 
 export const demoTimeline = [

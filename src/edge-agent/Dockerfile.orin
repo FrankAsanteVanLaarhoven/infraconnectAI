@@ -10,7 +10,10 @@ WORKDIR /edge-agent
 RUN pip3 install --no-cache-dir redis rclpy python-dotenv
 
 # Copy the synchronization node logic
-COPY ros2_bridge.py .
+COPY *_bridge.py .
+
+# Which bridge to run by default (can be overridden via docker run -e BRIDGE_SCRIPT=...)
+ENV BRIDGE_SCRIPT="yahboom_m3_bridge.py"
 
 # Source ROS2 and execute the bridge directly
-CMD ["/bin/bash", "-c", "source /opt/ros/humble/setup.bash && python3 ros2_bridge.py"]
+CMD ["/bin/bash", "-c", "source /opt/ros/humble/setup.bash && python3 ${BRIDGE_SCRIPT}"]

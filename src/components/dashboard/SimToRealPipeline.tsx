@@ -10,7 +10,7 @@ export function SimToRealPipeline() {
   const [deployments, setDeployments] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
   const [targetTier, setTargetTier] = useState('SIM_L0')
-  const [hardwareTarget, setHardwareTarget] = useState('UNITREE_G1')
+  const [hardwareTarget, setHardwareTarget] = useState('YAHBOOM_M3_PRO')
   const [autoPromote, setAutoPromote] = useState(true)
   const [triggering, setTriggering] = useState(false)
 
@@ -36,7 +36,7 @@ export function SimToRealPipeline() {
     e.preventDefault()
     setTriggering(true)
 
-    // Simulate an actual OTA payload generated from the CI system
+    // Simulate an actual OTA payload generated from the CI system mapping to our 8D SOTA paper
     const fakePayload = {
       version: `vla-policy-${Math.floor(Math.random() * 1000)}.onnx`,
       storageUri: `s3://zerogate-models/vla-policy-staging.onnx`,
@@ -44,7 +44,13 @@ export function SimToRealPipeline() {
       pipelineStage: targetTier === 'SIM_L0' ? 'SIM_L0_BASELINE' : 'REAL_FLEET',
       hardwareTarget,
       autoPromote,
-      manifestData: { arch: "arm64", framework: "PyTorch" },
+      manifestData: { 
+        arch: "arm64", 
+        framework: "PyTorch (157 TOPS)",
+        safetyKernel: "8D_Predictive_CBF",
+        sensoryFusion: "Dual_LiDAR_DABAI_Depth",
+        fleetAttenuation: "beta_network_enabled"
+      },
       checksum: "sha256-mock"
     }
 
@@ -95,9 +101,9 @@ export function SimToRealPipeline() {
              onChange={e => setHardwareTarget(e.target.value)}
              className="bg-indigo-950/30 text-indigo-400 text-xs font-mono uppercase tracking-widest border border-indigo-500/30 rounded p-2 focus:outline-none"
            >
+             <option value="YAHBOOM_M3_PRO">Yahboom M3 Pro (4x Mecanum)</option>
              <option value="UNITREE_G1">Unitree G1 (Bipedal)</option>
              <option value="QUAD_GENERIC">Generic Quadruped</option>
-             <option value="WHEELED">Wheeled Chassis</option>
            </select>
 
            <label className="text-[9px] uppercase tracking-widest text-slate-400 mt-2">Target Baseline</label>

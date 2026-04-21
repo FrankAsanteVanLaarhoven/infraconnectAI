@@ -14,7 +14,7 @@ from std_msgs.msg import String
 # Fetch localized credentials (or use global defaults)
 REDIS_URL = os.getenv("REDIS_URL", "redis://localhost:6379")
 TENANT_ID = os.getenv("TENANT_ID", "SYSTEM_ROOT")
-ROBOT_ID = os.getenv("ROBOT_ID", "humanoid-02")
+ROBOT_ID = os.getenv("ROBOT_ID", "yahboom-m3-pro")
 ISOLATED_STREAM = f"{TENANT_ID}.stream:robot.commands"
 
 class EdgeSyncNode(Node):

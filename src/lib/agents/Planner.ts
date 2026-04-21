@@ -159,7 +159,7 @@ export class AgentEngine {
     // Bind generated A* path constraints down physical Kafka sockets
     if (step.path && step.path.length > 0) {
         this.onCommandStream({
-            robot_id: "humanoid-01",
+            robot_id: "yahboom-m3-pro",
             action: "path_override",
             path: step.path
         });

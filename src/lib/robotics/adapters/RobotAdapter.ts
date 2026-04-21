@@ -35,18 +35,18 @@ export interface RobotAdapter {
 }
 
 /**
- * Example Unitree Architecture Stub
+ * Example Yahboom M3 Pro Architecture Stub
  */
-export class UnitreeG1Adapter implements RobotAdapter {
+export class YahboomM3Adapter implements RobotAdapter {
   async sendCommand(cmd: CommandPayload): Promise<void> {
-    // Inject UDP target abstraction code mapping natively to the Unitree local APIs
-    console.log(`[UnitreeG1] SDK Binding Fired: ${cmd.action}`);
+    // Inject UDP target abstraction code mapping natively to the M3 local APIs
+    console.log(`[YahboomM3] SDK Binding Fired: ${cmd.action}`);
   }
 
   async getTelemetry(): Promise<TelemetryPayload> {
-    // Stub simulating raw physical UDP responses from the G1 joint motors
+    // Stub simulating raw physical UDP responses from the Mecanum encoders
     return {
-      robot_id: "unitree-01",
+      robot_id: "yahboom-m3-pro",
       battery: 81.4,
       status: "ACTIVE",
       pose: { x: 0.1, y: 0.0, z: 0.0 },

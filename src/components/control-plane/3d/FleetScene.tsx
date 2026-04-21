@@ -18,8 +18,7 @@ type RobotState = {
 export function FleetScene({ initialRobots = [] }: { initialRobots?: RobotState[] }) {
   const [robots, setRobots] = useState<RobotState[]>(
       initialRobots.length > 0 ? initialRobots : [
-          { id: "humanoid-01", position: [0, 0, 0], path: [[2,0,2], [4,0,0]], joints: {} },
-          { id: "humanoid-02", position: [-5, 0, -2], path: [[0,0,0]], joints: {} }
+          { id: "yahboom-m3-pro", position: [-2, 0, 1], path: [[2,0,2], [4,0,0]], joints: {} }
       ]
   );
 

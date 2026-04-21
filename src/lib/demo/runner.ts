@@ -13,8 +13,7 @@ function executeAction(action: string) {
       // Inject standard Demo execution payload wrapper
       bus.emit("tasks.created" as any, { 
           robots: [
-              { id: "humanoid-01", position: [0,0,0], battery: 85, status: "idle" },
-              { id: "humanoid-02", position: [4,0,2], battery: 92, status: "idle" }
+              { id: "yahboom-m3-pro", position: [0,0,0], battery: 85, status: "idle" }
           ], 
           tasks: [
               { id: "DEMO_INSPECT", type: "inspect", target: [6,0,6], priority: 1 }
@@ -23,16 +22,16 @@ function executeAction(action: string) {
       break;
 
     case "inject_failure":
-      tacticalBus.dispatch({ type: "HARDWARE_ANOMALY", payload: { nodeId: "humanoid-01", temp: 104, vram: 98 } });
+      tacticalBus.dispatch({ type: "HARDWARE_ANOMALY", payload: { nodeId: "yahboom-m3-pro", temp: 104, vram: 98, error: "DABAI DCW2 Occlusion" } });
       break;
       
     case "agent_response":
-      bus.emit("infraconnect:toast" as any, { title: "Agent Engaged", message: "Rerouting execution matrix due to Thermal cascade." });
+      bus.emit("infraconnect:toast" as any, { title: "Dual-Model Intervention", message: "Rerouting execution logic to secondary vision framework." });
       break;
       
     case "recovery":
       // Resolve error constraints and resume operations natively 
-      tacticalBus.dispatch({ type: "MISSION_PURGE", payload: { bufferId: "humanoid-01" } });
+      tacticalBus.dispatch({ type: "MISSION_PURGE", payload: { bufferId: "yahboom-m3-pro" } });
       break;
   }
 }

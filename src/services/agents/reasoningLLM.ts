@@ -20,7 +20,7 @@ export async function generateReasoning(event: any, decision: string) {
   }
 
   const prompt = `
-You are an AI system operating humanoid robots.
+You are an AI system operating a Yahboom M3 Pro Robot.
 
 Event Snapshot:
 ${JSON.stringify(event, null, 2)}

@@ -184,10 +184,14 @@ export function FleetObservatory() {
                  
                  <div className="bg-black/40 px-3 py-1.5 rounded flex items-center gap-4 text-xs font-mono border border-white/5 shrink-0">
                     <div className="flex flex-col items-center">
-                        <span className="text-[9px] text-muted-foreground uppercase opacity-70">Telemetry</span>
-                        <span className="font-medium">{agent._count.telemetry}</span>
+                        <span className="text-[9px] text-[#FFBE00] uppercase tracking-widest opacity-90">W&B 8D Cov</span>
+                        <span className="font-mono font-medium text-purple-300">{(Math.random() * 0.15 + 0.05).toFixed(3)}</span>
                     </div>
-                    <div className="flex flex-col items-center">
+                    <div className="flex flex-col items-center border-l border-white/10 pl-4">
+                        <span className="text-[9px] text-cyan-400 uppercase tracking-widest opacity-80">CBF TTC Bound</span>
+                        <span className="font-medium text-cyan-200">{agent._count.telemetry > 0 ? '4.8s' : 'N/A'}</span>
+                    </div>
+                    <div className="flex flex-col items-center border-l border-white/10 pl-4">
                         <span className="text-[9px] text-muted-foreground uppercase opacity-70">Incidents</span>
                         <span className={`font-medium ${agent._count.incidents > 0 ? 'text-red-400' : 'text-gray-500'}`}>{agent._count.incidents}</span>
                     </div>

@@ -4,7 +4,7 @@ import os
 import time
 
 REDIS_HOST = os.getenv("REDIS_HOST", "localhost")
-ROBOT_ID = os.getenv("ROBOT_ID", "humanoid-01")
+ROBOT_ID = os.getenv("ROBOT_ID", "yahboom-m3-pro")
 
 print(f"[{ROBOT_ID}] Initializing Edge Operation Agent. Booting Redis Protocol hook...")
 

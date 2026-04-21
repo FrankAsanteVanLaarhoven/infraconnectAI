@@ -34,7 +34,7 @@ export const EnterpriseDemoOrchestrator = () => {
           addLog('Routing stream:robot.telemetry -> GREEN');
           // Emit baseline telemetry to the actual backend pipeline
           dispatchToRedis("stream:robot.telemetry", {
-             robot_id: "humanoid-02",
+             robot_id: "yahboom-m3-pro",
              battery: 95.0,
              cpu_load: 0.15,
              temperature: 40.0,
@@ -45,20 +45,20 @@ export const EnterpriseDemoOrchestrator = () => {
       }
 
       if (targetPhase === 2) {
-          addLog('INJECT: Simulating catastrophic joint failure on humanoid-02...');
+          addLog('INJECT: Simulating catastrophic Mecanum wheel slip on yahboom-m3-pro...');
           // Trigger the explicit threshold (Battery < 20 && Temp > 85.0) which forces Node-level AI resolution
           setTimeout(() => {
-              addLog('stream:robot.alerts [HIGH] - Right arm torque anomaly detected.');
+              addLog('stream:robot.alerts [HIGH] - Mecanum wheel suspension geometry anomaly detected.');
               dispatchToRedis("stream:robot.alerts", {
-                 robot_id: "humanoid-02",
+                 robot_id: "yahboom-m3-pro",
                  severity: "HIGH",
                  type: "SYSTEM_FAILURE",
-                 message: "Catastrophic joint resistance across primary actuator.",
+                 message: "Catastrophic motor resistance across primary Mecanum actuator due to slip.",
                  timestamp: Date.now()
               });
 
               dispatchToRedis("stream:robot.telemetry", {
-                 robot_id: "humanoid-02",
+                 robot_id: "yahboom-m3-pro",
                  battery: 15.0, 
                  cpu_load: 0.95,
                  temperature: 95.5,
@@ -76,13 +76,13 @@ export const EnterpriseDemoOrchestrator = () => {
       }
 
       if (targetPhase === 5) {
-          addLog('Operator Override Requested: > Fix humanoid-02');
+          addLog('Operator Override Requested: > Reboot Orin Inference Module yahboom-m3-pro');
           setTimeout(() => {
-             addLog('Executing stream:robot.commands [RESTART_JOINT]');
+             addLog('Executing stream:robot.commands [RESTART_ORIN]');
              dispatchToRedis("stream:robot.commands", {
                  command_id: `sys-recv-${Date.now()}`,
-                 robot_id: "humanoid-02",
-                 action: "RESTART_JOINT",
+                 robot_id: "yahboom-m3-pro",
+                 action: "RESTART_ORIN",
                  parameters: { priority: "highest", override: true },
                  issued_by: "operator:demo",
                  timestamp: Date.now()
@@ -92,11 +92,11 @@ export const EnterpriseDemoOrchestrator = () => {
       }
 
       if (targetPhase === 7) {
-          addLog('Confirmation Received: Actuator Stabilized. Resuming operations.');
+          addLog('Confirmation Received: Dual-Model inference stabilized. Resuming Mecanum operations.');
           addLog('Global State: Fully synced to Redis Engine across the cluster.');
           
           dispatchToRedis("stream:robot.telemetry", {
-             robot_id: "humanoid-02",
+             robot_id: "yahboom-m3-pro",
              battery: 88.0, 
              cpu_load: 0.35,
              temperature: 42.0,

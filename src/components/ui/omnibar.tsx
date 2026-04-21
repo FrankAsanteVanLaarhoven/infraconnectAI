@@ -30,7 +30,7 @@ export function Omnibar({ onExecuteTopology }: { onExecuteTopology: (t: IntentTo
   }, [query]);
 
   const handleExecute = () => {
-    // Intercept explicit command executions for the Control Plane (e.g. "> restart humanoid-02")
+    // Intercept explicit command executions for the Control Plane (e.g. "> restart yahboom-m3-pro")
     if (query.startsWith('>')) {
       const parts = query.slice(1).trim().split(" ");
       const action = parts[0]?.toUpperCase() || 'UNKNOWN';
@@ -178,7 +178,7 @@ export function Omnibar({ onExecuteTopology }: { onExecuteTopology: (t: IntentTo
                            <span className="text-[10px] text-[#6B7280]">{`Use [>] for operations, [!] for agents`}</span>
                         </div>
                         <div className="flex flex-wrap justify-center gap-2 mt-2 max-w-lg">
-                           <span className="text-[10px] bg-[#0a0a0a] border border-[#1F1F1F] px-2 py-1 flex items-center gap-1.5 rounded text-[#9AA4AF] cursor-pointer hover:bg-white/5 transition-colors" onClick={() => setQuery("> restart humanoid-02")}><span className="text-[#4CC9F0]">CMD</span> {"> restart humanoid-02"}</span>
+                           <span className="text-[10px] bg-[#0a0a0a] border border-[#1F1F1F] px-2 py-1 flex items-center gap-1.5 rounded text-[#9AA4AF] cursor-pointer hover:bg-white/5 transition-colors" onClick={() => setQuery("> restart yahboom-m3-pro")}><span className="text-[#4CC9F0]">CMD</span> {"> restart yahboom-m3-pro"}</span>
                            <span className="text-[10px] bg-[#0a0a0a] border border-[#1F1F1F] px-2 py-1 flex items-center gap-1.5 rounded text-[#9AA4AF] cursor-pointer hover:bg-white/5 transition-colors" onClick={() => setQuery("! stabilize fleet")}><span className="text-purple-400">AGENT</span> {"! stabilize fleet"}</span>
                            <span className="text-[10px] bg-[#0a0a0a] border border-[#1F1F1F] px-2 py-1 flex items-center gap-1.5 rounded text-[#9AA4AF] cursor-pointer hover:bg-white/5 transition-colors" onClick={() => setQuery("Stream Postgres users")}><span className="text-[#22C55E]">DAG</span> {"Stream Postgres users"}</span>
                         </div>

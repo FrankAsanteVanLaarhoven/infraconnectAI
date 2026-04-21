@@ -1,121 +1,114 @@
 "use client";
 
-import React, { useEffect, useState, useRef } from "react";
-import { Loader2, Activity } from "lucide-react";
+import React, { useState, useRef, useEffect } from "react";
+import { Loader2, GraduationCap, ChevronDown, ChevronUp, ChevronRight, ChevronLeft, ArrowUp, ArrowDown, ArrowLeft, ArrowRight, Activity } from "lucide-react";
+import { YAHBOOM_M3_PROFILE } from "../../lib/robotics/profiles/yahboom-m3";
+import { AcademyPanel } from "./AcademyPanel";
+import { Canvas, useFrame } from "@react-three/fiber";
+import { OrbitControls, Grid } from "@react-three/drei";
+import { URDFRobot } from "../control-plane/3d/URDFRobot";
 import * as THREE from "three";
+
+// Re-engineered Fiber loop integrating the high-fidelity native fallback URDF
+function SimulationScene({ robotState }: { robotState: any }) {
+    const ringRef = useRef<THREE.Mesh>(null);
+    const ringMatRef = useRef<THREE.MeshBasicMaterial>(null);
+
+    useFrame((state, delta) => {
+       // Circular Abstract LiDAR pulse
+       if (ringRef.current && ringMatRef.current) {
+          ringRef.current.scale.x += delta * 4;
+          ringRef.current.scale.y += delta * 4;
+          ringMatRef.current.opacity -= delta * 0.8;
+          if (ringRef.current.scale.x > 3.5) {
+             ringRef.current.scale.set(0.1, 0.1, 1);
+             ringMatRef.current.opacity = 0.6;
+          }
+       }
+    });
+
+    return (
+       <group>
+          <ambientLight intensity={1.2} />
+          <directionalLight position={[10, 20, 10]} intensity={1.5} />
+          <Grid infiniteGrid fadeDistance={40} sectionColor="#06b6d4" cellColor="#1A1D21" />
+          
+          <group 
+             position={[robotState.translation.x, robotState.translation.y, robotState.translation.z]}
+             rotation={[robotState.rotation.x, robotState.rotation.y, robotState.rotation.z]}
+          >
+             <URDFRobot joints={robotState.joints} />
+
+             {/* Semantic LiDAR Point Cloud Wave Overlay */}
+             <mesh ref={ringRef} rotation={[-Math.PI/2, 0, 0]} position={[0, 0.65, 0]}>
+                <ringGeometry args={[0.5, 0.55, 64]} />
+                <meshBasicMaterial ref={ringMatRef} color="#14b8a6" transparent opacity={0.6} side={THREE.DoubleSide} />
+             </mesh>
+          </group>
+       </group>
+    );
+}
 
 export function RobotViewer() {
   const [status, setStatus] = useState<"connecting" | "connected" | "error">("connecting");
-  const [poseData, setPoseData] = useState<any>(null);
+  const [showAcademy, setShowAcademy] = useState(false);
   
-  const mountRef = useRef<HTMLDivElement>(null);
-  const poseRef = useRef<any>(null); // Mutable reference for the render loop
+  // UI State toggles
+  const [telemetryExpanded, setTelemetryExpanded] = useState(true);
+  const [interconnectExpanded, setInterconnectExpanded] = useState(true);
+
+  // Unified interactive kinematic state
+  const [robotState, setRobotState] = useState({
+      translation: { x: 0, y: 0, z: 0 },
+      rotation: { x: 0, y: 0, z: 0 },
+      joints: { base: 0, link1: 0, link2: 0, link3: 0 }
+  });
 
   useEffect(() => {
-    // 1. Initialize Bare-Metal Palantir Digital Twin Context
-    const currentMount = mountRef.current;
-    if (!currentMount) return;
-
-    const width = currentMount.clientWidth;
-    const height = currentMount.clientHeight;
-
-    const scene = new THREE.Scene();
-    // Scene background mimicking tactical UI
-    scene.background = new THREE.Color(0x050607); 
-
-    const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
-    camera.position.set(5, 5, 5);
-    camera.lookAt(0, 0, 0);
-
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    renderer.setSize(width, height);
-    currentMount.appendChild(renderer.domElement);
-
-    // 2. Spatial Grid Context
-    const gridHelper = new THREE.GridHelper(20, 20, 0x06b6d4, 0x1A1D21);
-    (gridHelper.material as THREE.Material).transparent = true;
-    (gridHelper.material as THREE.Material).opacity = 0.5;
-    scene.add(gridHelper);
-
-    // 3. Construct Procedural Humanoid Bounding Cluster
-    // (In production, replace with urdf-loader executing raw geometry)
-    const robotCluster = new THREE.Group();
-    
-    // Core Chassis
-    const chassisGeo = new THREE.BoxGeometry(0.5, 0.8, 0.3);
-    const chassisMat = new THREE.MeshBasicMaterial({ color: 0x4CC9F0, wireframe: true, transparent: true, opacity: 0.8 });
-    const chassis = new THREE.Mesh(chassisGeo, chassisMat);
-    chassis.position.y = 1.0;
-    robotCluster.add(chassis);
-
-    // Head
-    const headGeo = new THREE.BoxGeometry(0.3, 0.3, 0.3);
-    const headMat = new THREE.MeshBasicMaterial({ color: 0x22C55E, wireframe: true });
-    const head = new THREE.Mesh(headGeo, headMat);
-    head.position.y = 1.65;
-    robotCluster.add(head);
-
-    scene.add(robotCluster);
-
-    // 4. Mocking Local SDK Linkage (Telemetry Bridge)
+    // Hardware bridge mock pipeline
     setTimeout(() => setStatus("connected"), 800);
-    const dataInterval = setInterval(() => {
-        const simPose = {
-            translation: { x: Math.sin(Date.now() / 1000) * 2, y: 0, z: Math.cos(Date.now() / 1000) * 2 },
-            rotation: { x: 0, y: (Date.now() / 1000) % (Math.PI * 2), z: 0, w: 1.0 }
-        };
-        poseRef.current = simPose;
-        setPoseData(simPose);
-    }, 100);
-
-    // 5. Render Physics Loop
-    let animationFrameId: number;
-    const animate = () => {
-      animationFrameId = requestAnimationFrame(animate);
-
-      // Directly couple telemetry physics into the visual cluster
-      if (poseRef.current) {
-         robotCluster.position.x = poseRef.current.translation.x;
-         robotCluster.position.z = poseRef.current.translation.z;
-         
-         // Smooth rotation application
-         robotCluster.rotation.y = poseRef.current.rotation.y;
-      }
-
-      renderer.render(scene, camera);
-    };
-    animate();
-
-    // Context Resizer
-    const handleResize = () => {
-        if (!currentMount) return;
-        camera.aspect = currentMount.clientWidth / currentMount.clientHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(currentMount.clientWidth, currentMount.clientHeight);
-    };
-    window.addEventListener('resize', handleResize);
-
-    // Cleanup Pipeline
-    return () => {
-      clearInterval(dataInterval);
-      window.removeEventListener('resize', handleResize);
-      cancelAnimationFrame(animationFrameId);
-      currentMount.removeChild(renderer.domElement);
-      
-      // Memory flush
-      chassisGeo.dispose();
-      chassisMat.dispose();
-      headGeo.dispose();
-      headMat.dispose();
-      renderer.dispose();
-    };
   }, []);
+
+  const drive = (axis: 'z' | 'rot', amount: number) => {
+     setRobotState(prev => {
+        const rot = prev.rotation.y;
+        if (axis === 'rot') {
+           return { ...prev, rotation: { ...prev.rotation, y: prev.rotation.y + amount } };
+        }
+        // Basic trigonometric forward/backward drive
+        return {
+           ...prev,
+           translation: {
+              ...prev.translation,
+              x: prev.translation.x + Math.sin(rot) * amount,
+              z: prev.translation.z + Math.cos(rot) * amount
+           }
+        }
+     });
+  };
+
+  const updateJoint = (joint: 'base' | 'link1' | 'link2' | 'link3', val: number) => {
+     setRobotState(prev => ({
+        ...prev,
+        joints: { ...prev.joints, [joint]: val }
+     }));
+  };
 
   return (
     <div className="flex flex-col h-full w-full bg-[#030405] rounded-xl border border-white/10 overflow-hidden relative group">
+      
+      {/* Primary WebGL Fiber Interactive Mount */}
+      <div className="flex-1 w-full h-full relative z-0">
+          <Canvas camera={{ position: [5, 4, 6], fov: 45 }} gl={{ antialias: true, alpha: true }}>
+              <color attach="background" args={['#050607']} />
+              <OrbitControls makeDefault enableDamping dampingFactor={0.05} />
+              <SimulationScene robotState={robotState} />
+          </Canvas>
+      </div>
+
       {/* Simulation Overlay Banner */}
-      <div className="absolute top-0 left-0 w-full p-2 flex justify-between items-center bg-gradient-to-b from-black/80 to-transparent z-10">
-        <div className="flex items-center gap-2 px-2 py-1 bg-white/5 backdrop-blur rounded border border-white/10">
+      <div className="absolute top-0 left-0 w-full p-2 flex justify-between items-center bg-gradient-to-b from-black/80 to-transparent z-10 pointer-events-none">
+        <div className="flex items-center gap-2 px-2 py-1 bg-white/5 backdrop-blur rounded border border-white/10 pointer-events-auto">
             {status === "connecting" ? (
                 <Loader2 className="w-3 h-3 text-yellow-500 animate-spin" />
             ) : status === "connected" ? (
@@ -124,33 +117,146 @@ export function RobotViewer() {
                 <div className="w-2 h-2 rounded-full bg-red-500" />
             )}
             <span className="text-[10px] font-mono font-bold text-white tracking-widest uppercase">
-              ROS2 BRIDGE: /tf // KINEMATICS
+              ROS2 BRIDGE: /tf // TELEOPERATION
             </span>
         </div>
-        <div className="flex gap-2">
+        <div className="flex gap-2 pointer-events-auto">
             <span className="text-[10px] px-2 py-1 bg-cyan-900/40 text-cyan-400 font-mono rounded border border-cyan-500/30 uppercase">
-                SIMULATION MODE
+                INTERACTIVE MODE
             </span>
         </div>
       </div>
+    
+      {/* Interconnect Protocol Overlay (Collapsible) */}
+      <div className="absolute top-12 left-4 w-64 bg-black/80 border border-white/10 rounded font-mono text-[10px] shadow-lg backdrop-blur z-10">
+         <div 
+             className="p-3 border-b border-white/5 flex justify-between items-center cursor-pointer hover:bg-white/5"
+             onClick={() => setInterconnectExpanded(!interconnectExpanded)}
+         >
+            <span className="text-white/40">INTERCONNECT PROTOCOL</span>
+            <div className="flex gap-2 items-center">
+                <span className="text-emerald-500 animate-pulse">ACTIVE</span>
+                {interconnectExpanded ? <ChevronUp className="w-3 h-3 text-white/40" /> : <ChevronDown className="w-3 h-3 text-white/40" />}
+            </div>
+         </div>
+         {interconnectExpanded && (
+             <div className="p-3 flex flex-col gap-1 text-cyan-400">
+                <div><span className="text-white/60">DRIVE SOURCE:</span> {YAHBOOM_M3_PROFILE.inputs.active}</div>
+                <div><span className="text-white/60">AVAILABLE BACKUP:</span> {YAHBOOM_M3_PROFILE.inputs.available.join(" | ")}</div>
+             </div>
+         )}
+      </div>
 
-      {/* Primary WebGL Interactive Mount */}
-      <div ref={mountRef} className="flex-1 w-full h-full relative z-0" />
+      <div className="absolute top-12 right-4 flex items-center gap-2 z-10">
+        <button 
+           onClick={() => setShowAcademy(true)}
+           className="px-3 py-1 flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-mono text-[10px] rounded hover:bg-emerald-500/20 transition-colors pointer-events-auto"
+        >
+           <GraduationCap className="h-3 w-3" />
+           AGENT LEARNING ACADEMY
+        </button>
+      </div>
 
-      {/* Telemetry Target Lock Overlay */}
-      {poseData && (
-          <div className="absolute bottom-4 left-4 p-3 bg-black/80 border border-white/10 rounded font-mono text-[10px] shadow-lg backdrop-blur z-10 pointer-events-none">
-              <div className="text-white/40 mb-1 border-b border-white/5 pb-1">REALTIME KINEMATICS (LOCAL)</div>
-              <div className="flex flex-col gap-1 mt-2 text-cyan-400">
-                  <div><span className="text-white/60">TARGET:</span> humanoid-01</div>
-                  <div><span className="text-white/60">HEALTH:</span> ACTIVE | BAT: 82%</div>
-                  <div className="grid grid-cols-2 gap-x-4 mt-1 pt-1 border-t border-white/5">
-                    <div><span className="text-white/60">POS X:</span> {poseData.translation.x.toFixed(3)}</div>
-                    <div><span className="text-white/60">POS Z:</span> {poseData.translation.z.toFixed(3)}</div>
+      {showAcademy && (
+          <AcademyPanel onClose={() => setShowAcademy(false)} />
+      )}
+
+      {/* Telemetry Target Lock Overlay (Collapsible) */}
+      <div className="absolute bottom-4 left-4 w-80 bg-black/80 border border-white/10 rounded font-mono text-[10px] shadow-lg backdrop-blur z-10 pointer-events-auto">
+          <div 
+              className="p-3 border-b border-white/5 flex justify-between items-center cursor-pointer hover:bg-white/5"
+              onClick={() => setTelemetryExpanded(!telemetryExpanded)}
+          >
+              <div className="text-white/40">M3 PRO TELEMETRY (EDGE-NODE)</div>
+              {telemetryExpanded ? <ChevronUp className="w-3 h-3 text-white/40" /> : <ChevronDown className="w-3 h-3 text-white/40" />}
+          </div>
+          
+          {telemetryExpanded && (
+              <div className="p-3 flex flex-col gap-1 text-cyan-400">
+                  <div><span className="text-white/60">TARGET:</span> {YAHBOOM_M3_PROFILE.name}</div>
+                  <div><span className="text-white/60">BATTERY:</span> {YAHBOOM_M3_PROFILE.control.batteryCapacity} PACK [<span className="text-emerald-500 font-bold">100%</span>]</div>
+                  <div><span className="text-white/60">LATENCY:</span> 2s (DECISION) | 4s (TASK LOAD)</div>
+                  <div><span className="text-white/60">PIPELINE:</span> OpenCV / MediaPipe TRACKING [{YAHBOOM_M3_PROFILE.vision.rgbFps}fps]</div>
+                  <div><span className="text-white/60">MODELS:</span> LLM / VOICE / VISUAL LLM [RAG ACTIVE]</div>
+                  
+                  {/* Diagnostics Extension Panel */}
+                  <div className="grid grid-cols-2 gap-x-4 mt-2 pt-2 border-t border-white/5 text-[9px]">
+                    <div><span className="text-white/60">MCU BOUND:</span> {YAHBOOM_M3_PROFILE.control.mcu}</div>
+                    <div><span className="text-white/60">IMU SYNC:</span> {YAHBOOM_M3_PROFILE.control.imu}</div>
+                    <div><span className="text-white/60">ARM DOF:</span> {YAHBOOM_M3_PROFILE.kinematics.dof}-Axis / {YAHBOOM_M3_PROFILE.kinematics.servoType}</div>
+                    <div><span className="text-white/60">PAYLOAD:</span> max {YAHBOOM_M3_PROFILE.kinematics.payloadLimitGrams}g @ {YAHBOOM_M3_PROFILE.kinematics.maxRadiusCm}cm</div>
+                    <div><span className="text-white/60">LIDAR:</span> {YAHBOOM_M3_PROFILE.perception.lidarCount}x {YAHBOOM_M3_PROFILE.perception.lidarType}</div>
+                    <div><span className="text-white/60">LIDAR RNG:</span> {YAHBOOM_M3_PROFILE.perception.rangeMinM}m - {YAHBOOM_M3_PROFILE.perception.rangeMaxM}m</div>
+                    <div><span className="text-white/60">CAMERA:</span> {YAHBOOM_M3_PROFILE.vision.cameraType}</div>
+                    <div><span className="text-white/60">SUSPENSION:</span> {YAHBOOM_M3_PROFILE.chassis.suspension}</div>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-x-4 mt-2 pt-2 border-t border-white/5">
+                    <div><span className="text-white/60">POS X:</span> {robotState.translation.x.toFixed(3)}</div>
+                    <div><span className="text-white/60">POS Z:</span> {robotState.translation.z.toFixed(3)}</div>
                   </div>
               </div>
-          </div>
-      )}
+          )}
+      </div>
+
+      {/* Universal Control Center Desktop Module */}
+      <div className="absolute bottom-4 right-4 bg-black/80 border border-white/10 rounded-xl p-4 shadow-2xl backdrop-blur-md z-10 pointer-events-auto flex flex-col gap-4 min-w-[320px]">
+         <div className="flex justify-between items-center border-b border-white/10 pb-2">
+            <h3 className="text-cyan-400 font-mono text-xs font-bold flex items-center gap-2">
+                <Activity className="w-3 h-3 text-emerald-400" /> REAL-TIME CONTROL CENTER
+            </h3>
+            <span className="text-[9px] bg-red-500/20 text-red-500 px-2 py-0.5 rounded uppercase tracking-wider font-mono animate-pulse">Kinematics Priority</span>
+         </div>
+
+         <div className="flex gap-6 relative">
+            {/* D-Pad Base Movement Array */}
+            <div className="flex flex-col items-center gap-1 justify-center flex-1 py-2">
+               <button onClick={() => drive('z', 0.2)} className="bg-white/5 hover:bg-emerald-500/20 p-2 rounded text-white/50 hover:text-emerald-400 transition-colors border border-white/5">
+                  <ArrowUp className="w-4 h-4" />
+               </button>
+               <div className="flex gap-1">
+                  <button onClick={() => drive('rot', 0.2)} className="bg-white/5 hover:bg-emerald-500/20 p-2 rounded text-white/50 hover:text-emerald-400 transition-colors border border-white/5">
+                     <ArrowLeft className="w-4 h-4" />
+                  </button>
+                  <button onClick={() => drive('z', -0.2)} className="bg-white/5 hover:bg-emerald-500/20 p-2 rounded text-white/50 hover:text-emerald-400 transition-colors border border-white/5">
+                     <ArrowDown className="w-4 h-4" />
+                  </button>
+                  <button onClick={() => drive('rot', -0.2)} className="bg-white/5 hover:bg-emerald-500/20 p-2 rounded text-white/50 hover:text-emerald-400 transition-colors border border-white/5">
+                     <ArrowRight className="w-4 h-4" />
+                  </button>
+               </div>
+               <span className="text-[8px] font-mono text-white/40 uppercase tracking-widest mt-1 text-center font-bold">Mecanum Drive</span>
+            </div>
+
+            <div className="w-[1px] bg-white/10" />
+
+            {/* 6DOF Robotic Arm Joint Sliders */}
+            <div className="flex-1 flex flex-col gap-2 relative">
+               <div className="flex flex-col gap-1">
+                  <div className="flex justify-between text-[9px] font-mono text-cyan-400"><span>ARM PAN</span> <span>{robotState.joints.base.toFixed(2)}rad</span></div>
+                  <input type="range" min={-Math.PI} max={Math.PI} step={0.1} value={robotState.joints.base} onChange={(e) => updateJoint('base', parseFloat(e.target.value))} className="w-full accent-cyan-500 h-1 bg-white/10 appearance-none rounded-full" />
+               </div>
+               <div className="flex flex-col gap-1">
+                  <div className="flex justify-between text-[9px] font-mono text-cyan-400"><span>SHOULDER</span> <span>{robotState.joints.link1.toFixed(2)}rad</span></div>
+                  <input type="range" min={-Math.PI/2} max={Math.PI/2} step={0.1} value={robotState.joints.link1} onChange={(e) => updateJoint('link1', parseFloat(e.target.value))} className="w-full accent-cyan-500 h-1 bg-white/10 appearance-none rounded-full" />
+               </div>
+               <div className="flex flex-col gap-1">
+                  <div className="flex justify-between text-[9px] font-mono text-cyan-400"><span>ELBOW</span> <span>{robotState.joints.link2.toFixed(2)}rad</span></div>
+                  <input type="range" min={-Math.PI/2} max={Math.PI/2} step={0.1} value={robotState.joints.link2} onChange={(e) => updateJoint('link2', parseFloat(e.target.value))} className="w-full accent-cyan-500 h-1 bg-white/10 appearance-none rounded-full" />
+               </div>
+               <div className="flex flex-col gap-1">
+                  <div className="flex justify-between text-[9px] font-mono text-cyan-400"><span>GRIPPER TILT</span> <span>{robotState.joints.link3.toFixed(2)}rad</span></div>
+                  <input type="range" min={-Math.PI/2} max={Math.PI/2} step={0.1} value={robotState.joints.link3} onChange={(e) => updateJoint('link3', parseFloat(e.target.value))} className="w-full accent-cyan-500 h-1 bg-white/10 appearance-none rounded-full" />
+               </div>
+            </div>
+         </div>
+
+         {/* Core Capabilities */}
+         <div className="grid grid-cols-2 gap-2 mt-2 pt-3 border-t border-white/10">
+            <button className="bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400 border border-indigo-500/30 text-[9px] font-mono p-1 rounded transition-colors text-center font-bold tracking-widest uppercase">Start SLAM</button>
+            <button className="bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-[9px] font-mono p-1 rounded transition-colors text-center font-bold tracking-widest uppercase">DCW2 FUSION</button>
+         </div>
+      </div>
     </div>
   );
 }

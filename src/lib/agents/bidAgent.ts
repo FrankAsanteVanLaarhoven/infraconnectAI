@@ -29,7 +29,7 @@ register({
     const robots = [
        { id: "robot-01", position: [2,0,2] as [number,number,number], battery: 94, status: "idle" as const },
        { id: "robot-02", position: [8,0,8] as [number,number,number], battery: 52, status: "idle" as const },
-       { id: "humanoid-v4", position: [4,0,5] as [number,number,number], battery: 80, status: "idle" as const }
+       { id: "yahboom-m3-pro", position: [4,0,5] as [number,number,number], battery: 80, status: "idle" as const }
     ];
 
     robots.forEach(async (mockState) => {

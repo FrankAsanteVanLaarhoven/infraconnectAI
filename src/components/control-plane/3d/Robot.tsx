@@ -11,7 +11,7 @@ export function Robot({ id, position }: { id: string; position: [number, number,
 
   // Isolate hardware bounding loaders
   useEffect(() => {
-    loadURDF("/robots/humanoid.urdf").then(setModel);
+    loadURDF("/robots/yahboom_m3_pro.urdf").then(setModel);
   }, []);
 
   // Sync internal geometry coordinates dynamically mapped from Zustand

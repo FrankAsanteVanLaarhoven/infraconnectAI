@@ -12,7 +12,7 @@ export type TacticalCommand =
   | { type: 'MISSION_DISARM'; payload: {} }
   | { type: 'MISSION_PIVOT'; payload: { sector: string; reason: string } }
   | { type: 'MISSION_PURGE'; payload: { bufferId: string } }
-  | { type: 'HARDWARE_ANOMALY'; payload: { nodeId: string; temp: number; vram: number } }
+  | { type: 'HARDWARE_ANOMALY'; payload: { nodeId: string; temp: number; vram: number; error?: string } }
   | { type: 'SWARM_GOVERNANCE_LOCKDOWN'; payload: { toxicModels: string } };
 
 class TacticalBus {
@@ -96,7 +96,7 @@ import { collectExperience } from "@/lib/learning/collector";
 bus.on("tasks.created" as any, onTasksCreated as any);
 bus.on("tasks.announced" as any, async (task: any) => {
     // Simulated robotic endpoints calculating learned bids natively and emitting independent calculations
-    const mockState = { id: "humanoid-02", position: [2,0,2] as [number,number,number], battery: 94, status: "idle" as const };
+    const mockState = { id: "yahboom-m3-pro", position: [-2,0,1] as [number,number,number], battery: 94, status: "idle" as const };
     const bid = { robot_id: mockState.id, task_id: task.id, bid: 10 };
     bus.emit("robots.bid" as any, bid);
 });
