@@ -104,10 +104,12 @@ function SceneContent() {
 }
 
 function RobotOverlay() {
-  const robotState = useFleetStore((s) => {
-      const robots = s.robots;
-      return robots?.length > 0 ? { zone: "SECTOR-7G", battery: 98, status: robots[0]?.status || "IDLE" } : null;
-  });
+  const status = useFleetStore((s) => s.robots[0]?.status || "IDLE");
+  const hasRobots = useFleetStore((s) => s.robots?.length > 0);
+
+  if (!hasRobots) return null;
+
+  const robotState = { zone: "SECTOR-7G", battery: 98, status };
 
   if (!robotState) return null;
 
