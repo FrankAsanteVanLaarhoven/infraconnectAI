@@ -1,13 +1,21 @@
 "use client";
 
-import DAGCanvas from "@/components/mission/DAGCanvas";
+const DAGCanvas = dynamic(
+  () => import("@/components/mission/DAGCanvas"),
+  { ssr: false }
+);
+
 import ReasoningOverlay from "@/components/overlay/ReasoningOverlay";
 import DebatePanel from "@/components/panels/DebatePanel";
 import ROIPanel from "@/components/panels/ROIPanel";
 import Timeline from "@/components/mission/Timeline";
 import Omnibar from "@/components/omnibar/Omnibar";
-import TacticalSceneWrapper from "@/components/control-plane/3d/TacticalScene";
+import dynamic from 'next/dynamic';
 
+const TacticalSceneWrapper = dynamic(
+  () => import("@/components/control-plane/3d/TacticalScene"),
+  { ssr: false }
+);
 export default function NexusPage() {
   return (
     <div className="w-screen h-screen bg-bg text-white overflow-hidden relative">
