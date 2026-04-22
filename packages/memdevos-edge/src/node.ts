@@ -22,7 +22,7 @@ class EdgeNode {
   }
 
   async start() {
-    console.log('[EdgeNode] Initiating SOTA Bootstrap...')
+    console.log('[EdgeNode] Initiating CORE Bootstrap...')
     
     // 1. Identity Bootstrap
     const identity = await identityManager.bootstrapAgent(AGENT_ID)

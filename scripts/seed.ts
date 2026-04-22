@@ -3,7 +3,7 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
 async function main() {
-  console.log("Initiating SOTA Physical Matrix Injection...");
+  console.log("Initiating CORE Physical Matrix Injection...");
 
   // 1. Purge Old Vectors
   await prisma.memoryEdge.deleteMany({});
@@ -27,7 +27,7 @@ async function main() {
       slug: 'nexus-overlord',
       displayName: 'The Central Autonomic Matrix',
       agentType: 'SUPERVISOR',
-      deployTier: 'SOTA_EDGE',
+      deployTier: 'CORE_EDGE',
       orgId: 'ORG_GLOBAL_1',
       policyProfileId: 'STRICT_ZERO_TRUST'
     }
@@ -243,7 +243,7 @@ async function main() {
     await prisma.memoryNode.create({ data: n });
   }
 
-  console.log("SOTA Matrix Seeding Complete. 150 Nodes, 4 Directives, 20 Benchmarks, 3 Memory Nodes and World Intel established.");
+  console.log("CORE Matrix Seeding Complete. 150 Nodes, 4 Directives, 20 Benchmarks, 3 Memory Nodes and World Intel established.");
 
 }
 

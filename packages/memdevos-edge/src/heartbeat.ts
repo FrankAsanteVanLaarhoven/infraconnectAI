@@ -9,7 +9,7 @@ class HeartbeatManager {
         cpuLoad:   Math.random() * 20, // Mock
         memoryUsage: 45,               // Mock
         uptimeSec: process.uptime(),
-        version:   'SOTA-0.2.0'
+        version:   'CORE-0.2.0'
       }
       onTick(health)
     }, intervalMs)
