@@ -28,7 +28,7 @@ export default withAuth(
         const path = req.nextUrl.pathname;
         
         // Public pathways: Auth interfaces and the root landing page (waitlist)
-        if (path === '/' || path.startsWith('/api/lead') || path.startsWith('/auth') || path.startsWith('/api/auth')) {
+        if (path === '/' || path.startsWith('/api/access') || path.startsWith('/auth') || path.startsWith('/api/auth')) {
           return true;
         }
         

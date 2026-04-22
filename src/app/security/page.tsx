@@ -9,7 +9,7 @@ export default function SecurityPortal() {
   useEffect(() => {
     const email = localStorage.getItem('ic_lead_email');
     if (email) {
-      fetch('/api/lead', {
+      fetch('/api/access', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, viewedSecurity: true })
