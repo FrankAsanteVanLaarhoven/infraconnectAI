@@ -339,7 +339,7 @@ export default function LandingPage() {
                             <label className="text-[10px] uppercase text-slate-400 tracking-widest mb-1 block">Secure Payload</label>
                             <textarea required placeholder="ENTER DEPLOYMENT REQUIREMENTS..." className="w-full bg-black border border-slate-800 p-2 text-xs uppercase focus:border-amber-500 outline-none min-h-[100px]" value={contactState.intent} onChange={e => setContactState({...contactState, intent: e.target.value})} />
                           </div>
-                          <Button type="submit" disabled={emailStatus==='sending'} className={`text-white rounded-none uppercase text-xs tracking-widest transition-colors duration-500 ${emailStatus === 'sending' ? 'bg-amber-600' : emailStatus === 'sent' ? 'bg-green-600' : 'bg-amber-800 hover:bg-amber-700'}`}>
+                          <Button type="submit" disabled={emailStatus==='sending'} className={`text-white rounded-none uppercase text-xs tracking-widest transition-colors duration-500 ${emailStatus === 'sending' ? 'bg-amber-600' : emailStatus === 'sent' ? 'bg-green-600' : 'bg-red-600 hover:bg-red-700'}`}>
                              {emailStatus === 'sending' ? 'TRANSMITTING...' : emailStatus === 'sent' ? 'SECURED' : 'DISPATCH PAYLOAD'}
                           </Button>
                         </form>
@@ -368,7 +368,7 @@ export default function LandingPage() {
                             <label className="text-[10px] uppercase text-slate-400 tracking-widest mb-1 block">Corporate Email</label>
                             <input required type="email" placeholder="EXECUTIVE@DOMAIN.COM" className="w-full bg-black border border-slate-800 p-2 text-xs uppercase focus:border-cyan-500 outline-none" value={contactState.email} onChange={e => setContactState({...contactState, email: e.target.value})} />
                           </div>
-                          <Button type="submit" disabled={emailStatus==='sending'} className={`text-white rounded-none uppercase text-xs tracking-widest transition-colors duration-500 ${emailStatus === 'sending' ? 'bg-cyan-600' : emailStatus === 'sent' ? 'bg-green-600' : 'bg-cyan-800 hover:bg-cyan-700'}`}>
+                          <Button type="submit" disabled={emailStatus==='sending'} className={`text-white rounded-none uppercase text-xs tracking-widest transition-colors duration-500 ${emailStatus === 'sending' ? 'bg-amber-600' : emailStatus === 'sent' ? 'bg-green-600' : 'bg-red-600 hover:bg-red-700'}`}>
                              {emailStatus === 'sending' ? 'VERIFYING...' : emailStatus === 'sent' ? 'PENDING REVIEW' : 'REQUEST ELEVATION'}
                           </Button>
                         </form>
@@ -396,7 +396,7 @@ export default function LandingPage() {
                             <label className="text-[10px] uppercase text-slate-400 tracking-widest mb-1 block">Work Email</label>
                             <input required type="email" placeholder="YOUR@DOMAIN.COM" className="w-full bg-black border border-slate-800 p-2 text-xs uppercase focus:border-slate-500 outline-none" value={contactState.email} onChange={e => setContactState({...contactState, email: e.target.value})} />
                           </div>
-                          <Button type="submit" disabled={emailStatus==='sending'} className={`text-white rounded-none uppercase text-xs tracking-widest transition-colors duration-500 ${emailStatus === 'sending' ? 'bg-slate-600' : emailStatus === 'sent' ? 'bg-green-600' : 'bg-slate-800 hover:bg-slate-700'}`}>
+                          <Button type="submit" disabled={emailStatus==='sending'} className={`text-white rounded-none uppercase text-xs tracking-widest transition-colors duration-500 ${emailStatus === 'sending' ? 'bg-amber-600' : emailStatus === 'sent' ? 'bg-green-600' : 'bg-red-600 hover:bg-red-700'}`}>
                              {emailStatus === 'sending' ? 'TRANSMITTING...' : emailStatus === 'sent' ? 'SECURED ON WAITLIST' : 'JOIN WAITLIST'}
                           </Button>
                         </form>
@@ -458,9 +458,11 @@ export default function LandingPage() {
                           <DialogDescription className="text-[10px] uppercase text-slate-500 tracking-widest pt-2">Establish a secure connection.</DialogDescription>
                         </DialogHeader>
                         <form onSubmit={sendEnterpriseRequest} className="flex flex-col gap-4 mt-2">
-                          <div><label className="text-[10px] uppercase text-slate-400">Authentication</label><input required type="email" placeholder="YOU@COMPANY.COM" className="w-full bg-black border border-slate-800 p-2 text-xs" value={contactState.email} onChange={e => setContactState({...contactState, email: e.target.value})} /></div>
-                          <Button type="submit" disabled={emailStatus==='sending'} className="bg-white text-black rounded-none uppercase text-xs font-black h-12">
-                             {emailStatus === 'sending' ? 'TRANSMITTING...' : 'Get Access'}
+                          <div><label className="text-[10px] uppercase text-slate-400">Authentication</label><input required type="email" placeholder="EXECUTIVE@DOMAIN.COM" className="w-full bg-black border border-slate-800 p-2 text-xs" value={contactState.email} onChange={e => setContactState({...contactState, email: e.target.value})} /></div>
+                          <div><label className="text-[10px] uppercase text-slate-400">Routing Designation</label><select className="w-full bg-black border border-slate-800 p-2 text-xs" value={contactState.department} onChange={e => setContactState({...contactState, department: e.target.value})}><option value="hello">General (hello@)</option><option value="frank">Executive (frank@)</option><option value="security">Compliance (security@)</option><option value="support">Technical (support@)</option></select></div>
+                          <div><label className="text-[10px] uppercase text-slate-400">Secure Payload</label><textarea required placeholder="ENTER REQUIREMENTS..." className="w-full bg-black border border-slate-800 p-2 text-xs min-h-[100px]" value={contactState.intent} onChange={e => setContactState({...contactState, intent: e.target.value})} /></div>
+                          <Button type="submit" disabled={emailStatus==='sending'} className={`text-white rounded-none uppercase text-xs transition-colors duration-500 h-12 ${emailStatus === 'sending' ? 'bg-amber-600 hover:bg-amber-700' : emailStatus === 'sent' ? 'bg-green-600 hover:bg-green-700' : 'bg-red-600 hover:bg-red-700'}`}>
+                             {emailStatus === 'sending' ? 'TRANSMITTING...' : emailStatus === 'sent' ? 'SECURED' : 'DISPATCH PAYLOAD'}
                           </Button>
                         </form>
                       </DialogContent>
@@ -554,8 +556,8 @@ export default function LandingPage() {
                     value={contactState.email}
                     onChange={e => setContactState({...contactState, email: e.target.value})}
                   />
-                  <Button onClick={sendEnterpriseRequest} className="bg-white text-black px-8 font-black uppercase text-xs tracking-widest hover:bg-slate-200 h-14 rounded-none">
-                    Get Access
+                  <Button onClick={sendEnterpriseRequest} disabled={emailStatus==='sending'} className={`text-white px-8 font-black uppercase text-xs tracking-widest h-14 rounded-none transition-colors duration-500 ${emailStatus === 'sending' ? 'bg-amber-600 hover:bg-amber-700' : emailStatus === 'sent' ? 'bg-green-600 hover:bg-green-700' : 'bg-red-600 hover:bg-red-700'}`}>
+                    {emailStatus === 'sending' ? 'TRANSMITTING...' : emailStatus === 'sent' ? 'SECURED' : 'DISPATCH PAYLOAD'}
                   </Button>
                 </div>
               </section>
