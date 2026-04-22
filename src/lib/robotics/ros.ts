@@ -6,7 +6,7 @@ import ROSLIB from "roslib";
  */
 let ros: ROSLIB.Ros | null = null;
 
-if (typeof window !== "undefined") {
+if (typeof window !== "undefined" && process.env.NODE_ENV !== "production") {
     // We strictly limit instantiation to the client natively completely successfully preventing SSR Node failures.
     ros = new ROSLIB.Ros({
       url: "ws://localhost:9090", // Explicit host bounds mapping out physical node targets natively.

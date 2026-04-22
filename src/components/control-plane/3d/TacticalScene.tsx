@@ -49,16 +49,26 @@ function SceneContent() {
         const payload = JSON.parse(msg.data);
         if (payload.event === "tactical_override") {
            console.warn("[SSE] Watchdog tactical override engaged! Neutralizing kinetic outputs.");
-           robots.forEach(r => updateRobot(r.id, { path: [], status: "error" }));
+           useFleetStore.getState().robots.forEach((r: any) => updateRobot(r.id, { path: [], status: "error" }));
         }
       } catch(e){}
     };
 
     return () => {
-      socket.disconnect();
-      eventSource.close();
+      try {
+        if (socket.connected) {
+          socket.disconnect();
+        } else {
+          socket.close(); // Force clean
+        }
+      } catch (e) {
+        console.warn('Socket disconnect suppression', e);
+      }
+      try {
+        eventSource.close();
+      } catch (e) {}
     };
-  }, [robots, updateRobot]);
+  }, [updateRobot]);
 
   useFrame(({ camera }) => {
     robots.forEach((r) => {
@@ -124,11 +134,24 @@ function SceneContent() {
   );
 }
 
+function RobotOverlay() {
+  const robotState = useFleetStore((s) => {
+      const robots = s.robots;
+      return robots?.length > 0 ? { zone: "SECTOR-7G", battery: 98, status: robots[0]?.status || "IDLE" } : null;
+  });
+
+  if (!robotState) return null;
+
+  return (
+      <div className="absolute bottom-2 right-2 text-[10px] text-emerald-400 font-mono tracking-widest uppercase text-right">
+          ZONE: {robotState.zone} | BAT: {robotState.battery}%<br />
+          OP: {robotState.status}
+      </div>
+  );
+}
+
 export default function TacticalScene() {
   const { connected } = useROS();
-  const robots = useFleetStore((s) => s.robots);
-  const robotState = robots.length > 0 ? { zone: "SECTOR-7G", battery: 98, status: robots[0].status || "IDLE" } : null;
-
   const [mounted, setMounted] = useState(false);
   useEffect(() => { setMounted(true); }, []);
 
@@ -173,12 +196,7 @@ export default function TacticalScene() {
       </div>
       
       {/* State Fallback Render */}
-      {robotState && (
-          <div className="absolute bottom-2 right-2 text-[10px] text-emerald-400 font-mono tracking-widest uppercase text-right">
-              ZONE: {robotState.zone} | BAT: {robotState.battery}%<br />
-              OP: {robotState.status}
-          </div>
-      )}
+      <RobotOverlay />
     </div>
   );
 }

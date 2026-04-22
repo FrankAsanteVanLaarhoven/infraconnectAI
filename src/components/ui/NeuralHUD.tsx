@@ -63,7 +63,7 @@ export function NeuralHUD() {
 
       {/* ── Left Metric HUD: System Vitals ── */}
       <motion.div initial={{ x: -50, opacity: 0 }} animate={{ x: 0, opacity: 1 }} className="absolute left-12 top-1/2 -translate-y-1/2 space-y-8">
-        <HudMetric label="SIGNAL DENSITY" value={events.length * 12} unit="Hz" icon={Activity} color="text-cyan-400" />
+        <HudMetric label="SIGNAL DENSITY" value={(events?.length || 0) * 12} unit="Hz" icon={Activity} color="text-cyan-400" />
         <HudMetric label="NEURAL VELOCITY" value={84} unit="OPS/S" icon={Zap} color="text-yellow-400" />
         <HudMetric label="NODE INTEGRITY" value={98.4} unit="%" icon={Cpu} color="text-green-400" />
       </motion.div>
@@ -86,7 +86,7 @@ export function NeuralHUD() {
       <div className="absolute top-12 left-1/2 -translate-x-1/2 flex flex-col items-center">
         <div className="text-[10px] font-black uppercase tracking-[0.4em] text-cyan-500/50 mb-4">Neural HUD 2035 // Nexus Connected</div>
         <div className="flex gap-1 h-8 items-end">
-           {events.slice(0, 40).map((e, idx) => (
+           {(events || []).slice(0, 40).map((e, idx) => (
              <motion.div 
                key={idx}
                initial={{ height: 0 }}

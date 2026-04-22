@@ -6,7 +6,12 @@
 
 import { fleetManager } from './fleet-manager';
 
+let isInitialized = false;
+
 export function initializeControlPlane() {
+  if (isInitialized) return;
+  isInitialized = true;
+
   console.log("[CONTROL_PLANE] Initializing GitOps Orchestration Layers...");
 
   // 1. Inject Initial Workloads (Simulated)

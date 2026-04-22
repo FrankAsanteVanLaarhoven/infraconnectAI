@@ -15,7 +15,7 @@ type RobotState = {
   joints: Record<string, number>;
 };
 
-export function FleetScene({ initialRobots = [] }: { initialRobots?: RobotState[] }) {
+function FleetSceneContent({ initialRobots }: { initialRobots: RobotState[] }) {
   const [robots, setRobots] = useState<RobotState[]>(
       initialRobots.length > 0 ? initialRobots : [
           { id: "yahboom-m3-pro", position: [-2, 0, 1], path: [[2,0,2], [4,0,0]], joints: {} }
@@ -23,16 +23,7 @@ export function FleetScene({ initialRobots = [] }: { initialRobots?: RobotState[
   );
 
   return (
-    <Canvas camera={{ position: [8, 6, 8] }}>
-      <fog attach="fog" args={["#050607", 10, 50]} />
-      <ambientLight intensity={0.2} />
-      <directionalLight position={[10, 10, 5]} intensity={1.2} />
-      <pointLight position={[0, 5, 0]} intensity={0.5} color="#4CC9F0" />
-      
-      <EffectComposer>
-        <Bloom intensity={0.4} luminanceThreshold={0.2} />
-      </EffectComposer>
-
+    <>
       <FleetLogic robots={robots} setRobots={setRobots} />
 
       {robots.map((r) => (
@@ -49,6 +40,23 @@ export function FleetScene({ initialRobots = [] }: { initialRobots?: RobotState[
           )}
         </group>
       ))}
+    </>
+  );
+}
+
+export function FleetScene({ initialRobots = [] }: { initialRobots?: RobotState[] }) {
+  return (
+    <Canvas camera={{ position: [8, 6, 8] }}>
+      <fog attach="fog" args={["#050607", 10, 50]} />
+      <ambientLight intensity={0.2} />
+      <directionalLight position={[10, 10, 5]} intensity={1.2} />
+      <pointLight position={[0, 5, 0]} intensity={0.5} color="#4CC9F0" />
+      
+      <EffectComposer>
+        <Bloom intensity={0.4} luminanceThreshold={0.2} />
+      </EffectComposer>
+
+      <FleetSceneContent initialRobots={initialRobots} />
 
       <OrbitControls />
     </Canvas>

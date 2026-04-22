@@ -43,7 +43,13 @@ export function useTelemetry() {
     });
 
     return () => {
-        socket.disconnect();
+        try {
+            if (socket.connected) {
+                socket.disconnect();
+            } else {
+                socket.close();
+            }
+        } catch (e) {}
     };
   }, []);
 

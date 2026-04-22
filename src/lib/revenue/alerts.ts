@@ -9,6 +9,8 @@ export async function alertFounder(lead: {
   email: string;
   score: number;
   company?: string | null;
+  role?: string | null;
+  message?: string | null;
   activity: string;
 }) {
   if (!process.env.RESEND_API_KEY || process.env.RESEND_API_KEY === 're_dummy') {
@@ -26,11 +28,16 @@ export async function alertFounder(lead: {
           <h2 style="color: #2563eb;">High Intent Movement Detected</h2>
           <p><strong>Lead:</strong> ${lead.email}</p>
           <p><strong>Company:</strong> ${lead.company || 'Unknown'}</p>
+          <p><strong>Role:</strong> ${lead.role || 'Unknown'}</p>
           <p><strong>Lead Health Score:</strong> ${lead.score}/100</p>
           <hr />
           <p><strong>Activity:</strong> <span style="color: #dc2626; font-weight: bold;">${lead.activity}</span></p>
+          <p><strong>Payload / Use Case:</strong></p>
+          <blockquote style="border-left: 4px solid #cbd5e1; padding-left: 12px; color: #475569;">
+            ${lead.message || 'No additional details provided.'}
+          </blockquote>
           <div style="margin-top: 30px;">
-            <a href="http://localhost:3006/dashboard/operator?email=${lead.email}" 
+            <a href="https://infraconnect.ai/nexus" 
                style="background: #000; color: #fff; padding: 12px 24px; text-decoration: none; font-weight: bold;">
                Execute Outreach in Operator
             </a>

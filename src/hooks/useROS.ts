@@ -14,6 +14,13 @@ export function useROS() {
     // Graceful fallback for environments not yet fully packaged
     if (typeof window === "undefined" || !ROSLIB) return;
 
+    // Disable ROS bridge connection in production to prevent WebSocket crashes.
+    // In production on Vercel, localhost:9090 is not available.
+    if (process.env.NODE_ENV === "production") {
+      setConnected(false);
+      return;
+    }
+
     try {
       const rosInstance = new ROSLIB.Ros({
         url: "ws://localhost:9090", // rosbridge
@@ -51,7 +58,9 @@ export function useROS() {
 
       return () => {
         try {
-          rosInstance.close();
+          if (rosInstance.isConnected) {
+            rosInstance.close();
+          }
         } catch(e) {}
       }
     } catch(err) {
