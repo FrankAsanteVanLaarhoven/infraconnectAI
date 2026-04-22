@@ -178,7 +178,7 @@ export function ConcurrentMissionNexus() {
                 </div>
                 <div className="flex gap-2 text-indigo-400">
                     <GitBranch className="w-3 h-3" />
-                    <span>Parallel Execution Mesh: SOTA 2035</span>
+                    <span>Parallel Execution Mesh: SYSTEM</span>
                 </div>
             </div>
         </div>

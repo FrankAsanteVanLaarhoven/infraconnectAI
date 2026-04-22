@@ -29,7 +29,7 @@ export function JitroHub() {
                     <Brain className="w-5 h-5 text-cyan-400" />
                     <div>
                         <h2 className="text-xs font-black text-white uppercase tracking-[0.2em]">Jitro Outcome Hub</h2>
-                        <p className="text-[9px] text-slate-500 uppercase font-black">Strategic Goal Orchestration // SOTA 2035</p>
+                        <p className="text-[9px] text-slate-500 uppercase font-black">Strategic Goal Orchestration</p>
                     </div>
                 </div>
                 <div className="flex gap-4">

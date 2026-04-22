@@ -10,7 +10,7 @@ const ForceGraph3D = dynamic(() => import('react-force-graph-3d'), { ssr: false 
 
 /**
  * ─── Neural PLC Interface Node Generator ─────────────────────────────────────
- * Generates a mock topology combining SOTA PLC Safety Interlocks 
+ * Generates a mock topology combining CORE PLC Safety Interlocks 
  * with industrial agent logic engines.
  */
 function generatePLCNeuralData() {
@@ -86,7 +86,7 @@ export function NeuralPLCDataFlow() {
     return () => observer.disconnect()
   }, [])
 
-  // Slowly rotate the camera to give a "live SOTA" feel
+  // Slowly rotate the camera to give a "live CORE" feel
   useEffect(() => {
     let angle = 0
     let raf: number
@@ -141,7 +141,7 @@ export function NeuralPLCDataFlow() {
             nodeRelSize={4}
             nodeColor={(node) => {
               if (node.group === 'plc') return '#ffffff'
-              if (node.group === 'neural') return '#60a5fa' // nice SOTA blue
+              if (node.group === 'neural') return '#60a5fa' // nice CORE blue
               return '#9ca3af' // bus
             }}
             nodeResolution={16}

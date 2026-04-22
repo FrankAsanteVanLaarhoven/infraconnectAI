@@ -1,7 +1,7 @@
 /**
  * Fleet-Safe VLA Safety Kernel
  * 
- * Implements SOTA benchmarks for autonomous locomotion stability:
+ * Implements CORE benchmarks for autonomous locomotion stability:
  * - SVR (Safety Violation Rate): Rate of kinematic boundary excursions.
  * - DMR (Disengagement Metric Rate): Frequency of manual or system overrides.
  * - 3-Axis Stability: Euler angle variance (Roll, Pitch, Yaw).

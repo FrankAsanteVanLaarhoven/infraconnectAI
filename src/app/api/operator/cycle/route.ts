@@ -5,7 +5,7 @@ export async function POST(req: Request) {
   try {
     // Optional: Secret key check for security
     const authHeader = req.headers.get('Authorization');
-    if (authHeader !== `Bearer ${process.env.OPERATOR_SECRET_KEY || 'sota_operator_secret'}`) {
+    if (authHeader !== `Bearer ${process.env.OPERATOR_SECRET_KEY || 'CORE_operator_secret'}`) {
        // We'll allow it for now if no secret is set, for dev convenience
        if (process.env.NODE_ENV === 'production' && process.env.OPERATOR_SECRET_KEY) {
          return NextResponse.json({ error: "Unauthorized" }, { status: 401 });

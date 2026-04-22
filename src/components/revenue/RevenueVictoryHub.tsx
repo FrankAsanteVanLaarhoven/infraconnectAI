@@ -42,7 +42,7 @@ export function RevenueVictoryHub() {
              </div>
              <div>
                 <h2 className="text-sm font-black text-white uppercase tracking-[0.4em]">Revenue Victory Hub</h2>
-                <p className="text-[9px] text-slate-500 uppercase font-black tracking-widest mt-1">Autonomous Conversion Ledger // SOTA-X</p>
+                <p className="text-[9px] text-slate-500 uppercase font-black tracking-widest mt-1">Autonomous Conversion Ledger</p>
              </div>
           </div>
 

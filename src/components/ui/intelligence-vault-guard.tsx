@@ -57,7 +57,7 @@ export function IntelligenceVaultGuard({
         </div>
       </motion.div>
 
-      {/* SOTA Blueprint Lines (Decorative) */}
+      {/* CORE Blueprint Lines (Decorative) */}
       <div className="absolute inset-0 pointer-events-none opacity-20 border-2 border-dashed border-red-900/30 m-2 rounded-lg" />
     </div>
   );

@@ -112,7 +112,7 @@ export function resolveSemanticTarget(query: string): OntologyObject | undefined
  * Predicts how a mission will affect the object's status.
  */
 export function modelForward(urn: string, delta: any): Partial<OntologyObject> {
-    // SOTA logic for predictive drift
+    // CORE logic for predictive drift
     return {
         status: 'SYNCHRONIZED', // Placeholder for simulation result
         lastHeard: new Date().toISOString()

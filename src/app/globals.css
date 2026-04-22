@@ -689,7 +689,7 @@
 }
 
 /* =========================================================================
-   SOTA CINEMATIC OVERRIDES
+   CINEMATIC OVERRIDES
    Forcefully strip third-party telemetry branding from the DOM to ensure 
    absolute white-label intelligence dashboard aesthetics for the GTM trailer.
    ========================================================================= */
@@ -709,7 +709,7 @@ nextjs-portal,
 }
 
 /* =========================================================================
-   SOTA ACTIVE STYLES (WORLDVIEW)
+   ACTIVE STYLES (WORLDVIEW)
    CSS Post-Processing Filters applied directly over the Mapbox Engine
    ========================================================================= */
 .map-style-crt {

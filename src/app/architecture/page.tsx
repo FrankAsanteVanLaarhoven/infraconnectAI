@@ -130,7 +130,7 @@ export default function EpicArchitecturePage() {
       <section className="pt-40 pb-20 px-8 max-w-7xl mx-auto flex flex-col items-center text-center">
         <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1 }}>
           <div className="mb-6 mx-auto w-max text-xs font-bold font-mono uppercase tracking-[0.3em] text-slate-500 border-b border-slate-800 pb-2">
-             [ SOTA Architectural Spec ]
+             [ CORE Architectural Spec ]
           </div>
           <h1 className="text-5xl md:text-7xl font-black uppercase tracking-tighter mb-8 text-transparent bg-clip-text bg-gradient-to-br from-white via-slate-300 to-slate-600 drop-shadow-2xl">
             Security by Architecture,<br />Not Afterthought.

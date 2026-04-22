@@ -46,7 +46,7 @@ export function MultiverseSim() {
                     <Layers className="w-5 h-5 text-indigo-400" />
                     <div>
                         <h2 className="text-xs font-black text-white uppercase tracking-[0.2em]">Multiverse Sim-Engine</h2>
-                        <p className="text-[9px] text-slate-500 uppercase font-black italic">Parallel Reality Observation Core // SOTA 2035</p>
+                        <p className="text-[9px] text-slate-500 uppercase font-black italic">Parallel Reality Observation Core</p>
                     </div>
                 </div>
                 <div className="flex items-center gap-2">

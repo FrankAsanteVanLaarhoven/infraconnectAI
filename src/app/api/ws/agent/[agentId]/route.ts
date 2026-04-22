@@ -21,7 +21,7 @@ export function GET(req: NextRequest, { params }: { params: { agentId: string } 
   // Register with shared registry
   agentRegistry.registerAgent(agentId, socket)
 
-  // --- SOTA Capability Sync ---
+  // --- CORE Capability Sync ---
   const manifest = ManifestBuilder.buildEdgeManifest()
   socket.send(JSON.stringify({ type: 'skill_sync', data: { manifest } }))
 

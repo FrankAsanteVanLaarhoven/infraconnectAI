@@ -10,7 +10,7 @@ export const FleetFoundryWorkspace = () => {
   // Connect to the autonomous loop (Simulation)
   useEffect(() => {
     const handleBatch = (e: any) => {
-      // In a real SOTA implementation, this hooks into your Zustand/store stream
+      // In a real CORE implementation, this hooks into your Zustand/store stream
       const payloads = e.detail?.payloads || [];
       if (payloads.length > 0) {
         setFleet(prev => {

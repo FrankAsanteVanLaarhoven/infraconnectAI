@@ -48,7 +48,7 @@ export type TelemetryBatch = z.infer<typeof TelemetryBatchSchema>;
 
 /**
  * Mock representation of a streaming Data Fabric ingestion port.
- * In a production SOTA environment, this would strictly pipe into a Pulsar/Kafka stream.
+ * In a production CORE environment, this would strictly pipe into a Pulsar/Kafka stream.
  */
 export class EdgeTelemetryBuffer {
   private buffer: RobotTelemetry[] = [];

@@ -1,5 +1,5 @@
 export async function runAction(action: string, params: any) {
-  // In a real SOTA implementation, this dispatch functions to a Redis queue,
+  // In a real CORE implementation, this dispatch functions to a Redis queue,
   // WebSocket server, or direct Prisma DB updates.
   switch (action) {
     case "show_data":

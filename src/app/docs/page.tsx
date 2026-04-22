@@ -6,7 +6,7 @@ import { BookOpen, ChevronRight, TerminalSquare, Search, Zap, ShieldAlert } from
 import { cn } from '@/lib/utils';
 import ReactMarkdown from 'react-markdown'; // Assuming the user can install or we will just render standard markdown manually if it fails, but we'll try a raw JSX simulation first.
 
-// A raw renderer substituting react-markdown to avoid dependency issues while maintaining SOTA style
+// A raw renderer substituting react-markdown to avoid dependency issues while maintaining CORE style
 const parseMarkdownToJSX = (text: string) => {
   const lines = text.split('\n');
   return lines.map((line, idx) => {

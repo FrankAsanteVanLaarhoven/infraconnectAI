@@ -93,7 +93,7 @@ export function AssetIntelligenceHub() {
                         <div className="flex items-center gap-2 mt-1">
                             <span className="text-[8px] text-cyan-500/70 uppercase font-bold tracking-widest">Industrial Ground Truth</span>
                             <div className="w-1 h-1 rounded-full bg-cyan-500/40 animate-pulse" />
-                            <span className="text-[8px] text-slate-500 uppercase font-bold tracking-widest">SOTA 2035 // Core</span>
+                            <span className="text-[8px] text-slate-500 uppercase font-bold tracking-widest">Core</span>
                         </div>
                     </div>
                 </div>
@@ -238,7 +238,7 @@ export function AssetIntelligenceHub() {
                                                 { label: 'Thesis', val: 'Direct Telemetry Displacement' },
                                                 { label: 'Edge', val: '70% OpEx Recalibration' },
                                                 { label: 'Mechanism', val: 'Ceo-Direct Mirroring' },
-                                                { label: 'Compliance', val: 'Methanol Audit SOTA' }
+                                                { label: 'Compliance', val: 'Methanol Audit System' }
                                             ].map((line, i) => (
                                                 <div key={i} className="space-y-1">
                                                     <div className="flex justify-between text-[7px] text-slate-500 uppercase font-black tracking-widest">

@@ -67,7 +67,7 @@ export function StrategicRehearsalNexus() {
                 ctx.globalAlpha = 0.5 + proxy.sentiment * 0.5;
                 ctx.fill();
 
-                // Draw connection lines to nearby particles (SOTA benchmark look)
+                // Draw connection lines to nearby particles (CORE benchmark look)
                 particles.forEach((other, oi) => {
                     const dx = p.x - other.x;
                     const dy = p.y - other.y;
@@ -115,7 +115,7 @@ export function StrategicRehearsalNexus() {
                     </div>
                     <div>
                         <h2 className="text-sm font-black text-white uppercase tracking-[0.4em]">Strategic Rehearsal Nexus</h2>
-                        <p className="text-[9px] text-slate-500 uppercase font-black tracking-widest mt-1">Simulated Reality Engine // SOTA 2035</p>
+                        <p className="text-[9px] text-slate-500 uppercase font-black tracking-widest mt-1">Simulated Reality Engine</p>
                     </div>
                 </div>
                 <div className="flex gap-4 items-center">
@@ -240,7 +240,7 @@ export function StrategicRehearsalNexus() {
                 </div>
             </div>
 
-            {/* Background Data Matrix (SOTA look) */}
+            {/* Background Data Matrix (CORE look) */}
             <div className="absolute inset-x-0 bottom-0 h-1/4 pointer-events-none opacity-[0.03] overflow-hidden grayscale">
                 <motion.div 
                     animate={{ x: [-1000, 1000] }}

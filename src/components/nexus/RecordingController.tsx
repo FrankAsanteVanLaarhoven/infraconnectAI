@@ -142,7 +142,7 @@ export function RecordingController({
                    {status === 'RECORDING' ? 'LIVE_FRAME_X24' : 'UPLINK_STANDBY'}
                 </span>
              </div>
-             <span className="text-[7px] text-slate-900 font-black">CODEC: HVEC-SOTA</span>
+             <span className="text-[7px] text-slate-900 font-black">CODEC: HEVC-CORE</span>
           </div>
        </GlassCard>
     </div>

@@ -74,7 +74,7 @@ export function CameraPresenter({ onClose }: CameraPresenterProps) {
     >
       <div className="group relative w-full h-full">
         
-        {/* SOTA BORDER & GLOW */}
+        {/* CORE BORDER & GLOW */}
         <div className="absolute -inset-[1px] bg-cyan-500/30 rounded-xl blur-[2px] opacity-50 group-hover:opacity-100 transition-opacity" />
         
         <GlassCard className="w-full h-full bg-black/80 border-cyan-500/40 rounded-xl overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.8)] relative flex flex-col pt-0">
@@ -131,7 +131,7 @@ export function CameraPresenter({ onClose }: CameraPresenterProps) {
                  <div className="text-[7px] font-mono text-cyan-500/40 uppercase tabular-nums">1080P // 60FPS</div>
               </div>
 
-              {/* SOTA Lens HUD */}
+              {/* CORE Lens HUD */}
               <div className="absolute inset-0 border border-cyan-500/10 pointer-events-none">
                  <div className="absolute top-2 right-2 w-2 h-2 border-t border-r border-cyan-500/30" />
                  <div className="absolute bottom-2 right-2 w-2 h-2 border-b border-r border-cyan-500/30" />

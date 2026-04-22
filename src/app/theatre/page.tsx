@@ -24,7 +24,7 @@ function Act6ClosePanel({ nodeCount }: { nodeCount: number }) {
     return () => { clearTimeout(t1); clearTimeout(t2); };
   }, []);
 
-  const roi = (nodeCount || 1) * 1200; // SOTA calculation logic
+  const roi = (nodeCount || 1) * 1200; // CORE calculation logic
 
   return (
     <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="w-full max-w-4xl mx-auto flex flex-col items-center justify-center text-center space-y-12">
@@ -95,7 +95,7 @@ export default function EpicTheatre() {
         <motion.div animate={{ opacity: [0, 0.4, 0] }} transition={{ repeat: Infinity, duration: 0.2 }} className="absolute inset-0 z-[100] bg-red-600 pointer-events-none mix-blend-overlay" />
       )}
 
-      {/* SOTA Dynamic Logo & Status */}
+      {/* CORE Dynamic Logo & Status */}
       <div className="absolute top-6 left-6 z-[60] flex items-center gap-6">
         <div className="w-[180px]">
           <InfraConnectLogo size="sm" variant="flat" />

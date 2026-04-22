@@ -134,7 +134,7 @@ export function SwarmOrchestrator() {
                   </div>
                   <h5 className="text-[10px] font-black text-white uppercase mb-1 leading-tight line-clamp-2">{t(`swarm.agent.${agent.id.replace('agent-', '')}`)}</h5>
                   
-                  {/* SOTA Benchmark Pill */}
+                  {/* CORE Benchmark Pill */}
                   <div className="bg-blue-950/20 border border-blue-900/40 rounded px-1.5 py-0.5 mb-2 inline-flex items-center gap-1">
                      <Target className="w-2 h-2 text-blue-500" />
                      <span className="text-[6px] text-blue-400 uppercase font-black tracking-tighter truncate max-w-[120px]">{agent.benchmark}</span>

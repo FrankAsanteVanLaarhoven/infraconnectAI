@@ -186,7 +186,7 @@ export default function LandingPage() {
     if (act !== 1) return;
     setAct(2); 
     
-    // START SOTA AUDIO AND HAPTIC SYNC
+    // START CORE AUDIO AND HAPTIC SYNC
     spatial.play("master", 0, 0.6);
     spatial.play("boot", 0, 0.4);
     haptic(10);
@@ -278,7 +278,7 @@ export default function LandingPage() {
               <InfraConnectLogo variant="hero" />
             </div>
 
-            {/* SOTA EPHEMERAL ACCESS CORNER */}
+            {/* CORE EPHEMERAL ACCESS CORNER */}
             <div 
               className="relative pr-6 flex items-center h-full"
               onMouseEnter={() => setIsAccessHovered(true)}
@@ -443,7 +443,7 @@ export default function LandingPage() {
         {act >= 4 && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 3 }} className={`fixed inset-0 z-0 pointer-events-none bg-[#050505] transition-all duration-[3000ms] ${act >= 6 ? 'opacity-0 blur-md' : 'opacity-40 blur-[2px]'}`}>
             <motion.div initial={false} animate={{ scale: [1.0, 1.05], x: ['0%', '-2%'], y: ['0%', '-1%'] }} transition={{ duration: 25, ease: "linear", repeat: Infinity, repeatType: "reverse" }} className="w-full h-[120vh] absolute -top-[10%] left-0 origin-center">
-                <img src={activeMedia} className="w-full h-full object-cover" alt="SOTA System Trailer" />
+                <img src={activeMedia} className="w-full h-full object-cover" alt="CORE System Trailer" />
             </motion.div>
           </motion.div>
         )}
@@ -596,7 +596,7 @@ export default function LandingPage() {
         </AnimatePresence>
       </main>
 
-      {/* SOTA FOOTER */}
+      {/* CORE FOOTER */}
       <footer className="relative z-10 w-full px-12 py-8 mt-auto border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] uppercase tracking-[0.2em] font-black text-slate-500">
         <div className="flex items-center gap-2">
           <div className="w-1.5 h-1.5 rounded-full bg-slate-500" />

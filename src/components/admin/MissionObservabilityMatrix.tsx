@@ -28,7 +28,7 @@ import {
 
 /**
  * MissionObservabilityMatrix
- * A SOTA observability suite designed to outshine Grafana and Dynatrace.
+ * A CORE observability suite designed to outshine Grafana and Dynatrace.
  * Focused on high-fidelity visual benchmarks and predictive telemetry.
  */
 export function MissionObservabilityMatrix({ data }: { data: any }) {

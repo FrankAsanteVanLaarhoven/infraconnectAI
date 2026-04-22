@@ -11,7 +11,7 @@ function evaluateLead(email: string, intent: string) {
   const domain = email.split('@')[1]?.toLowerCase() || '';
   
   const text = intent.toLowerCase();
-  const highValueSignals = ['buy', 'enterprise', 'deploy', 'scale', 'compliance', 'sota'];
+  const highValueSignals = ['buy', 'enterprise', 'deploy', 'scale', 'compliance', 'CORE'];
   let signalScore = 0;
   
   if (!genericDomains.includes(domain)) signalScore += 2;

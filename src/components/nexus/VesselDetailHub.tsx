@@ -8,7 +8,7 @@ export function VesselDetailHub({ name = "ADVANTAGE VITAL", type = "VLCC TANKER"
   const specs = [
     { label: 'STATUS', value: 'UNDERWAY [ENGINE]', color: 'text-green-500' },
     { label: 'LOCOMOTION STABILITY', value: '98.42% [OPTIMAL]', color: 'text-cyan-400' },
-    { label: 'SVR BENCHMARK', value: '0.002% [SOTA]', color: 'text-emerald-500' },
+    { label: 'SVR BENCHMARK', value: '0.002% [CORE]', color: 'text-emerald-500' },
     { label: 'SPEED / COURSE', value: '12.4 KN / 310°', color: 'text-white' },
     { label: 'DESTINATION', value: 'HORMUZ PORT [HAP]', color: 'text-amber-500' },
     { label: 'SAFETY KERNEL', value: 'LOCKED [ORIN-NX]', color: 'text-indigo-400' },

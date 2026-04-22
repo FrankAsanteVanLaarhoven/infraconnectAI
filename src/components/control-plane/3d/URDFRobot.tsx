@@ -9,7 +9,7 @@ export function URDFRobot({ url }: { url?: string }) {
   const lidarRef = useRef<THREE.Group>(null);
   const armRef = useRef<THREE.Group>(null);
 
-  // Smooth animation logic for SOTA "active idle" twin behaviors
+  // Smooth animation logic for CORE "active idle" twin behaviors
   useFrame((state) => {
     const time = state.clock.getElapsedTime();
     if (lidarRef.current) {

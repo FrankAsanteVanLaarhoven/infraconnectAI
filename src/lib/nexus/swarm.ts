@@ -138,7 +138,7 @@ export interface MasterWorker {
 
 export const WORKER_STACK: MasterWorker[] = [
   { id: 'w1', role: 'TERMINAL', capability: 'System Execution', progress: 93 },
-  { id: 'w2', role: 'CODE GEN', capability: 'SOTA Logic Synthesis', progress: 84 },
+  { id: 'w2', role: 'CODE GEN', capability: 'Advanced Logic Synthesis', progress: 84 },
   { id: 'w3', role: 'WEB SEARCH', capability: 'Real-time Intel Extraction', progress: 75 },
   { id: 'w4', role: 'FILE MGMT', capability: 'Data Sharding & Storage', progress: 68 },
   { id: 'w5', role: 'IMAGE GEN', capability: 'Cinematic Visual Synthesis', progress: 57 },

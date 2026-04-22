@@ -50,7 +50,7 @@ export function SARDiscoveryEngine() {
                     </div>
                     <div>
                         <h2 className="text-sm font-black text-white uppercase tracking-[0.4em]">SAR Discovery Engine</h2>
-                        <p className="text-[9px] text-slate-500 uppercase font-black tracking-widest mt-1">Satellite Intelligence // SOTA 2035</p>
+                        <p className="text-[9px] text-slate-500 uppercase font-black tracking-widest mt-1">Satellite Intelligence</p>
                     </div>
                 </div>
 

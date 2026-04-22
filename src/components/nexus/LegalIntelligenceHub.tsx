@@ -65,7 +65,7 @@ export function LegalIntelligenceHub() {
             </div>
             <div className="flex items-baseline gap-2">
                <span className="text-xl font-black text-white">{data?.ip?.resilience?.toFixed(1) || '---'}%</span>
-               <span className="text-[8px] text-indigo-600 font-bold uppercase">SOTA PROOF</span>
+               <span className="text-[8px] text-indigo-600 font-bold uppercase">VERIFIED</span>
             </div>
          </div>
       </div>

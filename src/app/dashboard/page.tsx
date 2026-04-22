@@ -117,7 +117,7 @@ function StatusBar({
         <span className="hidden md:inline">Intelligence Context <span className="text-cyan-400 font-bold">{activeCognitive}</span></span>
       )}
       
-      {/* SOTA NEXUS UPLINK (GATED) */}
+      {/* CORE NEXUS UPLINK (GATED) */}
       <NexusUplinkBeacon isAuthorized={isAuthorized} className="ml-4" />
 
       <span className="ml-auto text-slate-700 font-bold border border-slate-800/40 px-2 py-0.5 rounded bg-black/50 tracking-widest">INFRA-SIGHT OS // 1.0.0</span>

@@ -65,7 +65,7 @@ export async function GET() {
   } catch (error: any) {
     console.warn("[AGENT_OPS_API] Database unavailable, entering Autonomous Signal Fallback.", error.message);
     
-    // Return high-fidelity SOTA Mock data to prevent system crash
+    // Return high-fidelity CORE Mock data to prevent system crash
     return NextResponse.json({
       verificationGates: [
         { id: "mock-01", displayName: "SAR_GROUND_TRUTH", spec: "SIGNAL_STRENGTH > 85%", category: "security", severity: "critical", status: "passed", violationCount: 0, lastCheckAt: new Date().toISOString() },

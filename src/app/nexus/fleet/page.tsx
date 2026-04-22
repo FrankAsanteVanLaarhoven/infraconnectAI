@@ -256,7 +256,7 @@ export default function FleetPage() {
           <div className="flex items-center gap-4">
              <span className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-emerald-500" /> SIM2REAL_SYNC: OPTIMAL</span>
              <span>TOTAL_NODES: 42</span>
-             <span>GRID_HEALTH: SOTA_EXCELLENT</span>
+             <span>GRID_HEALTH: CORE_EXCELLENT</span>
           </div>
           <div className="flex items-center gap-4">
              <span className="text-emerald-900 underline">ES_HW:NODE01</span>

@@ -1,7 +1,7 @@
 import { db } from "@/lib/db";
 
 export async function buildContext(userId: string) {
-  // Production-Ready SOTA DB Ingestion
+  // Production-Ready CORE DB Ingestion
   
   // 1. Fetch connected systems / fleet nodes
   const rawFleetNodes = await db.fleetNode.findMany({

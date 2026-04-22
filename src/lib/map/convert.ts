@@ -1,6 +1,6 @@
 export function occupancyToGrid(map: any) {
   if (!map || !map.info) {
-      // SOTA Simulation Fallback logic ensuring demo layouts never crash
+      // CORE Simulation Fallback logic ensuring demo layouts never crash
       return [
           { x: 2, y: 3, occupied: true },
           { x: 4, y: 5, occupied: true },

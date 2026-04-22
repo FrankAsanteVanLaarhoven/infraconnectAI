@@ -57,7 +57,7 @@ export default function ConnectPage() {
           </div>
           <div className="flex flex-col gap-2">
             <Zap className="w-5 h-5 text-slate-400" />
-            <h3 className="text-sm font-bold uppercase tracking-wider text-slate-300">SOTA Discovery</h3>
+            <h3 className="text-sm font-bold uppercase tracking-wider text-slate-300">CORE Discovery</h3>
             <p className="text-xs text-slate-500 leading-relaxed">Autonomous port and resource scanning algorithms actively map your topology for the Semantic Layer instantly.</p>
           </div>
           <div className="flex flex-col gap-2">

@@ -163,10 +163,10 @@ export default function RLHFFoundryPage() {
                     </div>
                  </div>
 
-                 {/* SOTA Hardening Parameters */}
+                 {/* CORE Hardening Parameters */}
                  <div className="grid grid-cols-2 gap-4 pt-4 border-t border-white/5 bg-red-950/20 p-4 rounded-xl border border-red-900/30">
                     <div className="col-span-2 flex items-center justify-between mb-2">
-                       <span className="text-[8px] text-red-500 font-black uppercase tracking-widest flex items-center gap-1"><Target className="w-2.5 h-2.5" /> SOTA PEFT Parameters</span>
+                       <span className="text-[8px] text-red-500 font-black uppercase tracking-widest flex items-center gap-1"><Target className="w-2.5 h-2.5" /> CORE PEFT Parameters</span>
                        <span className="text-[6px] text-red-400 bg-red-950 px-1 py-0.5 rounded border border-red-900/50 uppercase">Strict Enforcement</span>
                     </div>
                     <div className="col-span-2">

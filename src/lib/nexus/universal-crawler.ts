@@ -106,7 +106,7 @@ export interface YahooFinanceSignal {
 }
 
 export function fetchYahooFinanceData(ticker: string): YahooFinanceSignal {
-    // SOTA 2035: Deep-parsing Yahoo Finance public data clusters
+   : Deep-parsing Yahoo Finance public data clusters
     console.log(`[SIGINT] Scraping Yahoo Finance for ticker: ${ticker}`);
     return {
         ticker,

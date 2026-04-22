@@ -269,7 +269,7 @@ export function NegotiationWarRoom({ leadEmail }: { leadEmail?: string }) {
             <BarChart3 className="w-3 h-3 text-red-500" />
             Strategic Oversight Cycle: 3.2s
          </div>
-         <div>SOTA EXECUTION ENGINE V1.0</div>
+         <div>EXECUTION ENGINE V1.0</div>
       </div>
     </div>
   );

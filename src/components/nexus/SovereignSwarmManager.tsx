@@ -27,7 +27,7 @@ export function SovereignSwarmManager() {
                     <Users className="w-5 h-5 text-indigo-400" />
                     <div>
                         <h2 className="text-xs font-black text-white uppercase tracking-[0.2em]">Sovereign Swarm Manager</h2>
-                        <p className="text-[9px] text-slate-500 uppercase font-black">Geospatial Awareness Core // SOTA 2035</p>
+                        <p className="text-[9px] text-slate-500 uppercase font-black">Geospatial Awareness Core</p>
                     </div>
                 </div>
                 <div className="flex gap-2">

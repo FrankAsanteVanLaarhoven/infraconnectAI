@@ -22,7 +22,7 @@ export default withAuth(
     return NextResponse.next();
   },
   {
-    secret: process.env.NEXTAUTH_SECRET || "sota_overlord_encryption_key_2026",
+    secret: process.env.NEXTAUTH_SECRET || "CORE_overlord_encryption_key_2026",
     callbacks: {
       authorized: ({ req, token }) => {
         const path = req.nextUrl.pathname;

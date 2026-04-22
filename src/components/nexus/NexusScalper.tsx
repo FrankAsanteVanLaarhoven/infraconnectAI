@@ -151,7 +151,7 @@ export function NexusScalper() {
                         <div className="flex justify-between pb-1 border-t border-white/5 pt-6">
                             <div className="flex flex-col gap-1">
                                 <span className="text-[8px] text-slate-600 uppercase font-black tracking-widest">Leverage Capacity</span>
-                                <span className="text-xs font-black text-white uppercase tracking-tighter">30X // 50X SOTA</span>
+                                <span className="text-xs font-black text-white uppercase tracking-tighter">30X // 50X CORE</span>
                             </div>
                             <div className="flex flex-col items-end gap-1">
                                 <span className="text-[8px] text-slate-600 uppercase font-black tracking-widest">Active Units</span>

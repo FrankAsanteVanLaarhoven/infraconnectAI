@@ -195,7 +195,7 @@ export class GovernanceEngine {
       }
     }
 
-    // --- Swarm Substrate SOTA Validation ---
+    // --- Swarm Substrate CORE Validation ---
     // The Sovereign Swarm refuses to promote memories if unaligned models are running.
     const allExperiments = await prisma.mL_Experiment.findMany();
     const toxicModels = allExperiments.filter(m => {
@@ -220,8 +220,8 @@ export class GovernanceEngine {
        console.error(`[GOVERNANCE FATAL ENTRY] Global Swarm Promotions FROZEN to isolate fleet.\n`);
        
        promotionCandidates.length = 0; // Destroy pipeline arrays
-       actionsApplied.push(`SWARM_LOCKDOWN: Unaligned PEFT weights detected (${toxicNames}). Autonomous promotions blocked to preserve SOTA integrity.`);
-       await this.logActivity('fleet_lockdown', 'SYSTEM', `FROZEN: Unaligned SOTA bounds intercepted.`);
+       actionsApplied.push(`SWARM_LOCKDOWN: Unaligned PEFT weights detected (${toxicNames}). Autonomous promotions blocked to preserve CORE integrity.`);
+       await this.logActivity('fleet_lockdown', 'SYSTEM', `FROZEN: Unaligned CORE bounds intercepted.`);
        
        serverHub.broadcast('tactical_override', {
          type: 'SWARM_GOVERNANCE_LOCKDOWN',

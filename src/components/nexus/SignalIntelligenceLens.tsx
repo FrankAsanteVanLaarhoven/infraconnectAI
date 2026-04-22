@@ -74,7 +74,7 @@ export function SignalIntelligenceLens() {
                     <div>
                         <div className="flex items-center gap-3">
                             <h2 className="text-base font-black text-white uppercase tracking-[0.4em]">Signal Intelligence Lens</h2>
-                            <span className="px-2 py-0.5 bg-cyan-500/10 border border-cyan-500/30 text-[8px] text-cyan-500 font-black tracking-widest rounded">SOTA 2035</span>
+                            <span className="px-2 py-0.5 bg-cyan-500/10 border border-cyan-500/30 text-[8px] text-cyan-500 font-black tracking-widest rounded">SYSTEM</span>
                         </div>
                         <p className="text-[10px] text-slate-500 uppercase font-black tracking-[0.2em] mt-2 flex items-center gap-2">
                              Global Surveillance // <span className="text-cyan-500/60 animate-pulse">Scanning Sub-THz Frequencies</span>

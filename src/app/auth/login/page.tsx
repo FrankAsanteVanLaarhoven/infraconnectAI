@@ -31,7 +31,7 @@ export default function LoginPage() {
     setLoading(true);
     setError(null);
 
-    // In a real SOTA app, we'd use the credentials provider
+    // In a real CORE app, we'd use the credentials provider
     // For this demo, we'll simulate a successful handshake
     setTimeout(() => {
       router.push('/dashboard');

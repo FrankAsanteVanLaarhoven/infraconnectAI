@@ -45,7 +45,7 @@ export function ResonanceAuthorize() {
                     <Waves className="w-5 h-5 text-emerald-400" />
                     <div>
                         <h2 className="text-xs font-black text-white uppercase tracking-[0.2em]">Neural Resonance Matrix</h2>
-                        <p className="text-[9px] text-slate-500 uppercase font-black">Intent-Reality Alignment // SOTA 2035</p>
+                        <p className="text-[9px] text-slate-500 uppercase font-black">Intent-Reality Alignment</p>
                     </div>
                 </div>
                 <div className="flex items-center gap-2">

@@ -53,7 +53,7 @@ export function AutonomousDisruptorSwarm() {
                     </div>
                     <div>
                         <h2 className="text-sm font-black text-white uppercase tracking-[0.4em]">Autonomous Disruptor Swarm</h2>
-                        <p className="text-[9px] text-slate-500 uppercase font-black tracking-widest mt-1">Background OSINT Intelligence // SOTA 2035</p>
+                        <p className="text-[9px] text-slate-500 uppercase font-black tracking-widest mt-1">Background OSINT Intelligence</p>
                     </div>
                 </div>
 

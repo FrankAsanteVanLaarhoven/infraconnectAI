@@ -81,7 +81,7 @@ async function streamListener() {
 const PORT = process.env.PORT || 3007;
 httpServer.listen(PORT, () => {
   console.log(`\n================================`);
-  console.log(`🚀 SOTA Websocket Gateway Active`);
+  console.log(`🚀 CORE Websocket Gateway Active`);
   console.log(`📡 Port: ${PORT}`);
   console.log(`================================\n`);
   

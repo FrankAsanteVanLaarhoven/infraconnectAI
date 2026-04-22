@@ -77,7 +77,7 @@ export const EnvironmentAwareness = () => {
                     </div>
                 </div>
 
-                {/* SOTA Loop Visualization */}
+                {/* CORE Loop Visualization */}
                 <div className="flex items-center gap-6 text-[8px] font-black uppercase text-slate-600">
                     <div className={cn("flex flex-col items-center gap-1 transition-all duration-300", status === 'OBSERVING' ? 'text-cyan-400' : 'opacity-40')}>
                         <Eye className={cn("w-3.5 h-3.5", status === 'OBSERVING' && 'animate-pulse')} />
@@ -145,7 +145,7 @@ export const EnvironmentAwareness = () => {
                         <div className="flex gap-10">
                             <div className="flex flex-col gap-1">
                                 <span className="text-[7px] text-slate-600 uppercase font-black tracking-widest">Environment_OS</span>
-                                <span className="text-[10px] text-white font-black uppercase">{sysInfo.os} // SOTA_READY</span>
+                                <span className="text-[10px] text-white font-black uppercase">{sysInfo.os} // READY</span>
                             </div>
                             <div className="flex flex-col gap-1">
                                 <span className="text-[7px] text-slate-600 uppercase font-black tracking-widest">Core_Arch</span>

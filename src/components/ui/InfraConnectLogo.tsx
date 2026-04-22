@@ -34,7 +34,7 @@ export function InfraConnectLogo({
   else if (variant === 'animated') src = "/brand/logo-anim.png";
   else if (variant === 'favicon') src = "/brand/favicon-source.png";
   
-  // Use specific split layouts for SOTA animated branding
+  // Use specific split layouts for CORE animated branding
   return (
     <Link href={href || "/"} className={`relative flex items-center justify-start gap-3 md:gap-4 ${sizeMap[size]} ${className}`}>
       {/* 3D Swoosh Symbol - Interactive Kinetic Spin on Pointer Hover */}

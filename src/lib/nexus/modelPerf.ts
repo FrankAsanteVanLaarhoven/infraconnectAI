@@ -16,7 +16,7 @@ export interface ModelBenchmark {
 }
 
 export function calculateInferenceBenchmark(modelId: string): ModelBenchmark {
-  // Simulation of SOTA local inference on Orin-NX
+  // Simulation of CORE local inference on Orin-NX
   // Gemma-4 usually performs exceptionally well on edge
   const isGemma = modelId.includes('gemma');
   

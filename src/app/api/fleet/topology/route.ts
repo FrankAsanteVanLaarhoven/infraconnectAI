@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 
 export async function GET() {
-  // In a real SOTA app, we'd query the DB for agents and their connection history
+  // In a real CORE app, we'd query the DB for agents and their connection history
   const nodes = [
     { id: 'nexus-core', name: 'CONTROL PLANE', type: 'core', val: 20 },
     { id: 'gov-engine', name: 'GOVERNANCE STRATA', type: 'engine', val: 15 },

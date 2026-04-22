@@ -1,6 +1,6 @@
 // src/lib/session/bootstrap.ts
 // Token-budgeted, tiered context injection.
-// This is the SOTA contribution: grounding agent sessions in governed memory.
+// This is the CORE contribution: grounding agent sessions in governed memory.
 // Directly implements the context-engineering SKILL.md hierarchy:
 //   L2 canon  = Level 1 (Rules Files)   — always loaded
 //   L1 wiki   = Level 2 (Spec/Arch)     — loaded per feature

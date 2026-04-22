@@ -22,7 +22,7 @@ export async function POST(request: Request) {
         console.log(`[SINGULARITY] Initiating Timeline Collapse for: ${timelineId}`);
         console.log(`[SINGULARITY] Targeting Ontology URNs: ${targetUrns.join(', ')}`);
 
-        // Simulate 2035 SOTA Synchronization
+        // Simulate 2035 CORE Synchronization
         await new Promise(resolve => setTimeout(resolve, 2000));
 
         return NextResponse.json({

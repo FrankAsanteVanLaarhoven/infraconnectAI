@@ -244,7 +244,7 @@ export default function EnterpriseAdminDashboard() {
          <div className="flex justify-between items-center max-w-[1800px] mx-auto opacity-40">
             <span className="text-[8px] text-slate-500 tracking-[0.4em] uppercase">Enterprise Sentinel v4.2.1</span>
             <div className="flex gap-4 items-center">
-               <span className="text-[8px] text-slate-500 tracking-widest uppercase">Encryption: SOTA-AES-256</span>
+               <span className="text-[8px] text-slate-500 tracking-widest uppercase">Encryption: CORE-AES-256</span>
                <div className="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse" />
             </div>
          </div>

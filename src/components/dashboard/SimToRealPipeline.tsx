@@ -36,7 +36,7 @@ export function SimToRealPipeline() {
     e.preventDefault()
     setTriggering(true)
 
-    // Simulate an actual OTA payload generated from the CI system mapping to our 8D SOTA paper
+    // Simulate an actual OTA payload generated from the CI system mapping to our 8D CORE paper
     const fakePayload = {
       version: `vla-policy-${Math.floor(Math.random() * 1000)}.onnx`,
       storageUri: `s3://zerogate-models/vla-policy-staging.onnx`,

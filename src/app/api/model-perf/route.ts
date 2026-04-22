@@ -36,7 +36,7 @@ export async function POST(req: NextRequest) {
     const { action } = body
 
     if (action === 'import' || action === 'refresh') {
-      // SOTA Refresh: Force a re-calculation from the actual telemetry history
+      // CORE Refresh: Force a re-calculation from the actual telemetry history
       await TelemetryAggregator.refreshProjection()
       return NextResponse.json({ ok: true, message: 'Telemetry projection synchronized with hardware stream.' })
     }

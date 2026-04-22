@@ -1,6 +1,6 @@
 /**
  * INFRA-SIGHT Intelligence Engine
- * SOTA Data Fusion for Global Energy, Economics, and Legal Projections.
+ * CORE Data Fusion for Global Energy, Economics, and Legal Projections.
  */
 
 export interface IntelligenceFeedItem {

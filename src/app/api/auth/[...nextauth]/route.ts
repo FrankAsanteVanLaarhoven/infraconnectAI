@@ -4,7 +4,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
-      name: "SOTA Terminal",
+      name: "CORE Terminal",
       credentials: {
         username: { label: "Identifier", type: "text" },
         password: { label: "Passcode", type: "password" },
@@ -14,7 +14,7 @@ export const authOptions: NextAuthOptions = {
         const { db } = await import("@/lib/db");
         console.log("NEXTAUTH ATTEMPT:", credentials?.username);
         
-        if ((credentials?.username === "admin" || credentials?.username === "commander") && credentials?.password === "sota2026") {
+        if ((credentials?.username === "admin" || credentials?.username === "commander") && credentials?.password === "CORE2026") {
           const clientId = credentials.username;
           const fingerprint = credentials.fingerprint || "UNKNOWN_LEGACY";
 
@@ -136,7 +136,7 @@ export const authOptions: NextAuthOptions = {
       return session;
     },
   },
-  secret: process.env.NEXTAUTH_SECRET || "sota_overlord_encryption_key_2026",
+  secret: process.env.NEXTAUTH_SECRET || "CORE_overlord_encryption_key_2026",
 };
 
 const handler = NextAuth(authOptions);

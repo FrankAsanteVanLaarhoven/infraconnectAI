@@ -146,7 +146,7 @@ class YahboomEdgeNode(Node):
                 self.get_logger().info(f"Command routed to ROS2 geometry: /cmd_vel_json")
                 
             elif action in ["GRAB", "RELEASE", "MOVE_ARM", "3D_GRASP"]:
-                # SOTA Hardware Validation: Preventing damage to 6DOF servos prior to ROS serial execution
+                # Hardware Validation: Preventing damage to 6DOF servos prior to ROS serial execution
                 expected_weight = params.get("target_weight_g", 0)
                 expected_radius = params.get("target_radius_cm", 0)
                 

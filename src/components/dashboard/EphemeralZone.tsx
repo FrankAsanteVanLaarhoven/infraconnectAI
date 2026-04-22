@@ -11,7 +11,7 @@ import { useBusEvent } from '@/lib/hooks/useBusEvent';
 import { bus } from '@/lib/events/bus';
 import type { EphemeralLayout, EphemeralWidget } from '@/lib/ephemeral-schema';
 
-// Recharts Integration for SOTA Analytics
+// Recharts Integration for CORE Analytics
 import { 
   LineChart, Line, AreaChart, Area, XAxis, YAxis, 
   CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, Cell 

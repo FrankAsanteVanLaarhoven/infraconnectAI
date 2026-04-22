@@ -44,7 +44,7 @@ export function StabilityVisualizer() {
           </div>
           <div>
             <h3 className="text-[10px] font-black text-cyan-500 uppercase tracking-widest">Kinematic Stability Visualizer</h3>
-            <p className="text-[8px] text-slate-500 uppercase font-bold tracking-tighter">Locomotion SOTA Benchmarking // VLA Kernel</p>
+            <p className="text-[8px] text-slate-500 uppercase font-bold tracking-tighter">Locomotion Benchmarking // VLA Kernel</p>
           </div>
         </div>
         <div className="text-right">
