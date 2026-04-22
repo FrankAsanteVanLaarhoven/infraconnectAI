@@ -45,6 +45,6 @@ export default withAuth(
 export const config = {
   // Enforce middleware across all endpoints, skipping static assets
   matcher: [
-    "/((?!_next/static|_next/image|favicon.ico|icons|sdk|audio|trailer-assets|fonts).*)",
+    "/((?!_next/static|_next/image|favicon.ico|icons|sdk|audio|trailer-assets|fonts|api/access).*)",
   ]
 };
