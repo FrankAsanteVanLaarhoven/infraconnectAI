@@ -31,12 +31,21 @@ function SceneContent() {
   const updateRobot = useFleetStore((s) => s.updateRobot);
 
   useEffect(() => {
+    // Production Gating: Unconditionally disable WebSockets and EventStreams on Vercel 
+    // to prevent cascading connection failures and context lost if backend is unavailable.
+    if (typeof window !== "undefined" && window.location.hostname !== "localhost") {
+      return;
+    }
+
     // 1. Mission Trajectory Paths via direct Websocket array sync
     const io = require("socket.io-client").io;
-    const socket = io(process.env.NEXT_PUBLIC_SOCKET_URL || "", { transports: ["polling", "websocket"] });
+    const socket = io(process.env.NEXT_PUBLIC_SOCKET_URL || "http://localhost:3001", { 
+        transports: ["polling", "websocket"],
+        reconnectionAttempts: 3
+    });
 
     socket.on("stream:tasks", (e: any) => {
-      if (e.path && e.path.length > 0) {
+      if (e && e.path && Array.isArray(e.path) && e.path.length > 0) {
         // Hydrate pure backend A* mapping geometries directly
         updateRobot(e.robot_id, { path: e.path });
       }
@@ -47,7 +56,7 @@ function SceneContent() {
     eventSource.onmessage = (msg) => {
       try {
         const payload = JSON.parse(msg.data);
-        if (payload.event === "tactical_override") {
+        if (payload && payload.event === "tactical_override") {
            console.warn("[SSE] Watchdog tactical override engaged! Neutralizing kinetic outputs.");
            useFleetStore.getState().robots.forEach((r: any) => updateRobot(r.id, { path: [], status: "error" }));
         }
@@ -56,16 +65,16 @@ function SceneContent() {
 
     return () => {
       try {
-        if (socket.connected) {
+        if (socket && typeof socket.disconnect === 'function') {
           socket.disconnect();
-        } else {
-          socket.close(); // Force clean
         }
       } catch (e) {
         console.warn('Socket disconnect suppression', e);
       }
       try {
-        eventSource.close();
+        if (eventSource && typeof eventSource.close === 'function') {
+            eventSource.close();
+        }
       } catch (e) {}
     };
   }, [updateRobot]);
@@ -112,8 +121,6 @@ function RobotOverlay() {
 
 export default function TacticalScene() {
   const { connected } = useROS();
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => { setMounted(true); }, []);
 
   return (
     <div className="w-full h-full bg-[#050607] relative">
@@ -140,12 +147,10 @@ export default function TacticalScene() {
 
         <SceneContent />
         
-        {mounted && (
-          <EffectComposer disableNormalPass multisampling={4}>
-            <Bloom intensity={0.6} luminanceThreshold={0.2} />
-            <Noise opacity={0.02} />
-          </EffectComposer>
-        )}
+        <EffectComposer disableNormalPass multisampling={0}>
+          <Bloom intensity={0.6} luminanceThreshold={0.2} />
+          <Noise opacity={0.02} />
+        </EffectComposer>
         
         <OrbitControls />
       </Canvas>
