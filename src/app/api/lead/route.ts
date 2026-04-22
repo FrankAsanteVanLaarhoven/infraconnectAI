@@ -62,7 +62,8 @@ export async function POST(req: Request) {
     }
 
     // 3. Trigger Smart Email (Auto-Responder)
-    if (score > 30 && !body.visitedDemo && !body.viewedSecurity) {
+    // Removed score limits for testing to ensure emails are ALWAYS sent.
+    if (!body.visitedDemo && !body.viewedSecurity) {
       await sendSmartEmail(lead);
     }
 

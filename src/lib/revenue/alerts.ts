@@ -49,9 +49,8 @@ export async function alertFounder(lead: {
  */
 export async function processLeadActivity(lead: any, activity: string) {
   // Alert if score is very high (>80) OR specific high-intent combo
-  const isHighIntentEvent = 
-    (lead.score >= 80) || 
-    (activity.includes('viewedSecurity') && lead.visitedDemo);
+  // MODIFIED FOR TESTING: Always alert to verify Resend pipeline
+  const isHighIntentEvent = true;
 
   if (isHighIntentEvent) {
     await alertFounder({
