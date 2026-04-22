@@ -254,7 +254,6 @@ export default function LandingPage() {
       localStorage.setItem('ic_lead_email', contactState.email);
       
       setEmailStatus('sent');
-      setTimeout(() => setEmailStatus('idle'), 3000);
     } catch {
       setEmailStatus('idle');
     }

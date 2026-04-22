@@ -20,9 +20,9 @@ export async function alertFounder(lead: {
 
   try {
     await resend.emails.send({
-      from: 'InfraConnect Ops <ops@infraconnect.ai>',
-      to: 'frank@lacoupefutur.com',
-      subject: `🚨 HIGH INTENT: ${lead.company || lead.email.split('@')[0]} [Score: ${lead.score}]`,
+      from: 'onboarding@resend.dev',
+      to: 'hello@infraconnect.ai',
+      subject: `🚨 [HOT LEAD] Infrastructure Dispatch - ${lead.company || lead.email.split('@')[0]}`,
       html: `
         <div style="font-family: sans-serif; padding: 20px;">
           <h2 style="color: #2563eb;">High Intent Movement Detected</h2>
