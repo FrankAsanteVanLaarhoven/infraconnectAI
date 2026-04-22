@@ -16,7 +16,7 @@ export function useROS() {
 
     // Disable ROS bridge connection in production to prevent WebSocket crashes.
     // In production on Vercel, localhost:9090 is not available.
-    if (process.env.NODE_ENV === "production") {
+    if (typeof window !== "undefined" && window.location.hostname !== "localhost") {
       setConnected(false);
       return;
     }
