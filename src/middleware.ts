@@ -27,13 +27,12 @@ export default withAuth(
       authorized: ({ req, token }) => {
         const path = req.nextUrl.pathname;
         
-        // Zero-Trust Architecture: 
-        // The ONLY public pathways are the explicit Auth interfaces and NextAuth systems
-        if (path.startsWith('/auth') || path.startsWith('/api/auth')) {
+        // Public pathways: Auth interfaces and the root landing page (waitlist)
+        if (path === '/' || path.startsWith('/api/lead') || path.startsWith('/auth') || path.startsWith('/api/auth')) {
           return true;
         }
         
-        // EVERYTHING else (especially the root '/' landing page) is completely locked out.
+        // EVERYTHING else is completely locked out.
         return !!token;
       }
     },
