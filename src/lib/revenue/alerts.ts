@@ -21,7 +21,7 @@ export async function alertFounder(lead: {
   try {
     await resend.emails.send({
       from: 'InfraConnect Ops <ops@infraconnect.ai>',
-      to: 'frank@infraconnect.ai',
+      to: 'frank@lacoupefutur.com',
       subject: `🚨 HIGH INTENT: ${lead.company || lead.email.split('@')[0]} [Score: ${lead.score}]`,
       html: `
         <div style="font-family: sans-serif; padding: 20px;">

@@ -33,7 +33,7 @@ function SceneContent() {
   useEffect(() => {
     // 1. Mission Trajectory Paths via direct Websocket array sync
     const io = require("socket.io-client").io;
-    const socket = io(process.env.NEXT_PUBLIC_SOCKET_URL || "", { transports: ["websocket"] });
+    const socket = io(process.env.NEXT_PUBLIC_SOCKET_URL || "", { transports: ["polling", "websocket"] });
 
     socket.on("stream:tasks", (e: any) => {
       if (e.path && e.path.length > 0) {
