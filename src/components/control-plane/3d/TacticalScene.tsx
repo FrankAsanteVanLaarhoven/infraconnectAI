@@ -71,46 +71,6 @@ function SceneContent() {
   }, [updateRobot]);
 
   useFrame(({ camera }) => {
-    robots.forEach((r) => {
-      // Dynamic collision avoidance overriding hard trajectory nodes
-      const avoidance = computeAvoidance(r, robots);
-      
-      if (r.path && r.path.length > 0) {
-        const next = r.path[0];
-
-        // Implementing native Lerp logic bounds smoothing animation + Avoidance
-        const currentPos = new THREE.Vector3(...(r.position as [number, number, number]));
-        const targetPos = new THREE.Vector3(next.x, 0, next.y);
-        
-        // Offset array seamlessly rendering deflection matrices natively smoothly
-        targetPos.x += avoidance.x * 0.05;
-        targetPos.z += avoidance.y * 0.05;
-        
-        currentPos.lerp(targetPos, 0.05);
-
-        // Advance path if reached target physically
-        if (currentPos.distanceTo(targetPos) < 0.1) {
-             updateRobot(r.id, {
-                 position: [next.x, 0, next.y],
-                 path: r.path.slice(1),
-             });
-        } else {
-             updateRobot(r.id, {
-                 position: [currentPos.x, currentPos.y, currentPos.z]
-             });
-        }
-      } else {
-         // Apply baseline avoidance drift even when idle mapping fleet constraints actively
-         updateRobot(r.id, {
-            position: [
-              r.position[0] + avoidance.x * 0.05,
-              0,
-              r.position[2] + avoidance.y * 0.05,
-            ],
-         });
-      }
-    });
-
     // Cinematic Camera Lerping Logic seamlessly tracking Robot operations
     const target = robots[0]?.position;
     if (target) {

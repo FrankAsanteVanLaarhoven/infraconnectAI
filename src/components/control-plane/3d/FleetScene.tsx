@@ -69,39 +69,6 @@ function FleetLogic({ robots, setRobots }: { robots: RobotState[], setRobots: an
         if (robots.length > 0) {
             handleFollowCamera(state.camera, { x: robots[0].position[0], z: robots[0].position[2] });
         }
-
-        setRobots((prev: RobotState[]) => prev.map(r => {
-            let nextPos = [...r.position] as [number, number, number];
-            let newPath = [...r.path];
-
-            // Real-time obstacle avoidance loop
-            const force = avoidCollisions(
-                { id: r.id, pos: { x: r.position[0], y: r.position[2] } },
-                prev.map(p => ({ id: p.id, pos: { x: p.position[0], y: p.position[2] } }))
-            );
-
-            // Execute Intent + Avoidance Math
-            if (newPath.length > 0) {
-                const target = newPath[0];
-                const dx = target[0] - nextPos[0];
-                const dz = target[2] - nextPos[2];
-                const dist = Math.sqrt(dx*dx + dz*dz);
-                
-                // Interpolate speed and offset with obstacle forces
-                if (dist > 0.1) {
-                    nextPos[0] += (dx/dist) * 0.05 + (force.x * 0.1);
-                    nextPos[2] += (dz/dist) * 0.05 + (force.y * 0.1);
-                } else {
-                    newPath.shift(); // Node reached
-                }
-            } else if (force.x !== 0 || force.y !== 0) {
-                // If stopped but colliding, slide away
-                nextPos[0] += force.x * 0.1;
-                nextPos[2] += force.y * 0.1;
-            }
-
-            return { ...r, position: nextPos, path: newPath };
-        }));
     });
 
     return null;
