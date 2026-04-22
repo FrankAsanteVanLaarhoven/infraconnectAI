@@ -57,13 +57,9 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
             __html: `
               if ('serviceWorker' in navigator) {
-                if (window.location.hostname === 'localhost') {
-                  navigator.serviceWorker.getRegistrations().then(function(registrations) {
-                    for(let registration of registrations) { registration.unregister(); }
-                  });
-                } else {
-                  navigator.serviceWorker.register('/sw.js');
-                }
+                navigator.serviceWorker.getRegistrations().then(function(registrations) {
+                  for(let registration of registrations) { registration.unregister(); }
+                });
               }
             `,
           }}
