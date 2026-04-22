@@ -161,7 +161,7 @@ export default function LandingPage() {
   const [act, setAct] = useState(0);
   const [isAccessHovered, setIsAccessHovered] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
-  const [contactState, setContactState] = useState({ email: '', department: 'hello', intent: '' });
+  const [contactState, setContactState] = useState({ email: '', company: '', role: '', message: '' });
   const [emailStatus, setEmailStatus] = useState<'idle'|'sending'|'sent'>('idle');
 
   useEffect(() => {
@@ -240,7 +240,13 @@ export default function LandingPage() {
       const res = await fetch('/api/access', { 
         method: 'POST', 
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(contactState) 
+        body: JSON.stringify({
+          email: contactState.email,
+          company: contactState.company || 'Not Provided',
+          role: contactState.role || 'Not Provided',
+          message: contactState.message || 'No Message Provided',
+          source: 'Landing Page'
+        }) 
       });
       if (!res.ok) throw new Error("Payload delivery rejected");
       
@@ -327,17 +333,16 @@ export default function LandingPage() {
                             <input required type="email" placeholder="EXECUTIVE@DOMAIN.COM" className="w-full bg-black border border-slate-800 p-2 text-xs uppercase focus:border-amber-500 outline-none" value={contactState.email} onChange={e => setContactState({...contactState, email: e.target.value})} />
                           </div>
                           <div>
-                            <label className="text-[10px] uppercase text-slate-400 tracking-widest mb-1 block">Routing Designation</label>
-                            <select className="w-full bg-black border border-slate-800 p-2 text-xs uppercase focus:border-amber-500 outline-none text-slate-300" value={contactState.department} onChange={e => setContactState({...contactState, department: e.target.value})}>
-                               <option value="hello">General (hello@)</option>
-                               <option value="frank">Executive (frank@)</option>
-                               <option value="security">Compliance (security@)</option>
-                               <option value="support">Technical (support@)</option>
-                            </select>
+                            <label className="text-[10px] uppercase text-slate-400 tracking-widest mb-1 block">Enterprise / Company</label>
+                            <input required type="text" placeholder="COMPANY NAME" className="w-full bg-black border border-slate-800 p-2 text-xs uppercase focus:border-amber-500 outline-none text-slate-300" value={contactState.company} onChange={e => setContactState({...contactState, company: e.target.value})} />
+                          </div>
+                          <div>
+                            <label className="text-[10px] uppercase text-slate-400 tracking-widest mb-1 block">Role / Title</label>
+                            <input required type="text" placeholder="YOUR ROLE" className="w-full bg-black border border-slate-800 p-2 text-xs uppercase focus:border-amber-500 outline-none text-slate-300" value={contactState.role} onChange={e => setContactState({...contactState, role: e.target.value})} />
                           </div>
                           <div>
                             <label className="text-[10px] uppercase text-slate-400 tracking-widest mb-1 block">Secure Payload</label>
-                            <textarea required placeholder="ENTER DEPLOYMENT REQUIREMENTS..." className="w-full bg-black border border-slate-800 p-2 text-xs uppercase focus:border-amber-500 outline-none min-h-[100px]" value={contactState.intent} onChange={e => setContactState({...contactState, intent: e.target.value})} />
+                            <textarea required placeholder="ENTER DEPLOYMENT REQUIREMENTS..." className="w-full bg-black border border-slate-800 p-2 text-xs uppercase focus:border-amber-500 outline-none min-h-[100px]" value={contactState.message} onChange={e => setContactState({...contactState, message: e.target.value})} />
                           </div>
                           <Button type="submit" disabled={emailStatus==='sending'} className={`text-white rounded-none uppercase text-xs tracking-widest transition-colors duration-500 ${emailStatus === 'sending' ? 'bg-amber-600' : emailStatus === 'sent' ? 'bg-green-600' : 'bg-red-600 hover:bg-red-700'}`}>
                              {emailStatus === 'sending' ? 'TRANSMITTING...' : emailStatus === 'sent' ? 'SECURED' : 'DISPATCH PAYLOAD'}
@@ -368,6 +373,18 @@ export default function LandingPage() {
                             <label className="text-[10px] uppercase text-slate-400 tracking-widest mb-1 block">Corporate Email</label>
                             <input required type="email" placeholder="EXECUTIVE@DOMAIN.COM" className="w-full bg-black border border-slate-800 p-2 text-xs uppercase focus:border-cyan-500 outline-none" value={contactState.email} onChange={e => setContactState({...contactState, email: e.target.value})} />
                           </div>
+                          <div>
+                            <label className="text-[10px] uppercase text-slate-400 tracking-widest mb-1 block">Enterprise / Company</label>
+                            <input required type="text" placeholder="COMPANY NAME" className="w-full bg-black border border-slate-800 p-2 text-xs uppercase focus:border-cyan-500 outline-none text-slate-300" value={contactState.company} onChange={e => setContactState({...contactState, company: e.target.value})} />
+                          </div>
+                          <div>
+                            <label className="text-[10px] uppercase text-slate-400 tracking-widest mb-1 block">Role / Title</label>
+                            <input required type="text" placeholder="YOUR ROLE" className="w-full bg-black border border-slate-800 p-2 text-xs uppercase focus:border-cyan-500 outline-none text-slate-300" value={contactState.role} onChange={e => setContactState({...contactState, role: e.target.value})} />
+                          </div>
+                          <div>
+                            <label className="text-[10px] uppercase text-slate-400 tracking-widest mb-1 block">Justification</label>
+                            <textarea required placeholder="WHY DO YOU NEED ELEVATED ACCESS?" className="w-full bg-black border border-slate-800 p-2 text-xs uppercase focus:border-cyan-500 outline-none min-h-[60px]" value={contactState.message} onChange={e => setContactState({...contactState, message: e.target.value})} />
+                          </div>
                           <Button type="submit" disabled={emailStatus==='sending'} className={`text-white rounded-none uppercase text-xs tracking-widest transition-colors duration-500 ${emailStatus === 'sending' ? 'bg-amber-600' : emailStatus === 'sent' ? 'bg-green-600' : 'bg-red-600 hover:bg-red-700'}`}>
                              {emailStatus === 'sending' ? 'VERIFYING...' : emailStatus === 'sent' ? 'PENDING REVIEW' : 'REQUEST ELEVATION'}
                           </Button>
@@ -395,6 +412,18 @@ export default function LandingPage() {
                           <div>
                             <label className="text-[10px] uppercase text-slate-400 tracking-widest mb-1 block">Work Email</label>
                             <input required type="email" placeholder="YOUR@DOMAIN.COM" className="w-full bg-black border border-slate-800 p-2 text-xs uppercase focus:border-slate-500 outline-none" value={contactState.email} onChange={e => setContactState({...contactState, email: e.target.value})} />
+                          </div>
+                          <div>
+                            <label className="text-[10px] uppercase text-slate-400 tracking-widest mb-1 block">Enterprise / Company</label>
+                            <input required type="text" placeholder="COMPANY NAME" className="w-full bg-black border border-slate-800 p-2 text-xs uppercase focus:border-slate-500 outline-none" value={contactState.company} onChange={e => setContactState({...contactState, company: e.target.value})} />
+                          </div>
+                          <div>
+                            <label className="text-[10px] uppercase text-slate-400 tracking-widest mb-1 block">Role / Title</label>
+                            <input required type="text" placeholder="YOUR ROLE" className="w-full bg-black border border-slate-800 p-2 text-xs uppercase focus:border-slate-500 outline-none" value={contactState.role} onChange={e => setContactState({...contactState, role: e.target.value})} />
+                          </div>
+                          <div>
+                            <label className="text-[10px] uppercase text-slate-400 tracking-widest mb-1 block">Use Case</label>
+                            <textarea required placeholder="HOW WILL YOU USE THE SANDBOX?" className="w-full bg-black border border-slate-800 p-2 text-xs uppercase focus:border-slate-500 outline-none min-h-[60px]" value={contactState.message} onChange={e => setContactState({...contactState, message: e.target.value})} />
                           </div>
                           <Button type="submit" disabled={emailStatus==='sending'} className={`text-white rounded-none uppercase text-xs tracking-widest transition-colors duration-500 ${emailStatus === 'sending' ? 'bg-amber-600' : emailStatus === 'sent' ? 'bg-green-600' : 'bg-red-600 hover:bg-red-700'}`}>
                              {emailStatus === 'sending' ? 'TRANSMITTING...' : emailStatus === 'sent' ? 'SECURED ON WAITLIST' : 'JOIN WAITLIST'}
@@ -459,8 +488,9 @@ export default function LandingPage() {
                         </DialogHeader>
                         <form onSubmit={sendEnterpriseRequest} className="flex flex-col gap-4 mt-2">
                           <div><label className="text-[10px] uppercase text-slate-400">Authentication</label><input required type="email" placeholder="EXECUTIVE@DOMAIN.COM" className="w-full bg-black border border-slate-800 p-2 text-xs" value={contactState.email} onChange={e => setContactState({...contactState, email: e.target.value})} /></div>
-                          <div><label className="text-[10px] uppercase text-slate-400">Routing Designation</label><select className="w-full bg-black border border-slate-800 p-2 text-xs" value={contactState.department} onChange={e => setContactState({...contactState, department: e.target.value})}><option value="hello">General (hello@)</option><option value="frank">Executive (frank@)</option><option value="security">Compliance (security@)</option><option value="support">Technical (support@)</option></select></div>
-                          <div><label className="text-[10px] uppercase text-slate-400">Secure Payload</label><textarea required placeholder="ENTER REQUIREMENTS..." className="w-full bg-black border border-slate-800 p-2 text-xs min-h-[100px]" value={contactState.intent} onChange={e => setContactState({...contactState, intent: e.target.value})} /></div>
+                          <div><label className="text-[10px] uppercase text-slate-400">Enterprise / Company</label><input required type="text" placeholder="COMPANY NAME" className="w-full bg-black border border-slate-800 p-2 text-xs" value={contactState.company} onChange={e => setContactState({...contactState, company: e.target.value})} /></div>
+                          <div><label className="text-[10px] uppercase text-slate-400">Role / Title</label><input required type="text" placeholder="YOUR ROLE" className="w-full bg-black border border-slate-800 p-2 text-xs" value={contactState.role} onChange={e => setContactState({...contactState, role: e.target.value})} /></div>
+                          <div><label className="text-[10px] uppercase text-slate-400">Secure Payload</label><textarea required placeholder="ENTER REQUIREMENTS..." className="w-full bg-black border border-slate-800 p-2 text-xs min-h-[100px]" value={contactState.message} onChange={e => setContactState({...contactState, message: e.target.value})} /></div>
                           <Button type="submit" disabled={emailStatus==='sending'} className={`text-white rounded-none uppercase text-xs transition-colors duration-500 h-12 ${emailStatus === 'sending' ? 'bg-amber-600 hover:bg-amber-700' : emailStatus === 'sent' ? 'bg-green-600 hover:bg-green-700' : 'bg-red-600 hover:bg-red-700'}`}>
                              {emailStatus === 'sending' ? 'TRANSMITTING...' : emailStatus === 'sent' ? 'SECURED' : 'DISPATCH PAYLOAD'}
                           </Button>
