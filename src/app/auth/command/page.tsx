@@ -19,8 +19,8 @@ export default function CommandAuth() {
     setAuthenticating(true);
     setError('');
 
-    const { generateFingerprint } = await import('@/lib/security/fingerprint');
-    const fingerprint = await generateFingerprint();
+    // Generate a browser-safe fingerprint
+    const fingerprint = typeof window !== 'undefined' ? window.navigator.userAgent : 'UNKNOWN';
 
     // Simulate elite latency for the cinematic handshake
     setTimeout(async () => {
