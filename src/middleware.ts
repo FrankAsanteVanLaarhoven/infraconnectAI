@@ -43,8 +43,8 @@ export default withAuth(
 );
 
 export const config = {
-  // Enforce middleware across all endpoints, skipping static assets
+  // Enforce middleware across all endpoints, skipping static assets and public root files
   matcher: [
-    "/((?!_next/static|_next/image|favicon.ico|icons|sdk|audio|trailer-assets|fonts|api/access).*)",
+    "/((?!_next/static|_next/image|favicon.ico|sw.js|manifest.json|robots.txt|icons|sdk|audio|trailer-assets|fonts|api/access).*)",
   ]
 };
