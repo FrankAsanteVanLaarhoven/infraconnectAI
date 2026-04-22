@@ -2,6 +2,7 @@
 import { useEffect, useState, useCallback } from 'react'
 import { GlassPanel } from '@/components/glass/GlassPanel'
 import { Activity, Database, Cpu, Bot, Layers, FlaskConical } from 'lucide-react'
+import { motion } from 'framer-motion'
 import type { HealthProjection } from '@/lib/projections/health'
 import { parseHealthProjection } from '@/lib/projections/health'
 

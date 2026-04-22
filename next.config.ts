@@ -2,6 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   output: "standalone",
+  serverExternalPackages: ['@prisma/client'],
   /* config options here */
   typescript: {
     ignoreBuildErrors: true,
@@ -18,6 +19,14 @@ const nextConfig: NextConfig = {
       'tailwind-merge'
     ]
   },
+  async rewrites() {
+    return [
+      {
+        source: '/socket.io/:path*',
+        destination: 'https://infraconnectai.up.railway.app/socket.io/:path*'
+      }
+    ];
+  }
 };
 
 export default nextConfig;

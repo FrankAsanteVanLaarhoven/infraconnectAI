@@ -2,17 +2,11 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useFrame } from "@react-three/fiber";
-import { loadURDF } from "@/lib/robotics/urdfLoader";
+import { URDFRobot } from "./URDFRobot";
 import { sendJointState } from "@/lib/robotics/ros";
 
 export function Robot({ id, position }: { id: string; position: [number, number, number] }) {
   const ref = useRef<any>();
-  const [model, setModel] = useState<any>(null);
-
-  // Isolate hardware bounding loaders
-  useEffect(() => {
-    loadURDF("/robots/yahboom_m3_pro.urdf").then(setModel);
-  }, []);
 
   // Sync internal geometry coordinates dynamically mapped from Zustand
   useEffect(() => {
@@ -35,7 +29,9 @@ export function Robot({ id, position }: { id: string; position: [number, number,
     sendJointState(joints);
   });
 
-  if (!model) return null;
-
-  return <primitive ref={ref} object={model} />;
+  return (
+    <group ref={ref}>
+      <URDFRobot />
+    </group>
+  );
 }

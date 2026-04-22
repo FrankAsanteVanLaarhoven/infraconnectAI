@@ -63,6 +63,9 @@ export function SimToRealPipeline() {
       const data = await res.json()
       if (data.success) {
         toast.success(`Pipeline triggered! Cascaded across ${data.totalCascades} stages.`)
+        if (data.metricsLog) {
+            toast.info(`Simulation Metrics Evaluated:\n${data.metricsLog.split('=========================================')[1]}`)
+        }
         fetchPipelines() // Refresh immediately
       } else {
         toast.error(`Deploy failed: ${data.error}`)

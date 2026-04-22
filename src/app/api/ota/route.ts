@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server';
 import { db } from '@/lib/db';
+import { execSync } from 'child_process';
+import path from 'path';
 
 export async function POST(req: Request) {
   try {
@@ -42,7 +44,39 @@ export async function POST(req: Request) {
     // 4. Cascade Logic for Sim-to-Real Autonomous Transfer
     const cascadeDeployments = [deployment];
 
-    if (autoPromote && pipelineStage === 'SIM_L0_BASELINE') {
+    let simulationPassed = true;
+    let metricsLog = "";
+
+    // If triggering a L0 baseline, physically run the CBF-QP python evaluation script
+    if (pipelineStage === 'SIM_L0_BASELINE') {
+        try {
+            const scriptPath = path.join(process.cwd(), 'scripts/evaluate_metrics.py');
+            const output = execSync(`python3 ${scriptPath}`).toString();
+            metricsLog = output;
+            
+            // Parse actual FleetSafe evaluation metrics
+            if (output.includes('Success Boundary:  False')) {
+                simulationPassed = false;
+            }
+            if (output.includes('SVR (Violation %):')) {
+                const svrMatch = output.match(/SVR \(Violation %\):\s*([0-9.]+)/);
+                if (svrMatch && parseFloat(svrMatch[1]) > 0.05) {
+                    simulationPassed = false; // Rigid SVR bounds check
+                }
+            }
+        } catch (err) {
+            console.error("Simulation Python execution failed:", err);
+            simulationPassed = false;
+        }
+
+        // Mark the primary deployment status
+        await db.oTA_Deployment.update({
+            where: { id: deployment.id },
+            data: { status: simulationPassed ? 'completed' : 'failed' }
+        });
+    }
+
+    if (autoPromote && pipelineStage === 'SIM_L0_BASELINE' && simulationPassed) {
       // Simulate autonomous transition to SIM_L1 after successful pass
       const l1Deployment = await db.oTA_Deployment.create({
         data: {
@@ -79,7 +113,8 @@ export async function POST(req: Request) {
     return NextResponse.json({ 
       success: true, 
       initialDeploymentId: deployment.id, 
-      totalCascades: cascadeDeployments.length 
+      totalCascades: cascadeDeployments.length,
+      metricsLog
     });
 
   } catch (error: any) {

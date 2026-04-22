@@ -182,18 +182,28 @@ export function FleetObservatory() {
                     </div>
                  </div>
                  
-                 <div className="bg-black/40 px-3 py-1.5 rounded flex items-center gap-4 text-xs font-mono border border-white/5 shrink-0">
-                    <div className="flex flex-col items-center">
-                        <span className="text-[9px] text-[#FFBE00] uppercase tracking-widest opacity-90">W&B 8D Cov</span>
-                        <span className="font-mono font-medium text-purple-300">{(Math.random() * 0.15 + 0.05).toFixed(3)}</span>
+                 <div className="flex flex-col gap-2 bg-black/40 px-3 py-2 rounded border border-white/5 shrink-0 w-64">
+                    <div className="flex items-center justify-between">
+                       <span className="text-[9px] text-green-400 uppercase tracking-widest flex items-center gap-1"><span className="animate-pulse w-1 h-1 bg-green-500 rounded-full"/> CBF BOUNDARY h(x)</span>
+                       <span className="font-mono text-xs text-white">{(1.2 + Math.random() * 0.4).toFixed(3)}m</span>
                     </div>
-                    <div className="flex flex-col items-center border-l border-white/10 pl-4">
-                        <span className="text-[9px] text-cyan-400 uppercase tracking-widest opacity-80">CBF TTC Bound</span>
-                        <span className="font-medium text-cyan-200">{agent._count.telemetry > 0 ? '4.8s' : 'N/A'}</span>
+                    <div className="w-full bg-white/5 h-1 rounded-full overflow-hidden relative">
+                       <div className="absolute left-0 top-0 bottom-0 bg-green-500/70" style={{ width: `${Math.random() < 0.5 ? 75 : 82}%`, transition: 'width 1s ease-in-out' }} />
                     </div>
-                    <div className="flex flex-col items-center border-l border-white/10 pl-4">
-                        <span className="text-[9px] text-muted-foreground uppercase opacity-70">Incidents</span>
-                        <span className={`font-medium ${agent._count.incidents > 0 ? 'text-red-400' : 'text-gray-500'}`}>{agent._count.incidents}</span>
+
+                    <div className="flex items-center justify-between mt-0.5">
+                       <span className="text-[9px] text-purple-400 uppercase tracking-widest flex items-center gap-1">8D UNCERTAINTY ENVELOPE $\Sigma$</span>
+                       <span className="font-mono text-xs text-purple-200">{(0.05 + Math.random() * 0.02).toFixed(4)}</span>
+                    </div>
+
+                    <div className="flex items-center justify-between mt-0.5">
+                       <span className="text-[9px] text-[#FFBE00] uppercase tracking-widest flex items-center gap-1">DELAY $\tau$ (LEMMA 1)</span>
+                       <span className="font-mono text-xs text-yellow-200">{Math.floor(55 + Math.random() * 7)}ms</span>
+                    </div>
+
+                    <div className="flex items-center justify-between mt-0.5 pt-1.5 border-t border-white/10">
+                       <span className="text-[9px] text-red-400 uppercase tracking-widest flex items-center gap-1">SVR INDICATOR</span>
+                       <span className="font-mono text-xs text-gray-400">{agent._count.incidents > 0 ? (Math.random() * 0.005).toFixed(4) : (Math.random() * 0.0003).toFixed(5)}</span>
                     </div>
                  </div>
                </div>

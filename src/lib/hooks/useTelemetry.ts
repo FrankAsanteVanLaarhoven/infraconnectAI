@@ -11,7 +11,9 @@ export function useTelemetry() {
 
   useEffect(() => {
     // Connect explicitly to the dedicated websocket backend running on port 3007
-    const socket: Socket = io(process.env.NEXT_PUBLIC_SOCKET_URL || "http://localhost:3007");
+    const socket: Socket = io(process.env.NEXT_PUBLIC_SOCKET_URL || "http://localhost:3007", { 
+        transports: ["websocket"] 
+    });
 
     socket.on("connect", () => {
        setIsConnected(true);

@@ -49,6 +49,6 @@ export async function evaluateTelemetryForAnomalies(telemetry: TelemetryEvent) {
         safe_mode: true
       },
       issued_by: "agent/system",
+    });
   }
 }
-

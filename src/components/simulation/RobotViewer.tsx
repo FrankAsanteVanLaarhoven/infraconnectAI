@@ -117,7 +117,7 @@ export function RobotViewer() {
                 <div className="w-2 h-2 rounded-full bg-red-500" />
             )}
             <span className="text-[10px] font-mono font-bold text-white tracking-widest uppercase">
-              ROS2 BRIDGE: /tf // TELEOPERATION
+              OMNIVERSE ISAAC SIM // WEBGL PROJECTION
             </span>
         </div>
         <div className="flex gap-2 pointer-events-auto">

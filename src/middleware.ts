@@ -22,6 +22,7 @@ export default withAuth(
     return NextResponse.next();
   },
   {
+    secret: process.env.NEXTAUTH_SECRET || "sota_overlord_encryption_key_2026",
     callbacks: {
       authorized: ({ req, token }) => {
         const path = req.nextUrl.pathname;
@@ -33,8 +34,7 @@ export default withAuth(
         }
         
         // EVERYTHING else (especially the root '/' landing page) is completely locked out.
-        // UNLOCKED FOR TESTING:
-        return true;
+        return !!token;
       }
     },
     pages: {

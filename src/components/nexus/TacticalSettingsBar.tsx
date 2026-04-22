@@ -39,6 +39,7 @@ interface PanelInfo {
 
 import { tacticalBus } from '@/lib/events/bus';
 import { broadcastAlert } from '@/lib/notifications/notificationEngine';
+import { sendBreachAlert } from '@/lib/notifications/breach-alert';
 
 export function TacticalSettingsBar({ onReset }: { onReset?: () => void }) {
   const [sharpen, setSharpen] = useState([49]); // AI Aggression %
@@ -59,6 +60,11 @@ export function TacticalSettingsBar({ onReset }: { onReset?: () => void }) {
            title: 'SYSTEM ARMED',
            message: 'Autonomous agents are now authorized for external mission engagement.'
         });
+        sendBreachAlert({
+           email: 'founder@infraconnect.ai',
+           type: 'NEW_DEVICE',
+           fingerprint: 'ARM_TOGGLE'
+        }).catch(console.error);
      } else {
         tacticalBus.dispatch({ type: 'MISSION_DISARM', payload: {} });
         broadcastAlert({

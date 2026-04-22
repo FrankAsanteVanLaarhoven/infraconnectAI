@@ -1,131 +1,97 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { useFrame } from "@react-three/fiber";
+import React, { useRef, useMemo } from "react";
 import * as THREE from "three";
+import { useFrame } from "@react-three/fiber";
 
-export function URDFRobot({ joints }: any) {
+export function URDFRobot({ url }: { url?: string }) {
+  const robotRef = useRef<THREE.Group>(null);
+  const lidarRef = useRef<THREE.Group>(null);
+  const armRef = useRef<THREE.Group>(null);
+
+  // Smooth animation logic for SOTA "active idle" twin behaviors
+  useFrame((state) => {
+    const time = state.clock.getElapsedTime();
+    if (lidarRef.current) {
+        // LiDAR spinning at 10Hz simulated
+        lidarRef.current.rotation.y = time * 10;
+    }
+    if (robotRef.current) {
+        // Micro-suspension breathing
+        robotRef.current.position.y = 0.5 + Math.sin(time * 2) * 0.005;
+    }
+  });
+
+  const materials = useMemo(() => ({
+    chassis: new THREE.MeshStandardMaterial({ color: "#1e293b", roughness: 0.3, metalness: 0.8 }),
+    accent: new THREE.MeshStandardMaterial({ color: "#2dd4bf", roughness: 0.4, metalness: 0.5, emissive: "#0f766e", emissiveIntensity: 0.2 }),
+    tire: new THREE.MeshStandardMaterial({ color: "#0f172a", roughness: 0.9, metalness: 0.1 }),
+    sensor: new THREE.MeshStandardMaterial({ color: "#ef4444", roughness: 0.2, emissive: "#ef4444", emissiveIntensity: 0.6 }),
+  }), []);
+
   return (
-    <group scale={[1.2, 1.2, 1.2]}>
-            {/* All-Aluminum Alloy Body (M3 Pro Precise Chassis) */}
-            <mesh position={[0, 0.4, 0]}>
-                <boxGeometry args={[0.5, 0.15, 0.7]} />
-                <meshStandardMaterial color="#2d3748" metalness={0.9} roughness={0.3} />
-            </mesh>
-            
-            {/* RPI 5 / Jetson Nano Control Board (Top deck) */}
-            <mesh position={[0, 0.485, 0]}>
-                <boxGeometry args={[0.3, 0.02, 0.4]} />
-                <meshStandardMaterial color="#10b981" metalness={0.2} roughness={0.8} />
-            </mesh>
+    <group ref={robotRef} position={[0, 0.5, 0]}>
+      {/* Structural Chassis Main Base */}
+      <mesh position={[0, 0, 0]} castShadow receiveShadow material={materials.chassis}>
+        <boxGeometry args={[0.3, 0.08, 0.45]} />
+      </mesh>
 
-            {/* Acrylic Baffle (Transparent Top Layer) */}
-            <mesh position={[0, 0.52, 0]}>
-                <boxGeometry args={[0.5, 0.01, 0.7]} />
-                <meshStandardMaterial color="#ffffff" transparent opacity={0.1} metalness={0.9} roughness={0.1} />
+      {/* RPi5 / Compute Deck */}
+      <mesh position={[0, 0.06, 0.05]} castShadow material={materials.accent}>
+        <boxGeometry args={[0.15, 0.04, 0.2]} />
+      </mesh>
+
+      {/* LiDAR Tower */}
+      <group position={[0, 0.12, -0.1]}>
+        <mesh position={[0, 0, 0]} material={materials.chassis}>
+            <cylinderGeometry args={[0.03, 0.03, 0.08, 16]} />
+        </mesh>
+        <group ref={lidarRef} position={[0, 0.05, 0]}>
+            <mesh material={materials.tire}>
+                <cylinderGeometry args={[0.04, 0.04, 0.03, 16]} />
             </mesh>
-            
-            {/* 7-inch IPS High-Definition Touch Screen (Rear mounted, angled) */}
-            <mesh position={[0, 0.65, -0.25]} rotation={[-Math.PI / 4, 0, 0]}>
-                <boxGeometry args={[0.3, 0.02, 0.2]} />
-                <meshStandardMaterial color="#0ea5e9" emissive="#0ea5e9" emissiveIntensity={0.6} />
+            <mesh position={[0.02, 0, 0]} material={materials.sensor}>
+                <boxGeometry args={[0.02, 0.015, 0.02]} />
             </mesh>
-
-            {/* Pendulous Suspension Mecanum Wheels */}
-            {[
-              [-0.3, 0.2, 0.25], // Front Left
-              [0.3, 0.2, 0.25],  // Front Right
-              [-0.3, 0.2, -0.25], // Rear Left
-              [0.3, 0.2, -0.25]   // Rear Right
-            ].map((pos, idx) => (
-               <group key={idx} position={pos as [number, number, number]}>
-                   <mesh rotation={[0, 0, Math.PI / 2]}>
-                       <cylinderGeometry args={[0.12, 0.12, 0.1, 16]} />
-                       <meshStandardMaterial color="#0f172a" roughness={0.9} />
-                   </mesh>
-                   <mesh rotation={[0, 0, Math.PI / 2]}>
-                       <cylinderGeometry args={[0.08, 0.08, 0.105, 16]} />
-                       <meshStandardMaterial color="#0ea5e9" emissive="#0ea5e9" emissiveIntensity={0.5} />
-                   </mesh>
-               </group>
-            ))}
-
-            {/* Rear Pendulum Suspension Mechanics */}
-            <mesh position={[0, 0.2, -0.25]}>
-                <boxGeometry args={[0.5, 0.05, 0.1]} />
-                <meshStandardMaterial color="#94a3b8" metalness={0.8} />
-            </mesh>
-
-            {/* Dual T-Mini Plus LiDAR (Right Front & Left Rear) */}
-            {[
-               [0.2, 0.55, 0.25],   // Right Front
-               [-0.2, 0.55, -0.25]  // Left Rear
-            ].map((pos, idx) => (
-              <group key={`lidar-${idx}`} position={pos as [number, number, number]}>
-                  {/* Black Base */}
-                  <mesh>
-                      <cylinderGeometry args={[0.06, 0.06, 0.04, 32]} />
-                      <meshStandardMaterial color="#111" />
-                  </mesh>
-                  {/* Spinning Laser Window */}
-                  <mesh position={[0, 0.02, 0]}>
-                      <cylinderGeometry args={[0.05, 0.05, 0.02, 32]} />
-                      <meshStandardMaterial color="#14b8a6" emissive="#14b8a6" emissiveIntensity={0.8} transparent opacity={0.8} />
-                  </mesh>
-              </group>
-            ))}
-
-            {/* 6DOF 3D Vision Robotic Arm (Front Center Mounted) */}
-            <group position={[0, 0.53, 0.25]}>
-                {/* Base Joint Aluminum (Pan) */}
-                <group rotation={[0, joints?.base || 0, 0]}>
-                    <mesh>
-                        <cylinderGeometry args={[0.08, 0.08, 0.08, 32]} />
-                        <meshStandardMaterial color="#e5e7eb" metalness={0.7} />
-                    </mesh>
-                    
-                    {/* Link 1 Pivot (Tilt) */}
-                    <group position={[0, 0.04, 0]} rotation={[joints?.link1 || 0, 0, 0]}>
-                        <mesh position={[0, 0.16, 0]}>
-                            <boxGeometry args={[0.05, 0.32, 0.05]} />
-                            <meshStandardMaterial color="#e5e7eb" metalness={0.7} />
-                        </mesh>
-                        
-                        {/* Link 2 Pivot (Tilt) */}
-                        <group position={[0, 0.32, 0.1]} rotation={[joints?.link2 || 0, 0, 0]}>
-                            <mesh position={[0, 0.15, 0]}>
-                                <boxGeometry args={[0.04, 0.3, 0.04]} />
-                                <meshStandardMaterial color="#e5e7eb" metalness={0.7} />
-                            </mesh>
-                            
-                            {/* Link 3 / End Effector Pivot (Tilt) */}
-                            <group position={[0, 0.3, 0.08]} rotation={[joints?.link3 || 0, 0, 0]}>
-                                {/* End Effector Gripper Platform */}
-                                <mesh position={[0, 0.05, 0]}>
-                                    <boxGeometry args={[0.12, 0.03, 0.08]} />
-                                    <meshStandardMaterial color="#111" />
-                                </mesh>
-                                {/* DABAI DCW2 Depth Camera (Upper Mount) */}
-                                <group position={[0, 0.12, 0]} rotation={[-Math.PI/12, 0, 0]}>
-                                  <mesh>
-                                      <boxGeometry args={[0.15, 0.04, 0.04]} />
-                                      <meshStandardMaterial color="#111" />
-                                  </mesh>
-                                  {/* Lenses */}
-                                  <mesh position={[-0.04, 0, 0.021]} rotation={[Math.PI/2, 0, 0]}>
-                                      <cylinderGeometry args={[0.015, 0.015, 0.01]} />
-                                      <meshStandardMaterial color="#14b8a6" emissive="#14b8a6" />
-                                  </mesh>
-                                  <mesh position={[0.04, 0, 0.021]} rotation={[Math.PI/2, 0, 0]}>
-                                      <cylinderGeometry args={[0.015, 0.015, 0.01]} />
-                                      <meshStandardMaterial color="#14b8a6" emissive="#14b8a6" />
-                                  </mesh>
-                                </group>
-                            </group>
-                        </group>
-                    </group>
-                </group>
-            </group>
         </group>
-      );
+      </group>
+
+      {/* 6DOF Arm Rig (Resting Position) */}
+      <group ref={armRef} position={[0, 0.08, 0.15]}>
+          <mesh material={materials.chassis}>
+              <cylinderGeometry args={[0.04, 0.04, 0.02, 16]} />
+          </mesh>
+          <mesh position={[0, 0.08, 0]} rotation={[0.4, 0, 0]} material={materials.chassis}>
+              <boxGeometry args={[0.03, 0.18, 0.03]} />
+          </mesh>
+          <mesh position={[0, 0.18, 0.04]} rotation={[-0.2, 0, 0]} material={materials.accent}>
+              <boxGeometry args={[0.025, 0.15, 0.025]} />
+          </mesh>
+          {/* Gripper */}
+          <group position={[0, 0.28, 0.02]}>
+              <mesh position={[-0.02, 0, 0]} material={materials.chassis}>
+                 <boxGeometry args={[0.01, 0.06, 0.03]} />
+              </mesh>
+              <mesh position={[0.02, 0, 0]} material={materials.chassis}>
+                 <boxGeometry args={[0.01, 0.06, 0.03]} />
+              </mesh>
+          </group>
+      </group>
+
+      {/* Mecanum Wheels (4x) */}
+      {[
+        [-0.18, -0.04, 0.18], [0.18, -0.04, 0.18],
+        [-0.18, -0.04, -0.18], [0.18, -0.04, -0.18]
+      ].map((pos, i) => (
+        <mesh key={i} position={pos as any} rotation={[0, 0, Math.PI / 2]} castShadow material={materials.tire}>
+          <cylinderGeometry args={[0.06, 0.06, 0.05, 24]} />
+        </mesh>
+      ))}
+
+      {/* Front Depth Camera */}
+      <mesh position={[0, 0.01, 0.23]} material={materials.sensor}>
+          <boxGeometry args={[0.08, 0.02, 0.01]} />
+      </mesh>
+    </group>
+  );
 }

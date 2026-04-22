@@ -9,6 +9,8 @@ import OperatorPanel from "@/components/operator/OperatorPanel";
 import { LocalizationProvider } from "@/components/providers/LocalizationProvider";
 import { NeuralHUD } from "@/components/ui/NeuralHUD";
 import { GlobalSecurityGuard } from "@/components/ui/GlobalSecurityGuard";
+import { GlobalSidebar } from "@/components/navigation/GlobalSidebar";
+import { SidebarProvider, SidebarInset, SidebarTrigger } from "@/components/ui/sidebar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -53,7 +55,17 @@ export default function RootLayout({
       >
         <script
           dangerouslySetInnerHTML={{
-            __html: `if ('serviceWorker' in navigator) { navigator.serviceWorker.register('/sw.js'); }`,
+            __html: `
+              if ('serviceWorker' in navigator) {
+                if (window.location.hostname === 'localhost') {
+                  navigator.serviceWorker.getRegistrations().then(function(registrations) {
+                    for(let registration of registrations) { registration.unregister(); }
+                  });
+                } else {
+                  navigator.serviceWorker.register('/sw.js');
+                }
+              }
+            `,
           }}
         />
         <ThemeProvider
@@ -65,7 +77,15 @@ export default function RootLayout({
           <GlobalSecurityGuard>
             <NextAuthProvider>
               <LocalizationProvider>
-                {children}
+                <SidebarProvider>
+                   <GlobalSidebar />
+                   <SidebarInset className="bg-transparent flex-1 w-full h-full min-h-screen relative">
+                      <div className="absolute top-4 left-4 z-50 pointer-events-auto mix-blend-difference">
+                        <SidebarTrigger className="text-white hover:bg-white/10" />
+                      </div>
+                      {children}
+                   </SidebarInset>
+                </SidebarProvider>
                 <NeuralHUD />
                 <OperatorPanel />
                 <Toaster />

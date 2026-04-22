@@ -1,4 +1,4 @@
-import URDFLoader from "urdf-loader";
+import URDFLoader from "urdf-loader/umd/URDFLoader.js";
 import * as THREE from "three";
 
 /**

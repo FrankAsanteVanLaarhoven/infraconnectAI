@@ -1,11 +1,6 @@
+"use server";
+
 import { Resend } from 'resend';
-
-const resend = new Resend(process.env.RESEND_API_KEY);
-
-/**
- * Sovereign Breach Notification Pipeline
- * Dispatches high-fidelity security alerts via Resend for Phase 18.
- */
 
 export async function sendBreachAlert(params: {
   email: string;
@@ -17,6 +12,7 @@ export async function sendBreachAlert(params: {
      console.warn("Resend API Key missing. Skipping alert dispatch.");
      return;
   }
+  const resend = new Resend(process.env.RESEND_API_KEY);
 
   const { email, type, fingerprint, ip } = params;
   const isBlocked = type === 'LIMIT_BLOCKED';

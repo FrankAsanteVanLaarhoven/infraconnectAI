@@ -2,7 +2,7 @@
 
 import { useROS } from "@/hooks/useROS";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Grid, OrbitControls } from "@react-three/drei";
 import { useMap } from "@/lib/hooks/useMap";
 import { subscribe } from "@/lib/core/bus";
@@ -33,7 +33,7 @@ function SceneContent() {
   useEffect(() => {
     // 1. Mission Trajectory Paths via direct Websocket array sync
     const io = require("socket.io-client").io;
-    const socket = io(process.env.NEXT_PUBLIC_SOCKET_URL || "http://localhost:3007");
+    const socket = io(process.env.NEXT_PUBLIC_SOCKET_URL || "", { transports: ["websocket"] });
 
     socket.on("stream:tasks", (e: any) => {
       if (e.path && e.path.length > 0) {
@@ -129,6 +129,9 @@ export default function TacticalScene() {
   const robots = useFleetStore((s) => s.robots);
   const robotState = robots.length > 0 ? { zone: "SECTOR-7G", battery: 98, status: robots[0].status || "IDLE" } : null;
 
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => { setMounted(true); }, []);
+
   return (
     <div className="w-full h-full bg-[#050607] relative">
       <Canvas camera={{ position: [10, 10, 10], fov: 60 }}>
@@ -154,10 +157,12 @@ export default function TacticalScene() {
 
         <SceneContent />
         
-        <EffectComposer>
-          <Bloom intensity={0.6} luminanceThreshold={0.2} />
-          <Noise opacity={0.02} />
-        </EffectComposer>
+        {mounted && (
+          <EffectComposer disableNormalPass multisampling={4}>
+            <Bloom intensity={0.6} luminanceThreshold={0.2} />
+            <Noise opacity={0.02} />
+          </EffectComposer>
+        )}
         
         <OrbitControls />
       </Canvas>
