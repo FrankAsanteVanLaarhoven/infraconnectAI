@@ -11,7 +11,11 @@ interface FileNode {
   children?: FileNode[];
 }
 
-const TreeNode = ({ node, level = 0 }: { node: FileNode; level?: number }) => {
+interface WorkspaceExplorerProps {
+  onSelectFile?: (path: string) => void;
+}
+
+const TreeNode = ({ node, level = 0, onSelectFile }: { node: FileNode; level?: number; onSelectFile?: (path: string) => void }) => {
   const [isOpen, setIsOpen] = useState(false);
   const isDir = node.type === "directory";
 
@@ -20,7 +24,7 @@ const TreeNode = ({ node, level = 0 }: { node: FileNode; level?: number }) => {
       <div 
         className={`flex items-center gap-1.5 py-1 px-2 hover:bg-slate-800/50 cursor-pointer text-sm font-mono text-slate-300 transition-colors ${level === 0 ? "font-bold text-slate-200" : ""}`}
         style={{ paddingLeft: `${level * 12 + 8}px` }}
-        onClick={() => isDir && setIsOpen(!isOpen)}
+        onClick={() => isDir ? setIsOpen(!isOpen) : onSelectFile?.(node.path)}
       >
         {isDir ? (
           <>
@@ -39,7 +43,7 @@ const TreeNode = ({ node, level = 0 }: { node: FileNode; level?: number }) => {
       {isOpen && node.children && (
         <div className="flex flex-col">
           {node.children.map((child, i) => (
-            <TreeNode key={i} node={child} level={level + 1} />
+            <TreeNode key={i} node={child} level={level + 1} onSelectFile={onSelectFile} />
           ))}
         </div>
       )}
@@ -47,7 +51,7 @@ const TreeNode = ({ node, level = 0 }: { node: FileNode; level?: number }) => {
   );
 };
 
-export function WorkspaceExplorer() {
+export function WorkspaceExplorer({ onSelectFile }: WorkspaceExplorerProps) {
   const [tree, setTree] = useState<FileNode[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -85,7 +89,7 @@ export function WorkspaceExplorer() {
             <Loader2 className="w-4 h-4 animate-spin" />
           </div>
         ) : tree.length > 0 ? (
-          tree.map((node, i) => <TreeNode key={i} node={node} />)
+          tree.map((node, i) => <TreeNode key={i} node={node} onSelectFile={onSelectFile} />)
         ) : (
           <div className="text-xs text-slate-500 text-center mt-4 font-mono">No files found.</div>
         )}

@@ -84,6 +84,15 @@ export function SandboxTerminal() {
       newSocket.emit("terminal:input", data);
     });
 
+    // Listen for CodeEditor execution requests
+    const handleExecute = (e: Event) => {
+      const customEvent = e as CustomEvent<string>;
+      if (customEvent.detail) {
+        newSocket.emit("terminal:input", customEvent.detail);
+      }
+    };
+    window.addEventListener("terminal:execute", handleExecute);
+
     // Handle Resize
     const resizeObserver = new ResizeObserver(() => {
       if (fitAddonRef.current && xtermRef.current && isConnected) {
@@ -98,6 +107,7 @@ export function SandboxTerminal() {
     resizeObserver.observe(terminalRef.current);
 
     return () => {
+      window.removeEventListener("terminal:execute", handleExecute);
       resizeObserver.disconnect();
       newSocket.disconnect();
       term.dispose();

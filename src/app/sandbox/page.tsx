@@ -1,10 +1,7 @@
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
-import { SandboxTerminal } from "@/components/terminal/SandboxTerminal";
-import { CopilotChat } from "@/components/sandbox/CopilotChat";
-import { WorkspaceExplorer } from "@/components/sandbox/WorkspaceExplorer";
-import { AgentManager } from "@/components/sandbox/AgentManager";
+import { SandboxLayout } from "@/components/sandbox/SandboxLayout";
 import { InfraConnectLogo } from "@/components/ui/InfraConnectLogo";
 import Link from "next/link";
 import { ShieldAlert, Terminal, Sparkles } from "lucide-react";
@@ -34,7 +31,7 @@ export default async function SandboxPage() {
           <div className="flex items-center gap-2 text-slate-400">
             <Sparkles className="w-4 h-4 text-emerald-500" />
             <span className="text-xs uppercase tracking-widest font-black">AI Mission Control</span>
-            <Badge variant="outline" className="border-emerald-900/50 text-emerald-400 bg-emerald-900/10 text-[9px] ml-2 animate-pulse">ANTIGRAVITY_MODE</Badge>
+            <Badge variant="outline" className="border-emerald-900/50 text-emerald-400 bg-emerald-900/10 text-[9px] ml-2 animate-pulse">REPLIT_MODE</Badge>
           </div>
         </div>
         
@@ -46,14 +43,15 @@ export default async function SandboxPage() {
         </div>
       </nav>
 
-      {/* Main Content Area: 3-Pane Split View */}
+      {/* Main Content Area: Replit-Mode View */}
       <main className="flex-1 p-6 flex flex-col z-10 relative">
         <div className="flex justify-between items-end mb-4">
           <div>
             <h1 className="text-2xl font-black uppercase tracking-tighter text-white">Sovereign Ecosystem</h1>
             <p className="text-xs text-slate-400 font-mono mt-1 uppercase tracking-widest flex items-center gap-2">
               Workspace <span className="text-slate-600">|</span> 
-              AI Copilot <span className="text-slate-600">|</span> 
+              Editor <span className="text-slate-600">|</span> 
+              Copilot <span className="text-slate-600">|</span> 
               PTY Sandbox
               <span className="text-red-400 ml-4 hidden md:inline">Warning: Live environment.</span>
             </p>
@@ -64,27 +62,7 @@ export default async function SandboxPage() {
           </div>
         </div>
 
-        <div className="flex-1 w-full relative flex gap-4 h-full">
-          {/* Left Pane: Workspace & Agents (20%) */}
-          <div className="w-[20%] min-w-[250px] h-[calc(100vh-180px)] flex flex-col gap-4">
-            <div className="flex-1 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
-              <WorkspaceExplorer />
-            </div>
-            <div className="h-[40%] min-h-[200px] shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
-              <AgentManager />
-            </div>
-          </div>
-
-          {/* Middle Pane: AI Copilot (30%) */}
-          <div className="w-[30%] min-w-[350px] h-[calc(100vh-180px)] shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
-            <CopilotChat />
-          </div>
-          
-          {/* Right Pane: Sandbox Terminal (50%) */}
-          <div className="flex-1 h-[calc(100vh-180px)] shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
-            <SandboxTerminal />
-          </div>
-        </div>
+        <SandboxLayout />
       </main>
     </div>
   );
