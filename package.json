@@ -3,9 +3,9 @@
   "version": "0.2.0",
   "private": true,
   "scripts": {
-    "dev": "concurrently \"NODE_OPTIONS='--max-old-space-size=4096' next dev -p 3006\" \"bun run sockets\" \"bun run src/infrastructure/sockets/rosbridge.ts\"",
+    "dev": "concurrently \"NODE_OPTIONS='--max-old-space-size=4096' next dev -p 3006\" \"npx tsx src/infrastructure/sockets/server.ts\" \"npx tsx src/infrastructure/sockets/rosbridge.ts\"",
     "dev:ui": "NODE_OPTIONS='--max-old-space-size=4096' next dev -p 3006 2>&1 | tee dev.log",
-    "sockets": "bun run src/infrastructure/sockets/server.ts",
+    "sockets": "npx tsx src/infrastructure/sockets/server.ts",
     "dev:stable": "NODE_OPTIONS='--max-old-space-size=4096' next dev --webpack -p 3006 2>&1 | tee dev.log",
     "build": "next build",
     "start": "next start -p 3006",

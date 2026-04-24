@@ -31,7 +31,7 @@ io.on('connection', (socket) => {
   console.log(`[SOCKET_GATEWAY] Edge Connection Established: ${socket.id}`);
 
   // Sandbox Terminal logic
-  let ptyProcess: pty.IPty | null = null;
+  let ptyProcess: any = null;
 
   socket.on('terminal:spawn', () => {
     if (ptyProcess) return;
@@ -41,20 +41,23 @@ io.on('connection', (socket) => {
     const shell = os.platform() === 'win32' ? 'powershell.exe' : 'bash';
     
     try {
-      ptyProcess = pty.spawn(shell, [], {
-        name: 'xterm-256color',
-        cols: 80,
-        rows: 24,
+      // Fallback to standard child_process to avoid native posix_spawnp crash on Mac ARM64
+      const { spawn } = require('child_process');
+      ptyProcess = spawn(shell, ['-i'], {
         cwd: process.cwd(),
-        env: process.env as { [key: string]: string }
+        env: { ...process.env, TERM: 'xterm-256color' }
       });
 
-      ptyProcess.onData((data) => {
-        socket.emit('terminal:data', data);
+      ptyProcess.stdout.on('data', (data: any) => {
+        socket.emit('terminal:data', data.toString());
+      });
+
+      ptyProcess.stderr.on('data', (data: any) => {
+        socket.emit('terminal:data', data.toString());
       });
 
       // Send initial welcome message
-      socket.emit('terminal:data', '\r\n\x1b[36m[CORE SANDBOX INITIATED]\x1b[0m\r\n');
+      socket.emit('terminal:data', '\r\n\x1b[36m[CORE SANDBOX INITIATED - FALLBACK MODE]\x1b[0m\r\n');
     } catch (err) {
       console.error('[SOCKET_GATEWAY] PTY Spawn Error:', err);
       socket.emit('terminal:data', '\r\n\x1b[31m[CORE ERROR] Failed to allocate PTY session.\x1b[0m\r\n');
@@ -62,19 +65,13 @@ io.on('connection', (socket) => {
   });
 
   socket.on('terminal:input', (data) => {
-    if (ptyProcess) {
-      ptyProcess.write(data);
+    if (ptyProcess && ptyProcess.stdin) {
+      ptyProcess.stdin.write(data);
     }
   });
 
   socket.on('terminal:resize', ({ cols, rows }) => {
-    if (ptyProcess) {
-      try {
-        ptyProcess.resize(cols, rows);
-      } catch (err) {
-        // Ignore resize errors if process died
-      }
-    }
+    // Ignore native resizing for fallback spawn
   });
 
   socket.on('disconnect', () => {
