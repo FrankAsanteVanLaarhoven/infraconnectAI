@@ -21,10 +21,10 @@ export function SandboxLayout() {
 
   return (
     <div className="flex-1 w-full relative h-[calc(100vh-180px)]">
-      <PanelGroup autoSaveId="sandbox-layout-main" direction="horizontal" className="h-full w-full shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-slate-800 bg-[#0a0a0a] rounded-md overflow-hidden">
+      <PanelGroup autoSaveId="sandbox-layout-v2" direction="horizontal" className="h-full w-full shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-slate-800 bg-[#0a0a0a] rounded-md overflow-hidden">
         {/* Left Pane: Workspace & Agents */}
         <Panel id="sidebar" order={1} defaultSize={15} minSize={10} className="flex flex-col">
-          <PanelGroup autoSaveId="sandbox-layout-sidebar" direction="vertical">
+          <PanelGroup autoSaveId="sandbox-layout-sidebar-v2" direction="vertical">
             <Panel id="explorer" order={1} defaultSize={60} minSize={20} className="overflow-hidden border-b border-slate-800">
               <WorkspaceExplorer onSelectFile={setSelectedFile} />
             </Panel>
