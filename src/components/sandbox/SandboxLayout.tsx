@@ -6,6 +6,7 @@ import { WorkspaceExplorer } from "./WorkspaceExplorer";
 import { AgentManager } from "./AgentManager";
 import { CopilotChat } from "./CopilotChat";
 import { CodeEditor } from "./CodeEditor";
+import { ParameterSliders } from "./ParameterSliders";
 import { SandboxTerminal } from "../terminal/SandboxTerminal";
 
 // Custom resize handle for the glowing cyberpunk aesthetic
@@ -37,21 +38,28 @@ export function SandboxLayout() {
         <CustomResizeHandle />
 
         {/* Main Canvas: Code Editor */}
-        <Panel defaultSize={40} minSize={20} className="border-l border-r border-slate-800 overflow-hidden relative">
+        <Panel defaultSize={35} minSize={20} className="border-l border-r border-slate-800 overflow-hidden relative">
           <CodeEditor selectedFile={selectedFile} />
         </Panel>
 
         <CustomResizeHandle />
 
         {/* AI Copilot */}
-        <Panel defaultSize={20} minSize={15} className="overflow-hidden relative bg-[#0a0a0a]">
+        <Panel defaultSize={15} minSize={10} className="overflow-hidden relative bg-[#0a0a0a]">
           <CopilotChat />
         </Panel>
         
         <CustomResizeHandle />
 
+        {/* Telemetry Sliders */}
+        <Panel defaultSize={15} minSize={10} className="border-l border-slate-800 overflow-hidden relative">
+          <ParameterSliders />
+        </Panel>
+        
+        <CustomResizeHandle />
+
         {/* Output Terminal */}
-        <Panel defaultSize={25} minSize={15} className="border-l border-slate-800 overflow-hidden relative">
+        <Panel defaultSize={20} minSize={15} className="border-l border-slate-800 overflow-hidden relative">
           <SandboxTerminal />
         </Panel>
       </PanelGroup>
