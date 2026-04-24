@@ -10,37 +10,32 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Google API key is missing from environment variables.' }, { status: 500 });
     }
 
-    // Default to gemini-1.5-pro-latest if none provided, but map the user's requested strings to valid API model IDs
-    let mappedModelId = 'gemini-1.5-pro-latest';
+    // Map the user's requested strings to valid 2026 API model IDs from their account
+    let mappedModelId = 'gemini-pro-latest';
     
     switch (modelId) {
       case 'gemini-3.1-pro':
-      case 'gemini-1.5-pro-latest':
       case 'Gemini 3.1 Pro':
-        mappedModelId = 'models/gemini-1.5-pro-latest'; // Future-proofing to the closest existing model
+        mappedModelId = 'gemini-3.1-pro-preview';
         break;
       case 'gemini-3.0':
       case 'Gemini 3.0':
-        mappedModelId = 'models/gemini-1.5-pro'; 
+        mappedModelId = 'gemini-3-pro-preview'; 
         break;
       case 'gemini-3.1-flash':
       case 'Gemini 3.1 Flash':
-        mappedModelId = 'models/gemini-1.5-flash-latest';
+        mappedModelId = 'gemini-3-flash-preview';
         break;
       case 'gemini-veo-3.0':
       case 'Gemini Veo 3.0':
-        // Veo is a video model, fallback to 1.5-pro for text generation chat
-        mappedModelId = 'models/gemini-1.5-pro-latest';
+        // Fallback to pro-latest for text chats, since Veo is video generation
+        mappedModelId = 'gemini-pro-latest';
         break;
       default:
-        // Attempt to pass whatever string they sent directly to Google if it's not in our map
-        mappedModelId = modelId || 'models/gemini-1.5-pro-latest';
+        mappedModelId = modelId || 'gemini-pro-latest';
         break;
     }
 
-    // Google Generative AI requires 'models/' prefix sometimes depending on the SDK version, 
-    // but @ai-sdk/google natively accepts standard strings like 'gemini-1.5-pro-latest'
-    // Let's clean the string for the @ai-sdk wrapper
     const cleanModelId = mappedModelId.replace('models/', '');
 
     const result = await streamText({
