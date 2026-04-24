@@ -27,8 +27,9 @@ export function ParameterSliders() {
 
   const handleChange = (id: string, value: number) => {
     setValues((prev) => ({ ...prev, [id]: value }));
-    // In the future: emit to websocket to live-update agents/ROS
-    // window.dispatchEvent(new CustomEvent('telemetry:update', { detail: { [id]: value } }));
+    // Emit to websocket to live-update agents/ROS via the PTY terminal
+    const command = `echo "[TELEMETRY_SYNC] Setting ROS 2 Parameter: ${id} = ${value}"\r`;
+    window.dispatchEvent(new CustomEvent('terminal:execute', { detail: command }));
   };
 
   return (

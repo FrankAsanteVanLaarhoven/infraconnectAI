@@ -74,6 +74,12 @@ export function WorkspaceExplorer({ onSelectFile }: WorkspaceExplorerProps) {
       <div className="flex items-center justify-between px-3 py-2 bg-[#0a0b0c] border-b border-slate-800 shrink-0">
         <span className="text-[10px] uppercase font-bold tracking-widest text-slate-400">Workspace</span>
         <button 
+          onClick={() => {
+            const url = window.prompt("Enter Git Repository URL:");
+            if (url) {
+              window.dispatchEvent(new CustomEvent('terminal:execute', { detail: `git clone ${url}\r` }));
+            }
+          }}
           className="flex items-center gap-1.5 px-2 py-1 bg-cyan-900/20 text-cyan-400 border border-cyan-900/50 hover:bg-cyan-900/40 transition-colors rounded-sm text-[9px] uppercase tracking-widest font-bold"
           title="Import or Clone Repository"
         >

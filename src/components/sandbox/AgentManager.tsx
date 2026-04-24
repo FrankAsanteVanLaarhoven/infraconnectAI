@@ -29,10 +29,16 @@ export function AgentManager() {
                 <span className="text-xs font-mono font-bold text-slate-200 truncate max-w-[120px]">{agent.name}</span>
               </div>
               <div className="flex gap-1">
-                <button className="p-1 hover:bg-slate-800 rounded text-slate-500 hover:text-emerald-400 transition-colors">
+                <button 
+                  onClick={() => window.dispatchEvent(new CustomEvent('terminal:execute', { detail: `echo "[AGENT_SWARM] Initiating agent node: ${agent.name}..."\r` }))}
+                  className="p-1 hover:bg-slate-800 rounded text-slate-500 hover:text-emerald-400 transition-colors"
+                >
                   <Play className="w-3 h-3" />
                 </button>
-                <button className="p-1 hover:bg-slate-800 rounded text-slate-500 hover:text-amber-400 transition-colors">
+                <button 
+                  onClick={() => window.dispatchEvent(new CustomEvent('terminal:execute', { detail: `echo "[AGENT_SWARM] Suspending agent node: ${agent.name}."\r` }))}
+                  className="p-1 hover:bg-slate-800 rounded text-slate-500 hover:text-amber-400 transition-colors"
+                >
                   <Pause className="w-3 h-3" />
                 </button>
               </div>
