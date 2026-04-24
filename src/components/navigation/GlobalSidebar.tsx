@@ -30,13 +30,15 @@ import {
   Network,
   Activity,
   Bot,
-  LogOut
+  LogOut,
+  Terminal
 } from "lucide-react";
 
 const navGroups = [
   {
     label: "Control Plane",
     items: [
+      { title: "CORE Sandbox", url: "/sandbox", icon: Terminal },
       { title: "Mission Dashboard", url: "/dashboard", icon: LayoutDashboard },
       { title: "Operator HUD", url: "/dashboard/operator", icon: Activity },
       { title: "Digital Twin (Sim)", url: "/simulation", icon: MonitorPlay },
