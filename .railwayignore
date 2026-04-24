@@ -1,0 +1,13 @@
+node_modules
+.next
+.git
+*.log
+dist
+out
+*.tar.gz
+*.zip
+*.log
+*.sqlite
+.vercel
+apps
+packages
