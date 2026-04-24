@@ -21,15 +21,15 @@ export function SandboxLayout() {
 
   return (
     <div className="flex-1 w-full relative h-[calc(100vh-180px)]">
-      <PanelGroup direction="horizontal" className="h-full w-full shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-slate-800 bg-[#0a0a0a] rounded-md overflow-hidden">
+      <PanelGroup autoSaveId="sandbox-layout-main" direction="horizontal" className="h-full w-full shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-slate-800 bg-[#0a0a0a] rounded-md overflow-hidden">
         {/* Left Pane: Workspace & Agents */}
-        <Panel defaultSize={15} minSize={10} className="flex flex-col">
-          <PanelGroup direction="vertical">
-            <Panel defaultSize={60} minSize={20} className="overflow-hidden border-b border-slate-800">
+        <Panel id="sidebar" order={1} defaultSize={15} minSize={10} className="flex flex-col">
+          <PanelGroup autoSaveId="sandbox-layout-sidebar" direction="vertical">
+            <Panel id="explorer" order={1} defaultSize={60} minSize={20} className="overflow-hidden border-b border-slate-800">
               <WorkspaceExplorer onSelectFile={setSelectedFile} />
             </Panel>
             <CustomResizeHandle vertical />
-            <Panel defaultSize={40} minSize={20} className="overflow-hidden">
+            <Panel id="agents" order={2} defaultSize={40} minSize={20} className="overflow-hidden">
               <AgentManager />
             </Panel>
           </PanelGroup>
@@ -38,28 +38,28 @@ export function SandboxLayout() {
         <CustomResizeHandle />
 
         {/* Main Canvas: Code Editor */}
-        <Panel defaultSize={35} minSize={20} className="border-l border-r border-slate-800 overflow-hidden relative">
+        <Panel id="editor" order={2} defaultSize={35} minSize={20} className="border-l border-r border-slate-800 overflow-hidden relative">
           <CodeEditor selectedFile={selectedFile} />
         </Panel>
 
         <CustomResizeHandle />
 
         {/* AI Copilot */}
-        <Panel defaultSize={15} minSize={10} className="overflow-hidden relative bg-[#0a0a0a]">
+        <Panel id="copilot" order={3} defaultSize={15} minSize={10} className="overflow-hidden relative bg-[#0a0a0a]">
           <CopilotChat />
         </Panel>
         
         <CustomResizeHandle />
 
         {/* Telemetry Sliders */}
-        <Panel defaultSize={15} minSize={10} className="border-l border-slate-800 overflow-hidden relative">
+        <Panel id="telemetry" order={4} defaultSize={15} minSize={10} className="border-l border-slate-800 overflow-hidden relative">
           <ParameterSliders />
         </Panel>
         
         <CustomResizeHandle />
 
         {/* Output Terminal */}
-        <Panel defaultSize={20} minSize={15} className="border-l border-slate-800 overflow-hidden relative">
+        <Panel id="terminal" order={5} defaultSize={20} minSize={15} className="border-l border-slate-800 overflow-hidden relative">
           <SandboxTerminal />
         </Panel>
       </PanelGroup>
