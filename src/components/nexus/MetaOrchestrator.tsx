@@ -29,22 +29,22 @@ export function MetaOrchestrator() {
   }, []);
 
   return (
-    <div className="w-full h-full bg-slate-950/90 backdrop-blur-3xl border border-purple-500/30 rounded-2xl overflow-hidden flex flex-col font-mono relative">
+    <div className="w-full h-full bg-slate-950/90 backdrop-blur-3xl border border-slate-800 rounded-none overflow-hidden flex flex-col font-mono relative">
       {/* HUD Header */}
-      <div className="p-4 bg-purple-950/20 border-b border-purple-500/20 flex items-center justify-between">
+      <div className="p-4 bg-slate-900/50 border-b border-slate-800 flex items-center justify-between">
          <div className="flex items-center gap-3">
-            <div className="p-2 bg-purple-500/10 rounded-lg border border-purple-500/30">
-               <Eye className="w-5 h-5 text-purple-400 animate-pulse" />
+            <div className="p-2 bg-slate-900/50 rounded-sm border border-slate-800">
+               <Eye className="w-5 h-5 text-slate-400" />
             </div>
             <div>
-               <h2 className="text-xs font-black text-purple-400 tracking-[0.3em] uppercase">Meta Agent Oracle</h2>
+               <h2 className="text-xs font-black text-slate-400 tracking-[0.3em] uppercase">Meta Agent Oracle</h2>
                <p className="text-[8px] text-slate-500 font-bold uppercase tracking-widest leading-none">System Validation // Cross-Swarm Oversight</p>
             </div>
          </div>
          <div className="flex gap-4">
             <div className="text-right">
                <p className="text-[8px] text-slate-600 font-black uppercase">Grid Load</p>
-               <p className="text-[10px] text-purple-400 font-black">{telemetry.cpuLoad.toFixed(1)}%</p>
+               <p className="text-[10px] text-slate-400 font-black">{telemetry.cpuLoad.toFixed(1)}%</p>
             </div>
             <div className="text-right">
                <p className="text-[8px] text-slate-600 font-black uppercase">Latency</p>
@@ -62,9 +62,9 @@ export function MetaOrchestrator() {
            animate={{ scale: 1 }}
            className="relative z-20"
          >
-            <div className="w-20 h-20 rounded-full bg-purple-500/10 border-2 border-purple-500 flex items-center justify-center shadow-[0_0_40px_rgba(168,85,247,0.3)]">
-               <div className="w-12 h-12 rounded-full border border-purple-400/30 flex items-center justify-center animate-spin-slow">
-                  <Cpu className="w-6 h-6 text-purple-400" />
+            <div className="w-20 h-20 rounded-sm bg-slate-900/50 border-2 border-slate-800 flex items-center justify-center">
+               <div className="w-12 h-12 rounded-sm border border-slate-800 flex items-center justify-center animate-spin-slow">
+                  <Cpu className="w-6 h-6 text-slate-400" />
                </div>
             </div>
             <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 w-32 text-center">
@@ -86,16 +86,16 @@ export function MetaOrchestrator() {
                   <motion.button 
                     whileHover={{ scale: 1.1 }}
                     onClick={() => setActiveSwarm(activeSwarm === swarm.id ? null : swarm.id)}
-                    className={`w-14 h-14 rounded-full border-2 flex items-center justify-center transition-all ${
+                    className={`w-14 h-14 rounded-sm border-2 flex items-center justify-center transition-all ${
                       activeSwarm === swarm.id 
-                      ? (sIdx === 0 ? 'bg-emerald-500/20 border-emerald-500 shadow-[0_0_20px_rgba(16,185,129,0.3)]' :
-                         sIdx === 1 ? 'bg-amber-500/20 border-amber-500 shadow-[0_0_20px_rgba(245,158,11,0.3)]' :
-                         'bg-cyan-500/20 border-cyan-500 shadow-[0_0_20px_rgba(6,182,212,0.3)]')
-                      : 'bg-slate-900 border-slate-700 hover:border-purple-500/50'
+                      ? (sIdx === 0 ? 'bg-slate-800 border-slate-700 ' :
+                         sIdx === 1 ? 'bg-amber-500/20 border-amber-500 ' :
+                         'bg-cyan-500/20 border-cyan-500 ')
+                      : 'bg-slate-900 border-slate-700 hover:border-slate-800'
                     }`}
                   >
                      <Share2 className={`w-6 h-6 ${
-                        activeSwarm === swarm.id ? 'text-white' : 'text-slate-600 group-hover:text-purple-400'
+                        activeSwarm === swarm.id ? 'text-white' : 'text-slate-600 group-hover:text-slate-400'
                      }`} />
                      <div className="absolute -bottom-6 text-[8px] font-black text-slate-500 uppercase tracking-widest">{swarm.name}</div>
                   </motion.button>
@@ -111,7 +111,7 @@ export function MetaOrchestrator() {
                        >
                           {swarm.workers.map(worker => (
                              <div key={worker.id} className="flex flex-col items-center gap-2">
-                                <div className="w-8 h-8 rounded-full bg-slate-900 border border-slate-700 flex items-center justify-center">
+                                <div className="w-8 h-8 rounded-sm bg-slate-900 border border-slate-700 flex items-center justify-center">
                                    <Server className="w-3 h-3 text-slate-500" />
                                 </div>
                                 <span className="text-[6px] font-black text-slate-400 uppercase tracking-tighter">{worker.role}</span>
@@ -126,13 +126,13 @@ export function MetaOrchestrator() {
       </div>
 
       {/* Footer System Status */}
-      <div className="p-4 bg-purple-950/10 border-t border-purple-500/10 flex items-center justify-between">
+      <div className="p-4 bg-slate-900/50 border-t border-slate-800 flex items-center justify-between">
          <div className="flex items-center gap-4">
             <div className="flex items-center gap-2">
-               <Activity className="w-3 h-3 text-purple-400" />
-               <span className="text-[9px] text-purple-500 font-black uppercase">Validation Pulse Active</span>
+               <Activity className="w-3 h-3 text-slate-400" />
+               <span className="text-[9px] text-slate-400 font-black uppercase">Validation Pulse Active</span>
             </div>
-            <div className="w-32 h-1 bg-slate-900 rounded-full overflow-hidden">
+            <div className="w-32 h-1 bg-slate-900 rounded-sm overflow-hidden">
                <motion.div 
                  animate={{ x: [-128, 128] }}
                  transition={{ duration: 3, repeat: Infinity, ease: "linear" }}

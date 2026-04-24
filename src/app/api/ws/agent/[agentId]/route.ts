@@ -7,8 +7,8 @@ import { ManifestBuilder } from '@/lib/skills/ManifestBuilder'
 
 const prisma = new PrismaClient()
 
-export function GET(req: NextRequest, { params }: { params: { agentId: string } }) {
-  const { agentId } = params
+export async function GET(req: NextRequest, { params }: { params: Promise<{ agentId: string }> }) {
+  const { agentId } = await params;
   const agentKey = req.headers.get('x-agent-key')
 
   // Validate agent key

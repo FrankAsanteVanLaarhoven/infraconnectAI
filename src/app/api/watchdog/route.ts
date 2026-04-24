@@ -20,7 +20,7 @@ export async function POST(req: Request) {
         description: `THERMAL LOCKDOWN: Core Tjunction boundary exceeded. (Recorded: ${data.temperature}°C, GPU Usage: ${data.gpu_percent}%, VRAM: ${data.memory_percent}%). Immediate Throttle Engaged.`,
         category: 'RESOURCE_LIMIT',
         severity: 'critical',
-        nodeId: data.nodeId || 'UNKNOWN_EDGE',
+        agentId: data.nodeId || 'UNKNOWN_EDGE',
         resolvedAt: null // Marked active immediately
       }
     });

@@ -8,9 +8,9 @@ import { bus } from '@/lib/events/bus'
 import { useBusEvent } from '@/lib/hooks/useBusEvent'
 
 const CATEGORY_COLOR: Record<string, string> = {
-  skill:      'text-green-400',
+  skill:      'text-slate-300',
   memory:     'text-blue-400',
-  cognitive:  'text-purple-400',
+  cognitive:  'text-slate-400',
   bench:      'text-yellow-400',
   panel:      'text-gray-400',
   governance: 'text-orange-400',
@@ -176,8 +176,7 @@ export function IntentBar({ activeAgentId, activePersonaId }: IntentBarProps) {
   return (
     <div className="relative w-full">
       {/* Input */}
-      <div className="flex items-center gap-2 px-3 py-1.5 bg-white/3 border border-white/10
-                      rounded-xl focus-within:border-white/25 transition-colors">
+      <div className="flex items-center gap-2 px-3 py-1.5 bg-white/3 border border-white/10 rounded-sm focus-within:border-white/25 transition-colors">
         <Search className="w-3.5 h-3.5 text-gray-600 shrink-0" />
         <input
           ref={inputRef}
@@ -185,11 +184,10 @@ export function IntentBar({ activeAgentId, activePersonaId }: IntentBarProps) {
           onChange={e => handleChange(e.target.value)}
           onKeyDown={handleKeyDown}
           placeholder="State your intent — /spec, /plan, /run <skill>, describe what you need..."
-          className="flex-1 bg-transparent text-xs font-mono text-gray-300
-                     placeholder:text-gray-600 focus:outline-none"
+          className="flex-1 bg-transparent text-xs font-mono text-gray-300 placeholder:text-gray-600 focus:outline-none"
         />
         {status && (
-          <span className="text-xs font-mono text-yellow-500 animate-pulse shrink-0">{status}</span>
+          <span className="text-xs font-mono text-yellow-500 shrink-0">{status}</span>
         )}
         {value && (
           <button
@@ -208,9 +206,7 @@ export function IntentBar({ activeAgentId, activePersonaId }: IntentBarProps) {
 
       {/* Suggestion dropdown */}
       {suggestions.length > 0 && (
-        <div className="absolute top-full left-0 right-0 mt-1 z-50
-                        bg-[#0e1012] border border-white/10 rounded-xl overflow-hidden
-                        shadow-2xl shadow-black/60">
+        <div className="absolute top-full left-0 right-0 mt-1 z-50 bg-[#0e1012] border border-white/10 rounded-sm overflow-hidden shadow-2xl shadow-black/60">
           {suggestions.map((cmd, i) => (
             <button
               key={cmd.id}

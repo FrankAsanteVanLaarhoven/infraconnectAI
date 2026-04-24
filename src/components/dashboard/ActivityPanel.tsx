@@ -32,8 +32,8 @@ const ACTION_COLORS: Record<string, string> = {
   delete: 'text-red-500',
   policy: 'text-foreground',
   health: 'text-foreground',
-  skill: 'text-purple-400',
-  incident: 'text-red-500 shadow-[0_0_10px_rgba(239,68,68,0.5)]',
+  skill: 'text-slate-400',
+  incident: 'text-red-500 ',
   sync: 'text-blue-400',
   autonomous: 'text-cyan-400',
 };
@@ -54,8 +54,8 @@ export function ActivityPanel() {
           Neural activity hub
         </h3>
         <div className="flex items-center gap-3">
-           <span className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-cyan-500/10 border border-cyan-500/20">
-              <div className="w-1 h-1 rounded-full bg-cyan-500 animate-pulse" />
+           <span className="flex items-center gap-1.5 px-2 py-0.5 rounded-sm bg-cyan-500/10 border border-cyan-500/20">
+              <div className="w-1 h-1 rounded-sm bg-cyan-500" />
               <span className="text-[8px] uppercase font-bold tracking-widest text-cyan-500">Live</span>
            </span>
            <span className="text-[10px] uppercase tracking-widest text-muted-foreground/50 tabular-nums">{activityLog.length} events</span>
@@ -66,7 +66,7 @@ export function ActivityPanel() {
         <AnimatePresence initial={false}>
           {activityLog.length === 0 ? (
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center py-12">
-              <Activity className="w-8 h-8 text-muted-foreground/20 mx-auto mb-3 animate-pulse" />
+              <Activity className="w-8 h-8 text-muted-foreground/20 mx-auto mb-3" />
               <p className="text-[10px] uppercase font-bold tracking-[0.2em] text-muted-foreground/30 text-center">Awaiting platform signals...</p>
             </motion.div>
           ) : (
@@ -83,12 +83,12 @@ export function ActivityPanel() {
                   exit={{ opacity: 0, scale: 0.95 }}
                   layout
                   className={cn(
-                    "flex items-start gap-3 px-3 py-2.5 rounded-lg transition-all duration-300 group relative overflow-hidden",
+                    "flex items-start gap-3 px-3 py-2.5 rounded-sm transition-all duration-300 group relative overflow-hidden",
                     isIncident ? "bg-red-500/5 border border-red-500/20" : "hover:bg-foreground/5 border border-transparent hover:border-border/10"
                   )}
                 >
                   {/* Subtle Background Glow for Incidents */}
-                  {isIncident && <div className="absolute inset-0 bg-red-500/5 animate-pulse pointer-events-none" />}
+                  {isIncident && <div className="absolute inset-0 bg-red-500/5 pointer-events-none" />}
                   
                   <div className={cn(
                     "mt-0.5 shrink-0 w-7 h-7 flex items-center justify-center rounded border transition-colors",
@@ -111,7 +111,7 @@ export function ActivityPanel() {
                     </div>
                     {log.target && (
                       <div className="flex items-center gap-1.5 mt-1">
-                         <div className="w-1 h-1 rounded-full bg-muted-foreground/20" />
+                         <div className="w-1 h-1 rounded-sm bg-muted-foreground/20" />
                          <span className="text-[10px] font-mono text-muted-foreground/40 truncate block uppercase tracking-widest">
                            {log.target}
                          </span>

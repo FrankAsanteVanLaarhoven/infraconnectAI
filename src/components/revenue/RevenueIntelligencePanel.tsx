@@ -23,17 +23,17 @@ export function RevenueIntelligencePanel() {
     fetchSummary();
   }, []);
 
-  if (loading) return <div className="h-40 flex items-center justify-center text-[10px] uppercase font-black tracking-widest text-slate-700 animate-pulse">Syncing Financials...</div>;
+  if (loading) return <div className="h-40 flex items-center justify-center text-[10px] uppercase font-black tracking-widest text-slate-700">Syncing Financials...</div>;
 
   return (
-    <div className="glass-subtle rounded-xl p-6 space-y-6 overflow-hidden relative group">
+    <div className="glass-subtle rounded-sm p-6 space-y-6 overflow-hidden relative group">
        
        {/* Background Accent */}
-       <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 blur-3xl rounded-full -translate-y-16 translate-x-16 group-hover:bg-blue-500/10 transition-colors" />
+       <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 blur-3xl rounded-sm -translate-y-16 translate-x-16 group-hover:bg-blue-500/10 transition-colors" />
 
        <div className="flex items-center justify-between relative z-10">
           <div className="flex items-center gap-3">
-             <div className="w-8 h-8 rounded-lg bg-blue-500/10 flex items-center justify-center border border-blue-500/30">
+             <div className="w-8 h-8 rounded-sm bg-blue-500/10 flex items-center justify-center border border-blue-500/30">
                 <BarChart3 className="w-4 h-4 text-blue-400" />
              </div>
              <div>
@@ -75,7 +75,7 @@ export function RevenueIntelligencePanel() {
                    <p className="text-[7px] text-slate-500 uppercase font-black">Active War Rooms</p>
                 </div>
                 <div className="bg-slate-900/40 border border-slate-800 p-3 rounded space-y-1 text-center">
-                   <p className="text-lg font-black text-emerald-500">{(data?.totalAnnualImpact / 100000).toFixed(1)}x</p>
+                   <p className="text-lg font-black text-slate-300">{(data?.totalAnnualImpact / 100000).toFixed(1)}x</p>
                    <p className="text-[7px] text-slate-500 uppercase font-black">Efficiency Multiplier</p>
                 </div>
              </div>
@@ -84,7 +84,7 @@ export function RevenueIntelligencePanel() {
                    <Brain className="w-3 h-3 text-blue-400" />
                    <span className="text-[8px] font-black text-blue-400 uppercase tracking-widest">Synthesis Sync Active</span>
                 </div>
-                <Zap className="w-3 h-3 text-amber-500 animate-pulse" />
+                <Zap className="w-3 h-3 text-amber-500" />
              </div>
           </div>
 

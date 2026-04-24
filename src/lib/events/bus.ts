@@ -9,7 +9,7 @@
 
 export type TacticalCommand = 
   | { type: 'MISSION_ARM'; payload: { level: 'GREEN' | 'YELLOW' | 'RED' } }
-  | { type: 'MISSION_DISARM'; payload: {} }
+  | { type: 'MISSION_DISARM'; payload: Record<string, never> }
   | { type: 'MISSION_PIVOT'; payload: { sector: string; reason: string } }
   | { type: 'MISSION_PURGE'; payload: { bufferId: string } }
   | { type: 'HARDWARE_ANOMALY'; payload: { nodeId: string; temp: number; vram: number; error?: string } }

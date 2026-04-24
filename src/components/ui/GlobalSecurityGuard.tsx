@@ -92,7 +92,7 @@ export function GlobalSecurityGuard({ children }: { children: React.ReactNode })
 
       {isCompromised && (
         <div className="fixed inset-0 z-[9999] bg-black flex flex-col items-center justify-center text-red-500 font-mono text-center">
-          <ShieldAlert className="w-24 h-24 mb-6 animate-pulse" />
+          <ShieldAlert className="w-24 h-24 mb-6" />
           <h1 className="text-4xl font-black uppercase tracking-widest mb-4">SECURITY VIOLATION DETECTED</h1>
           <p className="text-slate-400">Recording, debugging, or unauthorized data extraction blocked.<br/>This incident has been logged.</p>
         </div>

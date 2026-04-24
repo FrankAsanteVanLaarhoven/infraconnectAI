@@ -41,11 +41,11 @@ export function SARDiscoveryEngine() {
     };
 
     return (
-        <div className="w-full h-full bg-[#020617] border border-cyan-500/20 rounded-3xl p-8 flex flex-col font-mono relative overflow-hidden group shadow-[0_0_80px_rgba(6,182,212,0.05)]">
+        <div className="w-full h-full bg-[#020617] border border-cyan-500/20 rounded-3xl p-8 flex flex-col font-mono relative overflow-hidden group">
             {/* Header */}
             <div className="flex items-center justify-between mb-8 border-b border-white/5 pb-6 relative z-10">
                 <div className="flex items-center gap-4">
-                    <div className="p-3 bg-cyan-500/10 border border-cyan-500/20 rounded-2xl">
+                    <div className="p-3 bg-cyan-500/10 border border-cyan-500/20 rounded-none">
                         <Satellite className="w-5 h-5 text-cyan-400" />
                     </div>
                     <div>
@@ -57,7 +57,7 @@ export function SARDiscoveryEngine() {
                 <div className="flex gap-4">
                     <button 
                         onClick={triggerScan}
-                        className="bg-cyan-500 hover:bg-cyan-400 text-black px-6 py-2 rounded-xl text-[9px] font-black uppercase tracking-widest transition-all flex items-center gap-2"
+                        className="bg-cyan-500 hover:bg-cyan-400 text-black px-6 py-2 rounded-sm text-[9px] font-black uppercase tracking-widest transition-all flex items-center gap-2"
                     >
                         <Radar className={`w-3 h-3 ${scanning ? 'animate-spin' : ''}`} />
                         Initialize SAR Sweep
@@ -80,13 +80,13 @@ export function SARDiscoveryEngine() {
                                 animate={{ top: '100%' }} 
                                 exit={{ opacity: 0 }}
                                 transition={{ duration: 2, ease: 'linear' }}
-                                className="absolute left-0 right-0 h-0.5 bg-cyan-500 shadow-[0_0_20px_#06b6d4] z-20"
+                                className="absolute left-0 right-0 h-0.5 bg-cyan-500 z-20"
                             />
                         )}
                     </AnimatePresence>
 
                     <div className="relative w-full h-full flex items-center justify-center">
-                        <Crosshair className="w-32 h-32 text-cyan-500/10 animate-pulse" />
+                        <Crosshair className="w-32 h-32 text-cyan-500/10" />
                         
                         {/* Discovery Markers */}
                         {discoveries.map((d, i) => (
@@ -95,9 +95,9 @@ export function SARDiscoveryEngine() {
                                 style={{ top: `${20 + i * 30}%`, left: `${30 + i * 20}%` }}
                                 className="absolute flex flex-col items-center gap-2 group/marker"
                             >
-                                <div className="w-4 h-4 bg-cyan-500 rounded-full animate-ping opacity-50" />
-                                <div className="w-2 h-2 bg-cyan-400 rounded-full" />
-                                <div className="hidden group-hover/marker:block bg-black/80 border border-cyan-500/20 p-2 rounded-lg backdrop-blur-md absolute bottom-full mb-2 whitespace-nowrap">
+                                <div className="w-4 h-4 bg-cyan-500 rounded-sm animate-ping opacity-50" />
+                                <div className="w-2 h-2 bg-cyan-400 rounded-sm" />
+                                <div className="hidden group-hover/marker:block bg-black/80 border border-cyan-500/20 p-2 rounded-sm backdrop-blur-md absolute bottom-full mb-2 whitespace-nowrap">
                                     <span className="text-[8px] text-cyan-400 font-black uppercase">{d.label}</span>
                                 </div>
                             </motion.div>
@@ -129,12 +129,12 @@ export function SARDiscoveryEngine() {
                         <motion.div 
                             key={d.id}
                             whileHover={{ scale: 0.98 }}
-                            className="p-5 bg-slate-900/40 border border-white/5 rounded-2xl flex flex-col gap-3 group/discovery hover:bg-slate-900/60 transition-all cursor-pointer"
+                            className="p-5 bg-slate-900/40 border border-white/5 rounded-none flex flex-col gap-3 group/discovery hover:bg-slate-900/60 transition-all cursor-pointer"
                         >
                             <div className="flex justify-between items-center">
                                 <span className={`text-[7px] font-black uppercase px-2 py-0.5 rounded ${
                                     d.type === 'FAB' ? 'bg-cyan-500/20 text-cyan-400' :
-                                    d.type === 'MINERAL' ? 'bg-emerald-500/20 text-emerald-400' : 'bg-indigo-500/20 text-indigo-400'
+                                    d.type === 'MINERAL' ? 'bg-slate-800 text-slate-300' : 'bg-indigo-500/20 text-indigo-400'
                                 }`}>
                                     {d.type}
                                 </span>
@@ -153,7 +153,7 @@ export function SARDiscoveryEngine() {
                         </motion.div>
                     ))}
 
-                    <div className="mt-auto p-4 bg-amber-500/5 border border-amber-500/20 rounded-xl flex items-center gap-4">
+                    <div className="mt-auto p-4 bg-amber-500/5 border border-amber-500/20 rounded-sm flex items-center gap-4">
                         <AlertCircle className="w-6 h-6 text-amber-500" />
                         <p className="text-[8px] text-slate-500 uppercase font-black leading-tight">
                             Asset discovery exceeds local consultant records by 14.2%. McKinsey data lag identified.

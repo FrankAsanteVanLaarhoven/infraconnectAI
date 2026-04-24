@@ -36,7 +36,7 @@ function ScoreBar({ value, label }: {
 
 function Stat({ label, value, sub }: { label: string; value: string | number; sub?: string }) {
   return (
-    <div className="bg-white/3 rounded-lg p-2 border border-white/5">
+    <div className="bg-white/3 rounded-sm p-2 border border-white/5">
       <div className="text-xs text-gray-500 font-mono uppercase tracking-wider">{label}</div>
       <div className="text-sm font-mono font-medium text-gray-200 mt-0.5">{value}</div>
       {sub && <div className="text-xs text-gray-600 font-mono">{sub}</div>}
@@ -73,7 +73,7 @@ export function HealthPanel() {
 
   const overallColor = !data
     ? 'text-gray-500'
-    : data.health >= 80 ? 'text-green-400'
+    : data.health >= 80 ? 'text-slate-300'
     : data.health >= 50 ? 'text-yellow-400'
     : 'text-red-400'
 
@@ -81,7 +81,7 @@ export function HealthPanel() {
     <GlassPanel>
       <div className="flex items-center justify-between mb-6 border-b border-white/5 pb-2">
         <div className="flex items-center gap-3">
-          <div className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse shadow-[0_0_10px_rgba(59,130,246,0.5)]" />
+          <div className="w-1.5 h-1.5 rounded-sm bg-blue-500" />
           <h3 className="text-[11px] font-bold tracking-[0.2em] uppercase text-slate-300">System Telemetry</h3>
         </div>
         <button
@@ -121,11 +121,11 @@ export function HealthPanel() {
           </div>
 
           {/* Swarm Resilience Section */}
-          <div className="mb-6 p-4 bg-indigo-500/5 border border-indigo-500/20 rounded-xl space-y-4">
+          <div className="mb-6 p-4 bg-indigo-500/5 border border-indigo-500/20 rounded-sm space-y-4">
             <div className="flex items-center justify-between">
                <div className="text-[10px] text-indigo-400 font-black uppercase tracking-widest">Swarm Resilience</div>
                {data.swarm && (
-                 <div className={`text-[9px] font-black uppercase px-2 py-0.5 rounded ${data.swarm.predictiveHealth > 90 ? 'bg-emerald-500/20 text-emerald-400' : 'bg-amber-500/20 text-amber-400'}`}>
+                 <div className={`text-[9px] font-black uppercase px-2 py-0.5 rounded ${data.swarm.predictiveHealth > 90 ? 'bg-slate-800 text-slate-300' : 'bg-amber-500/20 text-amber-400'}`}>
                     Predictive: {data.swarm.predictiveHealth.toFixed(1)}%
                  </div>
                )}
@@ -134,13 +134,13 @@ export function HealthPanel() {
             <div className="mb-4">
               <div className="flex justify-between text-[8px] mb-1 font-bold uppercase tracking-wider">
                 <span className="text-slate-500">Regulatory Health</span>
-                <span className="text-indigo-400">{(data?.swarm?.governanceScore || 98).toFixed(1)}%</span>
+                <span className="text-indigo-400">{((data?.swarm as any)?.governanceScore || 98).toFixed(1)}%</span>
               </div>
-              <div className="w-full h-1 bg-slate-800 rounded-full overflow-hidden">
+              <div className="w-full h-1 bg-slate-800 rounded-sm overflow-hidden">
                 <motion.div 
                   initial={{ width: 0 }}
-                  animate={{ width: `${data?.swarm?.governanceScore || 98}%` }}
-                  className="h-full bg-indigo-500 shadow-[0_0_10px_#6366f1]"
+                  animate={{ width: `${(data?.swarm as any)?.governanceScore || 98}%` }}
+                  className="h-full bg-indigo-500"
                 />
               </div>
             </div>
@@ -176,7 +176,7 @@ export function HealthPanel() {
               {data.nemoclaw.activeAgents} agent{data.nemoclaw.activeAgents !== 1 ? 's' : ''} running
             </div>
             <div className="w-px h-3 bg-white/10" />
-            <div className="flex items-center gap-1 text-xs font-mono text-purple-400">
+            <div className="flex items-center gap-1 text-xs font-mono text-slate-400">
               <Layers className="w-3 h-3" />
               {data.cognitiveCore.activeDirectiveDisplay ?? 'no persona'}
             </div>

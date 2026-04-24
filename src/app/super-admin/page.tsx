@@ -219,8 +219,8 @@ export default function SuperAdminDashboard() {
       {/* HUD Background Decor */}
       <div className="fixed inset-0 pointer-events-none z-0">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-gradient-to-tr from-indigo-500/[0.03] to-cyan-500/[0.03] opacity-50" />
-        <div className="absolute top-20 left-20 w-[40rem] h-[40rem] bg-indigo-500/[0.03] blur-[150px] rounded-full" />
-        <div className="absolute bottom-20 right-20 w-[40rem] h-[40rem] bg-cyan-500/[0.03] blur-[150px] rounded-full" />
+        <div className="absolute top-20 left-20 w-[40rem] h-[40rem] bg-indigo-500/[0.03] blur-[150px] rounded-sm" />
+        <div className="absolute bottom-20 right-20 w-[40rem] h-[40rem] bg-cyan-500/[0.03] blur-[150px] rounded-sm" />
       </div>
 
       {/* Top Header: Sovereign Command Arc */}
@@ -228,19 +228,19 @@ export default function SuperAdminDashboard() {
         <div className="flex items-center gap-10">
           <button 
             onClick={handleNexusNavigation}
-            className="p-3 bg-white/[0.03] border border-white/5 rounded-2xl hover:border-cyan-500/50 hover:bg-cyan-500/10 transition-all text-slate-500 hover:text-cyan-400 group shadow-2xl"
+            className="p-3 bg-white/[0.03] border border-white/5 rounded-none hover:border-cyan-500/50 hover:bg-cyan-500/10 transition-all text-slate-500 hover:text-cyan-400 group shadow-2xl"
           >
             <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
           </button>
           <div className="flex items-center gap-8">
-             <InfraConnectLogo size="md" variant="flat" className="opacity-80 hover:opacity-100 transition-opacity drop-shadow-[0_0_20px_rgba(6,182,212,0.2)]" />
+             <InfraConnectLogo size="md" variant="flat" className="opacity-80 hover:opacity-100 transition-opacity drop-" />
              <div className="h-10 w-[1px] bg-white/[0.05]" />
              <div className="flex flex-col">
                 <h1 className="text-[12px] font-black tracking-[0.6em] text-white uppercase leading-none">
                   Sovereign Operator Core
                 </h1>
                 <div className="flex items-center gap-2.5 mt-2.5">
-                   <div className="w-1.5 h-1.5 rounded-full bg-cyan-500 shadow-[0_0_10px_rgba(6,182,212,1)] animate-pulse" />
+                   <div className="w-1.5 h-1.5 rounded-sm bg-cyan-500" />
                    <span className="text-[8px] text-slate-500 font-bold tracking-[0.25em] uppercase">Tactical Mesh v4.0.2 // OBSIDIAN</span>
                 </div>
              </div>
@@ -252,7 +252,7 @@ export default function SuperAdminDashboard() {
            <button 
              onClick={resetLayout}
              onMouseEnter={() => playHov()}
-             className="flex items-center gap-3 px-6 py-3 bg-white/[0.02] border border-white/[0.05] rounded-2xl text-[9px] font-black uppercase tracking-[0.2em] text-slate-400 hover:text-white hover:bg-white/5 hover:border-white/10 transition-all shadow-xl"
+             className="flex items-center gap-3 px-6 py-3 bg-white/[0.02] border border-white/[0.05] rounded-none text-[9px] font-black uppercase tracking-[0.2em] text-slate-400 hover:text-white hover:bg-white/5 hover:border-white/10 transition-all shadow-xl"
            >
              <RotateCcw className="w-3.5 h-3.5" />
              Recalibrate HUD
@@ -267,14 +267,14 @@ export default function SuperAdminDashboard() {
                     <span className="text-[7px] text-slate-600 uppercase font-black tracking-widest">Neural Link</span>
                     <span className="text-[9px] text-cyan-400 font-mono font-black">{integrityHealth}%</span>
                  </div>
-                 <div className="h-[2px] w-full bg-slate-900 rounded-full overflow-hidden">
-                    <motion.div animate={{ width: `${integrityHealth}%` }} className="h-full bg-cyan-500 shadow-[0_0_10px_rgba(6,182,212,0.5)]" />
+                 <div className="h-[2px] w-full bg-slate-900 rounded-sm overflow-hidden">
+                    <motion.div animate={{ width: `${integrityHealth}%` }} className="h-full bg-cyan-500" />
                  </div>
               </div>
               <div className="flex flex-col border-l border-white/[0.05] pl-6">
                  <span className="text-[7px] text-slate-600 uppercase font-black tracking-widest leading-none mb-1.5">Reality Gateway</span>
-                 <span className="text-[9px] text-green-500 font-black flex items-center gap-2">
-                    <div className="w-1.5 h-1.5 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.6)] animate-pulse" />
+                 <span className="text-[9px] text-slate-300 font-black flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 rounded-sm bg-slate-800" />
                     CONNECTED
                  </span>
               </div>
@@ -312,7 +312,7 @@ export default function SuperAdminDashboard() {
                                    className="bg-transparent border-none text-[11px] font-black outline-none w-64 text-white placeholder:text-slate-700 tracking-widest uppercase"
                                  />
                               </div>
-                              <div className="text-[9px] text-slate-500 font-black tracking-widest border border-white/5 px-4 py-1.5 rounded-full">PLANETARY UNITS: {data?.fleetNodes.length || 0}</div>
+                              <div className="text-[9px] text-slate-500 font-black tracking-widest border border-white/5 px-4 py-1.5 rounded-sm">PLANETARY UNITS: {data?.fleetNodes.length || 0}</div>
                            </div>
                            <table className="w-full text-left">
                               <thead className="sticky top-0 bg-[#050505] z-10 border-b border-white/[0.03]">
@@ -333,7 +333,7 @@ export default function SuperAdminDashboard() {
                                        </td>
                                        <td className="px-6 py-4 text-[10px] text-slate-500 font-mono tracking-tighter opacity-70 italic">{node.robotId}</td>
                                        <td className="px-6 py-4">
-                                          <div className={`text-[8px] font-black uppercase px-3 py-1 rounded-lg border w-fit shadow-2xl ${node.status === 'online' ? 'text-cyan-400 border-cyan-500/20 bg-cyan-500/5' : 'text-slate-500 border-white/5 bg-white/5'}`}>
+                                          <div className={`text-[8px] font-black uppercase px-3 py-1 rounded-sm border w-fit shadow-2xl ${node.status === 'online' ? 'text-cyan-400 border-cyan-500/20 bg-cyan-500/5' : 'text-slate-500 border-white/5 bg-white/5'}`}>
                                              {node.status}
                                           </div>
                                        </td>
@@ -352,7 +352,7 @@ export default function SuperAdminDashboard() {
                              onClick={handleNexusNavigation}
                              className="absolute inset-0 bg-cyan-500/[0.02] opacity-0 group-hover:opacity-100 transition-all flex items-center justify-center backdrop-blur-[4px] w-full h-full"
                            >
-                              <div className="px-8 py-3 bg-black/90 border border-cyan-500/30 rounded-2xl text-[10px] font-black text-cyan-400 uppercase tracking-[0.3em] shadow-2xl">Elevate to Global Worldview</div>
+                              <div className="px-8 py-3 bg-black/90 border border-cyan-500/30 rounded-none text-[10px] font-black text-cyan-400 uppercase tracking-[0.3em] shadow-2xl">Elevate to Global Worldview</div>
                            </button>
                         </div>
                      )}
@@ -364,7 +364,7 @@ export default function SuperAdminDashboard() {
                               <div key={log.id} className="text-[11px] leading-snug border-l-2 border-slate-900 pl-5 hover:border-cyan-500 transition-colors group/log">
                                  <div className="flex justify-between mb-1.5">
                                     <div className="text-slate-600 text-[9px] uppercase font-black tracking-widest">{new Date(log.timestamp).toLocaleTimeString()}</div>
-                                    <div className="w-1.5 h-1.5 rounded-full bg-slate-800 group-hover/log:bg-cyan-500 transition-colors" />
+                                    <div className="w-1.5 h-1.5 rounded-sm bg-slate-800 group-hover/log:bg-cyan-500 transition-colors" />
                                  </div>
                                  <div className="font-black text-white uppercase tracking-tight group-hover/log:text-cyan-400 transition-colors">{log.action}</div>
                                  <div className="text-slate-500 text-[10px] mt-1.5 leading-relaxed italic">{log.user} orchestrated {log.resource || 'CORE'}</div>

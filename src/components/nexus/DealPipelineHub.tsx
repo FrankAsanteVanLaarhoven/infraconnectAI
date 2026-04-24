@@ -59,13 +59,13 @@ export function DealPipelineHub() {
   };
 
   return (
-    <div className="w-full h-full bg-black/60 backdrop-blur-3xl border border-blue-500/30 rounded-xl overflow-hidden flex flex-col font-mono select-none">
+    <div className="w-full h-full bg-black/60 backdrop-blur-3xl border border-blue-500/30 rounded-sm overflow-hidden flex flex-col font-mono select-none">
       
       {/* Header */}
       <div className="p-6 border-b border-blue-500/20 bg-blue-950/10">
          <div className="flex items-center justify-between mb-2">
             <div className="flex items-center gap-3">
-               <div className="p-2 bg-blue-500/20 rounded-lg border border-blue-500/40">
+               <div className="p-2 bg-blue-500/20 rounded-sm border border-blue-500/40">
                   <Handshake className="w-5 h-5 text-blue-400" />
                </div>
                <div>
@@ -93,9 +93,9 @@ export function DealPipelineHub() {
             <button
                key={stage}
                onClick={() => setActiveTab(stage)}
-               className={`px-3 py-1.5 rounded-full text-[9px] font-black tracking-tighter whitespace-nowrap transition-all ${
+               className={`px-3 py-1.5 rounded-sm text-[9px] font-black tracking-tighter whitespace-nowrap transition-all ${
                   activeTab === stage 
-                  ? 'bg-blue-600 text-white shadow-[0_0_15px_rgba(37,99,235,0.4)]' 
+                  ? 'bg-blue-600 text-white ' 
                   : 'text-slate-500 hover:text-slate-300 hover:bg-slate-800'
                }`}
             >
@@ -115,7 +115,7 @@ export function DealPipelineHub() {
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, scale: 0.95 }}
-                    className="group bg-slate-900/40 border border-slate-800 hover:border-blue-500/30 p-4 rounded-lg flex items-center justify-between transition-all"
+                    className="group bg-slate-900/40 border border-slate-800 hover:border-blue-500/30 p-4 rounded-sm flex items-center justify-between transition-all"
                   >
                      <div className="flex items-center gap-4 flex-1">
                         <div className="p-2 bg-slate-950 rounded border border-slate-800 text-slate-600 group-hover:text-blue-400 transition-colors">
@@ -127,7 +127,7 @@ export function DealPipelineHub() {
                               <span className="text-[8px] text-slate-500 font-bold uppercase flex items-center gap-1">
                                  <Brain className="w-3 h-3" /> Agent Catalyst: {deal.agent.replace('agent-', '')}
                               </span>
-                              <span className="w-1 h-1 rounded-full bg-slate-700" />
+                              <span className="w-1 h-1 rounded-sm bg-slate-700" />
                               <span className="text-[8px] text-blue-500 uppercase font-black">{deal.stage}</span>
                            </div>
                         </div>
@@ -139,11 +139,11 @@ export function DealPipelineHub() {
                               <span>Probability</span>
                               <span>{deal.probability}%</span>
                            </div>
-                           <div className="w-full h-1 bg-slate-800 rounded-full overflow-hidden">
+                           <div className="w-full h-1 bg-slate-800 rounded-sm overflow-hidden">
                               <motion.div 
                                  initial={{ width: 0 }}
                                  animate={{ width: `${deal.probability}%` }}
-                                 className={`h-full ${deal.stage === 'CLOSED WON' ? 'bg-emerald-500' : deal.stage === 'CLOSED LOST' ? 'bg-red-500' : 'bg-blue-500'}`}
+                                 className={`h-full ${deal.stage === 'CLOSED WON' ? 'bg-slate-800' : deal.stage === 'CLOSED LOST' ? 'bg-red-500' : 'bg-blue-500'}`}
                               />
                            </div>
                         </div>
@@ -175,13 +175,13 @@ export function DealPipelineHub() {
          <div className="flex items-center gap-4">
             <div className="flex -space-x-2">
                {[1,2,3].map(i => (
-                  <div key={i} className="w-5 h-5 rounded-full bg-slate-800 border-2 border-slate-950 flex items-center justify-center text-[7px] text-slate-500 font-bold">A{i}</div>
+                  <div key={i} className="w-5 h-5 rounded-sm bg-slate-800 border-2 border-slate-950 flex items-center justify-center text-[7px] text-slate-500 font-bold">A{i}</div>
                ))}
             </div>
             <span className="text-[8px] text-slate-600 uppercase font-black tracking-widest">Global Ops Oversight Active</span>
          </div>
          <div className="flex items-center gap-2">
-            <div className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse" />
+            <div className="w-1.5 h-1.5 rounded-sm bg-blue-500" />
             <span className="text-[8px] text-slate-400 uppercase font-bold tracking-tighter">Live Updates Encrypted</span>
          </div>
       </div>

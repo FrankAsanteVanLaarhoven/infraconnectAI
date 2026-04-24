@@ -76,7 +76,7 @@ export function NexusWindowPrimitive({
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={handleMouseLeave}
       style={{ rotateX: isCollapsed ? 0 : rotateX, rotateY: isCollapsed ? 0 : rotateY, transformStyle: "preserve-3d" }}
-      className={`w-full h-full flex flex-col ${hideHeader ? 'bg-transparent border-none' : 'bg-black/85 backdrop-blur-3xl border ' + (isCollapsed ? 'border-slate-800' : 'border-slate-700/50')} rounded-2xl overflow-hidden relative shadow-[0_22px_70px_rgba(0,0,0,0.8),0_0_1px_1px_rgba(255,255,255,0.05)_inset] transition-all duration-500`}
+      className={`w-full h-full flex flex-col ${hideHeader ? 'bg-transparent border-none' : 'bg-black/85 backdrop-blur-3xl border ' + (isCollapsed ? 'border-slate-800' : 'border-slate-700/50')} rounded-none overflow-hidden relative shadow-[0_22px_70px_rgba(0,0,0,0.8),0_0_1px_1px_rgba(255,255,255,0.05)_inset] transition-all duration-500`}
     >
       {/* Spatial Glass Base */}
         
@@ -99,7 +99,7 @@ export function NexusWindowPrimitive({
         {!hideHeader && (
           <div className={`flex items-center justify-between px-5 h-11 bg-gradient-to-b from-white/[0.05] to-transparent border-b border-white/[0.02] select-none group z-10 ${layoutMode === 'MANUAL' ? 'nexus-drag-handle cursor-grab active:cursor-grabbing' : ''}`}>
             <div className="flex items-center gap-3.5">
-               <div className="text-slate-500 transition-all duration-300 group-hover:text-cyan-400 group-hover:scale-110 drop-shadow-[0_0_8px_rgba(6,182,212,0.3)]">
+               <div className="text-slate-500 transition-all duration-300 group-hover:text-cyan-400 group-hover:scale-110 drop-">
                  {icon || <Move className="w-3.5 h-3.5" />}
                </div>
                <div className="flex flex-col">
@@ -115,14 +115,14 @@ export function NexusWindowPrimitive({
             <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-2 group-hover:translate-x-0">
               <button 
                 onClick={handleCollapse}
-                className="p-2 hover:bg-white/5 rounded-lg text-slate-500 hover:text-cyan-400 transition-all border border-transparent hover:border-white/10"
+                className="p-2 hover:bg-white/5 rounded-sm text-slate-500 hover:text-cyan-400 transition-all border border-transparent hover:border-white/10"
                 title={isCollapsed ? "Expand" : "Collapse"}
               >
                 {isCollapsed ? <Maximize2 className="w-3 h-3" /> : <Minus className="w-3 h-3" />}
               </button>
               <button 
                 onClick={() => onClose?.(id)}
-                className="p-2 hover:bg-red-500/10 rounded-lg text-slate-500 hover:text-red-500 transition-all border border-transparent hover:border-red-500/20"
+                className="p-2 hover:bg-red-500/10 rounded-sm text-slate-500 hover:text-red-500 transition-all border border-transparent hover:border-red-500/20"
                 title="Close"
               >
                 <X className="w-3 h-3" />

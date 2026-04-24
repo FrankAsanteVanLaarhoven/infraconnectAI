@@ -38,7 +38,7 @@ export default function DAGCanvas() {
 
   const onConnect = useCallback((params: any) => {
     setEdges((eds) => addEdge(params, eds));
-  }, []);
+  }, [setEdges]);
 
   const runMission = () => {
     publish("mission.execute", {
@@ -84,7 +84,6 @@ export default function DAGCanvas() {
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
-        fitView
       >
         <Background gap={20} color="#1A1F24" />
         <Controls className="!bg-[#0B0F12] !border-[#1A1F24] !fill-white" />
@@ -93,7 +92,7 @@ export default function DAGCanvas() {
       {/* Manual Interactive Exec Override limits mapped locally explicitly natively */}
       <button
         onClick={runMission}
-        className="absolute bottom-6 left-1/2 -translate-x-1/2 bg-[#4CC9F0] text-black font-bold uppercase tracking-widest px-8 py-3 text-xs shadow-[0_0_20px_rgba(76,201,240,0.3)] hover:scale-105 transition-transform z-10"
+        className="absolute bottom-6 left-1/2 -translate-x-1/2 bg-[#4CC9F0] text-black font-bold uppercase tracking-widest px-8 py-3 text-xs hover:scale-105 transition-transform z-10"
       >
         Execute Run
       </button>

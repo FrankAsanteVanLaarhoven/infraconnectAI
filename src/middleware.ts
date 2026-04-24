@@ -27,7 +27,6 @@ export default withAuth(
       authorized: ({ req, token }) => {
         const path = req.nextUrl.pathname;
         
-        // Public pathways: Auth interfaces and the root landing page (waitlist)
         if (path === '/' || path.startsWith('/api/access') || path.startsWith('/auth') || path.startsWith('/api/auth')) {
           return true;
         }
@@ -37,7 +36,7 @@ export default withAuth(
       }
     },
     pages: {
-      signIn: "/auth/command", 
+      signIn: "/auth/login", 
     }
   }
 );

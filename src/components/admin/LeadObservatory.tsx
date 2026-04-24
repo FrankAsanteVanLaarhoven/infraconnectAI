@@ -52,7 +52,7 @@ export function LeadObservatory() {
           <Users className="w-5 h-5 text-cyan-400" />
           <h2 className="text-[14px] font-black uppercase tracking-widest text-cyan-400">Access Requests & Leads</h2>
         </div>
-        <div className="flex bg-black/50 p-1 rounded-lg border border-white/5">
+        <div className="flex bg-black/50 p-1 rounded-sm border border-white/5">
           {['ALL', 'ENTERPRISE', 'WAITLIST'].map(f => (
             <button
               key={f}
@@ -71,7 +71,7 @@ export function LeadObservatory() {
       <div className="flex-1 overflow-auto custom-scrollbar relative">
         {loading && leads.length === 0 ? (
           <div className="absolute inset-0 flex items-center justify-center">
-            <div className="w-8 h-8 rounded-full border-2 border-cyan-500 border-t-transparent animate-spin"/>
+            <div className="w-8 h-8 rounded-sm border-2 border-cyan-500 border-t-transparent animate-spin"/>
           </div>
         ) : (
           <table className="w-full text-left">
@@ -120,7 +120,7 @@ export function LeadObservatory() {
                   </td>
                   <td className="px-6 py-4">
                     <span className={`text-[9px] font-black uppercase flex items-center gap-1.5 w-fit ${
-                      lead.status === 'cleared' ? 'text-green-400' : 'text-amber-400'
+                      lead.status === 'cleared' ? 'text-slate-300' : 'text-amber-400'
                     }`}>
                       {lead.status === 'cleared' ? <CheckCircle className="w-3.5 h-3.5" /> : <Clock className="w-3.5 h-3.5" />}
                       {lead.status}

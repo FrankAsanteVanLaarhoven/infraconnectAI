@@ -114,20 +114,20 @@ export function NeuralPLCDataFlow() {
         </span>
         <div className="ml-auto flex items-center gap-2">
           <span className="flex items-center gap-1.5 text-[9px] uppercase tracking-widest font-mono text-muted-foreground/80">
-            <span className="w-2 h-2 rounded-full bg-white shadow-[0_0_8px_rgba(255,255,255,0.8)]" />
+            <span className="w-2 h-2 rounded-sm bg-white" />
             PLC Logic
           </span>
           <span className="flex items-center gap-1.5 text-[9px] uppercase tracking-widest font-mono text-muted-foreground/80">
-            <span className="w-2 h-2 rounded-full bg-blue-400 shadow-[0_0_8px_rgba(96,165,250,0.8)]" />
+            <span className="w-2 h-2 rounded-sm bg-blue-400" />
             Agent Logic
           </span>
         </div>
       </div>
       
-      <div ref={containerRef} className="flex-1 w-full relative bg-foreground/5 rounded-xl overflow-hidden border border-border/20">
+      <div ref={containerRef} className="flex-1 w-full relative bg-foreground/5 rounded-sm overflow-hidden border border-border/20">
         {/* Pulsing indicator */}
-        <div className="absolute top-4 left-4 z-10 flex items-center gap-2 bg-background/50 backdrop-blur-md px-3 py-1.5 rounded-full border border-border/20">
-          <Activity className="w-3.5 h-3.5 text-foreground animate-pulse" />
+        <div className="absolute top-4 left-4 z-10 flex items-center gap-2 bg-background/50 backdrop-blur-md px-3 py-1.5 rounded-sm border border-border/20">
+          <Activity className="w-3.5 h-3.5 text-foreground" />
           <h3 className="text-[11px] font-bold tracking-[0.2em] uppercase text-slate-300">Agent Logic Engine</h3>
         </div>
 

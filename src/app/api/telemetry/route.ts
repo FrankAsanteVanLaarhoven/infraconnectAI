@@ -72,7 +72,7 @@ export async function GET(req: Request) {
     }));
 
     let worldEarthquakes = [];
-    let gmtiData = [];
+    let gmtiData: any[] = [];
 
     if (mode === 'live') {
         // Authentically noisy OSINT additional feeds

@@ -31,8 +31,8 @@ export function MissionPanel({ mission, battery }: any) {
         <div className="text-slate-600 mb-2 uppercase font-bold">EXECUTION BLOCK</div>
         {mission.steps?.map((s: any) => (
           <div key={s.id} className="text-slate-300">
-            {s.status === "done" && <span className="text-emerald-500 mr-2">[✓]</span>}
-            {s.status === "running" && <span className="text-cyan-500 mr-2 animate-pulse">[→]</span>}
+            {s.status === "done" && <span className="text-slate-300 mr-2">[✓]</span>}
+            {s.status === "running" && <span className="text-cyan-500 mr-2">[→]</span>}
             {s.status === "pending" && <span className="text-slate-600 mr-2">[ ]</span>}
             {s.action}
           </div>
@@ -41,7 +41,7 @@ export function MissionPanel({ mission, battery }: any) {
 
       {/* Live Constraint Enforcement Breach Feedback */}
       {battery && battery < 30 && (
-        <div className="mt-4 pt-4 border-t border-red-900/30 text-red-500 font-black animate-pulse bg-red-500/10 p-2 rounded">
+        <div className="mt-4 pt-4 border-t border-red-900/30 text-red-500 font-black bg-red-500/10 p-2 rounded">
           ⚠ MISSION ABORT // BATTERY CONSTRAINT VIOLATED
         </div>
       )}

@@ -32,7 +32,7 @@ export function initializeControlPlane() {
       conditions: [],
       telemetry: {}
     }
-  });
+  } as any);
 
   fleetManager.addWorkload({
     metadata: { name: 'workload-revenue-strike', namespace: 'ns/revenue' },
@@ -51,7 +51,7 @@ export function initializeControlPlane() {
       conditions: [],
       telemetry: {}
     }
-  });
+  } as any);
 
   // 2. Start the Continuous Reconciliation Pulse (Every 10s)
   setInterval(async () => {

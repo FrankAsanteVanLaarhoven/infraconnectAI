@@ -1,4 +1,5 @@
-import { allocateTasks, Robot, Task } from "@/lib/fleet/allocator";
+import { allocateTasks } from "@/lib/fleet/allocator";
+import { Robot, Task } from "@/lib/fleet/types";
 import { bus } from "@/lib/events/bus";
 
 export async function onTasksCreated(event: { robots: Robot[], tasks: Task[] }) {

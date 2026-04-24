@@ -95,7 +95,7 @@ function DraggableWidget({ w, onRemove }: { w: EphemeralWidget; onRemove: () => 
       animate={{ opacity: opacity / 100, scale: expanded ? 1.1 : 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.9, y: -20 }}
       style={{ position: 'absolute', top: '15vh', left: '10vw' }}
-      className={`shadow-[0_40px_100px_rgba(0,0,0,1)] pointer-events-auto rounded-2xl border border-white/10 bg-black/60 backdrop-blur-2xl flex flex-col overflow-hidden transition-all ${expanded ? "w-[600px] z-50" : "w-[400px] z-40"}`}
+      className={`shadow-[0_40px_100px_rgba(0,0,0,1)] pointer-events-auto rounded-none border border-white/10 bg-black/60 backdrop-blur-2xl flex flex-col overflow-hidden transition-all ${expanded ? "w-[600px] z-50" : "w-[400px] z-40"}`}
     >
       <div className="flex items-center justify-between p-3 cursor-grab主动:cursor-grabbing border-b border-white/5 bg-gradient-to-r from-black/20 to-transparent">
         <div className="flex items-center gap-3 px-1 w-full shrink-0">
@@ -181,7 +181,7 @@ export function EphemeralZone() {
         {isGenerating && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/40 backdrop-blur-md">
              <div className="flex flex-col items-center gap-6">
-                <Sparkles className="w-16 h-16 text-cyan-400 animate-pulse" />
+                <Sparkles className="w-16 h-16 text-cyan-400" />
                 <div className="text-[10px] font-black uppercase tracking-[1em] text-cyan-500">Synthesizing Zero-UI</div>
              </div>
           </motion.div>
@@ -198,12 +198,12 @@ export function EphemeralZone() {
 
       <AnimatePresence>
         {activeWidgets.length > 0 && (
-          <motion.div initial={{ y: 50, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: 50, opacity: 0 }} className="fixed bottom-8 right-8 z-50 pointer-events-auto flex items-center gap-4 bg-black/80 backdrop-blur-xl border border-cyan-500/20 p-2 pl-6 rounded-full shadow-2xl">
+          <motion.div initial={{ y: 50, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: 50, opacity: 0 }} className="fixed bottom-8 right-8 z-50 pointer-events-auto flex items-center gap-4 bg-black/80 backdrop-blur-xl border border-cyan-500/20 p-2 pl-6 rounded-sm shadow-2xl">
              <div className="flex flex-col">
                 <span className="text-[10px] font-black uppercase tracking-widest text-cyan-500">{activeWidgets.length} Analytics Nodes</span>
                 <span className="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Unsaved Ephemeral State</span>
              </div>
-             <button onClick={saveToCanvas} className="px-8 py-3 bg-cyan-600 hover:bg-cyan-500 text-black font-black uppercase tracking-[0.2em] text-[10px] rounded-full transition-all flex items-center gap-2">
+             <button onClick={saveToCanvas} className="px-8 py-3 bg-cyan-600 hover:bg-cyan-500 text-black font-black uppercase tracking-[0.2em] text-[10px] rounded-sm transition-all flex items-center gap-2">
                 <Save className="w-3.5 h-3.5" />
                 Persist to Canvas
              </button>
@@ -220,7 +220,7 @@ export function EphemeralZone() {
                    <History className="w-5 h-5 text-cyan-500" />
                    <h3 className="text-sm font-black uppercase tracking-widest text-white">Studio History</h3>
                 </div>
-                <button onClick={() => setHistoryOpen(false)} className="p-2 hover:bg-white/5 rounded-full"><X className="w-4 h-4 text-slate-500" /></button>
+                <button onClick={() => setHistoryOpen(false)} className="p-2 hover:bg-white/5 rounded-sm"><X className="w-4 h-4 text-slate-500" /></button>
              </div>
 
              <div className="flex-1 overflow-y-auto space-y-4 custom-scrollbar pr-2">
@@ -228,7 +228,7 @@ export function EphemeralZone() {
                    <div className="text-center py-12 text-slate-600 text-[10px] uppercase font-bold tracking-widest italic">No saved intelligence found</div>
                 )}
                 {history.map(layout => (
-                   <div key={layout.id} onClick={() => loadFromHistory(layout)} className="p-4 rounded-xl bg-white/5 border border-white/5 hover:border-cyan-500/30 cursor-pointer transition-all group">
+                   <div key={layout.id} onClick={() => loadFromHistory(layout)} className="p-4 rounded-sm bg-white/5 border border-white/5 hover:border-cyan-500/30 cursor-pointer transition-all group">
                       <div className="flex items-center justify-between mb-2">
                          <span className="text-[10px] font-black uppercase tracking-widest text-white group-hover:text-cyan-400">{layout.title}</span>
                          <Star className={`w-3 h-3 ${layout.isStarred ? 'text-yellow-500 fill-yellow-500' : 'text-slate-700'}`} />
@@ -245,7 +245,7 @@ export function EphemeralZone() {
         )}
       </AnimatePresence>
 
-      <motion.button onClick={() => setHistoryOpen(!historyOpen)} className="fixed top-24 right-6 z-50 bg-black/40 hover:bg-black/60 backdrop-blur border border-white/5 p-2 rounded-lg text-slate-500 hover:text-cyan-500 transition-all">
+      <motion.button onClick={() => setHistoryOpen(!historyOpen)} className="fixed top-24 right-6 z-50 bg-black/40 hover:bg-black/60 backdrop-blur border border-white/5 p-2 rounded-sm text-slate-500 hover:text-cyan-500 transition-all">
          <History className="w-5 h-5" />
       </motion.button>
     </>

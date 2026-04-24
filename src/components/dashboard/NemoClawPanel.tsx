@@ -8,14 +8,14 @@ import { bus } from '@/lib/events/bus'
 
 const STATUS_COLOR: Record<string, string> = {
   idle:       'text-gray-400',
-  running:    'text-green-400',
+  running:    'text-slate-300',
   paused:     'text-yellow-400',
   terminated: 'text-gray-600',
   error:      'text-red-400',
 }
 
-const OUTCOME_ICON: Record<string, JSX.Element> = {
-  success:            <CheckCircle className="w-3 h-3 text-green-400" />,
+const OUTCOME_ICON: Record<string, any> = {
+  success:            <CheckCircle className="w-3 h-3 text-slate-300" />,
   failed:             <XCircle     className="w-3 h-3 text-red-400"   />,
   abandoned:          <Clock       className="w-3 h-3 text-gray-500"  />,
   blocked_by_policy:  <Shield      className="w-3 h-3 text-yellow-400"/>,
@@ -27,7 +27,7 @@ export function NemoClawPanel() {
   return (
     <GlassPanel>
       <div className="flex items-center gap-2 mb-4">
-        <Bot className="w-4 h-4 text-green-400" />
+        <Bot className="w-4 h-4 text-slate-300" />
         <h3 className="text-sm font-semibold tracking-tight">NemoClaw</h3>
       </div>
       
@@ -64,9 +64,9 @@ export function NemoClawPanel() {
         <div className="space-y-1 max-h-40 overflow-y-auto pr-1">
           {sessions.map(s => (
             <div key={s.id} className="flex items-center gap-2 p-1.5 rounded bg-white/5 text-xs font-mono">
-              {OUTCOME_ICON[s.outcome] || <Clock className="w-3 h-3 text-gray-500" />}
+              {(OUTCOME_ICON as any)[(s as any).outcome] || <Clock className="w-3 h-3 text-gray-500" />}
               <span className="text-gray-300 truncate flex-1">{s.taskSummary || s.id}</span>
-              <span className="text-gray-500 ml-auto">{new Date(s.createdAt).toLocaleTimeString()}</span>
+              <span className="text-gray-500 ml-auto">{new Date((s as any).createdAt).toLocaleTimeString()}</span>
             </div>
           ))}
           {sessions.length === 0 && !loading && (

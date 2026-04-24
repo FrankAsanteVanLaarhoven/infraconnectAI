@@ -27,9 +27,9 @@ export async function recoveryAgent(telemetry: TelemetryEvent, reasoningContext:
    await streamProducer.publish("stream:agent.actions", {
        agent: "recovery-agent",
        decision: action,
-       reasonContext: reasoningContext, 
+       reasoningContext, 
        explanation: explanation, // LLM output
        robot_id: telemetry.robot_id,
        timestamp: Date.now()
-   });
+   } as any);
 }

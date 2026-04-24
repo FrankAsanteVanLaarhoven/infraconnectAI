@@ -33,7 +33,7 @@ export const NeuralHandshake: React.FC<NeuralHandshakeProps> = ({ isVisible, onC
             animate={{ width: "100%", height: 2 }}
             exit={{ width: 0, opacity: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="bg-cyan-500 shadow-[0_0_30px_rgba(6,182,212,1)] z-10"
+            className="bg-cyan-500 z-10"
           />
 
           <motion.div 
@@ -43,7 +43,7 @@ export const NeuralHandshake: React.FC<NeuralHandshakeProps> = ({ isVisible, onC
             className="z-20 flex flex-col items-center"
           >
             <div className="flex items-center gap-4 mb-4">
-              <div className="w-2 h-2 rounded-full bg-cyan-500 animate-ping" />
+              <div className="w-2 h-2 rounded-sm bg-cyan-500 animate-ping" />
               <span className="text-[10px] font-black text-white tracking-[0.8em] uppercase">Neural Uplink Synchronizing</span>
             </div>
             <div className="text-[8px] text-cyan-400 font-mono tracking-widest opacity-60">LAYER HANDSHAKE // 0xCC77A // STABLE</div>
@@ -70,7 +70,7 @@ export const NeuralHandshake: React.FC<NeuralHandshakeProps> = ({ isVisible, onC
                  repeat: Infinity, 
                  delay: Math.random() * 0.5 
                }}
-               className="absolute w-1 h-1 bg-cyan-400 rounded-full blur-[1px]"
+               className="absolute w-1 h-1 bg-cyan-400 rounded-sm blur-[1px]"
              />
           ))}
         </motion.div>

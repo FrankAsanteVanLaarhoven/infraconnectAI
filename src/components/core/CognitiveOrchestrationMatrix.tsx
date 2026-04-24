@@ -49,7 +49,7 @@ export function CognitiveOrchestrationMatrix() {
           <Database className="w-4 h-4 text-foreground" />
           Cognitive Orchestration
         </h3>
-        <span className="text-[10px] uppercase tracking-widest text-[#76b900] animate-pulse">Memory Contract: Live</span>
+        <span className="text-[10px] uppercase tracking-widest text-[#76b900]">Memory Contract: Live</span>
       </div>
 
       <div className="flex-1 overflow-y-auto space-y-4">
@@ -82,7 +82,7 @@ export function CognitiveOrchestrationMatrix() {
             {paths.find(p => p.id === activePath)?.desc}
           </p>
           <div className="mt-3 text-[9px] text-muted-foreground/60 font-mono flex items-center gap-2">
-            <div className="w-2 h-2 rounded-full bg-[#76b900] animate-ping" />
+            <div className="w-2 h-2 rounded-sm bg-[#76b900] animate-ping" />
             SYNC: {activePath}/* {"->"} NemoClaw/Substrate
           </div>
         </GlassCard>
@@ -96,7 +96,7 @@ export function CognitiveOrchestrationMatrix() {
             </Badge>
           </div>
 
-          <div className="flex items-center gap-1 h-1.5 bg-border/10 rounded-full overflow-hidden">
+          <div className="flex items-center gap-1 h-1.5 bg-border/10 rounded-sm overflow-hidden">
             <div className={`h-full transition-all duration-500 ${
               governanceStage === 'review' ? 'w-1/3 bg-muted-foreground' : 
               governanceStage === 'ship' ? 'w-2/3 bg-foreground' : 'w-full bg-[#76b900]'
@@ -111,7 +111,7 @@ export function CognitiveOrchestrationMatrix() {
         </div>
 
         {/* Promotion Trigger */}
-        <div className="bg-foreground/5 p-4 rounded-lg border border-border/10 flex flex-col gap-3">
+        <div className="bg-foreground/5 p-4 rounded-sm border border-border/10 flex flex-col gap-3">
           <p className="text-[9px] text-muted-foreground/60 leading-relaxed font-mono uppercase">
             Release validated knowledge as canonical, creating official records for model re-training and agent alignment.
           </p>

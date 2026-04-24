@@ -12,7 +12,9 @@ import {
   RefreshCw,
   Terminal,
   Database,
-  Search
+  Search,
+  ChevronRight,
+  ChevronLeft
 } from 'lucide-react';
 
 interface Pod {
@@ -27,6 +29,7 @@ export function ControlPlaneGrid() {
   const [pods, setPods] = useState<Pod[]>([]);
   const [nodes] = useState(['node-orin-01', 'node-cloud-02', 'node-edge-03', 'node-orin-04']);
   const [reconciling, setReconciling] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(false);
 
   useEffect(() => {
     // Initial Pod Simulation
@@ -57,30 +60,56 @@ export function ControlPlaneGrid() {
   }, []);
 
   return (
-    <div className="w-full h-full bg-[#020617] border border-cyan-500/20 rounded-3xl p-8 flex flex-col font-mono relative overflow-hidden group shadow-[0_0_80px_rgba(34,211,238,0.05)]">
+    <motion.div 
+       initial={false}
+       animate={{ width: isCollapsed ? 64 : 960 }}
+       className="h-full bg-[#020617] border-l border-y border-cyan-500/20 rounded-l-3xl flex flex-col font-mono relative overflow-hidden group"
+    >
        {/* UI scanline */}
        <div className="absolute inset-0 pointer-events-none opacity-[0.02] bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,255,255,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-[length:100%_4px,3px_100%] z-50"></div>
 
-       {/* Header */}
-       <div className="flex items-center justify-between mb-10 border-b border-white/5 pb-6 relative z-10">
-          <div className="flex items-center gap-4">
-             <div className="p-3 bg-cyan-500/10 border border-cyan-500/20 rounded-2xl shadow-[0_0_20px_rgba(34,211,238,0.2)]">
-                <Box className="w-6 h-6 text-cyan-400" />
+       {isCollapsed ? (
+          <div 
+             className="w-full h-full flex flex-col items-center py-8 gap-6 cursor-pointer hover:bg-white/5 transition-colors"
+             onClick={() => setIsCollapsed(false)}
+             title="Expand Control Plane"
+          >
+             <Box className="w-6 h-6 text-cyan-400" />
+             <div 
+                className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-500 mt-4"
+                style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
+             >
+                Neural Control Plane
              </div>
-             <div>
+             <div className="mt-auto">
+                <ChevronLeft className="w-4 h-4 text-slate-600" />
+             </div>
+          </div>
+       ) : (
+          <div className="w-[960px] h-full p-8 flex flex-col">
+             {/* Header */}
+             <div className="flex items-center justify-between mb-10 border-b border-white/5 pb-6 relative z-10">
+                <div className="flex items-center gap-4">
+                   <div className="p-3 bg-cyan-500/10 border border-cyan-500/20 rounded-none cursor-pointer hover:bg-cyan-500/20 transition-colors" onClick={() => setIsCollapsed(true)}>
+                      <ChevronRight className="w-5 h-5 text-cyan-400" />
+                   </div>
+                   <div className="p-3 bg-cyan-500/10 border border-cyan-500/20 rounded-none hidden">
+                      <Box className="w-6 h-6 text-cyan-400" />
+                   </div>
+                   <div>
                 <h2 className="text-sm font-black text-white uppercase tracking-[0.4em]">Neural Control Plane</h2>
                 <p className="text-[9px] text-slate-500 uppercase font-black tracking-widest mt-1">Declarative Orchestration // K8S Ideology</p>
              </div>
           </div>
 
           <div className="flex gap-8 items-center">
-             <div className={`flex items-center gap-2 px-4 py-1.5 rounded-full border transition-all ${reconciling ? 'border-cyan-500/50 bg-cyan-500/10' : 'border-white/5'}`}>
+             <div className={`flex items-center gap-2 px-4 py-1.5 rounded-sm border transition-all ${reconciling ? 'border-cyan-500/50 bg-cyan-500/10' : 'border-white/5'}`}>
                 <RefreshCw className={`w-3 h-3 ${reconciling ? 'text-cyan-400 animate-spin' : 'text-slate-800'}`} />
                 <span className={`text-[8px] font-black uppercase tracking-widest ${reconciling ? 'text-cyan-400' : 'text-slate-800'}`}>Reconciling</span>
              </div>
              <div className="flex flex-col text-right">
                 <span className="text-[8px] text-slate-600 uppercase font-black tracking-widest mb-1">Grid Health</span>
-                <span className="text-xl font-black text-emerald-500 tracking-tighter">99.8%</span>
+                <span className="text-xl font-black text-slate-300 tracking-tighter">99.8%</span>
              </div>
           </div>
        </div>
@@ -111,8 +140,8 @@ export function ControlPlaneGrid() {
                                   initial={{ scale: 0 }}
                                   animate={{ scale: 1 }}
                                   exit={{ scale: 0 }}
-                                  className={`h-12 w-12 rounded-xl flex items-center justify-center border relative group/pod cursor-pointer ${
-                                     p.status === 'Running' ? 'bg-cyan-500/10 border-cyan-500/30 shadow-[0_0_10px_rgba(34,211,238,0.1)]' : 
+                                  className={`h-12 w-12 rounded-sm flex items-center justify-center border relative group/pod cursor-pointer ${
+                                     p.status === 'Running' ? 'bg-cyan-500/10 border-cyan-500/30 ' : 
                                      p.status === 'Degraded' ? 'bg-red-500/10 border-red-500/30' : 'bg-slate-800 border-slate-700'
                                   }`}
                                >
@@ -129,7 +158,7 @@ export function ControlPlaneGrid() {
                          
                          {/* Empty Slots */}
                          {Array.from({ length: 4 - nodePods.length }).map((_, i) => (
-                            <div key={i} className="h-12 w-12 rounded-xl border border-white/[0.02] bg-white/[0.01]" />
+                            <div key={i} className="h-12 w-12 rounded-sm border border-white/[0.02] bg-white/[0.01]" />
                          ))}
                       </div>
 
@@ -139,7 +168,7 @@ export function ControlPlaneGrid() {
                             <span>Resource Load</span>
                             <span>{Math.floor(Math.random() * 20 + 70)}%</span>
                          </div>
-                         <div className="h-1 w-full bg-slate-900 rounded-full overflow-hidden">
+                         <div className="h-1 w-full bg-slate-900 rounded-sm overflow-hidden">
                             <motion.div 
                                initial={{ width: '0%' }}
                                animate={{ width: '78%' }}
@@ -169,7 +198,7 @@ export function ControlPlaneGrid() {
                    ].map((ev, i) => (
                       <div key={i} className="text-[9px] font-mono leading-relaxed group">
                          <div className="flex justify-between items-center mb-1">
-                            <span className={`font-black ${ev.type === 'SUCCESS' ? 'text-emerald-500' : ev.type === 'WARNING' ? 'text-amber-500' : 'text-blue-500'}`}>
+                            <span className={`font-black ${ev.type === 'SUCCESS' ? 'text-slate-300' : ev.type === 'WARNING' ? 'text-amber-500' : 'text-blue-500'}`}>
                                [{ev.type}]
                             </span>
                             <span className="text-slate-800">{ev.time}</span>
@@ -189,7 +218,7 @@ export function ControlPlaneGrid() {
              {/* Strategic Manifest Control */}
              <div className="p-6 bg-cyan-500/5 border border-cyan-500/20 rounded-3xl space-y-4 group cursor-pointer hover:bg-cyan-500/10 transition-all">
                 <div className="flex items-center gap-3">
-                   <ShieldCheck className="w-4 h-4 text-cyan-400 shadow-[0_0_10px_#22d3ee]" />
+                   <ShieldCheck className="w-4 h-4 text-cyan-400" />
                    <h3 className="text-[10px] font-black text-white uppercase tracking-widest">Apply Global Manifest</h3>
                 </div>
                 <p className="text-[9px] text-slate-500 font-bold uppercase leading-relaxed">
@@ -204,16 +233,18 @@ export function ControlPlaneGrid() {
        <div className="mt-8 flex justify-between items-center text-[8px] font-black uppercase tracking-widest text-slate-700 relative z-10">
           <div className="flex items-center gap-6">
              <div className="flex items-center gap-2">
-                <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse" />
+                <div className="w-1.5 h-1.5 bg-slate-800 rounded-sm" />
                 <span>API_SERVER: READY</span>
              </div>
              <div className="flex items-center gap-2">
-                <div className="w-1.5 h-1.5 bg-cyan-500 rounded-full" />
+                <div className="w-1.5 h-1.5 bg-cyan-500 rounded-sm" />
                 <span>ETCD_SYNC: LATEST</span>
              </div>
           </div>
-          <span>NEURAL_CP_V1_ALPHA</span>
-       </div>
-    </div>
+           <span>NEURAL_CP_V1_ALPHA</span>
+        </div>
+          </div>
+       )}
+    </motion.div>
   );
 }

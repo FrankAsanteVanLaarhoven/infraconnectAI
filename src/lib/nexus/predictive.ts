@@ -6,7 +6,7 @@
 export interface ToolsetWidget {
   id: string;
   title: string;
-  type: 'chart' | 'detail' | 'matrix' | 'legal' | 'market' | 'radar'| 'threat' | 'energy' | 'generic' | 'swarm' | 'strategic' | 'pipeline' | 'adaptive';
+  type: 'chart' | 'detail' | 'matrix' | 'legal' | 'market' | 'radar'| 'threat' | 'energy' | 'generic' | 'swarm' | 'strategic' | 'pipeline' | 'adaptive' | 'meta' | 'validation';
 }
 
 export const SITUATIONAL_TOOLSETS: Record<string, ToolsetWidget[]> = {

@@ -46,7 +46,7 @@ export default function CRMPipelinePage() {
             <h1 className="text-4xl font-black uppercase tracking-tighter text-white">Conversion Pipeline</h1>
             <p className="text-xs text-slate-500 uppercase tracking-[0.3em] font-bold">Revenue Engine // Strategic Matrix</p>
           </div>
-          <div className="flex items-center gap-4 bg-slate-900/50 border border-slate-800 p-4 rounded-xl">
+          <div className="flex items-center gap-4 bg-slate-900/50 border border-slate-800 p-4 rounded-sm">
              <div className="text-right">
                 <p className="text-[10px] text-slate-500 uppercase font-black tracking-widest mb-1">Total Pipeline Value</p>
                 <p className="text-2xl font-black text-white">£{leads.reduce((acc, l) => acc + (l.projectedValue || l.score * 500), 0).toLocaleString()}</p>
@@ -68,7 +68,7 @@ export default function CRMPipelinePage() {
                 onClick={() => setActiveStage(stage)}
                 className={`px-4 py-2 rounded-none text-[10px] font-black tracking-widest uppercase transition-all border ${
                   activeStage === stage 
-                  ? 'bg-blue-600 border-blue-500 text-white shadow-[0_0_20px_rgba(37,99,235,0.3)]' 
+                  ? 'bg-blue-600 border-blue-500 text-white ' 
                   : 'bg-black border-slate-800 text-slate-500 hover:text-slate-300'
                 }`}
               >
@@ -81,17 +81,17 @@ export default function CRMPipelinePage() {
         <div className="grid grid-cols-1 gap-4">
           <AnimatePresence mode="popLayout">
             {loading ? (
-              <div className="h-64 flex items-center justify-center text-slate-500 animate-pulse uppercase text-xs tracking-[0.5em]">Syncing Intelligence...</div>
+              <div className="h-64 flex items-center justify-center text-slate-500 uppercase text-xs tracking-[0.5em]">Syncing Intelligence...</div>
             ) : filteredLeads.length > 0 ? filteredLeads.map((lead) => (
               <motion.div 
                 layout
                 key={lead.id}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="group bg-[#0a0b0c] border border-slate-800 p-6 rounded-xl flex flex-col md:flex-row items-center justify-between gap-6 hover:border-slate-600 transition-colors"
+                className="group bg-[#0a0b0c] border border-slate-800 p-6 rounded-sm flex flex-col md:flex-row items-center justify-between gap-6 hover:border-slate-600 transition-colors"
               >
                 <div className="flex items-center gap-6 flex-1 w-full">
-                  <div className={`p-4 rounded-lg border ${lead.score > 70 ? 'bg-red-950/20 border-red-900/50 text-red-500' : 'bg-slate-900 border-slate-800 text-slate-500'} transition-colors`}>
+                  <div className={`p-4 rounded-sm border ${lead.score > 70 ? 'bg-red-950/20 border-red-900/50 text-red-500' : 'bg-slate-900 border-slate-800 text-slate-500'} transition-colors`}>
                     <Users className="w-6 h-6" />
                   </div>
                   <div className="flex-1 space-y-1">
@@ -101,9 +101,9 @@ export default function CRMPipelinePage() {
                     </div>
                     <div className="flex items-center gap-4 text-[10px] text-slate-500 font-bold uppercase tracking-widest">
                        <span>{lead.company || "Unknown Org"}</span>
-                       <span className="w-1 h-1 rounded-full bg-slate-700" />
+                       <span className="w-1 h-1 rounded-sm bg-slate-700" />
                        <span className={lead.intent === 'high' ? 'text-blue-400' : ''}>{lead.intent} Intent</span>
-                       <span className="w-1 h-1 rounded-full bg-slate-700" />
+                       <span className="w-1 h-1 rounded-sm bg-slate-700" />
                        <span>{new Date(lead.createdAt).toLocaleDateString()}</span>
                     </div>
                   </div>
@@ -112,7 +112,7 @@ export default function CRMPipelinePage() {
                 <div className="flex items-center gap-8 w-full md:w-auto justify-between md:justify-end border-t md:border-t-0 border-white/5 pt-4 md:pt-0">
                   <div className="text-right space-y-1">
                     <p className="text-[10px] text-slate-500 uppercase font-black tracking-widest">Projected Value</p>
-                    <p className={`text-2xl font-black ${lead.projectedValue ? 'text-emerald-400' : 'text-white'}`}>
+                    <p className={`text-2xl font-black ${lead.projectedValue ? 'text-slate-300' : 'text-white'}`}>
                       £{(lead.projectedValue || lead.score * 1200).toLocaleString()}
                     </p>
                   </div>
@@ -133,7 +133,7 @@ export default function CRMPipelinePage() {
                 </div>
               </motion.div>
             )) : (
-              <div className="h-64 flex flex-col items-center justify-center text-slate-700 border border-dashed border-slate-800 rounded-xl">
+              <div className="h-64 flex flex-col items-center justify-center text-slate-700 border border-dashed border-slate-800 rounded-sm">
                  <Target className="w-12 h-12 opacity-10 mb-4" />
                  <p className="text-xs font-black uppercase tracking-widest">No matching targets in this stage</p>
               </div>

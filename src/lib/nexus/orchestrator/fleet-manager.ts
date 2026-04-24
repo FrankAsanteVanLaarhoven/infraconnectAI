@@ -39,7 +39,7 @@ export class GitOpsFleetManager {
     mqttBroker.processTelemetryIngest();
 
     // 4. Validate Edge Nodes (Zero-Trust mTLS Check)
-    const validNodes = this.nodes.filter(n => zeroTrustEnforcer.validateNodeIdentity(n.id));
+    const validNodes = this.nodes.filter(n => zeroTrustEnforcer.validateNodeIdentity((n as any).id));
 
     // 5. Reconcile Global Recon Streams (Orbital Feedback)
     await orbitalController.reconcileOrbital();

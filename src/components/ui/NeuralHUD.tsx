@@ -65,20 +65,20 @@ export function NeuralHUD() {
       <motion.div initial={{ x: -50, opacity: 0 }} animate={{ x: 0, opacity: 1 }} className="absolute left-12 top-1/2 -translate-y-1/2 space-y-8">
         <HudMetric label="SIGNAL DENSITY" value={(events?.length || 0) * 12} unit="Hz" icon={Activity} color="text-cyan-400" />
         <HudMetric label="NEURAL VELOCITY" value={84} unit="OPS/S" icon={Zap} color="text-yellow-400" />
-        <HudMetric label="NODE INTEGRITY" value={98.4} unit="%" icon={Cpu} color="text-green-400" />
+        <HudMetric label="NODE INTEGRITY" value={98.4} unit="%" icon={Cpu} color="text-slate-300" />
       </motion.div>
 
       {/* ── Right Metric HUD: Safety & Compliance ── */}
       <motion.div initial={{ x: 50, opacity: 0 }} animate={{ x: 0, opacity: 1 }} className="absolute right-12 top-1/2 -translate-y-1/2 space-y-8 text-right">
         <HudMetric align="right" label="POLICY COVERAGE" value={100} unit="%" icon={Radio} color="text-blue-400" />
-        <HudMetric align="right" label="DETECTION RATE" value={2.4} unit="MS" icon={Target} color="text-purple-400" />
+        <HudMetric align="right" label="DETECTION RATE" value={2.4} unit="MS" icon={Target} color="text-slate-400" />
         <HudMetric 
           align="right" 
           label="THREAT INDEX" 
           value={lastIncident ? 88 : 4} 
           unit="LR" 
           icon={ShieldAlert} 
-          color={lastIncident ? "text-red-500 animate-pulse" : "text-slate-500"} 
+          color={lastIncident ? "text-red-500 " : "text-slate-500"} 
         />
       </motion.div>
 

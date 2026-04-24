@@ -70,10 +70,10 @@ export async function bootstrapSessionContext(
 
   // === L2 CANON — always load, highest priority ===
   const canonNodes = await prisma.memoryNode.findMany({
-    where: { level: 'L2', status: 'canon' },
-    orderBy: [{ healthScore: 'desc' }, { referenceCount: 'desc' }],
+    where: { level: 'L2', state: 'canonical' },
+    orderBy: [{ confidence: 'desc' }, { updatedAt: 'desc' }],
     take: 10,
-    select: { id: true, title: true, content: true, level: true, category: true },
+    select: { id: true, title: true, summary: true, level: true, kind: true },
   })
 
   let canonTokensUsed = 0
@@ -81,9 +81,9 @@ export async function bootstrapSessionContext(
   for (const node of canonNodes) {
     const available = TOKEN_BUDGETS.l2_canon - canonTokensUsed
     if (available <= 50) break
-    const truncated = truncateToTokenBudget(node.content, available)
+    const truncated = truncateToTokenBudget(node.summary || '', available)
     const tokens = estimateTokens(node.title + truncated)
-    canonContext.push({ ...node, content: truncated, tokenEstimate: tokens })
+    canonContext.push({ ...node, category: node.kind, content: truncated, tokenEstimate: tokens })
     canonTokensUsed += tokens
   }
 
@@ -100,20 +100,20 @@ export async function bootstrapSessionContext(
   const wikiNodes = await prisma.memoryNode.findMany({
     where: {
       level: 'L1',
-      status: 'wiki',
+      state: 'active',
       ...(skill && SKILL_CONTRACTS[skill]
         ? {}  // If skill known, we already filtered by contract reads in runner
         : {}),
     },
-    orderBy: [{ healthScore: 'desc' }, { lastValidated: 'desc' }],
+    orderBy: [{ confidence: 'desc' }, { updatedAt: 'desc' }],
     take: 30,  // Over-fetch, then score
-    select: { id: true, title: true, content: true, level: true, category: true, tags: true },
+    select: { id: true, title: true, summary: true, level: true, kind: true, tags: true },
   })
 
   // Score wiki nodes by keyword overlap with intent
   const scoredWiki = wikiNodes
     .map((node) => {
-      const nodeText = (node.title + ' ' + node.content + ' ' + (node.tags ?? '')).toLowerCase()
+      const nodeText = (node.title + ' ' + (node.summary || '') + ' ' + (node.tags ?? '')).toLowerCase()
       const overlap = intentKeywords.filter((kw) => nodeText.includes(kw)).length
       return { ...node, relevanceScore: overlap }
     })
@@ -126,9 +126,9 @@ export async function bootstrapSessionContext(
   for (const node of scoredWiki) {
     const available = TOKEN_BUDGETS.l1_wiki - wikiTokensUsed
     if (available <= 50) break
-    const truncated = truncateToTokenBudget(node.content, available)
+    const truncated = truncateToTokenBudget(node.summary || '', available)
     const tokens = estimateTokens(node.title + truncated)
-    wikiContext.push({ ...node, content: truncated, tokenEstimate: tokens })
+    wikiContext.push({ ...node, category: node.kind, content: truncated, tokenEstimate: tokens })
     wikiTokensUsed += tokens
   }
 
@@ -136,12 +136,12 @@ export async function bootstrapSessionContext(
   const wipNodes = await prisma.memoryNode.findMany({
     where: {
       level: 'L0',
-      status: 'scratch',
-      OR: [{ expiresAt: null }, { expiresAt: { gt: new Date() } }],
+      state: 'draft',
+      // OR: [{ expiresAt: null }, { expiresAt: { gt: new Date() } }], // expiresAt does not exist
     },
     orderBy: { updatedAt: 'desc' },
     take: 3,
-    select: { id: true, title: true, content: true, level: true, category: true },
+    select: { id: true, title: true, summary: true, level: true, kind: true },
   })
 
   let wipTokensUsed = 0
@@ -149,9 +149,9 @@ export async function bootstrapSessionContext(
   for (const node of wipNodes) {
     const available = TOKEN_BUDGETS.l0_scratch - wipTokensUsed
     if (available <= 50) break
-    const truncated = truncateToTokenBudget(node.content, available)
+    const truncated = truncateToTokenBudget(node.summary || '', available)
     const tokens = estimateTokens(node.title + truncated)
-    wipContext.push({ ...node, content: truncated, tokenEstimate: tokens })
+    wipContext.push({ ...node, category: node.kind, content: truncated, tokenEstimate: tokens })
     wipTokensUsed += tokens
   }
 

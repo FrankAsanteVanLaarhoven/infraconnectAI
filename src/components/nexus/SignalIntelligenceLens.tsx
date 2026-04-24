@@ -60,15 +60,15 @@ export function SignalIntelligenceLens() {
 
     return (
         <GlassPanel 
-            glowStrong 
+            {...{glowStrong: true} as any} 
             scanline 
             padding="none" 
-            className="w-full h-full flex flex-col font-mono relative overflow-hidden group select-none shadow-[0_0_100px_rgba(34,211,238,0.05)] border-white/5 bg-black/40"
+            className="w-full h-full flex flex-col font-mono relative overflow-hidden group select-none border-white/5 bg-black/40"
         >
             {/* 1. CINEMATIC HEADER */}
             <div className="flex items-center justify-between px-10 py-8 border-b border-white/5 relative z-20 bg-black/20 backdrop-blur-md">
                 <div className="flex items-center gap-6">
-                    <div className="p-4 bg-cyan-500/10 border border-cyan-500/20 rounded-2xl shadow-[0_0_25px_rgba(34,211,238,0.15)] group-hover:scale-110 transition-transform duration-500">
+                    <div className="p-4 bg-cyan-500/10 border border-cyan-500/20 rounded-none group-hover:scale-110 transition-transform duration-500">
                         <Radar className="w-6 h-6 text-cyan-400" />
                     </div>
                     <div>
@@ -77,7 +77,7 @@ export function SignalIntelligenceLens() {
                             <span className="px-2 py-0.5 bg-cyan-500/10 border border-cyan-500/30 text-[8px] text-cyan-500 font-black tracking-widest rounded">SYSTEM</span>
                         </div>
                         <p className="text-[10px] text-slate-500 uppercase font-black tracking-[0.2em] mt-2 flex items-center gap-2">
-                             Global Surveillance // <span className="text-cyan-500/60 animate-pulse">Scanning Sub-THz Frequencies</span>
+                             Global Surveillance // <span className="text-cyan-500/60">Scanning Sub-THz Frequencies</span>
                         </p>
                     </div>
                 </div>
@@ -87,14 +87,14 @@ export function SignalIntelligenceLens() {
                         <span className="text-[9px] text-slate-600 uppercase font-black tracking-[0.3em] flex items-center justify-end gap-2">
                             <Activity className="w-3 h-3" /> Pulsar Density
                         </span>
-                        <span className="text-2xl font-black text-cyan-500 tracking-tighter tabular-nums drop-shadow-[0_0_10px_rgba(34,211,238,0.3)] line-clamp-1">1,244<span className="text-slate-700 text-sm ml-1">/HR</span></span>
+                        <span className="text-2xl font-black text-cyan-500 tracking-tighter tabular-nums drop- line-clamp-1">1,244<span className="text-slate-700 text-sm ml-1">/HR</span></span>
                     </div>
                     <div className="flex flex-col gap-1 pr-2">
                         <span className="text-[9px] text-slate-600 uppercase font-black tracking-[0.3em] flex items-center justify-end gap-2">
                            <Wifi className="w-3 h-3" /> Global Sync
                         </span>
                         <div className="flex items-center gap-3 justify-end">
-                            <div className="w-2.5 h-2.5 rounded-full bg-cyan-500 shadow-[0_0_10px_#22d3ee] animate-pulse" />
+                            <div className="w-2.5 h-2.5 rounded-sm bg-cyan-500" />
                             <span className="text-xl font-black text-white tracking-tighter uppercase whitespace-nowrap">NODE_09_ONLINE</span>
                         </div>
                     </div>
@@ -141,7 +141,7 @@ export function SignalIntelligenceLens() {
                         onClick={() => setActiveId(s.id)}
                     >
                         <div className="relative">
-                            <GlassCard className="p-2 border-cyan-500/40 bg-cyan-900/20 rounded-xl relative z-10 hover:scale-110 transition-transform">
+                            <GlassCard className="p-2 border-cyan-500/40 bg-cyan-900/20 rounded-sm relative z-10 hover:scale-110 transition-transform">
                                 {s.type === 'HIRING_SPIKE' && <Zap className="w-4 h-4 text-cyan-400" />}
                                 {s.type === 'DATA_ABERRATION' && <Activity className="w-4 h-4 text-amber-500" />}
                                 {s.type === 'PATENT_FILING' && <Share2 className="w-4 h-4 text-cyan-500" />}
@@ -174,7 +174,7 @@ export function SignalIntelligenceLens() {
                                 initial={{ scale: 1, opacity: 0.8 }}
                                 animate={{ scale: 6, opacity: 0 }}
                                 transition={{ duration: 3, repeat: Infinity }}
-                                className="absolute inset-0 bg-cyan-500/20 rounded-full"
+                                className="absolute inset-0 bg-cyan-500/20 rounded-sm"
                             />
                         </div>
                     </motion.div>
@@ -186,10 +186,10 @@ export function SignalIntelligenceLens() {
                 </div>
                 
                 {/* Coordinate Counter (Technical Overlay) */}
-                <div className="absolute top-8 left-10 p-5 bg-black/40 border border-white/5 rounded-2xl backdrop-blur-xl z-10">
+                <div className="absolute top-8 left-10 p-5 bg-black/40 border border-white/5 rounded-none backdrop-blur-xl z-10">
                     <div className="flex flex-col gap-3">
                         <div className="flex items-center gap-3">
-                             <Crosshair className="w-4 h-4 text-cyan-500 animate-pulse" />
+                             <Crosshair className="w-4 h-4 text-cyan-500" />
                              <span className="text-[10px] text-cyan-400 font-black tracking-[0.2em] uppercase">Tactical Tracker</span>
                         </div>
                         <div className="flex gap-6">
@@ -208,25 +208,25 @@ export function SignalIntelligenceLens() {
 
             {/* 3. ENTERPRISE ACTIVE LINKAGE HUB */}
             <div className="absolute bottom-12 right-12 w-80 z-20">
-                <GlassCard glowStrong className="p-8 border-cyan-500/30 bg-cyan-900/30 backdrop-blur-3xl shadow-[0_40px_100px_rgba(0,0,0,0.6)]">
+                <GlassCard {...{glowStrong: true} as any} className="p-8 border-cyan-500/30 bg-cyan-900/30 backdrop-blur-3xl shadow-[0_40px_100px_rgba(0,0,0,0.6)]">
                     <div className="flex items-center justify-between mb-5">
                         <div className="flex items-center gap-3">
-                            <div className="w-2 h-2 rounded-full bg-cyan-500 shadow-[0_0_8px_#22d3ee]" />
+                            <div className="w-2 h-2 rounded-sm bg-cyan-500" />
                             <span className="text-[10px] text-cyan-400 uppercase font-black tracking-[0.3em]">Active Intelligence Linkage</span>
                         </div>
                         <Network className="w-4 h-4 text-cyan-400/50" />
                     </div>
                     <div className="space-y-4">
-                        <div className="p-4 bg-black/40 border border-white/5 rounded-xl">
+                        <div className="p-4 bg-black/40 border border-white/5 rounded-sm">
                             <div className="flex justify-between items-center text-[9px] uppercase font-black mb-3">
                                 <span className="text-white tracking-widest">Shell → Viaro Leak</span>
                                 <span className="text-cyan-400">92.4% Match</span>
                             </div>
-                            <div className="h-1 bg-slate-800 rounded-full overflow-hidden relative">
+                            <div className="h-1 bg-slate-800 rounded-sm overflow-hidden relative">
                                 <motion.div 
                                     initial={{ width: 0 }} 
                                     animate={{ width: '92.4%' }} 
-                                    className="h-full bg-cyan-500 shadow-[0_0_15px_rgba(34,211,238,0.8)]" 
+                                    className="h-full bg-cyan-500" 
                                 />
                             </div>
                         </div>
@@ -238,7 +238,7 @@ export function SignalIntelligenceLens() {
                     <div className="mt-6 pt-5 border-t border-white/5 flex justify-between items-center text-[8px] font-black text-slate-600 tracking-widest">
                         <span>SESSION_ID: SIG_ALPHA_99</span>
                         <div className="flex items-center gap-2">
-                             <div className="w-1 h-1 rounded-full bg-cyan-500" />
+                             <div className="w-1 h-1 rounded-sm bg-cyan-500" />
                              AUTO_VALIDATED
                         </div>
                     </div>

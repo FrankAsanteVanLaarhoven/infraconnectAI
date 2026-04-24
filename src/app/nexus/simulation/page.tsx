@@ -40,13 +40,13 @@ export default function SimulationPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#020202] text-slate-300 font-mono flex flex-col overflow-hidden selection:bg-indigo-500/30">
+    <div className="min-h-full bg-[#020202] text-slate-300 font-mono flex flex-col overflow-hidden selection:bg-indigo-500/30">
        
        {/* Simulation Header */}
        <header className="h-20 border-b border-white/5 bg-white/[0.02] flex items-center justify-between px-8 relative z-50">
           <div className="flex items-center gap-6">
              <div className="flex items-center gap-3">
-                <div className="p-2 bg-indigo-500/10 border border-indigo-500/30 rounded-lg shadow-[0_0_20px_rgba(99,102,241,0.1)]">
+                <div className="p-2 bg-indigo-500/10 border border-indigo-500/30 rounded-sm">
                    <AreaChart className="w-5 h-5 text-indigo-400" />
                 </div>
                 <div>
@@ -62,8 +62,8 @@ export default function SimulationPage() {
           </div>
 
           <div className="flex items-center gap-8">
-             <div className={`flex items-center gap-3 px-6 py-2 rounded-xl transition-all cursor-pointer ${
-                simulating ? 'bg-indigo-500/20 border border-indigo-500/50 animate-pulse' : 'bg-white/5 border border-white/10 hover:border-indigo-500/30'
+             <div className={`flex items-center gap-3 px-6 py-2 rounded-sm transition-all cursor-pointer ${
+                simulating ? 'bg-indigo-500/20 border border-indigo-500/50 ' : 'bg-white/5 border border-white/10 hover:border-indigo-500/30'
              }`} onClick={triggerSimulation}>
                 <RefreshCw className={`w-3.5 h-3.5 ${simulating ? 'animate-spin text-indigo-400' : 'text-slate-500'}`} />
                 <span className="text-[9px] font-black text-white uppercase tracking-widest">Run Isaac Sim Perturbation</span>
@@ -104,11 +104,11 @@ export default function SimulationPage() {
                            key={scenario.id}
                            onClick={() => setSelectedScenario(scenario)}
                            className={`p-6 bg-white/[0.02] border transition-all rounded-3xl flex flex-col gap-6 text-left group ${
-                              selectedScenario?.id === scenario.id ? 'border-indigo-500/50 bg-indigo-500/5 shadow-[0_0_40px_rgba(99,102,241,0.05)]' : 'border-white/5 hover:border-white/10'
+                              selectedScenario?.id === scenario.id ? 'border-indigo-500/50 bg-indigo-500/5 ' : 'border-white/5 hover:border-white/10'
                            }`}
                          >
                             <div className="flex justify-between items-start">
-                               <div className="p-3 bg-slate-900 rounded-xl border border-white/5 shadow-inner group-hover:border-indigo-500/30 transition-all">
+                               <div className="p-3 bg-slate-900 rounded-sm border border-white/5 shadow-inner group-hover:border-indigo-500/30 transition-all">
                                   <Box className={`w-5 h-5 ${scenario.isPreferred ? 'text-cyan-400' : 'text-slate-600'}`} />
                                </div>
                                <div className="flex flex-col items-end gap-1">
@@ -119,10 +119,10 @@ export default function SimulationPage() {
                             
                             <div>
                                <h3 className="text-xs font-black text-white uppercase tracking-wider mb-1 leading-tight">{scenario.name}</h3>
-                               <p className="text-[8px] text-slate-600 font-bold uppercase tracking-widest">Collision Delta: <span className="text-emerald-500">{(scenario.metrics.collisionRate).toFixed(3)}%</span></p>
+                               <p className="text-[8px] text-slate-600 font-bold uppercase tracking-widest">Collision Delta: <span className="text-slate-300">{(scenario.metrics.collisionRate).toFixed(3)}%</span></p>
                             </div>
 
-                            <div className="h-1 w-full bg-slate-900 rounded-full overflow-hidden mt-2">
+                            <div className="h-1 w-full bg-slate-900 rounded-sm overflow-hidden mt-2">
                                <motion.div 
                                  initial={{ width: '0%' }}
                                  animate={{ width: `${scenario.probability * 100}%` }}
@@ -143,7 +143,7 @@ export default function SimulationPage() {
              {/* 3. Deep Scenario Analysis */}
              <div className="p-8 space-y-8 bg-black/40">
                 <div className="flex items-center gap-4">
-                   <div className="p-3 bg-indigo-500/10 border border-indigo-500/30 rounded-xl">
+                   <div className="p-3 bg-indigo-500/10 border border-indigo-500/30 rounded-sm">
                       <Target className="w-5 h-5 text-indigo-400" />
                    </div>
                    <div>
@@ -162,7 +162,7 @@ export default function SimulationPage() {
                          <div className="space-y-3 mt-4">
                             {selectedScenario.events.map((ev, i) => (
                                <div key={i} className="flex items-start gap-3 group/ev">
-                                  <div className="w-1.5 h-1.5 bg-indigo-500 rounded-full mt-1.5 group-hover/ev:scale-150 transition-all" />
+                                  <div className="w-1.5 h-1.5 bg-indigo-500 rounded-sm mt-1.5 group-hover/ev:scale-150 transition-all" />
                                   <span className="text-[10px] font-black text-slate-400 uppercase leading-relaxed font-mono italic group-hover/ev:text-white transition-colors">{ev}</span>
                                </div>
                             ))}
@@ -170,18 +170,18 @@ export default function SimulationPage() {
                       </div>
 
                       <div className="grid grid-cols-2 gap-4">
-                         <div className="p-6 bg-white/[0.02] border border-white/5 rounded-2xl group hover:border-emerald-500/30 transition-all">
+                         <div className="p-6 bg-white/[0.02] border border-white/5 rounded-none group hover:border-slate-700 transition-all">
                             <span className="text-[8px] text-slate-600 uppercase font-black block mb-1">Collision Rate</span>
-                            <span className="text-xl font-black text-emerald-500">{selectedScenario.metrics.collisionRate.toFixed(3)}%</span>
+                            <span className="text-xl font-black text-slate-300">{selectedScenario.metrics.collisionRate.toFixed(3)}%</span>
                          </div>
-                         <div className="p-6 bg-white/[0.02] border border-white/5 rounded-2xl group hover:border-cyan-500/30 transition-all">
+                         <div className="p-6 bg-white/[0.02] border border-white/5 rounded-none group hover:border-cyan-500/30 transition-all">
                             <span className="text-[8px] text-slate-600 uppercase font-black block mb-1">Kinematic Stability</span>
                             <span className="text-xl font-black text-cyan-400">{selectedScenario.metrics.stabilityIndex.toFixed(0)}%</span>
                          </div>
                       </div>
 
                       {/* State Steering Control */}
-                      <button className="w-full py-6 bg-indigo-600 text-black text-[10px] font-black uppercase tracking-[0.4em] rounded-2xl hover:bg-indigo-500 transition-all shadow-[0_0_30px_rgba(99,102,241,0.2)] flex items-center justify-center gap-4 group">
+                      <button className="w-full py-6 bg-indigo-600 text-black text-[10px] font-black uppercase tracking-[0.4em] rounded-none hover:bg-indigo-500 transition-all flex items-center justify-center gap-4 group">
                          <Lock className="w-4 h-4 text-black group-hover:scale-110 transition-all" />
                          Apply Predictive Steering
                       </button>
@@ -192,7 +192,7 @@ export default function SimulationPage() {
              {/* 4. Infrastructure Maintenance Loop */}
              <div className="flex-1 p-8 bg-black/60 space-y-6 border-t border-white/5">
                 <div className="flex items-center gap-3">
-                   <ShieldCheck className="w-4 h-4 text-emerald-500 shadow-[0_0_10px_#10b981]" />
+                   <ShieldCheck className="w-4 h-4 text-slate-300" />
                    <h2 className="text-[11px] font-black text-white uppercase tracking-widest">Simulation Feedback</h2>
                 </div>
                 <div className="space-y-4">
@@ -216,7 +216,7 @@ export default function SimulationPage() {
        {/* Simulation Status Footer */}
        <footer className="h-8 border-t border-white/5 bg-black flex items-center justify-between px-6 text-[8px] font-black text-slate-600 uppercase tracking-widest">
           <div className="flex items-center gap-6">
-             <span className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-indigo-500" /> SIM_CONVERGENCE: STABLE</span>
+             <span className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-sm bg-indigo-500" /> SIM_CONVERGENCE: STABLE</span>
              <span>TOTAL_SCENARIOS: 10,000</span>
              <span>CLUSTER_NODES: 42</span>
           </div>

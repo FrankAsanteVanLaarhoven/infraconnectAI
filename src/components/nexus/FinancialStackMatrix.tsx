@@ -35,11 +35,11 @@ export function FinancialStackMatrix() {
     ]);
 
     return (
-        <div className="w-full h-full bg-[#020617] border border-blue-500/20 rounded-3xl p-8 flex flex-col font-mono relative overflow-hidden group shadow-[0_0_80px_rgba(59,130,246,0.05)]">
+        <div className="w-full h-full bg-[#020617] border border-blue-500/20 rounded-3xl p-8 flex flex-col font-mono relative overflow-hidden group">
             {/* Header */}
             <div className="flex items-center justify-between mb-8 border-b border-white/5 pb-6 relative z-10">
                 <div className="flex items-center gap-4">
-                    <div className="p-3 bg-blue-500/10 border border-blue-500/20 rounded-2xl">
+                    <div className="p-3 bg-blue-500/10 border border-blue-500/20 rounded-none">
                         <CreditCard className="w-5 h-5 text-blue-400" />
                     </div>
                     <div>
@@ -53,7 +53,7 @@ export function FinancialStackMatrix() {
                         <span className="text-[8px] text-slate-600 uppercase font-black tracking-[0.2em]">Net Credit Health</span>
                         <div className="flex items-baseline gap-2">
                             <span className="text-xl font-black text-blue-500 tracking-tighter">0.74</span>
-                            <span className="text-[10px] text-emerald-500 font-black">+2.1%</span>
+                            <span className="text-[10px] text-slate-300 font-black">+2.1%</span>
                         </div>
                     </div>
                 </div>
@@ -67,13 +67,13 @@ export function FinancialStackMatrix() {
                         <motion.div 
                             key={m.id}
                             whileHover={{ y: -4 }}
-                            className="p-5 bg-slate-900/40 border border-white/5 rounded-2xl flex flex-col gap-4 group/card hover:bg-slate-900/60 transition-all cursor-pointer"
+                            className="p-5 bg-slate-900/40 border border-white/5 rounded-none flex flex-col gap-4 group/card hover:bg-slate-900/60 transition-all cursor-pointer"
                         >
                             <div className="flex justify-between items-start">
-                                <div className={`p-2 rounded-xl ${
+                                <div className={`p-2 rounded-sm ${
                                     m.type === 'MORTGAGE' ? 'bg-red-500/10 text-red-400' :
                                     m.type === 'CREDIT' ? 'bg-blue-500/10 text-blue-400' :
-                                    m.type === 'PENSION' ? 'bg-emerald-500/10 text-emerald-400' :
+                                    m.type === 'PENSION' ? 'bg-slate-800 text-slate-300' :
                                     'bg-indigo-500/10 text-indigo-400'
                                 }`}>
                                     {m.type === 'MORTGAGE' && <Home className="w-4 h-4" />}
@@ -81,7 +81,7 @@ export function FinancialStackMatrix() {
                                     {m.type === 'PENSION' && <PiggyBank className="w-4 h-4" />}
                                     {m.type === 'INSURANCE' && <ShieldCheck className="w-4 h-4" />}
                                 </div>
-                                <Activity className={`w-3 h-3 ${m.health > 0.8 ? 'text-emerald-500' : m.health > 0.5 ? 'text-amber-500' : 'text-red-500'}`} />
+                                <Activity className={`w-3 h-3 ${m.health > 0.8 ? 'text-slate-300' : m.health > 0.5 ? 'text-amber-500' : 'text-red-500'}`} />
                             </div>
                             
                             <div>
@@ -95,11 +95,11 @@ export function FinancialStackMatrix() {
                                     <span>Stability</span>
                                     <span>{(m.health * 100).toFixed(0)}%</span>
                                 </div>
-                                <div className="h-1 bg-slate-800 rounded-full overflow-hidden">
+                                <div className="h-1 bg-slate-800 rounded-sm overflow-hidden">
                                     <motion.div 
                                         initial={{ width: 0 }} 
                                         animate={{ width: `${m.health * 100}%` }}
-                                        className={`h-full ${m.health > 0.8 ? 'bg-emerald-500' : m.health > 0.5 ? 'bg-blue-500' : 'bg-red-500'}`} 
+                                        className={`h-full ${m.health > 0.8 ? 'bg-slate-800' : m.health > 0.5 ? 'bg-blue-500' : 'bg-red-500'}`} 
                                     />
                                 </div>
                             </div>
@@ -121,11 +121,11 @@ export function FinancialStackMatrix() {
                         
                         {/* Live Counter (Simulated) */}
                         <div className="flex gap-4 justify-center pt-4">
-                            <div className="bg-white/5 border border-white/10 px-6 py-3 rounded-2xl backdrop-blur-md">
+                            <div className="bg-white/5 border border-white/10 px-6 py-3 rounded-none backdrop-blur-md">
                                 <div className="text-[8px] text-slate-500 uppercase font-black mb-1">Apple_Pay_Sync</div>
                                 <div className="text-xl font-black text-white tracking-tighter">98.4%</div>
                             </div>
-                            <div className="bg-white/5 border border-white/10 px-6 py-3 rounded-2xl backdrop-blur-md">
+                            <div className="bg-white/5 border border-white/10 px-6 py-3 rounded-none backdrop-blur-md">
                                 <div className="text-[8px] text-slate-500 uppercase font-black mb-1">Global_Default_Risk</div>
                                 <div className="text-xl font-black text-red-500 tracking-tighter">LOW</div>
                             </div>

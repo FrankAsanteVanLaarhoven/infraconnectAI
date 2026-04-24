@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  isaac-lab:
+    image: nvcr.io/nvidia/isaac-lab:latest
+    container_name: infraconnect-isaac-lab
+    runtime: nvidia
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+        limits:
+          memory: 64G
+          cpus: '32'
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8888/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NUM_ENVS=2048
+      - HEADLESS=true
+      - WANDB_API_KEY=${WANDB_API_KEY}
+      - INFRACONNECT_TENANT_ID=${TENANT_ID}
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - ./isaac_assets:/isaac_assets
+      - ./isaac_runs:/workspace/runs
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+    ports:
+      - "8888:8888"
+      - "6006:6006"
+    command: >
+      python scripts/train.py
+      --task Isaac-Lift-Cube-v0
+      --num_envs ${NUM_ENVS:-2048}
+      --headless
+      --wandb
+      --max_iterations 5000
+    restart: unless-stopped
+    networks:
+      - infraconnect-net
+
+networks:
+  infraconnect-net:
+    external: true

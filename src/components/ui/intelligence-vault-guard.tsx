@@ -34,10 +34,10 @@ export function IntelligenceVaultGuard({
       <motion.div 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className="absolute inset-0 z-50 flex flex-col items-center justify-center bg-black/40 backdrop-blur-sm border border-red-500/20 rounded-xl p-6 text-center"
+        className="absolute inset-0 z-50 flex flex-col items-center justify-center bg-black/40 backdrop-blur-sm border border-red-500/20 rounded-sm p-6 text-center"
       >
         <div className="relative mb-4">
-          <div className="absolute inset-0 bg-red-500/20 blur-2xl rounded-full animate-pulse" />
+          <div className="absolute inset-0 bg-red-500/20 blur-2xl rounded-sm" />
           <Lock className="w-12 h-12 text-red-500 relative z-10" />
         </div>
         
@@ -58,7 +58,7 @@ export function IntelligenceVaultGuard({
       </motion.div>
 
       {/* CORE Blueprint Lines (Decorative) */}
-      <div className="absolute inset-0 pointer-events-none opacity-20 border-2 border-dashed border-red-900/30 m-2 rounded-lg" />
+      <div className="absolute inset-0 pointer-events-none opacity-20 border-2 border-dashed border-red-900/30 m-2 rounded-sm" />
     </div>
   );
 }

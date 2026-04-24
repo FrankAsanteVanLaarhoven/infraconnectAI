@@ -2,6 +2,7 @@
  * InfraConnect - Physical Node Registration
  * Anchors the agent identity cryptographically utilizing hardware markers.
  */
+/* eslint-disable @typescript-eslint/no-require-imports */
 const os = require("os");
 const crypto = require("crypto");
 

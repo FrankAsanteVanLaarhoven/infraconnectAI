@@ -3,6 +3,7 @@
  * Transmits physical Jetson thermals & loads to the Control Plane 
  * simulating the MQTT/Kafka pipeline directly to the API sync.
  */
+/* eslint-disable @typescript-eslint/no-require-imports */
 const fetch = require("node-fetch");
 const NODE_ID = process.env.NODE_ID || "node_alpha_orin_nx";
 const CONTROL_PLANE = "http://localhost:3000/api/robotics/edge-sync";

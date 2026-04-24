@@ -1,4 +1,4 @@
-import { TimelineEvent } from "./store/useTimelineStore";
+import { TimelineEvent } from "../stores/timelineStore";
 
 /**
  * Replays localized history back over the true Redis stream.

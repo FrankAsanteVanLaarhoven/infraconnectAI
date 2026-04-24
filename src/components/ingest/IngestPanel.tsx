@@ -20,11 +20,11 @@ interface IngestResult {
   conflictCount: number
 }
 
-const SOURCE_TYPES: { type: SourceType; label: string; icon: React.ElementType; color: string; placeholder: string }[] = [
+const SOURCE_TYPES: { type: SourceType; label: string; icon: any; color: string; placeholder: string }[] = [
   { type: 'paper', label: 'Research Paper', icon: BookOpen, color: 'text-blue-400', placeholder: 'Paste paper abstract or full text...' },
-  { type: 'sim_telemetry', label: 'Sim Telemetry', icon: FlaskConical, color: 'text-green-400', placeholder: 'Paste Isaac Sim run log or metrics JSON...' },
+  { type: 'sim_telemetry', label: 'Sim Telemetry', icon: FlaskConical, color: 'text-slate-300', placeholder: 'Paste Isaac Sim run log or metrics JSON...' },
   { type: 'ros2_log', label: 'ROS2 Log', icon: Cpu, color: 'text-yellow-400', placeholder: 'Paste ROS2 topic list, bag summary, or error output...' },
-  { type: 'meeting_note', label: 'Meeting Note', icon: FileText, color: 'text-purple-400', placeholder: 'Paste supervision meeting notes or transcript...' },
+  { type: 'meeting_note', label: 'Meeting Note', icon: FileText, color: 'text-slate-400', placeholder: 'Paste supervision meeting notes or transcript...' },
   { type: 'url', label: 'Web Article', icon: Globe, color: 'text-cyan-400', placeholder: 'Paste article text (use Obsidian Web Clipper for best results)...' },
   { type: 'generic', label: 'Generic Doc', icon: FileCode2, color: 'text-gray-400', placeholder: 'Paste any document content...' },
 ]
@@ -39,7 +39,7 @@ export function IngestPanel() {
   const [result, setResult] = useState<IngestResult | null>(null)
   const [error, setError] = useState<string | null>(null)
 
-  const { fetchNodes } = useMemoryStore()
+  const { fetchNodes } = useMemoryStore() as any
 
   const activeType = SOURCE_TYPES.find((t) => t.type === selectedType)!
 
@@ -77,7 +77,7 @@ export function IngestPanel() {
   }
 
   return (
-    <GlassPanel title="Memory Ingest" icon={<Upload className="w-4 h-4" />} glow>
+    <GlassPanel title="Memory Ingest" {...{icon: <Upload className="w-4 h-4" />, glow: true} as any}>
       <div className="space-y-4">
         {/* Source type selector */}
         <div className="grid grid-cols-3 gap-2">
@@ -85,13 +85,13 @@ export function IngestPanel() {
             <button
               key={type}
               onClick={() => setSelectedType(type)}
-              className={`flex flex-col items-center gap-1 p-2 rounded-lg border transition-all text-xs ${
+              className={`flex flex-col items-center gap-1 p-2 rounded-sm border transition-all text-xs ${
                 selectedType === type
                   ? 'border-white/40 bg-white/10'
                   : 'border-white/10 hover:border-white/20'
               }`}
             >
-              <Icon className={`w-5 h-5 ${color}`} />
+              <Icon {...{className: `w-5 h-5 ${color}`} as any} />
               {label}
 
             </button>
@@ -141,7 +141,7 @@ export function IngestPanel() {
         </Button>
 
         {error && (
-          <div className="flex items-center gap-2 text-red-400 text-sm p-3 rounded-lg border border-red-500/30 bg-red-500/10">
+          <div className="flex items-center gap-2 text-red-400 text-sm p-3 rounded-sm border border-red-500/30 bg-red-500/10">
             <AlertTriangle className="w-4 h-4" />
             {error}
           </div>
@@ -155,7 +155,7 @@ export function IngestPanel() {
               exit={{ opacity: 0, height: 0 }}
             >
               <GlassCard className="p-4 space-y-3 mt-4" glow>
-                <div className="flex items-center gap-2 text-green-400 font-medium">
+                <div className="flex items-center gap-2 text-slate-300 font-medium">
                   <CheckCircle2 className="w-4 h-4" />
                   Successfully Ingested
                 </div>
@@ -164,7 +164,7 @@ export function IngestPanel() {
                   <Badge variant="outline" className="text-gray-300 border-white/20">
                     L0 Scratch: {result.rawNodeId.slice(0, 8)}
                   </Badge>
-                  <Badge variant="outline" className="text-purple-300 border-purple-500/30">
+                  <Badge variant="outline" className="text-slate-400 border-slate-800">
                     L1 Wiki: {result.wikiNodeId.slice(0, 8)}
                   </Badge>
                   {result.conflictCount > 0 && (

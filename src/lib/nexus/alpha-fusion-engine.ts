@@ -35,15 +35,15 @@ export function fuseMarketSignals(
     const finalConfidence = sarPrime ? (confidence * (1 - sarWeight)) + sarWeight : confidence;
 
     const leverage = finalConfidence > 0.9 ? 50 : finalConfidence > 0.7 ? 30 : 5;
-    const edge = calculateSystematicEdge(asset.symbol || 'N/A');
+    const edge = calculateSystematicEdge((asset as any).symbol || 'N/A');
 
     return {
-        ticker: asset.symbol || 'N/A',
+        ticker: (asset as any).symbol || 'N/A',
         confidence: finalConfidence,
         convictionType: finalConfidence > 0.9 ? 'ULTIMATE' : finalConfidence > 0.7 ? 'PRIME' : 'TACTICAL',
         rationale: sarPrime 
-            ? `SOVEREIGN_TRUTH detected via SAR Discovery // Inst Spoof identified in ${asset.symbol}` 
-            : `Efficiently Inefficient Capture // Alpha Gap @ ${asset.symbol}`,
+            ? `SOVEREIGN_TRUTH detected via SAR Discovery // Inst Spoof identified in ${(asset as any).symbol}` 
+            : `Efficiently Inefficient Capture // Alpha Gap @ ${(asset as any).symbol}`,
         latencyMs: 12 + Math.floor(Math.random() * 5),
         systematicEdge: edge,
         leverageRecommender: leverage,

@@ -1,6 +1,8 @@
 "use client";
 import { useCallback, useRef, useState } from "react";
+// @ts-ignore
 import Recorder from "opus-recorder";
+// @ts-ignore
 import encoderPath from "opus-recorder/dist/encoderWorker.min.js?url";
 import { useMediaContext } from "../MediaContext";
 

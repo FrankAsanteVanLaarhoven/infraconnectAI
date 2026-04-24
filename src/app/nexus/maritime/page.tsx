@@ -36,13 +36,13 @@ export default function MaritimePage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#020202] text-slate-300 font-mono flex flex-col overflow-hidden selection:bg-cyan-500/30">
+    <div className="min-h-full bg-[#020202] text-slate-300 font-mono flex flex-col overflow-hidden selection:bg-cyan-500/30">
        
        {/* Global Maritime Header */}
        <header className="h-20 border-b border-white/5 bg-white/[0.02] flex items-center justify-between px-8 relative z-50">
           <div className="flex items-center gap-6">
              <div className="flex items-center gap-3">
-                <div className="p-2 bg-cyan-500/10 border border-cyan-500/30 rounded-lg shadow-[0_0_20px_rgba(6,182,212,0.1)]">
+                <div className="p-2 bg-cyan-500/10 border border-cyan-500/30 rounded-sm">
                    <Waves className="w-5 h-5 text-cyan-400" />
                 </div>
                 <div>
@@ -60,15 +60,15 @@ export default function MaritimePage() {
           <div className="flex items-center gap-8">
              <div className="text-right">
                 <span className="text-[8px] text-slate-600 block mb-1 font-black uppercase tracking-widest">APAC Mission Status</span>
-                <span className="text-xs font-black text-emerald-500 flex items-center gap-2">
-                   <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                <span className="text-xs font-black text-slate-300 flex items-center gap-2">
+                   <div className="w-2 h-2 rounded-sm bg-slate-800" />
                    PIVOT_ENABLED
                 </span>
              </div>
              <div className="flex gap-2">
                 {['HORMUZ', 'SUEZ', 'MALACCA'].map(c => (
                    <div key={c} className="px-3 py-1 bg-white/5 border border-white/10 rounded flex items-center gap-2">
-                      <div className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                      <div className="w-1.5 h-1.5 rounded-sm bg-slate-800" />
                       <span className="text-[9px] font-black text-slate-400 uppercase tracking-tighter">{c}</span>
                    </div>
                 ))}
@@ -85,10 +85,10 @@ export default function MaritimePage() {
              
              {/* Map Controls */}
              <div className="absolute top-8 left-8 z-30 flex flex-col gap-2">
-                <button className="p-3 bg-black/80 border border-white/10 rounded-xl hover:bg-slate-900 transition-all text-white shadow-2xl">
+                <button className="p-3 bg-black/80 border border-white/10 rounded-sm hover:bg-slate-900 transition-all text-white shadow-2xl">
                    <Target className="w-4 h-4" />
                 </button>
-                <button className="p-3 bg-black/80 border border-white/10 rounded-xl hover:bg-slate-900 transition-all text-white shadow-2xl">
+                <button className="p-3 bg-black/80 border border-white/10 rounded-sm hover:bg-slate-900 transition-all text-white shadow-2xl">
                    <Activity className="w-4 h-4" />
                 </button>
              </div>
@@ -137,7 +137,7 @@ export default function MaritimePage() {
 
              {/* Bottom Map Info */}
              <div className="absolute bottom-8 left-8 right-8 flex justify-between items-end pointer-events-none">
-                <div className="p-4 bg-black/60 border border-white/10 rounded-xl backdrop-blur-md pointer-events-auto max-w-sm">
+                <div className="p-4 bg-black/60 border border-white/10 rounded-sm backdrop-blur-md pointer-events-auto max-w-sm">
                    <div className="flex items-center gap-3 mb-2">
                       <Satellite className="w-4 h-4 text-indigo-400" />
                       <span className="text-[10px] font-black text-white uppercase tracking-widest">RADARSAT-3 Live Feed</span>
@@ -147,11 +147,11 @@ export default function MaritimePage() {
                    </p>
                 </div>
                 <div className="flex gap-4 pointer-events-auto">
-                   <div className="px-6 py-3 bg-black border border-white/10 rounded-xl flex flex-col items-end">
+                   <div className="px-6 py-3 bg-black border border-white/10 rounded-sm flex flex-col items-end">
                       <span className="text-[8px] text-slate-600 uppercase font-black mb-1">Chokepoint Load</span>
                       <span className="text-xl font-black text-red-500 tabular-nums">92%</span>
                    </div>
-                   <div className="px-6 py-3 bg-black border border-white/10 rounded-xl flex flex-col items-end">
+                   <div className="px-6 py-3 bg-black border border-white/10 rounded-sm flex flex-col items-end">
                       <span className="text-[8px] text-slate-600 uppercase font-black mb-1">Pricing Delta</span>
                       <span className="text-xl font-black text-white tabular-nums">+$1.2M</span>
                    </div>
@@ -181,13 +181,13 @@ export default function MaritimePage() {
 
              {/* 3. Ripple Analysis Chart */}
              <div className="p-4 flex-1">
-                <div className="bg-slate-900/10 border border-white/5 rounded-xl h-full flex flex-col">
+                <div className="bg-slate-900/10 border border-white/5 rounded-sm h-full flex flex-col">
                    <div className="p-4 border-b border-white/5 flex items-center justify-between">
                       <div className="flex items-center gap-2">
                          <TrendingUp className="w-3 h-3 text-indigo-400" />
                          <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest">Supply Chain Ripple</span>
                       </div>
-                      <Zap className="w-3 h-3 text-amber-500 animate-pulse" />
+                      <Zap className="w-3 h-3 text-amber-500" />
                    </div>
                    <div className="flex-1 p-2">
                       <MetricLensChart title="TRANSIT RISK INDEX" unit="LOAD%" />
@@ -202,7 +202,7 @@ export default function MaritimePage() {
        {/* Global Pulse Indicator */}
        <footer className="h-8 border-t border-white/5 bg-black flex items-center justify-between px-6 text-[8px] font-black text-slate-600 uppercase tracking-widest">
           <div className="flex items-center gap-4">
-             <span className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-cyan-500" /> SYSTEM_OS_LIVE: NODE_A21</span>
+             <span className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-sm bg-cyan-500" /> SYSTEM_OS_LIVE: NODE_A21</span>
              <span>AIS_HANDSHAKE: OK</span>
              <span>SAR_DISCOVERY: ACTIVE</span>
           </div>

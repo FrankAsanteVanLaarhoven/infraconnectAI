@@ -34,7 +34,7 @@ export const AgentReasoningPanel = () => {
   }, [agentActions]);
 
   return (
-    <div className="flex flex-col h-full w-full bg-[#050607] text-[#E6EDF3] font-mono text-[11px] rounded-xl border border-[#1A1D21] shadow-2xl overflow-hidden">
+    <div className="flex flex-col h-full w-full bg-[#050607] text-[#E6EDF3] font-mono text-[11px] rounded-sm border border-[#1A1D21] shadow-2xl overflow-hidden">
       
       {/* HEADER */}
       <div className="flex justify-between items-center p-3 border-b border-[#1A1D21] bg-[#0B0D0F]">
@@ -53,7 +53,7 @@ export const AgentReasoningPanel = () => {
           {/* CNP NEGOTIATION AUCTION TRACKER */}
           {bids.length > 0 && (
              <div className="p-3 bg-[#0B0D0F] border-b border-[#1A1D21] mb-2 flex flex-col gap-1">
-                 <div className="text-[#A855F7] font-black tracking-widest text-[9px] uppercase animate-pulse">Live Negotiation Engine</div>
+                 <div className="text-[#A855F7] font-black tracking-widest text-[9px] uppercase">Live Negotiation Engine</div>
                  {bids.map((b, i) => (
                     <div key={i} className="text-[#6B7280] text-[10px] break-all">
                         {b.robot_id} BID: <span className="text-white">{b.bid.toFixed(2)}</span> → Target: {b.task_id}

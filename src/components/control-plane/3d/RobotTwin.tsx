@@ -4,7 +4,7 @@ import { useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 
 export function RobotTwin({ joints }: any) {
-  const ref = useRef<any>();
+  const ref = useRef<any>(null);
 
   useFrame(() => {
     if (!ref.current) return;

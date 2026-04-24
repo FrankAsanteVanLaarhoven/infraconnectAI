@@ -23,7 +23,7 @@ export function InferenceMonitor() {
   if (!data) return null;
 
   return (
-    <div className="w-full h-80 bg-slate-950/40 rounded-xl border border-indigo-500/20 p-6 font-mono relative overflow-hidden group shadow-[0_0_50px_rgba(99,102,241,0.05)]">
+    <div className="w-full h-80 bg-slate-950/40 rounded-sm border border-indigo-500/20 p-6 font-mono relative overflow-hidden group">
        {/* Background Grid */}
        <div className="absolute inset-0 opacity-[0.03] pointer-events-none" 
             style={{ backgroundImage: 'radial-gradient(#6366f1 1px, transparent 1px)', backgroundSize: '25px 25px' }} />
@@ -31,8 +31,8 @@ export function InferenceMonitor() {
        {/* Header */}
        <div className="flex justify-between items-start relative z-10 mb-8 border-b border-indigo-500/10 pb-4">
           <div className="flex items-center gap-3">
-             <div className="p-2 bg-indigo-500/10 border border-indigo-500/30 rounded-lg">
-                <Cpu className="w-4 h-4 text-indigo-400 animate-pulse" />
+             <div className="p-2 bg-indigo-500/10 border border-indigo-500/30 rounded-sm">
+                <Cpu className="w-4 h-4 text-indigo-400" />
              </div>
              <div>
                 <h3 className="text-[10px] font-black text-indigo-400 uppercase tracking-widest">Sovereign Inference Monitor</h3>
@@ -60,11 +60,11 @@ export function InferenceMonitor() {
                    </div>
                 </div>
                 {/* Visual Pulse Bar */}
-                <div className="h-1 w-full bg-slate-900 rounded-full overflow-hidden relative">
+                <div className="h-1 w-full bg-slate-900 rounded-sm overflow-hidden relative">
                    <motion.div 
                      initial={{ width: 0 }}
                      animate={{ width: `${(bench.tokensPerSec / 100) * 100}%` }}
-                     className="absolute top-0 left-0 h-full bg-indigo-600 shadow-[0_0_10px_#6366f1]"
+                     className="absolute top-0 left-0 h-full bg-indigo-600"
                    />
                 </div>
              </div>

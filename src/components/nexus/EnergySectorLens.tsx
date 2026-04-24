@@ -62,11 +62,11 @@ export function EnergySectorLens() {
     }, []);
 
     return (
-        <div className="w-full h-full bg-[#030712] border border-slate-900 rounded-3xl p-8 flex flex-col font-mono relative overflow-hidden group shadow-[0_0_80px_rgba(0,0,0,0.9)]">
+        <div className="w-full h-full bg-[#030712] border border-slate-900 rounded-3xl p-8 flex flex-col font-mono relative overflow-hidden group">
             {/* Header / Price Ticker */}
             <div className="flex items-center justify-between mb-8 border-b border-white/5 pb-6 relative z-10">
                 <div className="flex items-center gap-4">
-                    <div className="p-3 bg-amber-500/10 border border-amber-500/20 rounded-2xl">
+                    <div className="p-3 bg-amber-500/10 border border-amber-500/20 rounded-none">
                         <Droplets className="w-5 h-5 text-amber-500" />
                     </div>
                     <div>
@@ -105,7 +105,7 @@ export function EnergySectorLens() {
                          style={{ backgroundImage: 'radial-gradient(#amber-500 0.5px, transparent 0.5px)', backgroundSize: '40px 40px' }} />
 
                     {/* Node Markers */}
-                    <div className="absolute inset-4 rounded-2xl border border-white/5 bg-slate-900/10 backdrop-blur-sm overflow-hidden flex items-center justify-center p-8">
+                    <div className="absolute inset-4 rounded-none border border-white/5 bg-slate-900/10 backdrop-blur-sm overflow-hidden flex items-center justify-center p-8">
                         {/* Static Map Image / Placeholder */}
                         <div className="text-center opacity-30 flex flex-col items-center gap-4">
                             <Globe className="w-24 h-24 text-slate-800" />
@@ -123,11 +123,11 @@ export function EnergySectorLens() {
                                     }}
                                     className="absolute -translate-x-1/2 -translate-y-1/2 group/lead"
                                 >
-                                    <div className="p-1.5 rounded-full bg-blue-500/20 border border-blue-500 animate-[pulse_3s_infinite] pointer-events-auto cursor-help relative shadow-[0_0_15px_rgba(59,130,246,0.3)]">
+                                    <div className="p-1.5 rounded-sm bg-blue-500/20 border border-blue-500 animate-[pulse_3s_infinite] pointer-events-auto cursor-help relative">
                                         <Navigation className="w-2.5 h-2.5 text-blue-400 rotate-45" />
                                         
                                         {/* Lead Detail Card */}
-                                        <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-48 bg-slate-950 border border-blue-500/30 rounded-xl p-3 opacity-0 group-hover/lead:opacity-100 transition-opacity z-50 backdrop-blur-xl">
+                                        <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-48 bg-slate-950 border border-blue-500/30 rounded-sm p-3 opacity-0 group-hover/lead:opacity-100 transition-opacity z-50 backdrop-blur-xl">
                                             <p className="text-[7px] text-blue-500 font-black uppercase tracking-widest mb-1">Live Revenue Target</p>
                                             <h4 className="text-[10px] font-black text-white uppercase mb-1">{lead.company || lead.email}</h4>
                                             <div className="flex justify-between items-center text-[7px] text-slate-500 uppercase font-black tracking-widest border-b border-white/5 pb-1 mb-2">
@@ -135,7 +135,7 @@ export function EnergySectorLens() {
                                                 <span className="text-blue-400">Score: {lead.score}</span>
                                             </div>
                                             <div className="flex items-center gap-2">
-                                                <TrendingUp className="w-2.5 h-2.5 text-emerald-400" />
+                                                <TrendingUp className="w-2.5 h-2.5 text-slate-300" />
                                                 <span className="text-[8px] text-white font-black uppercase">£{lead.projectedValue?.toLocaleString()} Magnitude</span>
                                             </div>
                                         </div>
@@ -155,15 +155,15 @@ export function EnergySectorLens() {
                                     }}
                                     className="absolute -translate-x-1/2 -translate-y-1/2 group/node"
                                 >
-                                    <div className={`p-2 rounded-full border ${
+                                    <div className={`p-2 rounded-sm border ${
                                         node.status === 'PARALYZED' ? 'bg-red-500/20 border-red-500' : 
                                         node.status === 'RESTRICTED' ? 'bg-amber-500/20 border-amber-500' : 
-                                        'bg-emerald-500/20 border-emerald-500'
-                                    } animate-pulse pointer-events-auto cursor-help relative`}>
+                                        'bg-slate-800 border-slate-700'
+                                    }  pointer-events-auto cursor-help relative`}>
                                         {node.type === 'CHOKEPOINT' ? <Anchor className="w-3 h-3 text-white" /> : <Droplets className="w-3 h-3 text-white" />}
                                         
                                         {/* Hover Detail Card */}
-                                        <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-48 bg-black/95 border border-white/10 rounded-xl p-3 opacity-0 group-hover/node:opacity-100 transition-opacity z-50">
+                                        <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-48 bg-black/95 border border-white/10 rounded-sm p-3 opacity-0 group-hover/node:opacity-100 transition-opacity z-50">
                                             <h4 className="text-[9px] font-black text-white uppercase mb-1">{node.label}</h4>
                                             <div className="flex justify-between items-center text-[7px] text-slate-500 uppercase font-black tracking-widest border-b border-white/5 pb-1 mb-2">
                                                 <span>Status: {node.status}</span>
@@ -183,8 +183,8 @@ export function EnergySectorLens() {
 
                     {/* Overlay Alert */}
                     <div className="absolute top-6 left-6 pointer-events-none">
-                        <div className="bg-red-500/10 border border-red-500/40 px-4 py-2 rounded-xl backdrop-blur-md flex items-center gap-3">
-                            <AlertTriangle className="w-4 h-4 text-red-500 animate-pulse" />
+                        <div className="bg-red-500/10 border border-red-500/40 px-4 py-2 rounded-sm backdrop-blur-md flex items-center gap-3">
+                            <AlertTriangle className="w-4 h-4 text-red-500" />
                             <div className="flex flex-col">
                                 <span className="text-[9px] text-red-500 font-black uppercase tracking-widest">Global Energy Emergency</span>
                                 <span className="text-[7px] text-red-400 font-bold uppercase tracking-widest">Hormuz Blockade: DAY 5</span>
@@ -205,10 +205,10 @@ export function EnergySectorLens() {
                             {[
                                 { label: 'SPR US', val: 0.12, icon: ShieldAlert, color: 'text-red-500' },
                                 { label: 'SPR EU', val: 0.28, icon: Activity, color: 'text-amber-500' },
-                                { label: 'IEA EMERGENCY STOCK', val: 0.45, icon: Zap, color: 'text-emerald-500' }
+                                { label: 'IEA EMERGENCY STOCK', val: 0.45, icon: Zap, color: 'text-slate-300' }
                             ].map((stat, i) => (
                                 <div key={i} className="flex items-center gap-4">
-                                    <div className={`p-2 rounded-lg bg-slate-900 border border-white/5 ${stat.color}`}>
+                                    <div className={`p-2 rounded-sm bg-slate-900 border border-white/5 ${stat.color}`}>
                                         <stat.icon className="w-4 h-4" />
                                     </div>
                                     <div className="flex-1 space-y-1">
@@ -216,7 +216,7 @@ export function EnergySectorLens() {
                                             <span className="text-slate-400">{stat.label}</span>
                                             <span className={stat.color}>{(stat.val * 100).toFixed(0)}%</span>
                                         </div>
-                                        <div className="h-1 w-full bg-slate-800 rounded-full overflow-hidden">
+                                        <div className="h-1 w-full bg-slate-800 rounded-sm overflow-hidden">
                                             <motion.div initial={{ width: 0 }} animate={{ width: `${stat.val * 100}%` }} className={`h-full ${stat.color.replace('text', 'bg')}`} />
                                         </div>
                                     </div>

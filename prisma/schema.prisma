@@ -691,6 +691,7 @@ model EnterpriseLead {
   
   // Tactical Escalation Status
   status               String   @default("queued") // 'queued' | 'reviewing' | 'cleared' | 'archived'
+  accessCode           String?  // Auto-generated passcode upon approval
   
   capturedAt           DateTime @default(now())
   updatedAt            DateTime @updatedAt
@@ -846,6 +847,8 @@ model ML_Experiment {
   rewardCurves    Json     // Array of {episode, reward, loss}
   svrRate         Float    // Safety Violation Rate
   completedAt     DateTime @default(now())
+
+  isaacLabRuns    IsaacLabRun[]
 }
 
 model OTA_Payload {
@@ -874,4 +877,134 @@ model OTA_Deployment {
   finishedAt      DateTime?
 
   payload         OTA_Payload @relation(fields: [payloadId], references: [id])
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// PHYSICAL AI CORE — v3.0 "Physical WeightsLab" Additions
+// ═══════════════════════════════════════════════════════════════════════════════
+
+enum IsaacRunStatus {
+  QUEUED
+  RUNNING
+  PAUSED_FOR_DATA_ISSUE
+  PAUSED_FOR_PHYSICS
+  COMPLETED
+  FAILED_PHYSICS
+  ARCHIVED
+}
+
+enum CurationAction {
+  PRUNE
+  KEEP
+  AUGMENT
+  FLAG_HUMAN_REVIEW
+  PROMOTE_TO_CANON
+}
+
+model IsaacLabRun {
+  id                    String           @id @default(cuid())
+  experimentId          String
+  status                IsaacRunStatus   @default(QUEUED)
+  sceneUsd              String           // Path to Isaac Lab USD scene
+  domainRandomization   Json             // DR config (lighting, textures, physics)
+  numEnvs               Int              // Number of parallel envs
+  totalEpisodes         Int              @default(0)
+  physicsScoreAvg       Float            @default(0)
+  dataQualityScoreAvg   Float            @default(0)
+  highLossCount         Int              @default(0)
+  prunedCount           Int              @default(0)
+  startedAt             DateTime?
+  completedAt           DateTime?
+  createdAt             DateTime         @default(now())
+  updatedAt             DateTime         @updatedAt
+
+  mlExperiment          ML_Experiment    @relation(fields: [experimentId], references: [id])
+  episodes              PhysicsEpisode[]
+  curationEvents        DataCurationEvent[]
+
+  @@index([status])
+  @@index([experimentId])
+}
+
+model PhysicsEpisode {
+  id                    String   @id @default(cuid())
+  runId                 String
+  episodeIndex          Int
+  physicsRealism        Float    // 0-1 (collision, friction, stability)
+  sensorFidelity        Float    // 0-1 (camera, LiDAR, depth accuracy)
+  languageGrounding     Float    // 0-1 (VLA instruction alignment)
+  actionSuccess         Float    // 0-1
+  modelLoss             Float
+  cleanlabConfidence    Float    // 0-1 (Cleanlab label quality)
+  overallQualityScore   Float    // Weighted composite
+  isPruned              Boolean  @default(false)
+  pruneReason           String?
+  replayUrl             String?  // 3D replay link
+  memoryNodeId          String?  // Link to L1.5 Physics Canon
+  createdAt             DateTime @default(now())
+
+  run                   IsaacLabRun @relation(fields: [runId], references: [id], onDelete: Cascade)
+
+  @@index([runId, episodeIndex])
+  @@index([isPruned])
+  @@index([overallQualityScore])
+}
+
+model DataCurationEvent {
+  id             String          @id @default(cuid())
+  runId          String
+  episodeIds     String          // JSON array of episode IDs affected
+  action         CurationAction
+  reason         String
+  confidence     Float
+  agent          String          // "PhysicsAgent" | "CleanlabAgent" | "WeightsLabAgent" | "Human"
+  metadata       Json?
+  createdAt      DateTime        @default(now())
+
+  run            IsaacLabRun     @relation(fields: [runId], references: [id], onDelete: Cascade)
+
+  @@index([runId])
+  @@index([action])
+  @@index([createdAt])
+}
+
+model VlaTrainingSession {
+  id                  String   @id @default(cuid())
+  name                String
+  baseModel           String   // e.g. "openvla-7b", "pi0", "gr00t-n1"
+  datasetMix          Json     // { real: ["BDD100K"], synthetic: ["LIBERO"] }
+  status              String   @default("queued") // queued | training | paused | completed | failed
+  totalSteps          Int
+  currentStep         Int      @default(0)
+  bestPhysicsScore    Float?
+  bestDataQuality     Float?
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  @@index([status])
+}
+
+model RobotModel {
+  id          String   @id @default(cuid())
+  name        String
+  urdfContent String?
+  simConfig   String?  // JSON config for Isaac Lab
+  status      String   @default("IMPORTED") // IMPORTED, SYNCED, ACTIVE
+  jointCount  Int      @default(0)
+  linkCount   Int      @default(0)
+  totalMass   Float    @default(0)
+  importedAt  DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model RobotTelemetry {
+  id        String   @id @default(cuid())
+  robotId   String
+  type      String   // joint_states, battery_thermal, etc.
+  data      Json
+  timestamp DateTime @default(now())
+
+  @@index([robotId])
+  @@index([type])
+  @@index([timestamp])
 }

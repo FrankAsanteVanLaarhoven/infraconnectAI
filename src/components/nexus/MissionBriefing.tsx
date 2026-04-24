@@ -28,7 +28,7 @@ function TechnicalBadge({ children, variant = 'cyan' }: { children: React.ReactN
     const variants = {
         cyan: 'border-cyan-500/30 text-cyan-400 bg-cyan-500/5',
         amber: 'border-amber-500/30 text-amber-500 bg-amber-500/5',
-        emerald: 'border-emerald-500/30 text-emerald-400 bg-emerald-500/5',
+        emerald: 'border-slate-700 text-slate-300 bg-slate-800',
         red: 'border-red-500/30 text-red-500 bg-red-500/5',
     };
     return (
@@ -87,7 +87,7 @@ export function MissionBriefing() {
             glowStrong 
             scanline 
             padding="none" 
-            className="w-full h-full flex flex-col font-mono relative overflow-hidden group select-none shadow-[0_0_80px_rgba(34,211,238,0.05)]"
+            className="w-full h-full flex flex-col font-mono relative overflow-hidden group select-none"
         >
             <AnimatePresence mode="wait">
                 {isAnalyzing ? (
@@ -103,15 +103,15 @@ export function MissionBriefing() {
                             <motion.div 
                                 animate={{ rotate: 360 }}
                                 transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-                                className="w-48 h-48 border-2 border-cyan-500/5 border-t-cyan-500/20 rounded-full"
+                                className="w-48 h-48 border-2 border-cyan-500/5 border-t-cyan-500/20 rounded-sm"
                             />
                             <motion.div 
                                 animate={{ rotate: -360 }}
                                 transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
-                                className="absolute inset-2 border border-dashed border-cyan-500/10 rounded-full"
+                                className="absolute inset-2 border border-dashed border-cyan-500/10 rounded-sm"
                             />
                             <div className="absolute inset-0 flex items-center justify-center">
-                                <Search className="w-10 h-10 text-cyan-400 animate-pulse" />
+                                <Search className="w-10 h-10 text-cyan-400" />
                             </div>
                             
                             {/* Tactical Crosshair */}
@@ -124,9 +124,9 @@ export function MissionBriefing() {
                         <div className="text-center space-y-4">
                             <h3 className="text-sm font-black text-white uppercase tracking-[0.6em]">Neural Predictive Swarm Active</h3>
                             <div className="flex flex-col gap-2 scale-90">
-                                <div className="w-64 h-1 bg-white/5 rounded-full relative overflow-hidden">
+                                <div className="w-64 h-1 bg-white/5 rounded-sm relative overflow-hidden">
                                     <motion.div 
-                                        className="h-full bg-cyan-500 shadow-[0_0_15px_rgba(34,211,238,0.8)]"
+                                        className="h-full bg-cyan-500"
                                         initial={{ width: 0 }}
                                         animate={{ width: `${progress}%` }}
                                     />
@@ -155,14 +155,14 @@ export function MissionBriefing() {
                         {/* Cinematic Header */}
                         <div className="flex items-center justify-between border-b border-white/5 pb-6">
                             <div className="flex items-center gap-4">
-                                <div className="p-3 bg-cyan-500/10 border border-cyan-500/20 rounded-xl shadow-[0_0_20px_rgba(34,211,238,0.1)]">
+                                <div className="p-3 bg-cyan-500/10 border border-cyan-500/20 rounded-sm">
                                     <Target className="w-6 h-6 text-cyan-400" />
                                 </div>
                                 <div>
                                     <h2 className="text-sm font-black text-white uppercase tracking-[0.3em]">Strategic Investment Briefing</h2>
                                     <div className="flex items-center gap-3 mt-1.5">
                                         <span className="text-[8px] text-cyan-500 uppercase font-bold tracking-widest underline underline-offset-4 decoration-cyan-500/30">Prediction Swarm Calculated</span>
-                                        <div className="w-1 h-1 rounded-full bg-slate-700" />
+                                        <div className="w-1 h-1 rounded-sm bg-slate-700" />
                                         <span className="text-[8px] text-slate-500 uppercase font-bold tracking-widest">Neural Standard 2035 // 0.99A</span>
                                     </div>
                                 </div>
@@ -179,7 +179,7 @@ export function MissionBriefing() {
                                         <div className="space-y-2">
                                             <span className="text-[9px] text-slate-500 uppercase font-black tracking-widest bg-slate-500/10 px-2 py-0.5 rounded">Primary Vector</span>
                                             <div className="flex items-baseline gap-4 mt-2">
-                                                <span className="text-6xl font-black text-white tracking-tighter drop-shadow-[0_0_20px_rgba(255,255,255,0.1)]">{STOCK_PICK.ticker}</span>
+                                                <span className="text-6xl font-black text-white tracking-tighter drop-">{STOCK_PICK.ticker}</span>
                                                 <div className="flex flex-col">
                                                     <span className="text-[12px] text-cyan-400 font-extrabold uppercase tracking-widest leading-none">{STOCK_PICK.name}</span>
                                                     <span className="text-[8px] text-slate-600 font-bold uppercase tracking-tighter mt-1">{STOCK_PICK.class}</span>
@@ -187,10 +187,10 @@ export function MissionBriefing() {
                                             </div>
                                         </div>
                                         <div className="flex flex-col items-end">
-                                            <div className="p-3 bg-emerald-500/10 border border-emerald-500/20 rounded-full mb-3">
-                                                <TrendingUp className="w-8 h-8 text-emerald-400" />
+                                            <div className="p-3 bg-slate-800 border border-slate-700 rounded-sm mb-3">
+                                                <TrendingUp className="w-8 h-8 text-slate-300" />
                                             </div>
-                                            <span className="text-3xl font-black text-emerald-400 tracking-tighter">{STOCK_PICK.upside}</span>
+                                            <span className="text-3xl font-black text-slate-300 tracking-tighter">{STOCK_PICK.upside}</span>
                                             <span className="text-[8px] text-slate-600 uppercase font-black tracking-[0.2em] mt-1">Projected Delta</span>
                                         </div>
                                     </div>
@@ -210,9 +210,9 @@ export function MissionBriefing() {
                                                 <span className="text-[8px] text-slate-500 uppercase font-black tracking-widest uppercase">Conviction</span>
                                                 <span className="text-2xl font-black text-cyan-400">{STOCK_PICK.conviction}%</span>
                                             </div>
-                                            <div className="w-full h-1 bg-white/5 rounded-full overflow-hidden">
+                                            <div className="w-full h-1 bg-white/5 rounded-sm overflow-hidden">
                                                 <motion.div 
-                                                    className="h-full bg-cyan-500 shadow-[0_0_10px_#22d3ee]"
+                                                    className="h-full bg-cyan-500"
                                                     initial={{ width: 0 }}
                                                     animate={{ width: `${STOCK_PICK.conviction}%` }}
                                                 />
@@ -233,7 +233,7 @@ export function MissionBriefing() {
                                 <div className="space-y-4 flex-1">
                                     {STOCK_PICK.rationale.map((line, i) => (
                                         <GlassCard key={i} className="p-4 bg-white/5 border border-white/5 hover:border-cyan-500/20 group/line flex items-start gap-4 transition-all">
-                                            <div className="mt-1 p-1 bg-cyan-900/40 rounded-lg group-hover/line:bg-cyan-500 transition-colors">
+                                            <div className="mt-1 p-1 bg-cyan-900/40 rounded-sm group-hover/line:bg-cyan-500 transition-colors">
                                                 <ChevronRight className="w-3 h-3 text-cyan-400 group-hover/line:text-black" />
                                             </div>
                                             <p className="text-[10px] text-slate-300 leading-relaxed font-mono italic group-hover/line:text-white transition-colors">{line}</p>
@@ -271,7 +271,7 @@ export function MissionBriefing() {
                             
                             <div className="flex items-center gap-6">
                                 <span className="text-[10px] text-slate-700 font-mono tracking-widest font-bold uppercase">{pulseStamp}</span>
-                                <Button className="bg-cyan-500 hover:bg-cyan-400 text-black font-black uppercase text-[10px] py-7 px-12 rounded-xl tracking-[0.2em] shadow-[0_0_30px_rgba(34,211,238,0.3)] transition-all hover:scale-[1.02] active:scale-[0.98]">
+                                <Button className="bg-cyan-500 hover:bg-cyan-400 text-black font-black uppercase text-[10px] py-7 px-12 rounded-sm tracking-[0.2em] transition-all hover:scale-[1.02] active:scale-[0.98]">
                                     Commit to Mission Portfolio
                                 </Button>
                             </div>

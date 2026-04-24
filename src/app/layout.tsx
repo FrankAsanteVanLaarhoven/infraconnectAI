@@ -9,8 +9,9 @@ import OperatorPanel from "@/components/operator/OperatorPanel";
 import { LocalizationProvider } from "@/components/providers/LocalizationProvider";
 import { NeuralHUD } from "@/components/ui/NeuralHUD";
 import { GlobalSecurityGuard } from "@/components/ui/GlobalSecurityGuard";
-import { GlobalSidebar } from "@/components/navigation/GlobalSidebar";
-import { SidebarProvider, SidebarInset, SidebarTrigger } from "@/components/ui/sidebar";
+import { GlobalSidebar, GlobalSidebarTrigger } from "@/components/navigation/GlobalSidebar";
+import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
+import { ProjectTimeline } from "@/components/ui/ProjectTimeline";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -76,13 +77,12 @@ export default function RootLayout({
                 <SidebarProvider>
                    <GlobalSidebar />
                    <SidebarInset className="bg-transparent flex-1 w-full h-full min-h-screen relative">
-                      <div className="absolute top-4 left-4 z-50 pointer-events-auto mix-blend-difference">
-                        <SidebarTrigger className="text-white hover:bg-white/10" />
-                      </div>
+                      <GlobalSidebarTrigger />
                       {children}
                    </SidebarInset>
                 </SidebarProvider>
                 <NeuralHUD />
+                <ProjectTimeline />
                 <OperatorPanel />
                 <Toaster />
               </LocalizationProvider>

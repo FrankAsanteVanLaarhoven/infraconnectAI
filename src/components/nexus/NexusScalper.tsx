@@ -25,7 +25,7 @@ function TechnicalBadge({ children, variant = 'cyan' }: { children: React.ReactN
     const variants = {
         cyan: 'border-cyan-500/30 text-cyan-400 bg-cyan-500/5',
         amber: 'border-amber-500/30 text-amber-500 bg-amber-500/5',
-        emerald: 'border-emerald-500/30 text-emerald-400 bg-emerald-500/5',
+        emerald: 'border-slate-700 text-slate-300 bg-slate-800',
         red: 'border-red-500/30 text-red-500 bg-red-500/5',
     };
     return (
@@ -65,13 +65,13 @@ export function NexusScalper() {
             glowStrong 
             scanline 
             padding="none" 
-            className="w-full h-full flex flex-col font-mono relative overflow-hidden group select-none shadow-[0_0_100px_rgba(34,211,238,0.05)] bg-black/40"
+            className="w-full h-full flex flex-col font-mono relative overflow-hidden group select-none bg-black/40"
         >
             {/* 1. CINEMATIC HEADER */}
             <div className="flex items-center justify-between px-8 py-6 border-b border-white/5 bg-black/20 backdrop-blur-md relative z-10">
                 <div className="flex items-center gap-5">
-                    <div className="p-3 bg-cyan-500/10 border border-cyan-500/20 rounded-2xl shadow-[0_0_20px_rgba(34,211,238,0.1)]">
-                        <Zap className="w-6 h-6 text-cyan-400 group-hover:animate-pulse transition-all duration-500" />
+                    <div className="p-3 bg-cyan-500/10 border border-cyan-500/20 rounded-none">
+                        <Zap className="w-6 h-6 text-cyan-400 group-hover: transition-all duration-500" />
                     </div>
                     <div>
                         <div className="flex items-center gap-3">
@@ -85,18 +85,18 @@ export function NexusScalper() {
                 </div>
 
                 <div className={cn(
-                    "px-5 py-2.5 rounded-xl border flex items-center gap-4 transition-all duration-700 backdrop-blur-3xl",
+                    "px-5 py-2.5 rounded-sm border flex items-center gap-4 transition-all duration-700 backdrop-blur-3xl",
                     isGoldenWindow 
-                        ? 'bg-emerald-500/5 border-emerald-500/30 shadow-[0_0_30px_rgba(16,185,129,0.2)]' 
+                        ? 'bg-slate-800 border-slate-700 ' 
                         : 'bg-black/40 border-white/5'
                 )}>
                     <div className="relative">
-                        <Clock className={cn("w-4 h-4", isGoldenWindow ? 'text-emerald-400 animate-spin-slow' : 'text-slate-600')} />
-                        {isGoldenWindow && <div className="absolute inset-0 bg-emerald-400/20 blur-md rounded-full" />}
+                        <Clock className={cn("w-4 h-4", isGoldenWindow ? 'text-slate-300 animate-spin-slow' : 'text-slate-600')} />
+                        {isGoldenWindow && <div className="absolute inset-0 bg-slate-800 blur-md rounded-sm" />}
                     </div>
                     <div className="flex flex-col">
                         <span className="text-[8px] text-slate-500 uppercase font-black tracking-[0.2em] mb-0.5">Tactical Window</span>
-                        <span className={cn("text-[10px] font-black uppercase tracking-widest leading-none", isGoldenWindow ? 'text-emerald-400' : 'text-slate-500')}>
+                        <span className={cn("text-[10px] font-black uppercase tracking-widest leading-none", isGoldenWindow ? 'text-slate-300' : 'text-slate-500')}>
                             {isGoldenWindow ? 'Golden_Overlap_Active' : 'Idle_System_Monitor'}
                         </span>
                     </div>
@@ -119,7 +119,7 @@ export function NexusScalper() {
                         
                         <div className="relative w-48 h-48 self-center flex items-center justify-center">
                             {/* Orbital Progress */}
-                            <svg className="w-full h-full -rotate-90 filter drop-shadow-[0_0_10px_rgba(34,211,238,0.3)]">
+                            <svg className="w-full h-full -rotate-90 filter drop-">
                                 <circle cx="96" cy="96" r="80" fill="transparent" stroke="rgba(255,255,255,0.03)" strokeWidth="6" />
                                 <motion.circle 
                                     cx="96" cy="96" r="80" 
@@ -143,7 +143,7 @@ export function NexusScalper() {
                                 <motion.div 
                                     animate={{ rotate: 360 }}
                                     transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-                                    className="w-full h-full border border-dashed border-cyan-500/10 rounded-full"
+                                    className="w-full h-full border border-dashed border-cyan-500/10 rounded-sm"
                                 />
                             </div>
                         </div>
@@ -159,7 +159,7 @@ export function NexusScalper() {
                                     {Array.from({ length: 12 }).map((_, i) => (
                                         <div 
                                             key={i} 
-                                            className={cn("w-1 rounded-t-sm transition-all", i < 4 ? 'h-full bg-cyan-400 shadow-[0_0_5px_#22d3ee]' : 'h-1/3 bg-slate-800')} 
+                                            className={cn("w-1 rounded-t-sm transition-all", i < 4 ? 'h-full bg-cyan-400 ' : 'h-1/3 bg-slate-800')} 
                                         />
                                     ))}
                                 </div>
@@ -168,10 +168,10 @@ export function NexusScalper() {
                     </GlassCard>
 
                     {/* Operational Alert */}
-                    <div className="flex-1 rounded-2xl border border-amber-500/20 bg-amber-500/5 p-6 flex items-center gap-5 relative overflow-hidden group/alert">
+                    <div className="flex-1 rounded-none border border-amber-500/20 bg-amber-500/5 p-6 flex items-center gap-5 relative overflow-hidden group/alert">
                         <div className="absolute inset-0 bg-gradient-to-r from-amber-500/0 via-amber-500/[0.03] to-amber-500/0 -translate-x-full group-hover/alert:translate-x-full transition-transform duration-1000" />
-                        <div className="p-3 bg-amber-400/10 rounded-xl border border-amber-500/30">
-                            <Activity className="w-5 h-5 text-amber-500 animate-pulse" />
+                        <div className="p-3 bg-amber-400/10 rounded-sm border border-amber-500/30">
+                            <Activity className="w-5 h-5 text-amber-500" />
                         </div>
                         <div className="flex flex-col gap-1.5">
                             <span className="text-[9px] text-amber-500 font-black uppercase tracking-[0.3em]">Neural Verdict Engine</span>
@@ -191,7 +191,7 @@ export function NexusScalper() {
                         </span>
                         <div className="flex items-center gap-3">
                             <span className="text-[8px] text-cyan-500/60 font-black uppercase tracking-widest">Matrix_Validation_Active</span>
-                            <div className="w-1.5 h-1.5 bg-cyan-400 rounded-full shadow-[0_0_8px_#22d3ee] animate-pulse" />
+                            <div className="w-1.5 h-1.5 bg-cyan-400 rounded-sm" />
                         </div>
                     </div>
 
@@ -206,9 +206,9 @@ export function NexusScalper() {
                                 <GlassCard className="p-5 border-white/5 bg-white/[0.02] flex items-center justify-between hover:border-cyan-500/30 hover:bg-cyan-500/[0.03] group transition-all duration-300 overflow-hidden">
                                     <div className="flex items-center gap-5 relative z-10">
                                         <div className={cn(
-                                            "p-2.5 rounded-xl border transition-all duration-500 group-hover:bg-cyan-500 group-hover:text-black",
+                                            "p-2.5 rounded-sm border transition-all duration-500 group-hover:bg-cyan-500 group-hover:text-black",
                                             pick.type.includes('LONG') || pick.type.includes('RECOVERY') 
-                                                ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400' 
+                                                ? 'bg-slate-800 border-slate-700 text-slate-300' 
                                                 : 'bg-cyan-500/5 border-cyan-500/20 text-cyan-500'
                                         )}>
                                             <Target className="w-4 h-4" />
@@ -237,7 +237,7 @@ export function NexusScalper() {
                                                 const setup = `TICKER: ${pick.ticker}\nTYPE: ${pick.type}\nSTAKE: $${pick.stake}\nLEVERAGE: x${pick.leverage}\nEXIT_TARGET: ${pick.target}`;
                                                 navigator.clipboard.writeText(setup);
                                             }}
-                                            className="p-3 bg-cyan-500/5 border border-cyan-500/10 rounded-xl hover:bg-cyan-500 hover:text-black hover:scale-105 transition-all active:scale-95"
+                                            className="p-3 bg-cyan-500/5 border border-cyan-500/10 rounded-sm hover:bg-cyan-500 hover:text-black hover:scale-105 transition-all active:scale-95"
                                         >
                                             <ArrowRightLeft className="w-4 h-4" />
                                         </button>
@@ -250,7 +250,7 @@ export function NexusScalper() {
                         ))}
                     </div>
                     
-                    <button className="w-full bg-cyan-500 text-black font-black uppercase py-4 rounded-xl text-[10px] tracking-[0.3em] shadow-[0_0_30px_rgba(34,211,238,0.2)] hover:bg-cyan-400 hover:scale-[1.01] active:scale-[0.98] transition-all">
+                    <button className="w-full bg-cyan-500 text-black font-black uppercase py-4 rounded-sm text-[10px] tracking-[0.3em] hover:bg-cyan-400 hover:scale-[1.01] active:scale-[0.98] transition-all">
                         Execute all pending extractions
                     </button>
                 </div>
@@ -262,7 +262,7 @@ export function NexusScalper() {
                    <div className="flex items-center gap-2">
                        <Terminal className="w-3 h-3" /> System_ID: SCALP_X88
                    </div>
-                   <div className="w-1 h-1 rounded-full bg-slate-800" />
+                   <div className="w-1 h-1 rounded-sm bg-slate-800" />
                    <span>Security_Layer: LEVEL_9_ENCRYPT</span>
                 </div>
                 <div className="text-[9px] text-cyan-500/60 font-mono tracking-[1em] select-none">

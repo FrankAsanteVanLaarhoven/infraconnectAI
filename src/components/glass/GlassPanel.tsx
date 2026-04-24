@@ -32,7 +32,7 @@ export const GlassPanel = forwardRef<HTMLDivElement, GlassPanelProps>(
         ref={ref}
         className={cn(
           glassMap[variant],
-          'relative overflow-hidden rounded-xl',
+          'relative overflow-hidden rounded-sm',
           paddingMap[padding],
           glow && 'glass-glow',
           glowStrong && 'glass-glow-strong',
@@ -64,7 +64,7 @@ export const GlassCard = forwardRef<HTMLDivElement, GlassCardProps>(
       <div
         ref={ref}
         className={cn(
-          'glass-subtle rounded-lg transition-all duration-300 hover:glass-hover cursor-pointer',
+          'glass-subtle rounded-sm transition-all duration-300 hover:glass-hover cursor-pointer',
           selected && 'glass-glow ring-1 ring-matrix/30',
           level && `level-${level.toLowerCase()}`,
           glow && 'glass-glow',

@@ -25,7 +25,7 @@ export function LegalIntelligenceHub() {
   const news = fetchLegalPulse();
 
   return (
-    <div className="w-full h-full bg-black/60 backdrop-blur-3xl border border-indigo-500/30 rounded-xl overflow-hidden flex flex-col font-mono select-none">
+    <div className="w-full h-full bg-black/60 backdrop-blur-3xl border border-indigo-500/30 rounded-sm overflow-hidden flex flex-col font-mono select-none">
       {/* Header */}
       <div className="p-4 border-b border-indigo-500/20 bg-indigo-950/10 flex items-center justify-between">
          <div className="flex items-center gap-3">
@@ -48,7 +48,7 @@ export function LegalIntelligenceHub() {
 
       {/* Governance Alignment Header */}
       <div className="grid grid-cols-2 p-4 gap-4 border-b border-indigo-500/10">
-         <div className="bg-indigo-900/10 p-3 rounded-xl border border-indigo-500/20">
+         <div className="bg-indigo-900/10 p-3 rounded-sm border border-indigo-500/20">
             <div className="flex justify-between items-center mb-1">
                <span className="text-[8px] text-indigo-400 font-black uppercase">Governance Alignment</span>
                <BadgeCheck className="w-3 h-3 text-indigo-400" />
@@ -58,7 +58,7 @@ export function LegalIntelligenceHub() {
                <span className="text-[8px] text-indigo-600 font-bold uppercase">{data?.governance?.status}</span>
             </div>
          </div>
-         <div className="bg-indigo-900/10 p-3 rounded-xl border border-indigo-500/20">
+         <div className="bg-indigo-900/10 p-3 rounded-sm border border-indigo-500/20">
             <div className="flex justify-between items-center mb-1">
                <span className="text-[8px] text-indigo-400 font-black uppercase">IP Resilience</span>
                <Zap className="w-3 h-3 text-indigo-400" />
@@ -91,7 +91,7 @@ export function LegalIntelligenceHub() {
                   </div>
                   <div className="mt-1">
                      <span className={`px-1.5 py-0.5 rounded-sm font-black tracking-tighter ${
-                        p.status === 'GRANTED' ? 'bg-green-950/20 text-green-500' :
+                        p.status === 'GRANTED' ? 'bg-slate-800 text-slate-300' :
                         p.status === 'FILED' ? 'bg-amber-950/20 text-amber-500' :
                         'bg-indigo-950/20 text-indigo-400'
                      }`}>

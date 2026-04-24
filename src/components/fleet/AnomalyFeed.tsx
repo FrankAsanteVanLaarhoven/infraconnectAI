@@ -81,7 +81,7 @@ export function AnomalyFeed({ pollIntervalMs = 5000 }: { pollIntervalMs?: number
             </div>
             <button
               onClick={() => resolve(a.id)}
-              className="text-[10px] text-muted-foreground hover:text-emerald-400 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap"
+              className="text-[10px] text-muted-foreground hover:text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap"
             >
               resolve
             </button>

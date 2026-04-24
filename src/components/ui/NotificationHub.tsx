@@ -52,10 +52,10 @@ export function NotificationHub() {
                initial={{ opacity: 0, x: 50, scale: 0.9 }}
                animate={{ opacity: 1, x: 0, scale: 1 }}
                exit={{ opacity: 0, x: 20, scale: 0.95 }}
-               className={`pointer-events-auto p-4 bg-slate-950/90 backdrop-blur-xl border ${getBorderColor(notif.category)} rounded-xl shadow-2xl relative overflow-hidden group`}
+               className={`pointer-events-auto p-4 bg-slate-950/90 backdrop-blur-xl border ${getBorderColor(notif.category)} rounded-sm shadow-2xl relative overflow-hidden group`}
              >
                 {/* Entrance pulse */}
-                <div className={`absolute top-0 left-0 w-1 h-full ${notif.category === 'SECURITY' ? 'bg-red-500' : notif.category === 'COGNITIVE' ? 'bg-indigo-500' : 'bg-cyan-500'} animate-pulse`} />
+                <div className={`absolute top-0 left-0 w-1 h-full ${notif.category === 'SECURITY' ? 'bg-red-500' : notif.category === 'COGNITIVE' ? 'bg-indigo-500' : 'bg-cyan-500'} `} />
 
                 <div className="flex justify-between items-start mb-1">
                    <div className="flex items-center gap-2">

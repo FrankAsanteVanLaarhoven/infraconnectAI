@@ -31,7 +31,7 @@ export function GroundTruthCard({
     <motion.div 
       initial={{ scale: 0.9, opacity: 0 }}
       animate={{ scale: 1, opacity: 1 }}
-      className={`w-72 bg-black/80 backdrop-blur-xl border border-slate-700/50 rounded-xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] flex flex-col font-mono select-none pointer-events-auto ${className}`}
+      className={`w-72 bg-black/80 backdrop-blur-xl border border-slate-700/50 rounded-sm overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] flex flex-col font-mono select-none pointer-events-auto ${className}`}
     >
       {/* Header: Attacker -> Target (DRAG HANDLE) */}
       <div className="drag-handle bg-slate-900/60 p-2 flex items-center justify-between border-b border-slate-800 cursor-move">
@@ -54,7 +54,7 @@ export function GroundTruthCard({
          <div className="bg-slate-900 text-slate-400 border border-slate-800 px-1.5 py-0.5 rounded text-[8px] font-bold uppercase">{date}</div>
          <div className="bg-slate-900 text-slate-400 border border-slate-800 px-1.5 py-0.5 rounded text-[8px] font-bold uppercase">{category}</div>
          {verified && (
-           <div className="bg-green-950/20 text-green-500 border border-green-500/30 px-1.5 py-0.5 rounded text-[8px] font-bold flex items-center gap-1">
+           <div className="bg-slate-800 text-slate-300 border border-slate-700 px-1.5 py-0.5 rounded text-[8px] font-bold flex items-center gap-1">
              VERIFIED
            </div>
          )}
@@ -75,7 +75,7 @@ export function GroundTruthCard({
          </p>
 
          {/* Image/Media Container */}
-         <div className="relative aspect-video bg-slate-900 rounded-lg overflow-hidden border border-slate-800 group">
+         <div className="relative aspect-video bg-slate-900 rounded-sm overflow-hidden border border-slate-800 group">
             {image ? (
               <img src={image} alt="OSINT evidence" className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" />
             ) : (
@@ -87,7 +87,7 @@ export function GroundTruthCard({
             )}
             
             {/* Visual Scan Effect */}
-            <div className="absolute top-0 left-0 w-full h-[1px] bg-cyan-500/50 shadow-[0_0_15px_#0ff] animate-scan-line pointer-events-none" />
+            <div className="absolute top-0 left-0 w-full h-[1px] bg-cyan-500/50 animate-scan-line pointer-events-none" />
          </div>
       </div>
 

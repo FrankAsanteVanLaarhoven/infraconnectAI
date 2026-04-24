@@ -18,7 +18,7 @@ export function FutureWaveVisualizer() {
   const line3 = points.map(p => `${p.x},${p.y3}`).join(' ');
 
   return (
-    <div className="w-full h-full bg-black/20 rounded-2xl border border-white/5 relative overflow-hidden group">
+    <div className="w-full h-full bg-black/20 rounded-none border border-white/5 relative overflow-hidden group">
       <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="w-full h-full opacity-40">
         {/* Parallel Realities (Ghost Waves) */}
         <motion.polyline
@@ -48,7 +48,7 @@ export function FutureWaveVisualizer() {
           fill="none"
           stroke="#22d3ee"
           strokeWidth="1.5"
-          className="drop-shadow-[0_0_8px_rgba(34,211,238,0.5)]"
+          className="drop-"
           initial={{ pathLength: 0 }}
           animate={{ pathLength: 1 }}
           transition={{ duration: 2 }}

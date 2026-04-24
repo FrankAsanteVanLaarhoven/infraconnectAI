@@ -10,7 +10,7 @@ export async function updateAllProjections(event?: DomainEvent) {
     // Query required data
     const nodes = await db.memoryNode.findMany();
     const conflicts = await db.conflict.count({ where: { status: 'open' } });
-    const runs = await db.skillRun.count({ where: { status: 'completed' } });
+    const runs = await db.skillRun.count({ where: { status: 'passed' } });
 
     // Aggregate counts
     const levelCounts: Record<string, number> = { L0: 0, L1: 0, L2: 0 };
@@ -23,8 +23,8 @@ export async function updateAllProjections(event?: DomainEvent) {
       levelCounts[n.level] = (levelCounts[n.level] || 0) + 1;
       planeCounts[n.plane] = (planeCounts[n.plane] || 0) + 1;
       
-      if (n.category === 'canon') canonicalKnowledge++;
-      else if (n.category === 'wiki') wikiEntries++;
+      if (n.state === 'canonical') canonicalKnowledge++;
+      else if (n.state === 'active') wikiEntries++;
       else scratchItems++;
     });
 
@@ -60,17 +60,17 @@ export async function updateAllProjections(event?: DomainEvent) {
     });
 
     // 2. Health Projection
-    const totalHealth = nodes.reduce((sum, n) => sum + n.healthScore, 0);
+    const totalHealth = nodes.reduce((sum, n) => sum + (n.confidence ?? 1), 0);
     const avgHealth = nodes.length > 0 ? totalHealth / nodes.length : 1;
     
-    const nodesWithContent = nodes.filter(n => n.content?.length > 20).length;
+    const nodesWithContent = nodes.filter(n => (n.summary?.length || 0) > 20).length;
     const coverage = nodes.length > 0 ? nodesWithContent / nodes.length : 1;
     
     const conflictDensity = nodes.length > 0 ? Math.min(conflicts / nodes.length / 5, 1) : 0;
     
     const now = Date.now();
     const staleNodes = nodes.filter(n => {
-      const last = n.lastValidated ? new Date(n.lastValidated).getTime() : new Date(n.createdAt).getTime();
+      const last = new Date(n.updatedAt).getTime();
       return (now - last) > 30 * 86400000;
     });
     const staleness = nodes.length > 0 ? staleNodes.length / nodes.length : 0;
@@ -80,7 +80,7 @@ export async function updateAllProjections(event?: DomainEvent) {
       const subset = nodes.filter(n => n.level === l);
       byLevelState[l] = { 
         count: subset.length, 
-        avgHealth: subset.length > 0 ? subset.reduce((s, x) => s + x.healthScore, 0) / subset.length : 1 
+        avgHealth: subset.length > 0 ? subset.reduce((s, x) => s + (x.confidence ?? 1), 0) / subset.length : 1 
       };
     });
 
@@ -89,7 +89,7 @@ export async function updateAllProjections(event?: DomainEvent) {
       const subset = nodes.filter(n => n.plane === p);
       byPlaneState[p] = { 
         count: subset.length, 
-        avgHealth: subset.length > 0 ? subset.reduce((s, x) => s + x.healthScore, 0) / subset.length : 1 
+        avgHealth: subset.length > 0 ? subset.reduce((s, x) => s + (x.confidence ?? 1), 0) / subset.length : 1 
       };
     });
 

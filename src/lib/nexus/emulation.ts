@@ -43,7 +43,7 @@ export const DISRUPTOR_SEEDS = [
 /**
  * Simulated Reality Logic
  */
-export function simulateSocialEvolution(proxies: CognitiveProxy[], disruptor?: string): CognitiveProxy[] {
+export function simulateSocialEvolution(proxies: PredictionSwarmAgent[], disruptor?: string): PredictionSwarmAgent[] {
     return proxies.map(proxy => {
         const reactionFactor = disruptor ? Math.random() * 0.4 : 0.1;
         const newSentiment = Math.max(-1, Math.min(1, proxy.sentiment + (Math.random() - 0.5) * reactionFactor));

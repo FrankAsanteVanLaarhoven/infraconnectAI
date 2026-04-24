@@ -23,7 +23,7 @@ export function DigitalMoneyMatrix() {
     ]);
 
     return (
-        <div className="w-full h-full bg-[#020617]/80 backdrop-blur-[40px] border border-amber-500/20 rounded-3xl p-6 flex flex-col font-mono relative overflow-hidden group shadow-[0_0_60px_rgba(245,158,11,0.05)]">
+        <div className="w-full h-full bg-[#020617]/80 backdrop-blur-[40px] border border-amber-500/20 rounded-3xl p-6 flex flex-col font-mono relative overflow-hidden group">
             <div className="absolute -top-12 -right-12 opacity-10 rotate-12">
                 <Bitcoin className="w-48 h-48 text-amber-500" />
             </div>
@@ -31,7 +31,7 @@ export function DigitalMoneyMatrix() {
             {/* Header */}
             <div className="flex items-center justify-between mb-8 border-b border-white/5 pb-6 relative z-10">
                 <div className="flex items-center gap-4">
-                    <div className="p-3 bg-amber-500/10 border border-amber-500/20 rounded-2xl">
+                    <div className="p-3 bg-amber-500/10 border border-amber-500/20 rounded-none">
                         <Coins className="w-5 h-5 text-amber-400" />
                     </div>
                     <div>
@@ -40,11 +40,11 @@ export function DigitalMoneyMatrix() {
                     </div>
                 </div>
                 <div className="flex items-center gap-3">
-                    <div className="h-2 w-16 bg-slate-900 rounded-full overflow-hidden">
+                    <div className="h-2 w-16 bg-slate-900 rounded-sm overflow-hidden">
                         <motion.div 
                             animate={{ x: ['-100%', '100%'] }}
                             transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-                            className="h-full w-1/2 bg-amber-500 shadow-[0_0_10px_#f59e0b]"
+                            className="h-full w-1/2 bg-amber-500"
                         />
                     </div>
                 </div>
@@ -58,10 +58,10 @@ export function DigitalMoneyMatrix() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: i * 0.1 }}
-                        className="p-4 bg-slate-900/40 border border-white/5 rounded-2xl flex items-center justify-between group/asset hover:border-amber-500/30 transition-all"
+                        className="p-4 bg-slate-900/40 border border-white/5 rounded-none flex items-center justify-between group/asset hover:border-amber-500/30 transition-all"
                     >
                         <div className="flex items-center gap-4">
-                            <div className="w-10 h-10 rounded-xl bg-black border border-white/5 flex items-center justify-center">
+                            <div className="w-10 h-10 rounded-sm bg-black border border-white/5 flex items-center justify-center">
                                 <Bitcoin className="w-5 h-5 text-amber-400/60" />
                             </div>
                             <div className="flex flex-col">
@@ -72,7 +72,7 @@ export function DigitalMoneyMatrix() {
 
                         <div className="flex flex-col items-end">
                             <span className="text-sm font-black text-white">${asset.price}</span>
-                            <span className="text-[8px] font-black text-emerald-400 font-mono tracking-tighter">{asset.change}</span>
+                            <span className="text-[8px] font-black text-slate-300 font-mono tracking-tighter">{asset.change}</span>
                         </div>
                     </motion.div>
                 ))}
@@ -85,7 +85,7 @@ export function DigitalMoneyMatrix() {
                     { label: 'L_REWARDS', value: '12.4%' },
                     { label: 'GAS_PULSE', value: '12_GWEI' }
                 ].map((stat, i) => (
-                    <div key={i} className="flex flex-col items-center p-2 bg-amber-500/5 rounded-lg border border-amber-500/10">
+                    <div key={i} className="flex flex-col items-center p-2 bg-amber-500/5 rounded-sm border border-amber-500/10">
                         <span className="text-[6px] text-slate-500 uppercase font-black">{stat.label}</span>
                         <span className="text-[10px] text-amber-400 font-black">{stat.value}</span>
                     </div>

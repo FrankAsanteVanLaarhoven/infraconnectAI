@@ -68,7 +68,7 @@ export class AutonomousOptimizer {
       this.dispatchCommand(node.robotId, 'ENGAGE_FALLBACK_MODEL');
       
       // 2. Trigger MLOps Retraining Loop
-      this.triggerTrainingPipeline(node.robotId, node.activeModels || []);
+      this.triggerTrainingPipeline(node.robotId, (node as any).activeModels || []);
     }
 
     if (context.latencyFailure) {

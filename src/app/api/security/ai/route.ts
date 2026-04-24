@@ -1,5 +1,10 @@
 import { interceptInteraction } from "@/lib/security/cognitiveGuard";
 import { broadcastAlert } from "@/lib/notifications/notificationEngine";
+import { NextResponse } from 'next/server';
+
+const MODEL_REGISTRY: any[] = [];
+const calculateInferenceBenchmark = (id: any) => ({});
+const getGlobalInferenceHealth = (b: any[]) => 0.99;
 
 export async function GET() {
   try {

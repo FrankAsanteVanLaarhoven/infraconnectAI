@@ -51,7 +51,7 @@ export const ServerAudioStats = ({ getAudioStats }: ServerAudioStatsProps) => {
   }, []);
 
   return (
-    <div className="w-full rounded-lg text-zinc-500 p-2">
+    <div className="w-full rounded-sm text-zinc-500 p-2">
       <h2 className="text-md pb-2">Server Audio Stats</h2>
       <table>
         <tbody>

@@ -78,7 +78,7 @@ const PLANE_BADGE_STYLES: Record<MemoryPlane, string> = {
 };
 
 function healthColor(score: number): string {
-  if (score >= 0.8) return 'bg-emerald-500';
+  if (score >= 0.8) return 'bg-slate-800';
   if (score >= 0.5) return 'bg-amber-500';
   return 'bg-red-500';
 }
@@ -164,15 +164,15 @@ function TreeNode({
           : 'text-foreground/75'
       )}
     >
-      <span className={cn('w-1.5 h-1.5 rounded-full shrink-0', `level-dot-${node.level.toLowerCase()}`)} />
+      <span className={cn('w-1.5 h-1.5 rounded-sm shrink-0', `level-dot-${node.level.toLowerCase()}`)} />
       <span className="text-xs truncate flex-1">{node.title}</span>
       {/* tiny health bar */}
-      <div className="w-10 h-1.5 rounded-full bg-muted-foreground/10 overflow-hidden shrink-0 opacity-0 group-hover:opacity-100 transition-opacity">
+      <div className="w-10 h-1.5 rounded-sm bg-muted-foreground/10 overflow-hidden shrink-0 opacity-0 group-hover:opacity-100 transition-opacity">
         <motion.div
           initial={{ width: 0 }}
           animate={{ width: `${node.healthScore * 100}%` }}
           transition={{ duration: 0.4, ease: 'easeOut' }}
-          className={cn('h-full rounded-full', healthColor(node.healthScore), healthGlow(node.healthScore))}
+          className={cn('h-full rounded-sm', healthColor(node.healthScore), healthGlow(node.healthScore))}
         />
       </div>
       <span className={cn('text-mono-xs shrink-0', `level-dot-${node.level.toLowerCase()}`)}>
@@ -190,12 +190,12 @@ function HealthBar({ score, size = 'md' }: { score: number; size?: 'sm' | 'md' }
   const pct = Math.round(score * 100);
   return (
     <div className="flex items-center gap-2">
-      <div className={cn('rounded-full bg-muted-foreground/10 overflow-hidden', size === 'sm' ? 'w-16 h-1.5' : 'w-full h-2')}>
+      <div className={cn('rounded-sm bg-muted-foreground/10 overflow-hidden', size === 'sm' ? 'w-16 h-1.5' : 'w-full h-2')}>
         <motion.div
           initial={{ width: 0 }}
           animate={{ width: `${pct}%` }}
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className={cn('h-full rounded-full', healthColor(score), healthGlow(score))}
+          className={cn('h-full rounded-sm', healthColor(score), healthGlow(score))}
         />
       </div>
       <span className={cn('text-mono-xs tabular-nums', healthColor(score).replace('bg-', 'text-'))}>
@@ -442,7 +442,7 @@ function CreateNodeDialog({
               className="text-xs bg-matrix/20 text-matrix hover:bg-matrix/30 border border-matrix/30"
             >
               {isSubmitting ? (
-                <motion.div className="w-3 h-3 border-2 border-matrix/30 border-t-matrix rounded-full animate-spin" />
+                <motion.div className="w-3 h-3 border-2 border-matrix/30 border-t-matrix rounded-sm animate-spin" />
               ) : (
                 <Plus className="w-3.5 h-3.5 mr-1" />
               )}
@@ -671,7 +671,7 @@ function NodeDetailPanel({
           )}
         >
           {isSaving ? (
-            <motion.div className="w-3 h-3 border-2 border-matrix/30 border-t-matrix rounded-full animate-spin" />
+            <motion.div className="w-3 h-3 border-2 border-matrix/30 border-t-matrix rounded-sm animate-spin" />
           ) : (
             <Save className="w-3.5 h-3.5 mr-1" />
           )}
@@ -691,7 +691,7 @@ function NodeDetailPanel({
           )}
         >
           {isPromoting ? (
-            <motion.div className="w-3 h-3 border-2 border-amber-500/30 border-t-amber-500 rounded-full animate-spin" />
+            <motion.div className="w-3 h-3 border-2 border-amber-500/30 border-t-amber-500 rounded-sm animate-spin" />
           ) : (
             <ArrowUpCircle className="w-3.5 h-3.5 mr-1" />
           )}
@@ -929,7 +929,7 @@ export function MemoryExplorer({ onSelectNode }: ExplorerProps) {
                   animate={{ opacity: 1 }}
                   className="flex flex-col items-center justify-center py-12 text-center"
                 >
-                  <div className="w-12 h-12 rounded-xl glass-subtle flex items-center justify-center mb-3">
+                  <div className="w-12 h-12 rounded-sm glass-subtle flex items-center justify-center mb-3">
                     <FolderOpen className="w-6 h-6 text-muted-foreground/30" />
                   </div>
                   <p className="text-xs text-muted-foreground/50">Select a node to view details</p>

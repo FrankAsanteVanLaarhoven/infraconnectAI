@@ -28,7 +28,7 @@ const Waveform = () => (
     {[1, 2, 3, 4, 5].map((i) => (
       <motion.div
         key={i}
-        className="w-[2px] bg-cyan-500 rounded-full"
+        className="w-[2px] bg-cyan-500 rounded-sm"
         animate={{ height: [4, 12, 6, 14, 4] }}
         transition={{ duration: 0.6, repeat: Infinity, delay: i * 0.1 }}
       />
@@ -89,7 +89,7 @@ export function PersonaplexBar({ onGenerate, isGenerating }: PersonaplexBarProps
 
   return (
     <div className="w-full max-w-4xl mx-auto px-4 z-50">
-      <GlassCard className="relative p-1 bg-black/40 border-white/5 shadow-[0_0_40px_rgba(0,0,0,0.5)] overflow-visible group">
+      <GlassCard className="relative p-1 bg-black/40 border-white/5 overflow-visible group">
         
         {/* Background glow when active */}
         <div className={cn(
@@ -97,10 +97,10 @@ export function PersonaplexBar({ onGenerate, isGenerating }: PersonaplexBarProps
           (query.length > 0 || isGenerating || isThinking) && "opacity-100"
         )} />
 
-        <form onSubmit={handleSubmit} className="relative flex items-center h-12 bg-slate-900/40 rounded-xl border border-white/5 focus-within:border-cyan-500/30 transition-all overflow-hidden px-4">
+        <form onSubmit={handleSubmit} className="relative flex items-center h-12 bg-slate-900/40 rounded-sm border border-white/5 focus-within:border-cyan-500/30 transition-all overflow-hidden px-4">
           
           <div className="personaplex-drag-handle flex items-center gap-3 pr-2 border-r border-white/5 mr-4 cursor-grab active:cursor-grabbing">
-            <Brain className={cn("w-4 h-4 transition-colors", isThinking ? "text-cyan-400 animate-pulse" : "text-slate-500")} />
+            <Brain className={cn("w-4 h-4 transition-colors", isThinking ? "text-cyan-400 " : "text-slate-500")} />
             <span className="text-[9px] uppercase font-black text-slate-600 tracking-[0.2em] hidden sm:block">Personaplex_Agent</span>
           </div>
 
@@ -141,7 +141,7 @@ export function PersonaplexBar({ onGenerate, isGenerating }: PersonaplexBarProps
               type="button"
               onClick={toggleVoice}
               className={cn(
-                "p-2 rounded-lg transition-all",
+                "p-2 rounded-sm transition-all",
                 isVoiceActive ? "bg-cyan-500/20 text-cyan-400" : "text-slate-500 hover:text-cyan-400 hover:bg-white/5"
               )}
             >
@@ -152,7 +152,7 @@ export function PersonaplexBar({ onGenerate, isGenerating }: PersonaplexBarProps
               type="submit"
               disabled={!query.trim() || isGenerating || isThinking}
               className={cn(
-                "p-2 rounded-lg transition-all",
+                "p-2 rounded-sm transition-all",
                 query.trim() ? "text-cyan-400 hover:bg-cyan-500/10" : "text-slate-800"
               )}
             >

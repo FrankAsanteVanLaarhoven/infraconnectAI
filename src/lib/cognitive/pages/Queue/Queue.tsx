@@ -1,7 +1,10 @@
 "use client";
+// @ts-ignore
 import moshiProcessorUrl from "../../audio-processor.ts?worker&url";
 import { FC, useEffect, useState, useCallback, useRef, MutableRefObject } from "react";
+// @ts-ignore
 import eruda from "eruda";
+// @ts-ignore
 import { useSearchParams } from "react-router-dom";
 import { Conversation } from "../Conversation/Conversation";
 import { Button } from "../../components/Button/Button";
@@ -73,7 +76,7 @@ const Homepage = ({
                 <button
                   key={preset.label}
                   onClick={() => setTextPrompt(preset.text)}
-                  className="px-3 py-1 text-xs bg-white hover:bg-gray-100 text-gray-700 rounded-full border border-gray-300 transition-colors focus:outline-none focus:ring-2 focus:ring-[#76b900]"
+                  className="px-3 py-1 text-xs bg-white hover:bg-gray-100 text-gray-700 rounded-sm border border-gray-300 transition-colors focus:outline-none focus:ring-2 focus:ring-[#76b900]"
                 >
                   {preset.label}
                 </button>

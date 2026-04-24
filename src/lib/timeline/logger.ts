@@ -9,7 +9,7 @@ subscribe("*", (event: any) => {
   // Filter completely noise payloads seamlessly preserving RAM bounds natively locally cleanly.
   if (["reasoning.generated", "robot.commands"].includes(event.type)) return;
 
-  useTimelineStore.getState().addEvent({
+  useTimelineStore.getState().addEvent("SYS", {
     ...event,
     timestamp: Date.now(),
   });

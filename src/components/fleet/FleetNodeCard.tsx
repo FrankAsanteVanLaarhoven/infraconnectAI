@@ -26,7 +26,7 @@ interface FleetNode {
 }
 
 const statusColor: Record<string, string> = {
-  online: "bg-emerald-500",
+  online: "bg-slate-800",
   offline: "bg-red-500",
   degraded: "bg-amber-500",
 };
@@ -65,7 +65,7 @@ export function FleetNodeCard({ node }: { node: FleetNode }) {
   }, [node.id]);
 
   const overrideActive = stability?.overrideActive;
-  const cardBorder = overrideActive ? "border-red-500 animate-pulse bg-red-950/20" : "border-border hover:border-primary/50 transition-colors";
+  const cardBorder = overrideActive ? "border-red-500  bg-red-950/20" : "border-border hover:border-primary/50 transition-colors";
   const displayStatus = overrideActive ? "degraded" : node.status;
 
   return (
@@ -75,7 +75,7 @@ export function FleetNodeCard({ node }: { node: FleetNode }) {
           <CardTitle className="text-sm font-mono">{node.alias}</CardTitle>
           <div className="flex items-center gap-2">
             <span
-              className={`h-2 w-2 rounded-full ${statusColor[displayStatus] ?? "bg-gray-400"}`}
+              className={`h-2 w-2 rounded-sm ${statusColor[displayStatus] ?? "bg-gray-400"}`}
             />
             <span className={`text-xs capitalize ${overrideActive ? 'text-red-500 font-bold' : 'text-muted-foreground'}`}>{overrideActive ? 'LOCKED' : displayStatus}</span>
           </div>

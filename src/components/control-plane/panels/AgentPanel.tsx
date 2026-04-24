@@ -44,7 +44,7 @@ export const AgentPanel: React.FC<{
               <span className="text-[8px] uppercase font-black text-gray-500">Status</span>
               <span className={`text-[10px] uppercase font-black tracking-widest ${
                 robotState.status === 'idle' ? 'text-gray-400' :
-                robotState.status === 'error' ? 'text-[#EF4444] animate-pulse' :
+                robotState.status === 'error' ? 'text-[#EF4444] ' :
                 'text-[#4CC9F0]'
               }`}>
                 {robotState.status}

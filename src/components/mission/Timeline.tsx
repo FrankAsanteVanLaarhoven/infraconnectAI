@@ -24,7 +24,7 @@ export default function Timeline() {
            setPointer(p);
            replayTo(p);
         }}
-        className="w-full h-1 bg-panel border-y border-[var(--border)] appearance-none rounded-full cursor-pointer hover:bg-[var(--border)] transition-all accent-cyan"
+        className="w-full h-1 bg-panel border-y border-[var(--border)] appearance-none rounded-sm cursor-pointer hover:bg-[var(--border)] transition-all accent-cyan"
       />
     </div>
   );

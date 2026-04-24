@@ -22,8 +22,8 @@ import { IntentTopology } from '@/lib/dag-engine';
 import { InfraConnectLogo } from '@/components/ui/InfraConnectLogo';
 
 export default function BlueprintCanvas() {
-  const [nodes, setNodes, onNodesChange] = useNodesState([]);
-  const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+  const [nodes, setNodes, onNodesChange] = useNodesState<any>([]);
+  const [edges, setEdges, onEdgesChange] = useEdgesState<any>([]);
   const [isInstalling, setIsInstalling] = useState(false);
   const [logs, setLogs] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
@@ -132,7 +132,7 @@ export default function BlueprintCanvas() {
           className="bg-[#111214] border border-slate-800 rounded p-3 flex items-center justify-between cursor-pointer hover:border-slate-600 transition-colors"
         >
           <div className="flex items-center gap-3">
-            <Database className="w-4 h-4 text-green-400" />
+            <Database className="w-4 h-4 text-slate-300" />
             <span className="text-xs font-mono">PostgreSQL</span>
           </div>
           <span className="text-[9px] font-mono bg-slate-800 px-1 rounded text-slate-400">Agent</span>
@@ -154,7 +154,7 @@ export default function BlueprintCanvas() {
           className="bg-[#111214] border border-slate-800 rounded p-3 flex items-center justify-between cursor-pointer hover:border-slate-600 transition-colors"
         >
            <div className="flex items-center gap-3">
-             <Cpu className="w-4 h-4 text-purple-400" />
+             <Cpu className="w-4 h-4 text-slate-400" />
              <span className="text-xs font-mono">Semantic Pipeline</span>
            </div>
            <span className="text-[9px] font-mono bg-slate-800 px-1 rounded text-slate-400">AI</span>
@@ -173,12 +173,12 @@ export default function BlueprintCanvas() {
         {/* Live Install Logs Overlay */}
         {isInstalling && (
           <div className="absolute inset-0 bg-[#050505]/95 backdrop-blur-md p-4 z-20 flex flex-col pt-12">
-            <h3 className="text-green-400 font-mono text-[10px] uppercase mb-4 animate-pulse">Live Uplink Stream</h3>
+            <h3 className="text-slate-300 font-mono text-[10px] uppercase mb-4">Live Uplink Stream</h3>
             <div className="flex-1 font-mono text-[10px] text-slate-400 space-y-2 overflow-y-auto w-[250px]">
               {logs.map((log, i) => (
                 <div key={i} className={i === logs.length - 1 ? 'text-white' : ''}>{log}</div>
               ))}
-              <div className="w-2 h-4 bg-white animate-pulse inline-block align-middle ml-1" />
+              <div className="w-2 h-4 bg-white inline-block align-middle ml-1" />
             </div>
           </div>
         )}

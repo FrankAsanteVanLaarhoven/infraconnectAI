@@ -15,7 +15,7 @@ interface GraphData {
 export function NeuralTopology() {
   const [data, setData] = useState<GraphData | null>(null);
   const [loading, setLoading] = useState(true);
-  const fgRef = useRef<any>();
+  const fgRef = useRef<any>(null);
 
   const selectedNodeId = useMemoryStore(s => s.selectedNodeId);
 
@@ -38,17 +38,17 @@ export function NeuralTopology() {
   }, [data]);
 
   if (loading) return (
-     <div className="flex flex-col items-center justify-center p-12 bg-black/40 backdrop-blur rounded-2xl border border-white/5 h-[400px]">
+     <div className="flex flex-col items-center justify-center p-12 bg-black/40 backdrop-blur rounded-none border border-white/5 h-[400px]">
         <Loader2 className="w-8 h-8 text-cyan-500 animate-spin mb-4" />
         <div className="text-[10px] font-black uppercase tracking-[0.4em] text-cyan-500/40">Initializing Neural Layout</div>
      </div>
   );
 
   return (
-    <div className="relative w-full h-[400px] bg-black/40 backdrop-blur rounded-2xl border border-white/10 overflow-hidden shadow-2xl">
+    <div className="relative w-full h-[400px] bg-black/40 backdrop-blur rounded-none border border-white/10 overflow-hidden shadow-2xl">
       <div className="absolute top-4 left-6 z-10 space-y-1">
         <div className="flex items-center gap-2">
-           <Zap className="w-3.5 h-3.5 text-cyan-500 animate-pulse" />
+           <Zap className="w-3.5 h-3.5 text-cyan-500" />
            <h3 className="text-[11px] font-black uppercase tracking-widest text-slate-300">Neural Topology Map</h3>
         </div>
         <p className="text-[9px] text-slate-500 uppercase font-bold tracking-[0.2em]">Logical Infrastructure Visualization</p>
@@ -84,7 +84,7 @@ export function NeuralTopology() {
       <div className="absolute bottom-4 right-6 pt-2 border-t border-white/5 flex gap-4">
          <LegendItem color="bg-cyan-500" label="Active Focus" />
          <LegendItem color="bg-blue-500" label="Control Plane" />
-         <LegendItem color="bg-purple-500" label="Governance" />
+         <LegendItem color="bg-slate-900/50" label="Governance" />
       </div>
     </div>
   );
@@ -93,7 +93,7 @@ export function NeuralTopology() {
 function LegendItem({ color, label }: { color: string, label: string }) {
   return (
     <div className="flex items-center gap-1.5 font-mono text-[9px] text-slate-500 uppercase font-black">
-      <div className={`w-1.5 h-1.5 rounded-full ${color}`} />
+      <div className={`w-1.5 h-1.5 rounded-sm ${color}`} />
       {label}
     </div>
   );

@@ -26,7 +26,7 @@ export function LineageGraph() {
     const [hoverNode, setHoverNode] = useState<string | null>(null);
 
     return (
-        <div className="w-full h-full bg-slate-950/90 backdrop-blur-3xl border border-slate-800 rounded-2xl p-6 flex flex-col font-mono relative overflow-hidden group">
+        <div className="w-full h-full bg-slate-950/90 backdrop-blur-3xl border border-slate-800 rounded-none p-6 flex flex-col font-mono relative overflow-hidden group">
             {/* Header */}
             <div className="flex items-center justify-between mb-8 border-b border-slate-800 pb-4">
                 <div className="flex items-center gap-3">
@@ -36,9 +36,9 @@ export function LineageGraph() {
                         <p className="text-[9px] text-slate-500 uppercase font-black">Palantir-Grade Provenance Engine</p>
                     </div>
                 </div>
-                <div className="flex items-center gap-2 px-2 py-1 bg-emerald-500/10 border border-emerald-500/20 rounded">
-                    <Shield className="w-3 h-3 text-emerald-500" />
-                    <span className="text-[8px] text-emerald-500 font-black uppercase tracking-widest">Provenance Verified</span>
+                <div className="flex items-center gap-2 px-2 py-1 bg-slate-800 border border-slate-700 rounded">
+                    <Shield className="w-3 h-3 text-slate-300" />
+                    <span className="text-[8px] text-slate-300 font-black uppercase tracking-widest">Provenance Verified</span>
                 </div>
             </div>
 
@@ -73,9 +73,9 @@ export function LineageGraph() {
                         <motion.div 
                             onHoverStart={() => setHoverNode(stage.id)}
                             onHoverEnd={() => setHoverNode(null)}
-                            className={`w-12 h-12 rounded-xl flex items-center justify-center border transition-all ${
+                            className={`w-12 h-12 rounded-sm flex items-center justify-center border transition-all ${
                                 hoverNode === stage.id 
-                                ? 'bg-indigo-500 border-indigo-400 shadow-[0_0_30px_rgba(99,102,241,0.4)]' 
+                                ? 'bg-indigo-500 border-indigo-400 ' 
                                 : 'bg-slate-900 border-slate-800'
                             }`}
                         >
@@ -96,7 +96,7 @@ export function LineageGraph() {
                         {/* Connection Indicators */}
                         {idx < STAGES.length - 1 && (
                             <div className="absolute right-[-10%] top-[24px] z-20">
-                                <Activity className="w-3 h-3 text-indigo-500/50 animate-pulse" />
+                                <Activity className="w-3 h-3 text-indigo-500/50" />
                             </div>
                         )}
                     </div>

@@ -13,7 +13,7 @@ export default function APIDocsPage() {
         {/* ── Header ── */}
         <header className="space-y-4">
            <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="flex items-center gap-4">
-              <div className="p-3 rounded-xl bg-cyan-500/10 border border-cyan-500/30">
+              <div className="p-3 rounded-sm bg-cyan-500/10 border border-cyan-500/30">
                  <Shield className="w-8 h-8 text-cyan-400" />
               </div>
               <div>
@@ -66,7 +66,7 @@ export default function APIDocsPage() {
         <footer className="pt-12 border-t border-white/5 flex justify-between items-center text-[10px] uppercase font-bold tracking-widest text-slate-500">
            <span>InfraConnect OS v4.2.0-STABLE</span>
            <span className="flex items-center gap-2">
-              <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+              <div className="w-1.5 h-1.5 rounded-sm bg-slate-800" />
               All Systems Operational
            </span>
         </footer>
@@ -91,7 +91,7 @@ function EndpointBlock({ method, path, description, payload }: any) {
        <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
              <span className={`px-3 py-1 rounded-md font-black text-[10px] border ${
-               method === 'POST' ? 'bg-purple-500/10 border-purple-500/30 text-purple-400' : 'bg-blue-500/10 border-blue-500/30 text-blue-400'
+               method === 'POST' ? 'bg-slate-900/50 border-slate-800 text-slate-400' : 'bg-blue-500/10 border-blue-500/30 text-blue-400'
              }`}>
                {method}
              </span>
@@ -99,7 +99,7 @@ function EndpointBlock({ method, path, description, payload }: any) {
           </div>
           <p className="text-xs text-slate-500 font-bold uppercase tracking-wider">{description}</p>
        </div>
-       <pre className="p-4 bg-black/40 rounded-lg border border-white/5 text-[11px] leading-relaxed overflow-x-auto">
+       <pre className="p-4 bg-black/40 rounded-sm border border-white/5 text-[11px] leading-relaxed overflow-x-auto">
           {payload}
        </pre>
     </GlassPanel>

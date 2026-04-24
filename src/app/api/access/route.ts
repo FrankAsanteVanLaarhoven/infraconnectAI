@@ -61,6 +61,26 @@ export async function POST(req: Request) {
       });
     }
 
+    // Also persist to EnterpriseLead for waitlist & login approval flow
+    const domain = email.split('@')[1]?.toLowerCase() || '';
+    const genericDomains = ['gmail.com', 'yahoo.com', 'hotmail.com', 'outlook.com', 'icloud.com'];
+    const leadTier = !genericDomains.includes(domain) ? 'HIGH_VALUE' : 'GENERIC';
+    
+    // Check if EnterpriseLead exists
+    const existingEntLead = await db.enterpriseLead.findFirst({ where: { clientIdentifier: email } });
+    if (!existingEntLead && process.env.NODE_ENV !== "production" && !process.env.VERCEL) {
+       await db.enterpriseLead.create({
+         data: {
+           clientIdentifier: email,
+           clientName: company || email.split('@')[0],
+           routingDesignation: source || 'landing-page',
+           intentPayload: message || 'Waitlist request',
+           leadTier: leadTier,
+           status: 'queued'
+         }
+       });
+    }
+
     // 3. Trigger Smart Email (Auto-Responder)
     // Removed score limits for testing to ensure emails are ALWAYS sent.
     if (!body.visitedDemo && !body.viewedSecurity) {

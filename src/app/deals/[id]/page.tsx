@@ -63,7 +63,7 @@ export default function DealPortalPage({ params }: { params: { id: string } }) {
   if (loading) return (
     <div className="min-h-screen bg-black flex flex-col items-center justify-center space-y-4">
        <MatrixRain className="opacity-10" color="#3b82f6" />
-       <div className="w-16 h-16 border-t-2 border-blue-500 rounded-full animate-spin" />
+       <div className="w-16 h-16 border-t-2 border-blue-500 rounded-sm animate-spin" />
        <p className="text-[10px] font-black text-blue-500 uppercase tracking-[0.5em]">Synchronizing Deal Intelligence...</p>
     </div>
   );
@@ -88,7 +88,7 @@ export default function DealPortalPage({ params }: { params: { id: string } }) {
       <nav className="relative z-50 w-full flex items-center justify-between p-8 md:px-12">
         <InfraConnectLogo variant="flat" size="sm" />
         <div className="flex items-center gap-4">
-           <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+           <span className="w-2 h-2 rounded-sm bg-slate-800" />
            <span className="text-[9px] font-black text-slate-500 uppercase tracking-widest">Confidential Proposal // {new Date(deal.updatedAt).toLocaleDateString()}</span>
         </div>
       </nav>
@@ -101,7 +101,7 @@ export default function DealPortalPage({ params }: { params: { id: string } }) {
            animate={{ opacity: 1, y: 0 }}
            className="space-y-6 text-center"
          >
-            <div className="inline-flex items-center gap-2 border border-blue-500/30 bg-blue-500/5 px-4 py-1.5 rounded-full text-[10px] uppercase font-black tracking-widest text-blue-400 mb-4">
+            <div className="inline-flex items-center gap-2 border border-blue-500/30 bg-blue-500/5 px-4 py-1.5 rounded-sm text-[10px] uppercase font-black tracking-widest text-blue-400 mb-4">
                Strategic Executive Proposal
             </div>
             <h1 className="text-5xl md:text-7xl font-black uppercase text-white tracking-widest leading-none">
@@ -125,13 +125,13 @@ export default function DealPortalPage({ params }: { params: { id: string } }) {
                </div>
                
                <div className="grid grid-cols-2 gap-4">
-                  <div className="bg-slate-900/40 border border-slate-800 p-6 rounded-xl space-y-2">
+                  <div className="bg-slate-900/40 border border-slate-800 p-6 rounded-sm space-y-2">
                      <p className="text-[10px] text-slate-500 uppercase font-black">Annual Impact</p>
                      <p className="text-3xl font-black text-white">£{(deal.roi.totalAnnualImpact / 1000).toFixed(0)}k</p>
                   </div>
-                  <div className="bg-slate-900/40 border border-slate-800 p-6 rounded-xl space-y-2">
+                  <div className="bg-slate-900/40 border border-slate-800 p-6 rounded-sm space-y-2">
                      <p className="text-[10px] text-slate-500 uppercase font-black">Payback Tier</p>
-                     <p className="text-3xl font-black text-emerald-500">{deal.roi.paybackMonths.toFixed(1)}m</p>
+                     <p className="text-3xl font-black text-slate-300">{deal.roi.paybackMonths.toFixed(1)}m</p>
                   </div>
                </div>
             </div>
@@ -154,8 +154,8 @@ export default function DealPortalPage({ params }: { params: { id: string } }) {
                <div className="h-px bg-white/10 flex-1" />
             </div>
 
-            <div className="bg-white/5 border border-white/10 p-12 rounded-2xl relative">
-               <div className="absolute -top-4 -left-4 w-12 h-12 bg-blue-600 flex items-center justify-center animate-pulse">
+            <div className="bg-white/5 border border-white/10 p-12 rounded-none relative">
+               <div className="absolute -top-4 -left-4 w-12 h-12 bg-blue-600 flex items-center justify-center">
                   <Zap className="w-6 h-6 text-white" />
                </div>
                <div className="prose prose-invert max-w-none text-slate-400 font-mono text-sm leading-8 whitespace-pre-wrap">
@@ -174,27 +174,27 @@ export default function DealPortalPage({ params }: { params: { id: string } }) {
                  className="pt-20 space-y-12"
                >
                   <div className="flex flex-col items-center gap-6">
-                     <div className="w-24 h-24 rounded-full bg-emerald-500/20 border-2 border-emerald-500 flex items-center justify-center shadow-[0_0_40px_rgba(16,185,129,0.3)]">
-                        <Lock className="w-10 h-10 text-emerald-500" />
+                     <div className="w-24 h-24 rounded-sm bg-slate-800 border-2 border-slate-700 flex items-center justify-center">
+                        <Lock className="w-10 h-10 text-slate-300" />
                      </div>
                      <div className="text-center space-y-2">
                         <h3 className="text-4xl font-black text-white uppercase tracking-widest">Protocol Secured</h3>
-                        <p className="text-emerald-500 text-xs font-black uppercase tracking-[0.3em]">Neural Grid Membership: ACTIVE</p>
+                        <p className="text-slate-300 text-xs font-black uppercase tracking-[0.3em]">Neural Grid Membership: ACTIVE</p>
                      </div>
                   </div>
 
-                  <div className="bg-emerald-950/10 border border-emerald-500/20 p-12 rounded-2xl max-w-3xl mx-auto backdrop-blur-xl">
-                      <p className="text-[10px] text-emerald-500 font-black uppercase tracking-widest mb-6 flex items-center gap-3">
-                         <Activity className="w-3 h-3 animate-pulse" /> Initializing Executive Onboarding
+                  <div className="bg-slate-800 border border-slate-700 p-12 rounded-none max-w-3xl mx-auto backdrop-blur-xl">
+                      <p className="text-[10px] text-slate-300 font-black uppercase tracking-widest mb-6 flex items-center gap-3">
+                         <Activity className="w-3 h-3" /> Initializing Executive Onboarding
                       </p>
-                      <div className="prose prose-invert max-w-none text-emerald-100 font-mono text-xs leading-8 whitespace-pre-wrap opacity-80">
+                      <div className="prose prose-invert max-w-none text-slate-300 font-mono text-xs leading-8 whitespace-pre-wrap opacity-80">
                          {onboarding || "Allocating secure resources..."}
                       </div>
                   </div>
 
                   <div className="flex justify-center gap-6">
-                     <Button onClick={() => window.print()} variant="outline" className="border-emerald-900/50 text-emerald-500 text-[10px] font-black uppercase tracking-widest px-8">Download Briefing</Button>
-                     <Button onClick={() => window.location.href = '/dashboard/briefing'} className="bg-emerald-600 hover:bg-emerald-500 text-white text-[10px] font-black uppercase tracking-widest px-8">Access Portal</Button>
+                     <Button onClick={() => window.print()} variant="outline" className="border-slate-700 text-slate-300 text-[10px] font-black uppercase tracking-widest px-8">Download Briefing</Button>
+                     <Button onClick={() => window.location.href = '/dashboard/briefing'} className="bg-slate-800 hover:bg-slate-800 text-white text-[10px] font-black uppercase tracking-widest px-8">Access Portal</Button>
                   </div>
                </motion.div>
             ) : (
@@ -213,7 +213,7 @@ export default function DealPortalPage({ params }: { params: { id: string } }) {
                      <Button 
                        disabled={isClosing}
                        onClick={handleFinalize}
-                       className="bg-white text-black hover:bg-slate-200 px-12 py-8 text-[12px] font-black uppercase tracking-[0.2em] rounded-none group shadow-[0_0_30px_rgba(255,255,255,0.1)]"
+                       className="bg-white text-black hover:bg-slate-200 px-12 py-8 text-[12px] font-black uppercase tracking-[0.2em] rounded-none group"
                      >
                         {isClosing ? 'SECURING...' : 'Finalize Agreement'} <ArrowRight className="w-5 h-5 ml-4 group-hover:translate-x-2 transition-transform" />
                      </Button>

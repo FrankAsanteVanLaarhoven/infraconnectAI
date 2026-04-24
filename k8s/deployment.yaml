@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: isaac-lab
+  namespace: physical-ai
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: isaac-lab
+  template:
+    metadata:
+      labels:
+        app: isaac-lab
+    spec:
+      containers:
+      - name: isaac-lab
+        image: nvcr.io/nvidia/isaac-lab:latest
+        resources:
+          limits:
+            nvidia.com/gpu: 8
+            memory: "128Gi"
+            cpu: "64"
+          requests:
+            nvidia.com/gpu: 4
+            memory: "64Gi"
+            cpu: "32"
+        envFrom:
+        - secretRef:
+            name: vla-secrets
+        volumeMounts:
+        - name: assets
+          mountPath: /isaac_assets
+      volumes:
+      - name: assets
+        persistentVolumeClaim:
+          claimName: isaac-assets-pvc

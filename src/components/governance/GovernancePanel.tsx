@@ -69,7 +69,7 @@ function PromotionPipeline({ counts }: { counts: { scratch: number; wiki: number
         {stages.map((stage, i) => (
           <div key={stage.key} className="flex items-center gap-0 flex-1">
             <div className={cn(
-              'flex-1 rounded-lg border p-3 text-center transition-all duration-300',
+              'flex-1 rounded-sm border p-3 text-center transition-all duration-300',
               stage.colorClass
             )}>
               <div className={cn(
@@ -169,18 +169,18 @@ function PendingPromotions() {
               initial={{ opacity: 0, x: -8 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: 8 }}
-              className="flex items-center gap-2 px-3 py-2 rounded-lg glass-subtle"
+              className="flex items-center gap-2 px-3 py-2 rounded-sm glass-subtle"
             >
-              <div className="w-1.5 h-1.5 rounded-full level-dot-l1 shrink-0" />
+              <div className="w-1.5 h-1.5 rounded-sm level-dot-l1 shrink-0" />
               <div className="flex-1 min-w-0">
                 <div className="text-xs font-medium truncate">{node.title}</div>
                 <div className="flex items-center gap-2 mt-0.5">
                   <span className="text-mono-xs text-muted-foreground">{node.level}</span>
                   {/* Health bar */}
                   <div className="flex items-center gap-1">
-                    <div className="w-12 h-1 rounded-full bg-glass-border overflow-hidden">
+                    <div className="w-12 h-1 rounded-sm bg-glass-border overflow-hidden">
                       <div
-                        className="h-full rounded-full transition-all duration-500"
+                        className="h-full rounded-sm transition-all duration-500"
                         style={{
                           width: `${Math.round(node.healthScore * 100)}%`,
                           backgroundColor: node.healthScore >= 0.8
@@ -274,11 +274,11 @@ function DecayTimeline() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: i * 0.06 }}
             className={cn(
-              'flex items-center gap-2.5 px-3 py-2 rounded-lg transition-colors duration-200',
+              'flex items-center gap-2.5 px-3 py-2 rounded-sm transition-colors duration-200',
               t.isWarning ? 'glass-subtle' : 'bg-transparent'
             )}
           >
-            <div className={cn('w-1.5 h-1.5 rounded-full shrink-0', t.dotClass)} />
+            <div className={cn('w-1.5 h-1.5 rounded-sm shrink-0', t.dotClass)} />
             <div className="flex-1 flex items-center gap-2 min-w-0">
               <code className="text-mono-xs text-muted-foreground shrink-0">{t.label}</code>
               <code className="text-mono-xs text-muted-foreground/50 shrink-0">{t.value}</code>
@@ -322,9 +322,9 @@ function ConflictDetection() {
             initial={{ opacity: 0, x: -8 }}
             animate={{ opacity: 1, x: 0 }}
             onClick={() => selectNode(node.id)}
-            className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-left w-full transition-colors duration-200 hover:bg-destructive/5 cursor-pointer"
+            className="flex items-center gap-2 px-3 py-1.5 rounded-sm text-left w-full transition-colors duration-200 hover:bg-destructive/5 cursor-pointer"
           >
-            <span className="w-1.5 h-1.5 rounded-full bg-destructive shadow-[0_0_4px_var(--destructive)] shrink-0" />
+            <span className="w-1.5 h-1.5 rounded-sm bg-destructive shadow-[0_0_4px_var(--destructive)] shrink-0" />
             <span className="text-xs truncate flex-1 min-w-0">{node.title}</span>
             <span className="flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-destructive/10 text-destructive text-mono-xs font-medium shrink-0">
               {node.conflictCount}
@@ -362,7 +362,7 @@ function PolicyItem({ policy, index, onToggle }: {
       animate={{ opacity: 1, x: 0 }}
       transition={{ delay: index * 0.05 }}
       className={cn(
-        'flex items-start gap-3 px-3 py-2.5 rounded-lg transition-all duration-200',
+        'flex items-start gap-3 px-3 py-2.5 rounded-sm transition-all duration-200',
         policy.active ? 'glass-subtle hover:glass-hover' : 'opacity-40'
       )}
     >
@@ -432,7 +432,7 @@ export function GovernancePanel() {
           Governance
         </h3>
         {health && (
-          <div className="flex items-center gap-1.5 px-2 py-1 rounded-full glass-subtle">
+          <div className="flex items-center gap-1.5 px-2 py-1 rounded-sm glass-subtle">
             <Heart className={cn(
               'w-3 h-3',
               healthScore >= 0.8 ? 'text-matrix' : healthScore >= 0.6 ? 'text-yellow-500' : 'text-destructive'
@@ -450,21 +450,21 @@ export function GovernancePanel() {
         <div className="grid grid-cols-3 gap-2">
           <button
             onClick={() => {/* filter explorer to canon */}}
-            className="glass-subtle rounded-lg p-3 text-center transition-all duration-200 hover:glass-hover cursor-pointer"
+            className="glass-subtle rounded-sm p-3 text-center transition-all duration-200 hover:glass-hover cursor-pointer"
           >
             <div className="text-lg font-semibold text-matrix tabular-nums">{canonCount}</div>
             <div className="text-[10px] text-premium text-muted-foreground tracking-wider">CANON</div>
           </button>
           <button
             onClick={() => {/* filter explorer to wiki */}}
-            className="glass-subtle rounded-lg p-3 text-center transition-all duration-200 hover:glass-hover cursor-pointer"
+            className="glass-subtle rounded-sm p-3 text-center transition-all duration-200 hover:glass-hover cursor-pointer"
           >
             <div className="text-lg font-semibold text-l1 tabular-nums">{wikiCount}</div>
             <div className="text-[10px] text-premium text-muted-foreground tracking-wider">WIKI</div>
           </button>
           <button
             onClick={() => {/* filter explorer to scratch */}}
-            className="glass-subtle rounded-lg p-3 text-center transition-all duration-200 hover:glass-hover cursor-pointer"
+            className="glass-subtle rounded-sm p-3 text-center transition-all duration-200 hover:glass-hover cursor-pointer"
           >
             <div className="text-lg font-semibold text-muted-foreground tabular-nums">{scratchCount}</div>
             <div className="text-[10px] text-premium text-muted-foreground tracking-wider">SCRATCH</div>

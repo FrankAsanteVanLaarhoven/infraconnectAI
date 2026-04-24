@@ -127,16 +127,16 @@ export function CognitiveCoreDuplex({ onClose, autoOpen = true }: { onClose: () 
 
   return (
     <div className={cn(
-      "fixed z-[100] bg-background/95 backdrop-blur-xl flex font-mono overflow-hidden transition-all duration-300 border border-emerald-500/30 shadow-[0_0_50px_rgba(16,185,129,0.1)]",
+      "fixed z-[100] bg-background/95 backdrop-blur-xl flex font-mono overflow-hidden transition-all duration-300 border border-slate-700 ",
       isMiniature 
-        ? "bottom-4 left-4 w-96 h-[32rem] rounded-2xl flex-col items-center justify-between py-6"
+        ? "bottom-4 left-4 w-96 h-[32rem] rounded-none flex-col items-center justify-between py-6"
         : "inset-0 flex-col items-center justify-center"
     )}>
       {/* Background Matrix/Glow */}
       <div className="absolute inset-0 z-0 flex items-center justify-center opacity-20 pointer-events-none">
         <div 
           className={cn(
-            "rounded-full bg-emerald-500/20 blur-[100px] transition-all duration-75",
+            "rounded-sm bg-slate-800 blur-[100px] transition-all duration-75",
             isMiniature ? "w-[120%] h-[120%]" : "w-[60vw] h-[60vw]"
           )}
           style={{ transform: `scale(${1 + pulse / 200})` }}
@@ -146,13 +146,13 @@ export function CognitiveCoreDuplex({ onClose, autoOpen = true }: { onClose: () 
       <div className="absolute top-4 left-4 z-20 flex items-center gap-2">
         <button 
           onClick={onClose}
-          className="p-2 text-muted-foreground hover:text-foreground transition-colors bg-background/50 rounded-full"
+          className="p-2 text-muted-foreground hover:text-foreground transition-colors bg-background/50 rounded-sm"
         >
           <X className="w-4 h-4" />
         </button>
         <button 
           onClick={() => setIsMiniature(!isMiniature)}
-          className="p-2 text-muted-foreground hover:text-foreground transition-colors bg-background/50 rounded-full"
+          className="p-2 text-muted-foreground hover:text-foreground transition-colors bg-background/50 rounded-sm"
         >
           {isMiniature ? <Maximize2 className="w-4 h-4" /> : <Minimize2 className="w-4 h-4" />}
         </button>
@@ -162,8 +162,8 @@ export function CognitiveCoreDuplex({ onClose, autoOpen = true }: { onClose: () 
         "z-10 flex flex-col items-center w-full px-6",
         isMiniature ? "gap-6 mt-8" : "gap-8 max-w-3xl text-center"
       )}>
-        <div className="flex items-center gap-3 text-emerald-500">
-          <Radio className="w-6 h-6 animate-pulse" />
+        <div className="flex items-center gap-3 text-slate-300">
+          <Radio className="w-6 h-6" />
           <h1 className={cn("tracking-[0.2em] uppercase font-bold", isMiniature ? "text-sm" : "text-xl")}>
             Cognitive Orchestration
           </h1>
@@ -171,15 +171,15 @@ export function CognitiveCoreDuplex({ onClose, autoOpen = true }: { onClose: () 
 
         {/* Live Transcript Box */}
         <div className={cn(
-          "flex items-center justify-center w-full border border-white/5 bg-black/40 rounded-xl relative overflow-hidden backdrop-blur-sm",
+          "flex items-center justify-center w-full border border-white/5 bg-black/40 rounded-sm relative overflow-hidden backdrop-blur-sm",
           isMiniature ? "h-32 px-4" : "h-48 px-8 max-w-2xl"
         )}>
           {isListening || transcript || interimTranscript ? (
             <div className="w-full text-center space-y-2 overflow-y-auto">
                {transcript && <span className={cn("text-foreground/80 font-light tracking-wide", isMiniature ? "text-sm" : "text-xl")}>{transcript}</span>}
-               {interimTranscript && <span className={cn("text-emerald-400 font-light tracking-wide animate-pulse", isMiniature ? "text-sm" : "text-xl")}> {interimTranscript}</span>}
+               {interimTranscript && <span className={cn("text-slate-300 font-light tracking-wide ", isMiniature ? "text-sm" : "text-xl")}> {interimTranscript}</span>}
                {isListening && !transcript && !interimTranscript && (
-                  <p className={cn("text-muted-foreground font-light tracking-wide animate-pulse", isMiniature ? "text-sm" : "text-xl")}>
+                  <p className={cn("text-muted-foreground font-light tracking-wide ", isMiniature ? "text-sm" : "text-xl")}>
                     Listening...
                   </p>
                )}
@@ -194,10 +194,10 @@ export function CognitiveCoreDuplex({ onClose, autoOpen = true }: { onClose: () 
         <button
           onClick={toggleListening}
           className={cn(
-            "relative flex items-center justify-center rounded-full border-2 transition-all duration-500",
+            "relative flex items-center justify-center rounded-sm border-2 transition-all duration-500",
             isMiniature ? "w-20 h-20" : "w-32 h-32",
             isListening 
-              ? 'bg-emerald-500/10 border-emerald-500/50 text-emerald-400 shadow-[0_0_50px_rgba(16,185,129,0.3)]' 
+              ? 'bg-slate-800 border-slate-700 text-slate-300 ' 
               : 'bg-foreground/5 border-border/20 text-muted-foreground hover:bg-foreground/10 hover:border-border/40'
           )}
         >

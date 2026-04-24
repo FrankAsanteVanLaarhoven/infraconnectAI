@@ -3,6 +3,7 @@
  * InfraConnect Operator CLI
  * Usage: npx tsx scripts/operator.ts cycle
  */
+export {};
 
 const BASE_URL = process.env.InfraConnect_URL ?? 'http://localhost:3006';
 const SECRET = process.env.OPERATOR_SECRET_KEY ?? 'sota_operator_secret';

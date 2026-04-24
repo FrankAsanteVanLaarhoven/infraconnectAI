@@ -32,8 +32,8 @@ export class ErrorBoundary extends Component<Props, State> {
       if (this.props.fallback) return this.props.fallback;
 
       return (
-        <div className="flex flex-col items-center justify-center p-8 bg-black/40 border border-red-900/40 rounded-xl m-4 text-center backdrop-blur-xl">
-           <div className="p-3 bg-red-950/20 border border-red-500/40 rounded-full mb-4">
+        <div className="flex flex-col items-center justify-center p-8 bg-black/40 border border-red-900/40 rounded-sm m-4 text-center backdrop-blur-xl">
+           <div className="p-3 bg-red-950/20 border border-red-500/40 rounded-sm mb-4">
              <ShieldAlert className="w-8 h-8 text-red-500" />
            </div>
            <h3 className="text-sm font-black text-red-500 uppercase tracking-widest mb-2">Module Exception Detected</h3>

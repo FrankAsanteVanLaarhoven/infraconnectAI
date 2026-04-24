@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { Network, Activity, Cpu, ShieldAlert, CheckCircle, Terminal, Play, Loader2, RotateCcw } from 'lucide-react';
 import { useSfx } from '@/hooks/useSfx';
-import { useTimelineStore } from '@/lib/store/useTimelineStore';
+import { useTimelineStore } from '@/stores/timelineStore';
 import { replayTimeline } from '@/lib/replay';
 
 export const EnterpriseDemoOrchestrator = () => {
@@ -119,7 +119,7 @@ export const EnterpriseDemoOrchestrator = () => {
   };
 
   return (
-    <div className="flex flex-col h-full w-full bg-[#050505] p-6 text-white font-mono rounded-xl border border-white/10 shadow-[0_0_30px_rgba(6,182,212,0.1)] relative">
+    <div className="flex flex-col h-full w-full bg-[#050505] p-6 text-white font-mono rounded-sm border border-white/10 relative">
       <div className="flex items-center gap-3 mb-6">
           <Terminal className="text-cyan-500 w-5 h-5" />
           <h2 className="text-sm font-black tracking-widest uppercase text-cyan-400">Enterprise Pitch Orchestrator</h2>
@@ -131,7 +131,7 @@ export const EnterpriseDemoOrchestrator = () => {
           <div className="flex flex-col gap-4">
               <div className="text-[10px] text-white/40 uppercase tracking-widest border-b border-white/10 pb-2">Presentation Mechanics</div>
               
-              <button onClick={() => executePhaseSequence(1)} disabled={phase >= 1} className={`flex items-center justify-between p-3 rounded border text-xs font-bold transition-all ${phase >= 1 ? 'bg-emerald-900/40 border-emerald-500/40 text-emerald-500' : 'bg-white/5 border-white/10 hover:border-cyan-500/50'}`}>
+              <button onClick={() => executePhaseSequence(1)} disabled={phase >= 1} className={`flex items-center justify-between p-3 rounded border text-xs font-bold transition-all ${phase >= 1 ? 'bg-slate-800 border-slate-700 text-slate-300' : 'bg-white/5 border-white/10 hover:border-cyan-500/50'}`}>
                   <span>Phase 1: Normal Ops Flow</span>
                   {phase >= 1 ? <CheckCircle className="w-4 h-4" /> : <Play className="w-4 h-4" />}
               </button>
@@ -141,7 +141,7 @@ export const EnterpriseDemoOrchestrator = () => {
                   {phase >= 2 ? <ShieldAlert className="w-4 h-4" /> : <Play className="w-4 h-4" />}
               </button>
 
-              <button onClick={() => executePhaseSequence(3)} disabled={phase >= 3 || phase < 2} className={`flex items-center justify-between p-3 rounded border text-xs font-bold transition-all ${phase >= 3 ? 'bg-purple-900/40 border-purple-500/40 text-purple-500' : 'bg-white/5 border-white/10 hover:border-cyan-500/50'}`}>
+              <button onClick={() => executePhaseSequence(3)} disabled={phase >= 3 || phase < 2} className={`flex items-center justify-between p-3 rounded border text-xs font-bold transition-all ${phase >= 3 ? 'bg-slate-900/50 border-slate-800 text-slate-400' : 'bg-white/5 border-white/10 hover:border-cyan-500/50'}`}>
                   <span>Phase 3/4: Cognitive AI Diagnostics</span>
                   {phase >= 3 ? <Activity className="w-4 h-4" /> : <Play className="w-4 h-4" />}
               </button>
@@ -151,13 +151,13 @@ export const EnterpriseDemoOrchestrator = () => {
                   {phase >= 5 ? <Network className="w-4 h-4" /> : <Play className="w-4 h-4" />}
               </button>
 
-              <button onClick={() => executePhaseSequence(7)} disabled={phase >= 7 || phase < 5} className={`flex items-center justify-between p-3 rounded border text-xs font-bold transition-all ${phase >= 7 ? 'bg-emerald-900/40 border-emerald-500/40 text-emerald-500' : 'bg-white/5 border-white/10 hover:border-cyan-500/50'}`}>
+              <button onClick={() => executePhaseSequence(7)} disabled={phase >= 7 || phase < 5} className={`flex items-center justify-between p-3 rounded border text-xs font-bold transition-all ${phase >= 7 ? 'bg-slate-800 border-slate-700 text-slate-300' : 'bg-white/5 border-white/10 hover:border-cyan-500/50'}`}>
                   <span>Phase 7: Full Recovery Metric Stabilization</span>
                   {phase >= 7 ? <CheckCircle className="w-4 h-4" /> : <Play className="w-4 h-4" />}
               </button>
 
               <div className="mt-4 border-t border-white/10 pt-4">
-                  <button onClick={executeReplay} disabled={isReplaying || events.length === 0} className={`w-full flex items-center justify-between p-3 rounded border text-xs font-bold transition-all bg-purple-900/40 border-purple-500/50 text-purple-400 hover:bg-purple-900/60`}>
+                  <button onClick={executeReplay} disabled={isReplaying || events.length === 0} className={`w-full flex items-center justify-between p-3 rounded border text-xs font-bold transition-all bg-slate-900/50 border-slate-800 text-slate-400 hover:bg-slate-900/50`}>
                       <span className="flex items-center gap-2">
                          <RotateCcw className={`w-4 h-4 ${isReplaying ? 'animate-spin' : ''}`} /> 
                          {isReplaying ? 'BROADCASTING HISTORY...' : `REPLAY SESSION (${events.length} events)`}
@@ -168,16 +168,16 @@ export const EnterpriseDemoOrchestrator = () => {
           </div>
 
           {/* Log Intercept Window */}
-          <div className="bg-black/60 border border-white/5 rounded-lg p-4 flex flex-col font-mono relative overflow-hidden">
+          <div className="bg-black/60 border border-white/5 rounded-sm p-4 flex flex-col font-mono relative overflow-hidden">
              <div className="absolute top-0 right-0 p-4 opacity-10">
                 <Cpu className="w-24 h-24" />
              </div>
-             <div className="text-[10px] text-emerald-500 mb-4 border-b border-white/10 pb-2 z-10 flex gap-2 items-center">
+             <div className="text-[10px] text-slate-300 mb-4 border-b border-white/10 pb-2 z-10 flex gap-2 items-center">
                 <Loader2 className="w-3 h-3 animate-spin" /> Stream Watcher Active
              </div>
              <div className="flex-1 overflow-y-auto custom-scrollbar flex flex-col gap-2 z-10 text-[10px] text-white/70">
                 {logs.map((L, i) => (
-                    <div key={i} className={L.includes('[HIGH]') ? 'text-red-400 font-bold' : L.includes('GREEN') ? 'text-emerald-400' : ''}>
+                    <div key={i} className={L.includes('[HIGH]') ? 'text-red-400 font-bold' : L.includes('GREEN') ? 'text-slate-300' : ''}>
                         {L}
                     </div>
                 ))}

@@ -66,7 +66,7 @@ export function SecurityPostureGuard() {
         glowStrong 
         scanline 
         padding="none" 
-        className="w-full h-full flex flex-col font-mono select-none shadow-[0_0_80px_rgba(34,211,238,0.05)] bg-black/40 border-white/5"
+        className="w-full h-full flex flex-col font-mono select-none bg-black/40 border-white/5"
         dir={isRtl ? 'rtl' : 'ltr'}
     >
       {/* 1. CINEMATIC SECURITY HEADER */}
@@ -76,10 +76,10 @@ export function SecurityPostureGuard() {
       )}>
          <div className="flex items-center gap-5">
             <div className={cn(
-                "p-3 rounded-2xl border transition-all duration-300",
+                "p-3 rounded-none border transition-all duration-300",
                 threatLevel === 'elevated' 
-                    ? 'border-red-500 bg-red-500/10 shadow-[0_0_20px_rgba(239,68,68,0.3)] animate-pulse' 
-                    : 'border-cyan-500/30 bg-cyan-500/10 shadow-[0_0_15px_rgba(34,211,238,0.1)]'
+                    ? 'border-red-500 bg-red-500/10  ' 
+                    : 'border-cyan-500/30 bg-cyan-500/10 '
             )}>
                <Shield className={cn("w-6 h-6", threatLevel === 'elevated' ? 'text-red-500' : 'text-cyan-400')} />
             </div>
@@ -114,9 +114,9 @@ export function SecurityPostureGuard() {
          <GlassCard className="p-5 border-white/5 bg-white/[0.02] flex items-center justify-between group hover:border-red-500/30 transition-all">
             <div className="space-y-1">
                <span className="text-[9px] text-slate-500 uppercase font-black tracking-widest line-clamp-1 group-hover:text-red-500 transition-colors">{t('panel.vector_intercepts')}</span>
-               <div className="text-2xl font-black text-white tabular-nums drop-shadow-[0_0_15px_rgba(255,255,255,0.05)]">{stats.blockedAttacks}</div>
+               <div className="text-2xl font-black text-white tabular-nums drop-">{stats.blockedAttacks}</div>
             </div>
-            <div className="p-2.5 bg-red-500/5 rounded-xl border border-red-500/10 group-hover:bg-red-500 group-hover:text-black transition-all">
+            <div className="p-2.5 bg-red-500/5 rounded-sm border border-red-500/10 group-hover:bg-red-500 group-hover:text-black transition-all">
                 <UserX className="w-5 h-5 text-red-500/60 group-hover:text-inherit" />
             </div>
          </GlassCard>
@@ -124,11 +124,11 @@ export function SecurityPostureGuard() {
          <GlassCard className="p-5 border-white/5 bg-white/[0.02] flex items-center justify-between group hover:border-cyan-500/30 transition-all">
             <div className="space-y-1">
                <span className="text-[9px] text-slate-500 uppercase font-black tracking-widest line-clamp-1 group-hover:text-cyan-500 transition-colors">{t('panel.verified_signatures')}</span>
-               <div className="text-2xl font-black text-white tabular-nums drop-shadow-[0_0_15px_rgba(255,255,255,0.05)]">
+               <div className="text-2xl font-black text-white tabular-nums drop-">
                    {stats.activeDevices}<span className="text-slate-700 text-sm ml-1">/ {stats.deviceLimit}</span>
                </div>
             </div>
-            <div className="p-2.5 bg-cyan-500/5 rounded-xl border border-cyan-500/10 group-hover:bg-cyan-500 group-hover:text-black transition-all">
+            <div className="p-2.5 bg-cyan-500/5 rounded-sm border border-cyan-500/10 group-hover:bg-cyan-500 group-hover:text-black transition-all">
                 <Lock className="w-5 h-5 text-cyan-400 group-hover:text-inherit" />
             </div>
          </GlassCard>
@@ -153,7 +153,7 @@ export function SecurityPostureGuard() {
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, scale: 0.98 }}
                     transition={{ delay: i * 0.05 }}
-                    className={`flex items-center justify-between text-[10px] ${isRtl ? 'border-r-2' : 'border-l-2'} border-red-500/40 bg-white/[0.02] p-4 rounded-xl hover:bg-white/[0.04] transition-colors group/log`}
+                    className={`flex items-center justify-between text-[10px] ${isRtl ? 'border-r-2' : 'border-l-2'} border-red-500/40 bg-white/[0.02] p-4 rounded-sm hover:bg-white/[0.04] transition-colors group/log`}
                   >
                      <div className="flex items-center gap-6">
                         <span className="text-red-500/60 font-mono font-black tracking-tighter">[{new Date(incident.ts).toLocaleTimeString()}]</span>
@@ -177,7 +177,7 @@ export function SecurityPostureGuard() {
             
             {/* Scanline Sweep */}
             <motion.div 
-                className="absolute inset-x-0 h-px bg-cyan-500/20 shadow-[0_0_15px_rgba(34,211,238,0.5)] pointer-events-none"
+                className="absolute inset-x-0 h-px bg-cyan-500/20 pointer-events-none"
                 animate={{ top: ['0%', '100%'] }}
                 transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
             />
@@ -191,8 +191,8 @@ export function SecurityPostureGuard() {
              <div className="w-1 h-3 bg-white/5" />
              <span className="text-cyan-500/60">{t('security.cluster_auth')}</span>
          </div>
-         <div className="flex items-center gap-4 px-4 py-1.5 bg-cyan-500/5 border border-cyan-500/20 rounded-full">
-            <div className="w-2 h-2 rounded-full bg-cyan-500 shadow-[0_0_10px_#22d3ee] animate-pulse" />
+         <div className="flex items-center gap-4 px-4 py-1.5 bg-cyan-500/5 border border-cyan-500/20 rounded-sm">
+            <div className="w-2 h-2 rounded-sm bg-cyan-500" />
             <span className="text-[9px] text-cyan-500 font-black uppercase tracking-[0.2em]">{t('security.shield_active')}</span>
          </div>
       </div>

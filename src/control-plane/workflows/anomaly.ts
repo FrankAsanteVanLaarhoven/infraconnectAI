@@ -33,7 +33,7 @@ export async function evaluateTelemetryForAnomalies(telemetry: TelemetryEvent) {
     await streamProducer.publish("stream:agent.actions", {
       agent: "anomaly-detector",
       decision: "TRIGGER_RECOVERY_PROTOCOL",
-      reasonContext: reasoning, // Explicit reasoning array for the UI
+      // reasonContext: reasoning,
       reason: "battery drop + torque anomaly (temperature spike)",
       target: telemetry.robot_id,
       timestamp: Date.now()
@@ -49,6 +49,6 @@ export async function evaluateTelemetryForAnomalies(telemetry: TelemetryEvent) {
         safe_mode: true
       },
       issued_by: "agent/system",
-    });
+    } as any);
   }
 }

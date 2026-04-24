@@ -85,7 +85,7 @@ export default function RLHFFoundryPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#020202] text-slate-300 font-mono flex flex-col p-8 overflow-hidden selection:bg-indigo-500/30">
+    <div className="min-h-full bg-[#020202] text-slate-300 font-mono flex flex-col p-8 overflow-hidden selection:bg-indigo-500/30">
       
       {/* Background Decor */}
       <div className="absolute inset-0 opacity-[0.02] pointer-events-none" 
@@ -93,7 +93,7 @@ export default function RLHFFoundryPage() {
 
       <header className="relative z-10 flex items-center justify-between mb-8 pb-4 border-b border-white/5">
         <div className="flex items-center gap-4">
-           <div className="p-3 bg-indigo-500/10 border border-indigo-500/30 rounded-xl shadow-[0_0_20px_rgba(99,102,241,0.15)]">
+           <div className="p-3 bg-indigo-500/10 border border-indigo-500/30 rounded-sm">
               <Brain className="w-6 h-6 text-indigo-400" />
            </div>
            <div>
@@ -103,7 +103,7 @@ export default function RLHFFoundryPage() {
         </div>
         <div className="flex gap-4 items-center">
            <div className="flex items-center gap-2 px-3 py-1 bg-white/5 border border-white/10 rounded">
-              <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              <div className="w-1.5 h-1.5 rounded-sm bg-slate-800" />
               <span className="text-[9px] uppercase font-black tracking-widest text-slate-400">W&B Daemon Active</span>
            </div>
         </div>
@@ -113,7 +113,7 @@ export default function RLHFFoundryPage() {
         
         {/* Left Col: Hyperparams */}
         <div className="lg:col-span-4 flex flex-col gap-6">
-           <div className="bg-slate-900/40 border border-slate-800 rounded-2xl p-6 backdrop-blur-xl">
+           <div className="bg-slate-900/40 border border-slate-800 rounded-none p-6 backdrop-blur-xl">
               <h2 className="text-xs font-black text-white uppercase tracking-widest flex items-center gap-2 mb-6 border-b border-white/5 pb-2">
                  <Settings2 className="w-4 h-4 text-indigo-400" /> Training Architecture
               </h2>
@@ -124,7 +124,7 @@ export default function RLHFFoundryPage() {
                     <div className="grid gap-2">
                        {DOMAINS.map(d => (
                           <button key={d.id} onClick={() => setSelectedDomain(d.id)}
-                            className={`text-left text-xs px-4 py-3 rounded-lg border transition-all uppercase tracking-wide font-bold ${
+                            className={`text-left text-xs px-4 py-3 rounded-sm border transition-all uppercase tracking-wide font-bold ${
                               selectedDomain === d.id ? 'bg-indigo-500/20 border-indigo-500/50 text-indigo-300' : 'bg-black border-slate-800 text-slate-400 hover:border-slate-700'
                             }`}
                           >
@@ -138,7 +138,7 @@ export default function RLHFFoundryPage() {
                     <label className="text-[10px] text-slate-500 font-black uppercase tracking-widest mb-2 block">2. Foundation Substrate</label>
                     <select 
                       value={selectedModel} onChange={e => setSelectedModel(e.target.value)}
-                      className="w-full bg-black border border-slate-800 rounded-lg px-4 py-3 text-xs text-indigo-300 uppercase tracking-widest font-bold focus:outline-none focus:border-indigo-500/50 appearance-none"
+                      className="w-full bg-black border border-slate-800 rounded-sm px-4 py-3 text-xs text-indigo-300 uppercase tracking-widest font-bold focus:outline-none focus:border-indigo-500/50 appearance-none"
                     >
                        {MODELS.map(m => <option key={m.id} value={m.id}>{m.name}</option>)}
                     </select>
@@ -164,7 +164,7 @@ export default function RLHFFoundryPage() {
                  </div>
 
                  {/* CORE Hardening Parameters */}
-                 <div className="grid grid-cols-2 gap-4 pt-4 border-t border-white/5 bg-red-950/20 p-4 rounded-xl border border-red-900/30">
+                 <div className="grid grid-cols-2 gap-4 pt-4 border-t border-white/5 bg-red-950/20 p-4 rounded-sm border border-red-900/30">
                     <div className="col-span-2 flex items-center justify-between mb-2">
                        <span className="text-[8px] text-red-500 font-black uppercase tracking-widest flex items-center gap-1"><Target className="w-2.5 h-2.5" /> CORE PEFT Parameters</span>
                        <span className="text-[6px] text-red-400 bg-red-950 px-1 py-0.5 rounded border border-red-900/50 uppercase">Strict Enforcement</span>
@@ -193,7 +193,7 @@ export default function RLHFFoundryPage() {
            <button 
              disabled={status !== 'IDLE' && status !== 'COMPLETED'}
              onClick={startTraining}
-             className="w-full py-4 bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed text-white uppercase tracking-widest font-black text-xs rounded-xl shadow-[0_0_30px_rgba(79,70,229,0.3)] transition-all flex justify-center items-center gap-3"
+             className="w-full py-4 bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed text-white uppercase tracking-widest font-black text-xs rounded-sm transition-all flex justify-center items-center gap-3"
            >
               {status === 'IDLE' || status === 'COMPLETED' ? <><Play className="w-4 h-4 fill-current"/> INITIALIZE FINE-TUNING</> : <><Activity className="w-4 h-4 animate-spin"/> {status}...</>}
            </button>
@@ -201,15 +201,15 @@ export default function RLHFFoundryPage() {
 
         {/* Right Col: Graphs */}
         <div className="lg:col-span-8 flex flex-col gap-6">
-           <div className="flex-1 bg-slate-900/40 border border-slate-800 rounded-2xl p-6 backdrop-blur-xl flex flex-col relative overflow-hidden">
+           <div className="flex-1 bg-slate-900/40 border border-slate-800 rounded-none p-6 backdrop-blur-xl flex flex-col relative overflow-hidden">
               <h2 className="text-xs font-black text-white uppercase tracking-widest flex items-center justify-between mb-8 border-b border-white/5 pb-2">
-                 <span className="flex items-center gap-2"><Activity className="w-4 h-4 text-emerald-400" /> RL Telemetry Feed</span>
+                 <span className="flex items-center gap-2"><Activity className="w-4 h-4 text-slate-300" /> RL Telemetry Feed</span>
                  <span className="text-[10px] text-slate-500">Progress: {progress}%</span>
               </h2>
 
               {/* Progress Bar */}
-              <div className="w-full h-1 bg-black rounded-full overflow-hidden absolute top-[52px] left-0 right-0">
-                 <div className="h-full bg-emerald-500 transition-all duration-75" style={{ width: `${progress}%` }} />
+              <div className="w-full h-1 bg-black rounded-sm overflow-hidden absolute top-[52px] left-0 right-0">
+                 <div className="h-full bg-slate-800 transition-all duration-75" style={{ width: `${progress}%` }} />
               </div>
 
               {/* Loss / Reward Simulation Graph Container */}
@@ -227,7 +227,7 @@ export default function RLHFFoundryPage() {
                        <div className="w-1/2 bg-rose-500/60 rounded-t-sm transition-all duration-300 relative group-hover:bg-rose-400" 
                             style={{ height: `${c.loss * 100}%` }} />
                        {/* Reward Bar (Emerald) */}
-                       <div className="w-1/2 bg-emerald-500/60 rounded-t-sm transition-all duration-300 relative group-hover:bg-emerald-400 z-10" 
+                       <div className="w-1/2 bg-slate-800 rounded-t-sm transition-all duration-300 relative group-hover:bg-slate-800 z-10" 
                             style={{ height: `${c.reward * 100}%` }}>
                           
                           {/* Tooltip */}
@@ -246,15 +246,15 @@ export default function RLHFFoundryPage() {
 
               {/* Metrics Readout */}
               <div className="grid grid-cols-3 gap-6 mt-6">
-                 <div className="bg-black/50 p-4 rounded-xl border border-white/5">
+                 <div className="bg-black/50 p-4 rounded-sm border border-white/5">
                     <p className="text-[8px] text-slate-500 uppercase font-black tracking-widest mb-1">Final Loss (BCE)</p>
                     <p className="text-xl font-mono text-rose-400">{curves.length > 0 ? curves[curves.length - 1].loss.toFixed(4) : '0.0000'}</p>
                  </div>
-                 <div className="bg-black/50 p-4 rounded-xl border border-white/5">
+                 <div className="bg-black/50 p-4 rounded-sm border border-white/5">
                     <p className="text-[8px] text-slate-500 uppercase font-black tracking-widest mb-1">PPO Reward Avg</p>
-                    <p className="text-xl font-mono text-emerald-400">{curves.length > 0 ? curves[curves.length - 1].reward.toFixed(4) : '0.0000'}</p>
+                    <p className="text-xl font-mono text-slate-300">{curves.length > 0 ? curves[curves.length - 1].reward.toFixed(4) : '0.0000'}</p>
                  </div>
-                 <div className="bg-black/50 p-4 rounded-xl border border-indigo-500/20 relative overflow-hidden group">
+                 <div className="bg-black/50 p-4 rounded-sm border border-indigo-500/20 relative overflow-hidden group">
                     <div className="absolute inset-0 bg-indigo-500/5 transition-opacity opacity-0 group-hover:opacity-100" />
                     <p className="text-[8px] text-slate-500 uppercase font-black tracking-widest mb-1">W&B Target URN</p>
                     {runTag ? (
@@ -268,11 +268,11 @@ export default function RLHFFoundryPage() {
 
            <AnimatePresence>
              {status === 'COMPLETED' && (
-               <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="bg-emerald-950/30 border border-emerald-900/50 rounded-xl p-4 flex items-start gap-4">
-                  <CheckCircle2 className="w-6 h-6 text-emerald-500 shrink-0" />
+               <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="bg-slate-800 border border-slate-700 rounded-sm p-4 flex items-start gap-4">
+                  <CheckCircle2 className="w-6 h-6 text-slate-300 shrink-0" />
                   <div>
-                     <h4 className="text-sm font-black text-emerald-400 uppercase tracking-widest mb-1">Training Sync Verified</h4>
-                     <p className="text-[10px] text-emerald-600 font-bold uppercase leading-relaxed max-w-2xl">
+                     <h4 className="text-sm font-black text-slate-300 uppercase tracking-widest mb-1">Training Sync Verified</h4>
+                     <p className="text-[10px] text-slate-300 font-bold uppercase leading-relaxed max-w-2xl">
                         Weights updated & committed to registry. Payload completely flushed to local SQLite tracking store, ready for the w&b python daemon.
                      </p>
                   </div>

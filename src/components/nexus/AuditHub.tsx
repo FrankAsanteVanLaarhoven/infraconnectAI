@@ -27,14 +27,14 @@ export function AuditHub() {
   const getIcon = (category: string) => {
      switch(category) {
         case 'SECURITY': return <Shield className="w-3 h-3 text-red-500" />;
-        case 'REVENUE': return <Landmark className="w-3 h-3 text-green-500" />;
+        case 'REVENUE': return <Landmark className="w-3 h-3 text-slate-300" />;
         case 'GOVERNANCE': return <Zap className="w-3 h-3 text-indigo-400" />;
         default: return <Server className="w-3 h-3 text-cyan-400" />;
      }
   };
 
   return (
-    <div className="w-full h-[500px] bg-[#020202] border border-white/5 rounded-xl flex flex-col font-mono overflow-hidden shadow-2xl">
+    <div className="w-full h-[500px] bg-[#020202] border border-white/5 rounded-sm flex flex-col font-mono overflow-hidden shadow-2xl">
        {/* Ledger Header */}
        <div className="p-4 border-b border-white/5 bg-white/[0.02] flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -65,7 +65,7 @@ export function AuditHub() {
                    className="relative pl-6 border-l border-white/10 group pb-2"
                 >
                    {/* Timeline Marker */}
-                   <div className="absolute top-1 left-[-4px] w-2 h-2 rounded-full bg-slate-800 ring-2 ring-black group-hover:bg-indigo-500 transition-colors" />
+                   <div className="absolute top-1 left-[-4px] w-2 h-2 rounded-sm bg-slate-800 ring-2 ring-black group-hover:bg-indigo-500 transition-colors" />
                    
                    <div className="flex justify-between items-start mb-1">
                       <div className="flex items-center gap-2">
@@ -80,7 +80,7 @@ export function AuditHub() {
                       </span>
                    </div>
 
-                   <div className="bg-white/[0.01] border border-white/5 p-3 rounded-lg group-hover:bg-white/[0.03] transition-all cursor-pointer">
+                   <div className="bg-white/[0.01] border border-white/5 p-3 rounded-sm group-hover:bg-white/[0.03] transition-all cursor-pointer">
                       <div className="flex justify-between items-center mb-1">
                          <h4 className="text-[10px] font-bold text-slate-200">{e.title}</h4>
                          <ChevronRight className="w-3 h-3 text-slate-700 group-hover:text-white transition-all" />
@@ -99,7 +99,7 @@ export function AuditHub() {
 
           {loading && (
              <div className="flex flex-col items-center justify-center h-40 opacity-20">
-                <div className="w-8 h-8 border-2 border-white/10 border-t-white rounded-full animate-spin mb-4" />
+                <div className="w-8 h-8 border-2 border-white/10 border-t-white rounded-sm animate-spin mb-4" />
                 <span className="text-[8px] uppercase tracking-widest font-black">Syncing Ledger...</span>
              </div>
           )}
@@ -108,7 +108,7 @@ export function AuditHub() {
        {/* Footer Interlock */}
        <div className="p-3 bg-indigo-950/10 border-t border-white/5 flex items-center justify-between">
           <div className="flex items-center gap-2">
-             <div className="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse" />
+             <div className="w-1.5 h-1.5 rounded-sm bg-indigo-500" />
              <span className="text-[7px] text-indigo-400 font-black uppercase tracking-widest">Vault Synchronized // UDS:821-X</span>
           </div>
           <button className="text-[7px] text-slate-600 hover:text-white font-black uppercase tracking-tighter">Export Proof (PDF) →</button>

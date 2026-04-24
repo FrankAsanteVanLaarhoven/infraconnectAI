@@ -72,7 +72,7 @@ export async function POST(req: Request) {
               <p>Subject: ${clientName}, your request has been logged.</p>
               ${isEnterprise 
                 ? '<p>We detected an enterprise domain signature. Our Strategic Command team will review your application for priority unblocking within 24 hours.</p>' 
-                : '<p>You have successfully entered the deployment queue. We are rolling out access to the Sovereign Operator Core in waves.</p>'}
+                : '<p>You have successfully signed up for the waiting list and are currently <strong>awaiting approval</strong> to try our platform. We are rolling out access in waves.</p>'}
               <br/>
               <p style="color: #64748b; font-size: 12px;">-- Tactical Node Omega --<br/>Automated Transmission</p>
             </div>

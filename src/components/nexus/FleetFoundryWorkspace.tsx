@@ -26,7 +26,7 @@ export const FleetFoundryWorkspace = () => {
   }, []);
 
   return (
-    <div className="flex flex-col h-full w-full bg-[#050505] p-6 text-white font-mono rounded-xl border border-white/10 shadow-2xl overflow-hidden relative">
+    <div className="flex flex-col h-full w-full bg-[#050505] p-6 text-white font-mono rounded-sm border border-white/10 shadow-2xl overflow-hidden relative">
       {/* Background Grid Texture */}
       <div className="absolute inset-0 opacity-20 pointer-events-none" style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
 
@@ -38,7 +38,7 @@ export const FleetFoundryWorkspace = () => {
         </div>
         <div className="flex gap-4 text-[10px] uppercase tracking-widest text-white/50">
           <div className="flex items-center gap-2">
-            <div className={`w-2 h-2 rounded-full ${fleet.length > 0 ? 'bg-emerald-500 animate-pulse' : 'bg-red-500'} shadow-[0_0_8px_currentColor]`} />
+            <div className={`w-2 h-2 rounded-sm ${fleet.length > 0 ? 'bg-slate-800 ' : 'bg-red-500'} shadow-[0_0_8px_currentColor]`} />
             Kafka Ingress
           </div>
           <div className="flex items-center gap-2">
@@ -56,22 +56,22 @@ export const FleetFoundryWorkspace = () => {
           <div className="text-[10px] text-white/40 uppercase tracking-widest border-b border-white/10 pb-2">Active Fleet Nodes</div>
           <div className="grid grid-cols-2 lg:grid-cols-3 gap-3">
             {fleet.length === 0 ? (
-               <div className="col-span-3 h-32 flex items-center justify-center text-xs text-white/30 border border-dashed border-white/10 rounded-lg">
+               <div className="col-span-3 h-32 flex items-center justify-center text-xs text-white/30 border border-dashed border-white/10 rounded-sm">
                  Awaiting Telemetry Sync...
                </div>
             ) : (
                 fleet.map(node => (
-                <div key={node.robotId} className="bg-black/60 border border-white/5 p-4 rounded-lg hover:border-cyan-500/50 transition-colors group">
+                <div key={node.robotId} className="bg-black/60 border border-white/5 p-4 rounded-sm hover:border-cyan-500/50 transition-colors group">
                   <div className="flex justify-between items-start mb-4">
                     <div className="text-xs font-bold text-cyan-400 group-hover:text-cyan-300">{node.robotId.split('-')[0].toUpperCase()}</div>
-                    <div className={`text-[9px] px-2 py-0.5 rounded uppercase font-black tracking-widest ${node.status === 'ONLINE' ? 'bg-emerald-500/20 text-emerald-500' : 'bg-red-500/20 text-red-500'}`}>
+                    <div className={`text-[9px] px-2 py-0.5 rounded uppercase font-black tracking-widest ${node.status === 'ONLINE' ? 'bg-slate-800 text-slate-300' : 'bg-red-500/20 text-red-500'}`}>
                       {node.status}
                     </div>
                   </div>
                   <div className="space-y-2 text-[10px] text-white/60">
                     <div className="flex justify-between">
                        <span>Inference Confidence</span>
-                       <span className={node.perception.objectDetection < 0.45 ? 'text-red-400' : 'text-emerald-400'}>{(node.perception.objectDetection * 100).toFixed(1)}%</span>
+                       <span className={node.perception.objectDetection < 0.45 ? 'text-red-400' : 'text-slate-300'}>{(node.perception.objectDetection * 100).toFixed(1)}%</span>
                     </div>
                     <div className="flex justify-between">
                        <span>Network Latency</span>
@@ -96,7 +96,7 @@ export const FleetFoundryWorkspace = () => {
           </div>
 
           {/* Alert Stream */}
-          <div className="bg-black/40 border border-red-500/20 rounded-lg p-4 flex flex-col gap-3">
+          <div className="bg-black/40 border border-red-500/20 rounded-sm p-4 flex flex-col gap-3">
              <div className="flex items-center gap-2 text-xs font-bold text-red-400">
                 <ShieldAlert className="w-4 h-4" />
                 Intervention Logs
@@ -112,8 +112,8 @@ export const FleetFoundryWorkspace = () => {
           </div>
 
           {/* MLOps Dashboard Miniature */}
-          <div className="bg-black/40 border border-white/5 rounded-lg p-4 flex-1 flex flex-col">
-             <div className="flex items-center gap-2 text-xs font-bold text-purple-400 mb-4">
+          <div className="bg-black/40 border border-white/5 rounded-sm p-4 flex-1 flex flex-col">
+             <div className="flex items-center gap-2 text-xs font-bold text-slate-400 mb-4">
                 <GitBranch className="w-4 h-4" />
                 MLOps Retraining Pipeline
              </div>
@@ -122,10 +122,10 @@ export const FleetFoundryWorkspace = () => {
                   <div key={i} className="flex flex-col gap-1">
                      <div className="flex justify-between text-[9px] uppercase tracking-widest text-white/50">
                         <span>{model}</span>
-                        <span className="text-emerald-500">STABLE</span>
+                        <span className="text-slate-300">STABLE</span>
                      </div>
-                     <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
-                        <div className="h-full bg-purple-500" style={{ width: '100%' }} />
+                     <div className="h-1 w-full bg-white/5 rounded-sm overflow-hidden">
+                        <div className="h-full bg-slate-900/50" style={{ width: '100%' }} />
                      </div>
                   </div>
                ))}

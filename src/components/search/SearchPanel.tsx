@@ -89,7 +89,7 @@ export function SearchPanel() {
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder="BM25 + Semantic hybrid search..."
-          className="w-full h-9 pl-9 pr-3 glass rounded-lg text-xs text-foreground placeholder:text-muted-foreground/50 outline-none focus:glass-glow transition-all font-mono"
+          className="w-full h-9 pl-9 pr-3 glass rounded-sm text-xs text-foreground placeholder:text-muted-foreground/50 outline-none focus:glass-glow transition-all font-mono"
         />
         {isSearching && <Loader2 className="absolute right-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-matrix animate-spin" />}
       </div>
@@ -105,10 +105,10 @@ export function SearchPanel() {
               exit={{ opacity: 0, y: -5 }}
               transition={{ delay: i * 0.03 }}
               onClick={() => handleResultClick(node)}
-              className="glass-subtle rounded-lg p-3 cursor-pointer hover:glass-hover transition-all duration-200 group"
+              className="glass-subtle rounded-sm p-3 cursor-pointer hover:glass-hover transition-all duration-200 group"
             >
               <div className="flex items-start gap-2">
-                <span className={cn('w-2 h-2 rounded-full mt-1.5 shrink-0', `level-dot-${node.level.toLowerCase()}`)} />
+                <span className={cn('w-2 h-2 rounded-sm mt-1.5 shrink-0', `level-dot-${node.level.toLowerCase()}`)} />
                 <div className="flex-1 min-w-0">
                   <div className="text-xs font-medium group-hover:text-matrix transition-colors truncate">
                     {node.title}
@@ -149,7 +149,7 @@ export function SearchPanel() {
 
         {searchQuery.length < 2 && (
           <div className="text-center py-8">
-            <Sparkles className="w-6 h-6 text-matrix/30 mx-auto mb-2 animate-breathe" />
+            <Sparkles className="w-6 h-6 text-matrix/30 mx-auto mb-2" />
             <p className="text-xs text-muted-foreground/50">
               Hybrid BM25 + Semantic search
             </p>

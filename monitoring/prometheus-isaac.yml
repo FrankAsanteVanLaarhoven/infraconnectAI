@@ -1,0 +1,6 @@
+scrape_configs:
+  - job_name: 'isaac-lab'
+    static_configs:
+      - targets: ['isaac-lab:8888']
+    metrics_path: /metrics
+    scrape_interval: 15s

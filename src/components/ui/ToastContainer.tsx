@@ -12,13 +12,13 @@ interface ToastItem {
 
 const ICON = {
   info:    <Info      className="w-3.5 h-3.5 text-blue-400"   />,
-  success: <CheckCircle className="w-3.5 h-3.5 text-green-400" />,
+  success: <CheckCircle className="w-3.5 h-3.5 text-slate-300" />,
   warn:    <AlertTriangle className="w-3.5 h-3.5 text-yellow-400" />,
   error:   <XCircle   className="w-3.5 h-3.5 text-red-400"   />,
 }
 const BG = {
   info:    'border-blue-500/20   bg-blue-500/10',
-  success: 'border-green-500/20  bg-green-500/10',
+  success: 'border-slate-700  bg-slate-800',
   warn:    'border-yellow-500/20 bg-yellow-500/10',
   error:   'border-red-500/20    bg-red-500/10',
 }
@@ -26,9 +26,9 @@ const BG = {
 export function ToastContainer() {
   const [toasts, setToasts] = useState<ToastItem[]>([])
 
-  useBusEvent('infraconnect:toast', ({ message, type, durationMs = 3500 }) => {
+  useBusEvent('infraconnect:toast', ({ message, type, durationMs = 3500 }: any) => {
     const id = crypto.randomUUID()
-    setToasts(prev => [...prev.slice(-4), { id, message, type, durationMs }])
+    setToasts((prev: any) => [...prev.slice(-4), { id, message, type, durationMs } as any])
     setTimeout(() => setToasts(prev => prev.filter(t => t.id !== id)), durationMs)
   }, [])
 
@@ -39,7 +39,7 @@ export function ToastContainer() {
       {toasts.map(t => (
         <div
           key={t.id}
-          className={`flex items-center gap-2 px-3 py-2 rounded-lg border text-xs font-mono
+          className={`flex items-center gap-2 px-3 py-2 rounded-sm border text-xs font-mono
                       shadow-xl pointer-events-auto max-w-xs ${BG[t.type]}`}
         >
           {ICON[t.type]}

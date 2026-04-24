@@ -110,7 +110,7 @@ export const Conversation:FC<ConversationProps> = ({
   const modelParams = useModelParams(params);
   const micDuration = useRef<number>(0);
   const actualAudioPlayed = useRef<number>(0);
-  const textContainerRef = useRef<HTMLDivElement>(null);
+  const textContainerRef = useRef<any>(null);
   const textSeed = useMemo(() => Math.round(1000000 * Math.random()), []);
   const audioSeed = useMemo(() => Math.round(1000000 * Math.random()), []);
 
@@ -250,7 +250,7 @@ export const Conversation:FC<ConversationProps> = ({
           >
             {socketButtonMsg}
           </Button>
-          <div className={`h-4 w-4 rounded-full ${socketColor}`} />
+          <div className={`h-4 w-4 rounded-sm ${socketColor}`} />
         </div>
         {audioContext.current && worklet.current && <MediaContext.Provider value={
           {

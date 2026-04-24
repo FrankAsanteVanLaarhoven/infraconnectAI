@@ -126,3 +126,99 @@ export async function evaluateTransferReadiness(
     certExpiry: deadlineCertified ? new Date(Date.now() + 86_400_000 * 7).toISOString() : null,
   }
 }
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// v3.0 — Isaac Lab to Real Fleet Transfer Gate
+// ═══════════════════════════════════════════════════════════════════════════════
+
+export interface IsaacTransferReport {
+  runId:          string
+  approved:       boolean
+  blockers:       string[]
+  warnings:       string[]
+  physicsScore:   number
+  dataQuality:    number
+  pruneRatio:     number
+}
+
+const ISAAC_HARD_CRITERIA = [
+  { id: 'physics_score',    label: 'Physics score avg ≥ 0.70',      check: (ctx: any) => ctx.physicsScore >= 0.70 },
+  { id: 'data_quality',     label: 'Data quality avg ≥ 0.65',       check: (ctx: any) => ctx.dataQuality >= 0.65 },
+  { id: 'prune_ratio',      label: 'Prune ratio < 20%',             check: (ctx: any) => ctx.pruneRatio < 0.20 },
+  { id: 'min_episodes',     label: 'Minimum 50 episodes completed', check: (ctx: any) => ctx.totalEpisodes >= 50 },
+  { id: 'run_completed',    label: 'Isaac run completed',           check: (ctx: any) => ctx.runCompleted },
+]
+
+const ISAAC_SOFT_CRITERIA = [
+  { id: 'sensor_fidelity',  label: 'Sensor fidelity avg > 0.75',    check: (ctx: any) => ctx.sensorFidelity > 0.75 },
+  { id: 'action_success',   label: 'Action success avg > 0.70',     check: (ctx: any) => ctx.actionSuccess > 0.70 },
+]
+
+/**
+ * Isaac Lab → Real Fleet Transfer Gate
+ * Validates physics simulation quality + data curation health before
+ * allowing model weights to be deployed to physical robots via OTA.
+ */
+export async function isaacToRealGate(runId: string): Promise<IsaacTransferReport> {
+  const run = await prisma.isaacLabRun.findUnique({
+    where: { id: runId },
+    include: { episodes: { where: { isPruned: false } } },
+  })
+
+  if (!run) throw new Error(`Isaac Lab run ${runId} not found`)
+
+  const totalEpisodes = run.totalEpisodes
+  const pruneRatio = totalEpisodes > 0 ? run.prunedCount / totalEpisodes : 1
+
+  // Calculate sensor fidelity and action success averages from non-pruned episodes
+  const validEpisodes = run.episodes
+  const sensorFidelity = validEpisodes.length > 0
+    ? validEpisodes.reduce((s, e) => s + e.sensorFidelity, 0) / validEpisodes.length
+    : 0
+  const actionSuccess = validEpisodes.length > 0
+    ? validEpisodes.reduce((s, e) => s + e.actionSuccess, 0) / validEpisodes.length
+    : 0
+
+  const ctx = {
+    physicsScore: run.physicsScoreAvg,
+    dataQuality: run.dataQualityScoreAvg,
+    pruneRatio,
+    totalEpisodes,
+    runCompleted: run.status === 'COMPLETED',
+    sensorFidelity,
+    actionSuccess,
+  }
+
+  const blockers = ISAAC_HARD_CRITERIA.filter(c => !c.check(ctx)).map(c => c.label)
+  const warnings = ISAAC_SOFT_CRITERIA.filter(c => !c.check(ctx)).map(c => c.label)
+  const approved = blockers.length === 0
+
+  // Record the transfer attempt
+  await prisma.transferEvent.create({
+    data: {
+      agentId: `isaac-run-${runId}`,
+      fromTier: 'ISAAC_SIM',
+      toTier: 'REAL_FLEET',
+      triggeredBy: 'isaac-to-real-gate',
+      outcome: approved ? 'success' : 'rollback',
+      deltaMetrics: {
+        physicsScore: run.physicsScoreAvg,
+        dataQuality: run.dataQualityScoreAvg,
+        pruneRatio,
+        totalEpisodes,
+        sensorFidelity,
+        actionSuccess,
+      } as any,
+    },
+  })
+
+  return {
+    runId,
+    approved,
+    blockers,
+    warnings,
+    physicsScore: run.physicsScoreAvg,
+    dataQuality: run.dataQualityScoreAvg,
+    pruneRatio,
+  }
+}

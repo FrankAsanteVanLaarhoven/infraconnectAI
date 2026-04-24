@@ -12,7 +12,7 @@ export const ServerAudio: FC<ServerAudioProps> = ({ setGetAudioStats, theme }) =
   const { analyser, hasCriticalDelay, setHasCriticalDelay } = useServerAudio({
     setGetAudioStats,
   });
-  const containerRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<any>(null);
   return (
     <>
       {hasCriticalDelay && (

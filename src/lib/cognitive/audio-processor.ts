@@ -1,5 +1,5 @@
-"use client";
 // @ts-nocheck
+"use client";
 function asMs(samples) {
   return (samples * 1000 / sampleRate).toFixed(1);
 }
@@ -9,6 +9,7 @@ function asSamples(mili) {
 }
 
 class MoshiProcessor extends AudioWorkletProcessor {
+  [key: string]: any;
   constructor() {
     super();
     console.log("Moshi processor lives", currentFrame, sampleRate);
@@ -177,10 +178,15 @@ class MoshiProcessor extends AudioWorkletProcessor {
         output[i] *= (out_idx - i) / out_idx;
       }
     }
+    // @ts-ignore
     this.totalAudioPlayed += output.length / sampleRate;
+    // @ts-ignore
     this.actualAudioPlayed += out_idx / sampleRate;
+    // @ts-ignore
     this.timeInStream += out_idx / sampleRate;
     return true;
   }
 }
+// @ts-ignore
 registerProcessor("moshi-processor", MoshiProcessor);
+export {};

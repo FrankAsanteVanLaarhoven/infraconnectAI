@@ -19,7 +19,7 @@ export async function GET(req: NextRequest) {
       OR: [
         { title:   { contains: q, mode: 'insensitive' as const } },
         { summary: { contains: q, mode: 'insensitive' as const } },
-        { tags:    { has: q } },
+        { tags:    { contains: q, mode: 'insensitive' as const } },
       ],
     } : {}),
   }
@@ -104,7 +104,7 @@ export async function POST(req: NextRequest) {
       title,
       summary: content,
       kind: type ?? 'artifact',
-      tags: tags ?? [],
+      tags: Array.isArray(tags) ? tags.join(',') : (tags ?? null),
       level: 'L0',
       plane: 'memory',
       state: 'draft',

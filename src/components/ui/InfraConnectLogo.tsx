@@ -41,13 +41,13 @@ export function InfraConnectLogo({
       <img 
         src="/brand/logo-anim.png" 
         alt="InfraConnect AI Symbol" 
-        className="w-auto h-full object-contain cursor-pointer transition-all duration-500 hover:scale-110 hover:animate-[spin_4s_linear_infinite] drop-shadow-[0_0_8px_rgba(59,130,246,0.5)] hover:drop-shadow-[0_0_15px_rgba(59,130,246,0.8)]" 
+        className="w-auto h-full object-contain cursor-pointer transition-all duration-500 hover:scale-110 hover:animate-[spin_4s_linear_infinite] drop- hover:drop-" 
       />
       {/* Isolated Illuminated Text */}
       <img 
         src="/brand/logo-text-only.png" 
         alt="InfraConnect AI" 
-        className="w-auto h-[80%] max-w-full object-contain drop-shadow-[0_0_2px_rgba(255,255,255,0.3)] transition-all duration-700" 
+        className="w-auto h-[80%] max-w-full object-contain drop- transition-all duration-700" 
       />
     </Link>
   );

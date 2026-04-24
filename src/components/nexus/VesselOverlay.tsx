@@ -19,13 +19,13 @@ export function VesselMapOverlay() {
   }, []);
 
   return (
-    <div className="w-full h-full bg-[#020202] border border-white/5 rounded-xl flex flex-col font-mono overflow-hidden group">
+    <div className="w-full h-full bg-[#020202] border border-white/5 rounded-sm flex flex-col font-mono overflow-hidden group">
        {/* Radar Header */}
        <div className="p-3 border-b border-white/5 bg-white/[0.02] flex items-center justify-between">
           <div className="flex items-center gap-2">
              <div className="relative">
                 <Radio className="w-3 h-3 text-cyan-400" />
-                <div className="absolute inset-0 bg-cyan-400/20 rounded-full animate-ping" />
+                <div className="absolute inset-0 bg-cyan-400/20 rounded-sm animate-ping" />
              </div>
              <h3 className="text-[9px] font-black text-white uppercase tracking-widest">AIS Radar Sweep</h3>
           </div>
@@ -50,11 +50,11 @@ export function VesselMapOverlay() {
                    initial={{ opacity: 0, x: -10 }}
                    animate={{ opacity: 1, x: 0 }}
                    transition={{ delay: i * 0.1 }}
-                   className="flex items-center justify-between p-2.5 bg-white/[0.02] border border-white/5 rounded-lg group/item hover:bg-white/[0.04] transition-all"
+                   className="flex items-center justify-between p-2.5 bg-white/[0.02] border border-white/5 rounded-sm group/item hover:bg-white/[0.04] transition-all"
                 >
                    <div className="flex items-center gap-3">
                       <div className={`p-1.5 rounded ${v.status === 'DARK' ? 'bg-red-500/10 border border-red-500/30' : 'bg-cyan-500/10 border border-cyan-500/30'}`}>
-                         <Ship className={`w-3 h-3 ${v.status === 'DARK' ? 'text-red-500 animate-pulse' : 'text-cyan-500'}`} />
+                         <Ship className={`w-3 h-3 ${v.status === 'DARK' ? 'text-red-500 ' : 'text-cyan-500'}`} />
                       </div>
                       <div>
                          <p className="text-[9px] font-black text-white uppercase tracking-wider">{v.name}</p>

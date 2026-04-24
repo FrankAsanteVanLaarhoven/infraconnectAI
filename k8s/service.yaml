@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: isaac-lab-service
+  namespace: physical-ai
+spec:
+  selector:
+    app: isaac-lab
+  ports:
+  - port: 8888
+    targetPort: 8888
+    name: http
+  type: ClusterIP

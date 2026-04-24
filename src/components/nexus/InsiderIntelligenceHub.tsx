@@ -45,11 +45,11 @@ export function InsiderIntelligenceHub() {
     }, []);
 
     return (
-        <div className="w-full h-full bg-[#030712] border border-red-500/20 rounded-3xl p-8 flex flex-col font-mono relative overflow-hidden group shadow-[0_0_100px_rgba(239,68,68,0.05)]">
+        <div className="w-full h-full bg-[#030712] border border-red-500/20 rounded-3xl p-8 flex flex-col font-mono relative overflow-hidden group">
             {/* Header */}
             <div className="flex items-center justify-between mb-8 border-b border-white/5 pb-6 relative z-10">
                 <div className="flex items-center gap-4">
-                    <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-2xl">
+                    <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-none">
                         <Fingerprint className="w-5 h-5 text-red-500" />
                     </div>
                     <div>
@@ -65,7 +65,7 @@ export function InsiderIntelligenceHub() {
                     </div>
                     <div className="flex flex-col">
                         <span className="text-[8px] text-slate-600 uppercase font-black tracking-[0.2em]">Signal Fidelity</span>
-                        <span className="text-xl font-black text-emerald-500 tracking-tighter">98.4%</span>
+                        <span className="text-xl font-black text-slate-300 tracking-tighter">98.4%</span>
                     </div>
                 </div>
             </div>
@@ -78,8 +78,8 @@ export function InsiderIntelligenceHub() {
                         <span className="text-[9px] text-slate-600 uppercase font-black tracking-widest">Live Insider Stream</span>
                         {isScanning && (
                             <div className="flex items-center gap-2">
-                                <Activity className="w-3 h-3 text-red-500 animate-pulse" />
-                                <span className="text-[8px] text-red-500 font-black animate-pulse">Scraping Dark-OSINT Clusters...</span>
+                                <Activity className="w-3 h-3 text-red-500" />
+                                <span className="text-[8px] text-red-500 font-black">Scraping Dark-OSINT Clusters...</span>
                             </div>
                         )}
                     </div>
@@ -91,14 +91,14 @@ export function InsiderIntelligenceHub() {
                                 initial={{ opacity: 0, scale: 0.98, y: 10 }}
                                 animate={{ opacity: 1, scale: 1, y: 0 }}
                                 transition={{ delay: i * 0.1 }}
-                                className="bg-slate-900/40 border border-white/5 rounded-2xl p-5 flex flex-col gap-4 group/card hover:bg-slate-900/60 transition-all cursor-pointer"
+                                className="bg-slate-900/40 border border-white/5 rounded-none p-5 flex flex-col gap-4 group/card hover:bg-slate-900/60 transition-all cursor-pointer"
                             >
                                 <div className="flex justify-between items-start">
-                                    <div className={`p-2 rounded-xl ${
+                                    <div className={`p-2 rounded-sm ${
                                         s.type === 'LEAK' ? 'bg-amber-500/10 text-amber-500' :
                                         s.type === 'FLIGHT' ? 'bg-blue-500/10 text-blue-500' :
                                         s.type === 'SHADOW_API' ? 'bg-red-500/10 text-red-500' :
-                                        'bg-emerald-500/10 text-emerald-500'
+                                        'bg-slate-800 text-slate-300'
                                     }`}>
                                         {s.type === 'LEAK' && <FileWarning className="w-4 h-4" />}
                                         {s.type === 'FLIGHT' && <Plane className="w-4 h-4" />}
@@ -110,14 +110,14 @@ export function InsiderIntelligenceHub() {
                                 
                                 <div>
                                     <h4 className="text-[9px] font-black text-white uppercase mb-1 truncate">{s.entity}</h4>
-                                    <p className="text-[10px] text-slate-400 font-mono leading-tight bg-black/40 p-2 rounded-lg border border-white/5 min-h-[48px]">
+                                    <p className="text-[10px] text-slate-400 font-mono leading-tight bg-black/40 p-2 rounded-sm border border-white/5 min-h-[48px]">
                                         {s.description}
                                     </p>
                                 </div>
 
                                 <div className="flex justify-between items-center text-[8px] uppercase font-black tracking-widest pt-2 border-t border-white/5">
                                     <span className="text-slate-600">Conf: {(s.confidence * 100).toFixed(0)}%</span>
-                                    <span className={s.confidence > 0.9 ? 'text-emerald-500' : 'text-amber-500'}>Verified</span>
+                                    <span className={s.confidence > 0.9 ? 'text-slate-300' : 'text-amber-500'}>Verified</span>
                                 </div>
                             </motion.div>
                         ))}
@@ -136,7 +136,7 @@ export function InsiderIntelligenceHub() {
                         "Shadow API" detected in QuantumBlack internal staging. Potential access to confidential client strategy vectors for Q2 2026. Data leakage verified via ADS-B flight correlation of managing directors.
                     </p>
                     <div className="flex gap-2">
-                        <div className="h-1 flex-1 bg-red-500/40 rounded-full overflow-hidden">
+                        <div className="h-1 flex-1 bg-red-500/40 rounded-sm overflow-hidden">
                             <motion.div animate={{ x: ['-100%', '100%'] }} transition={{ duration: 2, repeat: Infinity }} className="h-full w-1/2 bg-red-500" />
                         </div>
                     </div>

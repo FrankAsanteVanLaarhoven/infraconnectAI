@@ -50,6 +50,34 @@ export interface SystemStateEvent {
   timestamp: number;
 }
 
+// ═══════════════════════════════════════════════════════════════════════════════
+// PHYSICAL AI CORE — v3.0 Stream Definitions
+// ═══════════════════════════════════════════════════════════════════════════════
+
+// 6. Physics Telemetry (physics.telemetry)
+export interface PhysicsTelemetryEvent {
+  runId: string;
+  episodeIndex: number;
+  physicsRealism: number;
+  sensorFidelity: number;
+  languageGrounding: number;
+  actionSuccess: number;
+  modelLoss: number;
+  timestamp: number;
+}
+
+// 7. Physics Curation Decisions (physics.curation)
+export interface CurationDecisionEvent {
+  runId: string;
+  decisions: Array<{
+    episodeIndex: number;
+    action: 'PRUNE' | 'KEEP' | 'FLAG_HUMAN_REVIEW' | 'PROMOTE_TO_CANON';
+    reason: string;
+    confidence: number;
+  }>;
+  timestamp: number;
+}
+
 // Registry mapped against keys
 export type SystemStreamMap = {
   "stream:robot.telemetry": TelemetryEvent;
@@ -57,4 +85,6 @@ export type SystemStreamMap = {
   "stream:robot.commands": CommandEvent;
   "stream:agent.actions": AgentActionEvent;
   "stream:system.state": SystemStateEvent;
+  "stream:physics.telemetry": PhysicsTelemetryEvent;
+  "stream:physics.curation": CurationDecisionEvent;
 };

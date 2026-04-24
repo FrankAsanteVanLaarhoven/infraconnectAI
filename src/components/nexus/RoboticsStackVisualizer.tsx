@@ -34,12 +34,12 @@ export function RoboticsStackVisualizer() {
        {/* Robotics Header */}
        <div className="flex items-center justify-between mb-6 border-b border-white/5 pb-4 relative z-10">
           <div className="flex items-center gap-3">
-             <Cpu className="w-4 h-4 text-emerald-400" />
+             <Cpu className="w-4 h-4 text-slate-300" />
              <h3 className="text-[10px] font-black text-white uppercase tracking-widest">ROS Robotics Stack</h3>
           </div>
           <div className="flex items-center gap-2">
-             <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-             <span className="text-[8px] text-emerald-500 font-black uppercase tracking-widest">Node_Master: ONLINE</span>
+             <div className="w-1.5 h-1.5 rounded-sm bg-slate-800" />
+             <span className="text-[8px] text-slate-300 font-black uppercase tracking-widest">Node_Master: ONLINE</span>
           </div>
        </div>
 
@@ -50,9 +50,9 @@ export function RoboticsStackVisualizer() {
           <div className="space-y-3">
              <span className="text-[8px] text-slate-700 font-black uppercase tracking-widest block mb-2">Distributed Nodes</span>
              {data.nodes.map(node => (
-                <div key={node.id} className="p-3 bg-white/[0.02] border border-white/5 rounded-xl flex items-center justify-between group/node hover:border-emerald-500/30 transition-all">
+                <div key={node.id} className="p-3 bg-white/[0.02] border border-white/5 rounded-sm flex items-center justify-between group/node hover:border-slate-700 transition-all">
                    <div className="flex items-center gap-3">
-                      <Box className={`w-3.5 h-3.5 ${node.status === 'ACTIVE' ? 'text-emerald-400' : 'text-slate-600'}`} />
+                      <Box className={`w-3.5 h-3.5 ${node.status === 'ACTIVE' ? 'text-slate-300' : 'text-slate-600'}`} />
                       <div>
                          <div className="text-[9px] text-white font-black uppercase tracking-tighter">{node.id}</div>
                          <div className="text-[7px] text-slate-700 font-bold uppercase">{node.namespace}</div>
@@ -70,11 +70,11 @@ export function RoboticsStackVisualizer() {
           <div className="space-y-3">
              <span className="text-[8px] text-slate-700 font-black uppercase tracking-widest block mb-2">Telemetry Topics</span>
              {data.topics.map(topic => (
-                <div key={topic.name} className="p-3 bg-white/[0.02] border border-white/5 rounded-xl space-y-2 group/topic hover:border-indigo-500/30 transition-all">
+                <div key={topic.name} className="p-3 bg-white/[0.02] border border-white/5 rounded-sm space-y-2 group/topic hover:border-indigo-500/30 transition-all">
                    <div className="flex justify-between items-start">
                       <span className="text-[9px] text-slate-400 font-black tracking-tighter truncate w-32">{topic.name}</span>
                       <span className={`text-[7px] font-black px-1.5 py-0.5 rounded ${
-                         topic.status === 'PUBLISHING' ? 'bg-emerald-950 text-emerald-400' : 'bg-red-950 text-red-500'
+                         topic.status === 'PUBLISHING' ? 'bg-slate-800 text-slate-300' : 'bg-red-950 text-red-500'
                       }`}>{topic.status}</span>
                    </div>
                    <div className="flex justify-between items-center">
@@ -95,7 +95,7 @@ export function RoboticsStackVisualizer() {
                 <span className="text-[8px] text-slate-600 font-black uppercase tracking-widest">ROS_Bridge_v2.4</span>
              </div>
           </div>
-          <button className="flex items-center gap-2 text-[8px] text-emerald-500 font-black uppercase tracking-widest hover:translate-x-1 transition-all">
+          <button className="flex items-center gap-2 text-[8px] text-slate-300 font-black uppercase tracking-widest hover:translate-x-1 transition-all">
              Open Telemetry Hub <ChevronRight className="w-3 h-3" />
           </button>
        </div>

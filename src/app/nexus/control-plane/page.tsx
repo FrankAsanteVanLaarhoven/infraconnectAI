@@ -33,13 +33,13 @@ spec:
 `);
 
   return (
-    <div className="min-h-screen bg-[#020202] text-slate-300 font-mono flex flex-col overflow-hidden selection:bg-cyan-500/30">
+    <div className="min-h-full bg-[#020202] text-slate-300 font-mono flex flex-col overflow-hidden selection:bg-cyan-500/30">
        
        {/* Control Plane Header */}
        <header className="h-20 border-b border-white/5 bg-white/[0.02] flex items-center justify-between px-8 relative z-50">
           <div className="flex items-center gap-6">
              <div className="flex items-center gap-3">
-                <div className="p-2 bg-cyan-500/10 border border-cyan-500/30 rounded-lg shadow-[0_0_20px_rgba(34,211,238,0.1)]">
+                <div className="p-2 bg-cyan-500/10 border border-cyan-500/30 rounded-sm">
                    <Box className="w-5 h-5 text-cyan-400" />
                 </div>
                 <div>
@@ -53,8 +53,8 @@ spec:
                    <button 
                      key={ns} 
                      onClick={() => setActiveNamespace(ns)}
-                     className={`px-4 py-1.5 rounded-full text-[9px] font-black uppercase tracking-widest transition-all ${
-                        activeNamespace === ns ? 'bg-cyan-500 text-black shadow-[0_0_15px_#22d3ee]' : 'bg-white/5 text-slate-600 hover:text-white'
+                     className={`px-4 py-1.5 rounded-sm text-[9px] font-black uppercase tracking-widest transition-all ${
+                        activeNamespace === ns ? 'bg-cyan-500 text-black ' : 'bg-white/5 text-slate-600 hover:text-white'
                      }`}
                    >
                       ns/{ns}
@@ -91,11 +91,11 @@ spec:
                 <div className="grid grid-cols-3 gap-6">
                    {[
                       { label: 'CPU Allocation', value: '72%', icon: Cpu, color: 'text-cyan-400' },
-                      { label: 'Memory Pressure', value: '54%', icon: LayoutGrid, color: 'text-emerald-400' },
+                      { label: 'Memory Pressure', value: '54%', icon: LayoutGrid, color: 'text-slate-300' },
                       { label: 'Reconciliation Latency', value: '42ms', icon: Activity, color: 'text-amber-400' }
                    ].map((stat, i) => (
-                      <div key={i} className="p-6 bg-white/[0.02] border border-white/5 rounded-2xl flex items-center gap-6 group hover:border-white/10">
-                         <div className={`p-3 bg-white/5 rounded-xl ${stat.color}`}>
+                      <div key={i} className="p-6 bg-white/[0.02] border border-white/5 rounded-none flex items-center gap-6 group hover:border-white/10">
+                         <div className={`p-3 bg-white/5 rounded-sm ${stat.color}`}>
                             <stat.icon className="w-5 h-5" />
                          </div>
                          <div>
@@ -115,7 +115,7 @@ spec:
                    <FileCode className="w-4 h-4 text-cyan-400" />
                    <h2 className="text-[11px] font-black text-white uppercase tracking-[0.2em]">Live Manifest Editor</h2>
                 </div>
-                <button className="flex items-center gap-2 px-4 py-1.5 bg-emerald-600 text-black text-[9px] font-black uppercase tracking-widest rounded-lg hover:bg-emerald-500 transition-all shadow-[0_0_15px_rgba(16,185,129,0.3)]">
+                <button className="flex items-center gap-2 px-4 py-1.5 bg-slate-800 text-black text-[9px] font-black uppercase tracking-widest rounded-sm hover:bg-slate-800 transition-all">
                    <RefreshCw className="w-3 h-3" /> Apply Spec
                 </button>
              </div>
@@ -155,7 +155,7 @@ spec:
        {/* Control Bar */}
        <footer className="h-8 border-t border-white/5 bg-black flex items-center justify-between px-6 text-[8px] font-black text-slate-600 uppercase tracking-widest">
           <div className="flex items-center gap-6">
-             <span className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-emerald-500" /> CONTROL_SERVER: ONLINE</span>
+             <span className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-sm bg-slate-800" /> CONTROL_SERVER: ONLINE</span>
              <span>CLUSTER_NODES: 42_ACTIVE</span>
              <span>STRATEGIC_NAMESPACES: 4</span>
           </div>

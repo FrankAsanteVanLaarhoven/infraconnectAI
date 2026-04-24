@@ -4,6 +4,7 @@ import React, { useEffect } from "react";
 import MissionPlanner from "@/components/mission/MissionPlanner";
 import { publish } from "@/lib/core/bus";
 import { computeGap } from "@/lib/learning/calibration";
+import { PremiumBackButton } from "@/components/navigation/PremiumBackButton";
 
 export default function FoundryPage() {
     
@@ -30,12 +31,13 @@ export default function FoundryPage() {
 
     return (
         <div className="w-screen h-screen flex flex-col bg-[#050607] font-mono overflow-hidden">
-            <header className="h-14 bg-[#0B0F12] border-b border-[#1A1F24] flex items-center px-6 justify-between">
-                <div className="flex items-center gap-4">
-                    <div className="h-6 w-6 bg-[#4CC9F0]"></div>
+            <header className="h-14 bg-[#0B0F12] border-b border-[#1A1F24] flex items-center px-6 justify-between gap-6">
+                <PremiumBackButton href="/dashboard" label="" className="!mb-0 border-none" />
+                <div className="flex items-center gap-4 flex-1">
+                    <div className="h-6 w-6 bg-zinc-300"></div>
                     <h1 className="text-white text-sm tracking-[0.2em] uppercase font-bold">InfraConnect <span className="opacity-40">/ Mission Foundry</span></h1>
                 </div>
-                <div className="text-xs text-[#4CC9F0] border border-[#4CC9F0]/30 px-3 py-1 bg-[#4CC9F0]/10 uppercase tracking-widest">
+                <div className="text-xs text-zinc-400 border border-zinc-800 px-3 py-1 bg-zinc-900 uppercase tracking-widest">
                     Enterprise Tier Connected
                 </div>
             </header>

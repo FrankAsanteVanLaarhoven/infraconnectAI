@@ -23,13 +23,13 @@ interface AgentSummary {
 
 const TIER_COLOR: Record<string, string> = {
   sim:    'text-blue-400   border-blue-500/30   bg-blue-500/8',
-  edge:   'text-green-400  border-green-500/30  bg-green-500/8',
-  cloud:  'text-purple-400 border-purple-500/30 bg-purple-500/8',
+  edge:   'text-slate-300  border-slate-700  bg-slate-800',
+  cloud:  'text-slate-400 border-slate-800 bg-slate-900/50',
   hybrid: 'text-yellow-400 border-yellow-500/30 bg-yellow-500/8',
 }
 
 const STATUS_ICON: Record<string, React.ReactNode> = {
-  live:         <CheckCircle  className="w-3 h-3 text-green-400"  />,
+  live:         <CheckCircle  className="w-3 h-3 text-slate-300"  />,
   offline:      <WifiOff      className="w-3 h-3 text-gray-600"   />,
   degraded:     <AlertTriangle className="w-3 h-3 text-yellow-400"/>,
   sim:          <Layers       className="w-3 h-3 text-blue-400"   />,
@@ -103,7 +103,7 @@ export function FleetObservatory() {
     <GlassPanel glow className="col-span-full md:col-span-2 xl:col-span-3 min-h-[300px]">
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-sm font-semibold uppercase tracking-widest flex items-center gap-2">
-          <Radio className="w-4 h-4 text-green-400" />
+          <Radio className="w-4 h-4 text-slate-300" />
           Fleet Observatory
         </h3>
         
@@ -123,7 +123,7 @@ export function FleetObservatory() {
       </div>
 
       {/* Fleet summary strip */}
-      <div className="flex gap-3 mb-4 p-3 rounded-lg bg-black/40 border border-white/5 text-xs font-mono">
+      <div className="flex gap-3 mb-4 p-3 rounded-sm bg-black/40 border border-white/5 text-xs font-mono">
         <div className="flex-1 flex flex-col justify-center items-center">
             <span className="text-muted-foreground uppercase tracking-widest text-[10px]">Total Agents</span>
             <span className="text-2xl font-light">{agents.length}</span>
@@ -131,7 +131,7 @@ export function FleetObservatory() {
         <div className="w-px bg-white/5" />
         <div className="flex-1 flex flex-col justify-center items-center">
             <span className="text-muted-foreground uppercase tracking-widest text-[10px]">Live Connected</span>
-            <span className="text-2xl font-light text-green-400">{counts.live}</span>
+            <span className="text-2xl font-light text-slate-300">{counts.live}</span>
         </div>
         <div className="w-px bg-white/5" />
         <div className="flex-1 flex flex-col justify-center items-center">
@@ -142,7 +142,7 @@ export function FleetObservatory() {
 
       <div className="mt-4 space-y-2 max-h-[400px] overflow-y-auto pr-2">
         {loading && agents.length === 0 ? (
-           <div className="text-center py-8 text-sm font-mono text-muted-foreground animate-pulse">Scanning Agent Nodes...</div>
+           <div className="text-center py-8 text-sm font-mono text-muted-foreground">Scanning Agent Nodes...</div>
         ) : filtered.length === 0 ? (
            <div className="text-center py-8 text-sm font-mono text-muted-foreground">No agents found for filter '{filter}'.</div>
         ) : (
@@ -184,16 +184,16 @@ export function FleetObservatory() {
                  
                  <div className="flex flex-col gap-2 bg-black/40 px-3 py-2 rounded border border-white/5 shrink-0 w-64">
                     <div className="flex items-center justify-between">
-                       <span className="text-[9px] text-green-400 uppercase tracking-widest flex items-center gap-1"><span className="animate-pulse w-1 h-1 bg-green-500 rounded-full"/> CBF BOUNDARY h(x)</span>
+                       <span className="text-[9px] text-slate-300 uppercase tracking-widest flex items-center gap-1"><span className="w-1 h-1 bg-slate-800 rounded-sm"/> CBF BOUNDARY h(x)</span>
                        <span className="font-mono text-xs text-white">{(1.2 + Math.random() * 0.4).toFixed(3)}m</span>
                     </div>
-                    <div className="w-full bg-white/5 h-1 rounded-full overflow-hidden relative">
-                       <div className="absolute left-0 top-0 bottom-0 bg-green-500/70" style={{ width: `${Math.random() < 0.5 ? 75 : 82}%`, transition: 'width 1s ease-in-out' }} />
+                    <div className="w-full bg-white/5 h-1 rounded-sm overflow-hidden relative">
+                       <div className="absolute left-0 top-0 bottom-0 bg-slate-800" style={{ width: `${Math.random() < 0.5 ? 75 : 82}%`, transition: 'width 1s ease-in-out' }} />
                     </div>
 
                     <div className="flex items-center justify-between mt-0.5">
-                       <span className="text-[9px] text-purple-400 uppercase tracking-widest flex items-center gap-1">8D UNCERTAINTY ENVELOPE $\Sigma$</span>
-                       <span className="font-mono text-xs text-purple-200">{(0.05 + Math.random() * 0.02).toFixed(4)}</span>
+                       <span className="text-[9px] text-slate-400 uppercase tracking-widest flex items-center gap-1">8D UNCERTAINTY ENVELOPE $\Sigma$</span>
+                       <span className="font-mono text-xs text-slate-400">{(0.05 + Math.random() * 0.02).toFixed(4)}</span>
                     </div>
 
                     <div className="flex items-center justify-between mt-0.5">

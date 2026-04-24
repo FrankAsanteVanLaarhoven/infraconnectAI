@@ -49,7 +49,7 @@ export function MissionObservabilityMatrix({ data }: { data: any }) {
   // Initialize and stream data
   useEffect(() => {
     // 1. Initial Buffer Creation
-    const initialData = [];
+    const initialData: any[] = [];
     const now = Date.now();
     for (let i = 20; i >= -10; i--) { // Create 10 projected future points
       initialData.push({
@@ -131,10 +131,10 @@ export function MissionObservabilityMatrix({ data }: { data: any }) {
          <div className="col-span-12 lg:col-span-4 flex flex-col gap-5">
             <div className="bg-slate-900/40 border border-white/5 p-7 rounded-3xl backdrop-blur-2xl shadow-[0_30px_60px_rgba(0,0,0,0.4)] relative overflow-hidden group">
                {/* Neural Background Glow */}
-               <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/5 blur-[60px] rounded-full group-hover:bg-cyan-500/10 transition-colors" />
+               <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/5 blur-[60px] rounded-sm group-hover:bg-cyan-500/10 transition-colors" />
                
                <h3 className="text-[10px] font-black text-slate-500 uppercase tracking-[0.4em] mb-7 flex items-center gap-3">
-                  <div className="p-1.5 bg-cyan-500/10 rounded-lg border border-cyan-500/20">
+                  <div className="p-1.5 bg-cyan-500/10 rounded-sm border border-cyan-500/20">
                     <Activity className="w-3.5 h-3.5 text-cyan-500 animate-[pulse_2s_infinite]" />
                   </div>
                   System Saturation Matrix
@@ -149,10 +149,10 @@ export function MissionObservabilityMatrix({ data }: { data: any }) {
                     <button 
                       key={m.id}
                       onClick={() => setActiveMetric(m.id as any)}
-                      className={`w-full p-5 rounded-2xl border transition-all duration-500 flex items-center justify-between group/btn ${activeMetric === m.id ? 'bg-cyan-500/10 border-cyan-400/30 shadow-[0_0_25px_rgba(6,182,212,0.15)]' : 'bg-slate-950/40 border-slate-800/40 hover:border-slate-700/60'}`}
+                      className={`w-full p-5 rounded-none border transition-all duration-500 flex items-center justify-between group/btn ${activeMetric === m.id ? 'bg-cyan-500/10 border-cyan-400/30 ' : 'bg-slate-950/40 border-slate-800/40 hover:border-slate-700/60'}`}
                     >
                        <div className="flex items-center gap-4">
-                          <div className={`p-3 rounded-xl transition-all duration-500 ${activeMetric === m.id ? 'bg-cyan-500 text-black shadow-[0_0_20px_rgba(6,182,212,0.5)] scale-110' : 'bg-slate-800 text-slate-500'}`}>
+                          <div className={`p-3 rounded-sm transition-all duration-500 ${activeMetric === m.id ? 'bg-cyan-500 text-black  scale-110' : 'bg-slate-800 text-slate-500'}`}>
                              <m.icon className="w-4 h-4" />
                           </div>
                           <div className="text-left">
@@ -172,7 +172,7 @@ export function MissionObservabilityMatrix({ data }: { data: any }) {
                   <Dna className="w-32 h-32 text-indigo-400" />
                </div>
                <div className="flex items-center gap-3 mb-5">
-                  <div className="p-2 bg-indigo-500/10 rounded-lg">
+                  <div className="p-2 bg-indigo-500/10 rounded-sm">
                     <Dna className="w-4 h-4 text-indigo-400" />
                   </div>
                   <span className="text-[10px] font-black text-white uppercase tracking-[0.3em]">Anticipatory Logic Core</span>
@@ -183,11 +183,11 @@ export function MissionObservabilityMatrix({ data }: { data: any }) {
                <div className="mt-5 pt-5 border-t border-indigo-500/10 flex justify-between items-center">
                   <span className="text-[8px] text-slate-500 font-black uppercase tracking-[0.4em]">Prophetic Confidence</span>
                   <div className="flex items-center gap-2.5">
-                    <div className="w-20 h-1 bg-slate-800/50 rounded-full overflow-hidden border border-white/5">
+                    <div className="w-20 h-1 bg-slate-800/50 rounded-sm overflow-hidden border border-white/5">
                       <motion.div 
                         initial={{ width: 0 }}
                         animate={{ width: '99.1%' }}
-                        className="h-full bg-indigo-500 shadow-[0_0_10px_rgba(99,102,241,0.5)]"
+                        className="h-full bg-indigo-500"
                       />
                     </div>
                     <span className="text-[10px] font-mono text-indigo-400 font-black">99.1%</span>
@@ -201,7 +201,7 @@ export function MissionObservabilityMatrix({ data }: { data: any }) {
             <div className="flex justify-between items-start mb-10 relative z-10">
                <div className="flex flex-col gap-2">
                   <h3 className="text-sm font-black text-white uppercase tracking-[0.3em] flex items-center gap-3">
-                     <span className="w-2.5 h-2.5 rounded-full bg-cyan-500 shadow-[0_0_15px_rgba(6,182,212,0.8)] animate-[pulse_1.5s_infinite]" />
+                     <span className="w-2.5 h-2.5 rounded-sm bg-cyan-500 animate-[pulse_1.5s_infinite]" />
                      Prophetic {activeMetric} Stream
                   </h3>
                   <div className="flex items-center gap-4 font-mono">
@@ -216,7 +216,7 @@ export function MissionObservabilityMatrix({ data }: { data: any }) {
                <div className="flex items-center gap-5">
                   <div className="flex flex-col items-end">
                     <div className="text-[8px] text-slate-600 font-black tracking-[0.4em] mb-1.5 uppercase text-right">Model Consistency</div>
-                    <div className="px-4 py-1.5 bg-slate-900/60 border border-white/5 rounded-lg flex gap-2.5 items-baseline shadow-xl">
+                    <div className="px-4 py-1.5 bg-slate-900/60 border border-white/5 rounded-sm flex gap-2.5 items-baseline shadow-xl">
                        <span className="text-xs font-black text-cyan-400 tracking-tighter">99.992</span>
                        <span className="text-[8px] text-slate-500 font-black tracking-widest">INDEX</span>
                     </div>
@@ -289,7 +289,7 @@ export function MissionObservabilityMatrix({ data }: { data: any }) {
                
                {/* Prophetic Marker */}
                <div className="absolute left-[80%] top-[10%] bottom-0 w-[1px] bg-gradient-to-b from-indigo-500/50 via-indigo-500/10 to-transparent pointer-events-none">
-                  <div className="absolute -top-1 -left-1 w-2 h-2 rounded-full bg-indigo-500 shadow-[0_0_10px_rgba(99,102,241,1)]" />
+                  <div className="absolute -top-1 -left-1 w-2 h-2 rounded-sm bg-indigo-500" />
                   <div className="absolute top-2 left-2 text-[8px] text-indigo-400 font-black uppercase tracking-[0.3em] whitespace-nowrap bg-black/40 px-2 py-1 rounded border border-indigo-500/20 backdrop-blur-md">
                     Projection Horizon
                   </div>
@@ -310,7 +310,7 @@ export function MissionObservabilityMatrix({ data }: { data: any }) {
                         <span className="text-[8px] font-black uppercase tracking-[0.3em] text-slate-500">{stat.label}</span>
                      </div>
                      <div className="text-[11px] font-black text-slate-200 tracking-tight">{stat.val}</div>
-                     <div className="mt-3 h-[1.5px] bg-slate-800/50 rounded-full overflow-hidden">
+                     <div className="mt-3 h-[1.5px] bg-slate-800/50 rounded-sm overflow-hidden">
                         <motion.div 
                           animate={{ scaleX: [0.7, 1.1, 0.9], opacity: [0.4, 0.8, 0.6] }}
                           transition={{ repeat: Infinity, duration: 4 }}
@@ -330,7 +330,7 @@ export function MissionObservabilityMatrix({ data }: { data: any }) {
          <div className="col-span-12 xl:col-span-8 bg-black border border-slate-800 rounded-3xl p-8 flex flex-col h-[360px] shadow-2xl overflow-hidden group">
             <div className="flex justify-between items-center mb-6 relative z-10">
                <div className="flex items-center gap-4">
-                  <div className="p-2 bg-amber-500/10 rounded-lg">
+                  <div className="p-2 bg-amber-500/10 rounded-sm">
                     <History className="w-4 h-4 text-amber-500" />
                   </div>
                   <div>
@@ -339,14 +339,14 @@ export function MissionObservabilityMatrix({ data }: { data: any }) {
                   </div>
                </div>
                <div className="flex items-center gap-3">
-                  <div className="px-2 py-1 bg-green-500/10 border border-green-500/20 rounded text-[8px] text-green-500 font-black flex items-center gap-1.5 uppercase">
-                    <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+                  <div className="px-2 py-1 bg-slate-800 border border-slate-700 rounded text-[8px] text-slate-300 font-black flex items-center gap-1.5 uppercase">
+                    <div className="w-1.5 h-1.5 rounded-sm bg-slate-800" />
                     Live Connection
                   </div>
                </div>
             </div>
             
-            <div className="flex-1 bg-slate-950/20 rounded-2xl p-6 font-mono text-[10px] overflow-hidden flex flex-col gap-2.5 border border-slate-900 shadow-inner group-hover:border-slate-800 transition-colors">
+            <div className="flex-1 bg-slate-950/20 rounded-none p-6 font-mono text-[10px] overflow-hidden flex flex-col gap-2.5 border border-slate-900 shadow-inner group-hover:border-slate-800 transition-colors">
                <AnimatePresence initial={false}>
                   {traces.map((trace, i) => (
                     <motion.div 
@@ -358,7 +358,7 @@ export function MissionObservabilityMatrix({ data }: { data: any }) {
                       className="flex items-center gap-4 text-slate-400 group/line"
                     >
                       <span className="text-slate-700 w-6 shrink-0 font-bold">#{traces.length - i}</span>
-                      <span className="px-1.5 py-0.5 bg-green-500/10 text-green-500 text-[8px] rounded border border-green-500/20 font-black">200 OK</span>
+                      <span className="px-1.5 py-0.5 bg-slate-800 text-slate-300 text-[8px] rounded border border-slate-700 font-black">200 OK</span>
                       <span className="flex-1 truncate tracking-tight group-hover/line:text-white transition-colors">{trace}</span>
                       <ChevronRight className="w-3 h-3 text-slate-800 opacity-0 group-hover/line:opacity-100" />
                     </motion.div>
@@ -374,7 +374,7 @@ export function MissionObservabilityMatrix({ data }: { data: any }) {
             
             <div className="flex flex-col h-full relative z-10">
                <div className="flex items-center gap-4 mb-8">
-                  <div className="w-10 h-10 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 shadow-[0_0_20px_rgba(6,182,212,0.1)]">
+                  <div className="w-10 h-10 rounded-none bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400">
                     <Filter className="w-5 h-5" />
                   </div>
                   <div>
@@ -390,9 +390,9 @@ export function MissionObservabilityMatrix({ data }: { data: any }) {
                        <motion.div 
                          animate={{ rotate: 360 }}
                          transition={{ repeat: Infinity, duration: 10, ease: 'linear' }}
-                         className="absolute -inset-4 border border-dashed border-cyan-500/20 rounded-full"
+                         className="absolute -inset-4 border border-dashed border-cyan-500/20 rounded-sm"
                        />
-                       <div className="w-14 h-14 bg-cyan-500 shadow-[0_0_40px_rgba(6,182,212,0.5)] rounded-[1.5rem] flex items-center justify-center text-black relative z-10">
+                       <div className="w-14 h-14 bg-cyan-500 rounded-[1.5rem] flex items-center justify-center text-black relative z-10">
                           <Zap className="w-7 h-7" />
                        </div>
                      </div>
@@ -400,7 +400,7 @@ export function MissionObservabilityMatrix({ data }: { data: any }) {
                        {[1,2,3].map(i => (
                           <div key={i} className="flex items-center gap-3">
                              <div className="h-[1px] w-12 bg-slate-800" />
-                             <div className="w-8 h-8 border border-slate-800 bg-black rounded-lg flex items-center justify-center text-[10px] text-slate-500 font-bold group-hover:border-slate-700 transition-colors">
+                             <div className="w-8 h-8 border border-slate-800 bg-black rounded-sm flex items-center justify-center text-[10px] text-slate-500 font-bold group-hover:border-slate-700 transition-colors">
                                 N{i}
                              </div>
                           </div>
@@ -409,9 +409,9 @@ export function MissionObservabilityMatrix({ data }: { data: any }) {
                   </div>
                </div>
 
-               <div className="mt-8 text-[10px] text-slate-400 font-mono leading-relaxed bg-black/40 p-4 rounded-2xl border border-slate-800/60 backdrop-blur-sm">
+               <div className="mt-8 text-[10px] text-slate-400 font-mono leading-relaxed bg-black/40 p-4 rounded-none border border-slate-800/60 backdrop-blur-sm">
                   <div className="flex items-center gap-2 mb-2">
-                    <div className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
+                    <div className="w-1.5 h-1.5 rounded-sm bg-cyan-400" />
                     <span className="text-cyan-400 font-black tracking-widest">INTELLIGENCE_UPDATE</span>
                   </div>
                   Global topology re-verified. Mesh stability <span className="text-white font-black">OPTIMAL</span>. No bottlenecks in logic handovers.
@@ -427,7 +427,7 @@ export function MissionObservabilityMatrix({ data }: { data: any }) {
 
 // Mock Data Generator for the cinematic chart
 function simData() {
-  const data = [];
+  const data: any[] = [];
   for (let i = 0; i < 20; i++) {
     data.push({
       t: i + ":00",

@@ -37,11 +37,11 @@ export function GlobalRealEstateRegistry() {
     ]);
 
     return (
-        <div className="w-full h-full bg-[#020617] border border-amber-500/20 rounded-3xl p-8 flex flex-col font-mono relative overflow-hidden group shadow-[0_0_80px_rgba(245,158,11,0.05)]">
+        <div className="w-full h-full bg-[#020617] border border-amber-500/20 rounded-3xl p-8 flex flex-col font-mono relative overflow-hidden group">
             {/* Header */}
             <div className="flex items-center justify-between mb-8 border-b border-white/5 pb-6 relative z-10">
                 <div className="flex items-center gap-4">
-                    <div className="p-3 bg-amber-500/10 border border-amber-500/20 rounded-2xl">
+                    <div className="p-3 bg-amber-500/10 border border-amber-500/20 rounded-none">
                         <Home className="w-5 h-5 text-amber-500" />
                     </div>
                     <div>
@@ -71,7 +71,7 @@ export function GlobalRealEstateRegistry() {
                         <motion.div 
                             key={city.id}
                             whileHover={{ x: 4 }}
-                            className="p-5 bg-slate-900/40 border border-white/5 rounded-2xl flex flex-col gap-3 group/city hover:bg-slate-900 transition-all cursor-pointer"
+                            className="p-5 bg-slate-900/40 border border-white/5 rounded-none flex flex-col gap-3 group/city hover:bg-slate-900 transition-all cursor-pointer"
                         >
                             <div className="flex justify-between items-start">
                                 <div className="flex flex-col">
@@ -79,7 +79,7 @@ export function GlobalRealEstateRegistry() {
                                     <span className="text-[8px] text-slate-600 font-bold uppercase">{city.country}</span>
                                 </div>
                                 <div className={`px-2 py-0.5 rounded-[4px] text-[7px] font-black uppercase ${
-                                    city.status === 'BOOM' ? 'bg-emerald-500/20 text-emerald-400' :
+                                    city.status === 'BOOM' ? 'bg-slate-800 text-slate-300' :
                                     city.status === 'CORRECTING' ? 'bg-red-500/20 text-red-500' :
                                     city.status === 'BUBBLE_RISK' ? 'bg-amber-500/20 text-amber-500' :
                                     'bg-blue-500/20 text-blue-400'
@@ -99,11 +99,11 @@ export function GlobalRealEstateRegistry() {
                             </div>
 
                             {/* Sentiment Bar */}
-                            <div className="h-0.5 bg-slate-800 rounded-full overflow-hidden mt-1">
+                            <div className="h-0.5 bg-slate-800 rounded-sm overflow-hidden mt-1">
                                 <motion.div 
                                     initial={{ width: 0 }} 
                                     animate={{ width: `${city.sentiment * 100}%` }} 
-                                    className={`h-full ${city.sentiment > 0.8 ? 'bg-emerald-500' : city.sentiment > 0.4 ? 'bg-amber-500' : 'bg-red-500'}`} 
+                                    className={`h-full ${city.sentiment > 0.8 ? 'bg-slate-800' : city.sentiment > 0.4 ? 'bg-amber-500' : 'bg-red-500'}`} 
                                 />
                             </div>
                         </motion.div>
@@ -123,13 +123,13 @@ export function GlobalRealEstateRegistry() {
                             </p>
                             
                             <div className="grid grid-cols-2 gap-4">
-                                <div className="p-4 bg-white/5 border border-white/10 rounded-2xl backdrop-blur-md">
+                                <div className="p-4 bg-white/5 border border-white/10 rounded-none backdrop-blur-md">
                                     <div className="text-[7px] text-slate-500 uppercase font-black mb-1">Office_Occupancy</div>
                                     <div className="text-lg font-black text-red-500 tracking-tighter">42.4%</div>
                                 </div>
-                                <div className="p-4 bg-white/5 border border-white/10 rounded-2xl backdrop-blur-md">
+                                <div className="p-4 bg-white/5 border border-white/10 rounded-none backdrop-blur-md">
                                     <div className="text-[7px] text-slate-500 uppercase font-black mb-1">Industrial_Demand</div>
-                                    <div className="text-lg font-black text-emerald-500 tracking-tighter">HIGH</div>
+                                    <div className="text-lg font-black text-slate-300 tracking-tighter">HIGH</div>
                                 </div>
                             </div>
                         </div>
@@ -137,7 +137,7 @@ export function GlobalRealEstateRegistry() {
 
                     <div className="h-32 bg-slate-900/40 border border-white/5 rounded-3xl p-6 flex items-center justify-between">
                         <div className="flex items-center gap-4">
-                            <div className="p-3 bg-white/5 rounded-xl">
+                            <div className="p-3 bg-white/5 rounded-sm">
                                 <Landmark className="w-5 h-5 text-amber-400" />
                             </div>
                             <div className="flex flex-col">
@@ -146,8 +146,8 @@ export function GlobalRealEstateRegistry() {
                             </div>
                         </div>
                         <div className="flex items-center gap-2">
-                            <Activity className="w-3 h-3 text-emerald-500 animate-pulse" />
-                            <span className="text-[8px] text-emerald-500 font-black">STABLE</span>
+                            <Activity className="w-3 h-3 text-slate-300" />
+                            <span className="text-[8px] text-slate-300 font-black">STABLE</span>
                         </div>
                     </div>
                 </div>

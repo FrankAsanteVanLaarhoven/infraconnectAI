@@ -4,10 +4,11 @@ import { db as prisma } from '@/lib/db'
 
 export async function GET(
   _req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params;
   const node = await prisma.memoryNode.findUnique({
-    where: { id: params.id },
+    where: { id },
     include: {
       conflictsAsSource: { orderBy: { createdAt: 'desc' }, take: 5 },
       conflictsAsTarget: { orderBy: { createdAt: 'desc' }, take: 5 },
@@ -30,8 +31,9 @@ export async function GET(
 
 export async function PATCH(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params;
   // Mock patch behavior to avoid 500s where schema is missing fields
-  return NextResponse.json({ node: { id: params.id } })
+  return NextResponse.json({ node: { id } })
 }

@@ -1,0 +1,10 @@
+src/components/vla-workbench/DynamicGridWorkspace.tsx(4,22): error TS2614: Module '"react-grid-layout"' has no exported member 'WidthProvider'. Did you mean to use 'import WidthProvider from "react-grid-layout"' instead?
+src/components/vla-workbench/DynamicGridWorkspace.tsx(41,32): error TS2741: Property 'runId' is missing in type '{}' but required in type '{ runId: string | null; }'.
+src/stores/vlaWorkbenchStore.ts(127,7): error TS2353: Object literal may only specify known properties, and 'i' does not exist in type 'readonly LayoutItem[]'.
+src/stores/vlaWorkbenchStore.ts(128,7): error TS2353: Object literal may only specify known properties, and 'i' does not exist in type 'readonly LayoutItem[]'.
+src/stores/vlaWorkbenchStore.ts(129,7): error TS2353: Object literal may only specify known properties, and 'i' does not exist in type 'readonly LayoutItem[]'.
+src/stores/vlaWorkbenchStore.ts(138,33): error TS2353: Object literal may only specify known properties, and 'i' does not exist in type 'readonly LayoutItem[]'.
+src/stores/vlaWorkbenchStore.ts(147,50): error TS2339: Property 'i' does not exist on type 'Layout'.
+src/stores/vlaWorkbenchStore.ts(159,9): error TS2353: Object literal may only specify known properties, and 'i' does not exist in type 'readonly LayoutItem[]'.
+src/stores/vlaWorkbenchStore.ts(160,9): error TS2353: Object literal may only specify known properties, and 'i' does not exist in type 'readonly LayoutItem[]'.
+src/stores/vlaWorkbenchStore.ts(161,9): error TS2353: Object literal may only specify known properties, and 'i' does not exist in type 'readonly LayoutItem[]'.

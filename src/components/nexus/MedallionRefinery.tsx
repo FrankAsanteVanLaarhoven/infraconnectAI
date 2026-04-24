@@ -29,7 +29,7 @@ export function MedallionRefinery() {
     const tables = VIRTUAL_TABLE_REGISTRY;
 
     return (
-        <div className="w-full h-full bg-slate-950/90 backdrop-blur-3xl border border-slate-800 rounded-2xl p-6 flex flex-col font-mono relative overflow-hidden group">
+        <div className="w-full h-full bg-slate-950/90 backdrop-blur-3xl border border-slate-800 rounded-none p-6 flex flex-col font-mono relative overflow-hidden group">
             {/* Header */}
             <div className="flex items-center justify-between mb-8 border-b border-slate-800 pb-4">
                 <div className="flex items-center gap-3">
@@ -47,7 +47,7 @@ export function MedallionRefinery() {
                                 onClick={() => setActiveStrata(s as any)}
                                 className={`px-2 py-0.5 rounded text-[8px] font-black border uppercase transition-all ${
                                     activeStrata === s 
-                                    ? 'bg-cyan-500/20 text-cyan-400 border-cyan-500/30 shadow-[0_0_10px_rgba(6,182,212,0.2)]' 
+                                    ? 'bg-cyan-500/20 text-cyan-400 border-cyan-500/30 ' 
                                     : 'text-slate-600 border-slate-800'
                                 }`}
                             >
@@ -63,7 +63,7 @@ export function MedallionRefinery() {
                 {/* Connection Lines */}
                 <div className="absolute left-0 right-0 top-1/2 -translate-y-1/2 h-0.5 bg-slate-900 overflow-hidden">
                     <motion.div 
-                        className="h-full bg-cyan-500 shadow-[0_0_15px_#06b6d4]"
+                        className="h-full bg-cyan-500"
                         style={{ width: '20px', marginLeft: `${pulsePos}%` }}
                     />
                 </div>
@@ -75,9 +75,9 @@ export function MedallionRefinery() {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: idx * 0.1 }}
-                            className={`p-4 rounded-xl border transition-all cursor-pointer ${
+                            className={`p-4 rounded-sm border transition-all cursor-pointer ${
                                 activeStrata === table.strata 
-                                ? 'bg-slate-900 border-cyan-500/50 shadow-[0_0_30px_rgba(6,182,212,0.1)]' 
+                                ? 'bg-slate-900 border-cyan-500/50 ' 
                                 : 'bg-slate-950/50 border-slate-800 opacity-60'
                             }`}
                             onClick={() => setActiveStrata(table.strata)}
@@ -110,7 +110,7 @@ export function MedallionRefinery() {
                         initial={{ opacity: 0, scale: 0.98 }}
                         animate={{ opacity: 1, scale: 1 }}
                         exit={{ opacity: 0, scale: 0.98 }}
-                        className="mt-4 p-4 bg-slate-950 border border-slate-800 rounded-xl"
+                        className="mt-4 p-4 bg-slate-950 border border-slate-800 rounded-sm"
                     >
                         <div className="flex items-center gap-2 mb-3">
                             <Activity className="w-3 h-3 text-cyan-500" />
@@ -125,8 +125,8 @@ export function MedallionRefinery() {
                         </div>
                         <div className="mt-4 pt-3 border-t border-slate-900 flex justify-between items-center">
                             <div className="flex items-center gap-2">
-                                <Lock className="w-2.5 h-2.5 text-emerald-500" />
-                                <span className="text-[8px] text-emerald-500 uppercase font-black">Autonomous Governance Active</span>
+                                <Lock className="w-2.5 h-2.5 text-slate-300" />
+                                <span className="text-[8px] text-slate-300 uppercase font-black">Autonomous Governance Active</span>
                             </div>
                             <span className="text-[8px] text-slate-600">Last Refresh: Just Now</span>
                         </div>

@@ -16,7 +16,7 @@ export const LiveTelemetryFeed = () => {
   }, [telemetry, alerts]);
 
   return (
-    <div className="flex flex-col h-full w-full bg-[#050505] text-[#9AA4AF] font-mono text-[11px] rounded-xl border border-white/5 shadow-2xl relative overflow-hidden group">
+    <div className="flex flex-col h-full w-full bg-[#050505] text-[#9AA4AF] font-mono text-[11px] rounded-sm border border-white/5 shadow-2xl relative overflow-hidden group">
       
       {/* HEADER */}
       <div className="flex justify-between items-center p-3 border-b border-[#1A1D21] bg-[#0B0D0F]">
@@ -27,12 +27,12 @@ export const LiveTelemetryFeed = () => {
          <div className="flex items-center gap-2 text-[10px]">
              {isConnected ? (
                  <span className="flex items-center gap-1.5 text-[#22C55E]">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#22C55E] animate-pulse shadow-[0_0_8px_rgba(34,197,94,0.4)]"></span>
+                    <span className="w-1.5 h-1.5 rounded-sm bg-[#22C55E]"></span>
                     SECURE LINK ACQUIRED
                  </span>
              ) : (
                  <span className="flex items-center gap-1.5 text-[#EF4444]">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#EF4444]"></span>
+                    <span className="w-1.5 h-1.5 rounded-sm bg-[#EF4444]"></span>
                     LINK OFFLINE
                  </span>
              )}
@@ -74,7 +74,7 @@ export const LiveTelemetryFeed = () => {
                          <span className="text-[#6B7280] w-[65px] shrink-0">
                              [{new Date(t.timestamp).toLocaleTimeString()}]
                          </span>
-                         <span className={t.status === 'DEGRADED' || t.status === 'ERROR' ? 'text-[#EAB308]' : 'text-[#4CC9F0]'}>
+                         <span className={t.status === 'DEGRADED' || (t.status as any) === 'ERROR' ? 'text-[#EAB308]' : 'text-[#4CC9F0]'}>
                              {t.robot_id}
                          </span>
                          <span className="text-white/60">

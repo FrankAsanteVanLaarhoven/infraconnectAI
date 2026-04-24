@@ -63,7 +63,7 @@ export function TacticalUtilitySuite() {
 
       {/* CURRENCY MATRIX */}
       <div className="bg-black/40 border border-slate-800 p-4 rounded flex flex-col gap-2">
-        <div className="flex items-center gap-2 text-[10px] text-emerald-500 uppercase tracking-widest font-bold">
+        <div className="flex items-center gap-2 text-[10px] text-slate-300 uppercase tracking-widest font-bold">
           <DollarSign className="w-3 h-3" />
           {t('widget.currency')}
         </div>
@@ -105,7 +105,7 @@ export function TacticalUtilitySuite() {
 
       {/* OP_CALENDAR */}
       <div className="bg-black/40 border border-slate-800 p-4 rounded flex flex-col gap-2">
-        <div className="flex items-center gap-2 text-[10px] text-purple-500 uppercase tracking-widest font-bold">
+        <div className="flex items-center gap-2 text-[10px] text-slate-400 uppercase tracking-widest font-bold">
           <Calendar className="w-3 h-3" />
           {t('widget.calendar')}
         </div>

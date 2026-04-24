@@ -61,7 +61,7 @@ export default function IntegrationPage() {
   const installCmd = `curl -sL https://install.infraconnect.ai | bash -s -- ${apiKey || 'YOUR_TOKEN'}`;
 
   return (
-    <div className="min-h-screen bg-[#020202] text-slate-300 font-mono p-8 relative overflow-hidden selection:bg-cyan-500/30">
+    <div className="min-h-full bg-[#020202] text-slate-300 font-mono p-8 relative overflow-hidden selection:bg-cyan-500/30">
        {/* Background Grid */}
        <div className="absolute inset-0 opacity-[0.05] pointer-events-none" 
             style={{ backgroundImage: 'radial-gradient(#6366f1 1px, transparent 1px)', backgroundSize: '30px 30px' }} />
@@ -72,7 +72,7 @@ export default function IntegrationPage() {
           <header className="flex justify-between items-end border-b border-white/5 pb-8">
              <div className="space-y-2">
                 <div className="flex items-center gap-3">
-                   <div className="p-2 bg-indigo-500/10 border border-indigo-500/30 rounded-lg">
+                   <div className="p-2 bg-indigo-500/10 border border-indigo-500/30 rounded-sm">
                       <Globe className="w-5 h-5 text-indigo-400" />
                    </div>
                    <h1 className="text-xl font-black text-white uppercase tracking-[0.4em]">Enterprise Developer Hub</h1>
@@ -84,8 +84,8 @@ export default function IntegrationPage() {
              <div className="flex items-center gap-6">
                 <div className="text-right">
                    <span className="text-[8px] text-slate-600 block mb-1 font-black uppercase tracking-widest">Global Status</span>
-                   <span className="text-xs font-black text-emerald-500 flex items-center gap-2">
-                      <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                   <span className="text-xs font-black text-slate-300 flex items-center gap-2">
+                      <div className="w-2 h-2 rounded-sm bg-slate-800" />
                       UPLINK_READY
                    </span>
                 </div>
@@ -98,7 +98,7 @@ export default function IntegrationPage() {
              <div className="lg:col-span-2 space-y-8">
                 
                 {/* 1. Quick Start */}
-                <section className="bg-white/[0.02] border border-white/5 p-8 rounded-2xl relative group">
+                <section className="bg-white/[0.02] border border-white/5 p-8 rounded-none relative group">
                    <div className="flex items-center gap-3 mb-6">
                       <Rocket className="w-4 h-4 text-cyan-400" />
                       <h2 className="text-[11px] font-black text-white uppercase tracking-[0.2em]">Quick Start Installer</h2>
@@ -106,15 +106,15 @@ export default function IntegrationPage() {
                    <p className="text-[10px] text-slate-500 mb-6 leading-relaxed">
                       Deploy a Sovereign Uplink Node to your infrastructure in seconds. This command initializes the identity mapping and secures the tunnel.
                    </p>
-                   <div className="bg-black/60 border border-white/10 p-4 rounded-xl flex items-center justify-between group">
+                   <div className="bg-black/60 border border-white/10 p-4 rounded-sm flex items-center justify-between group">
                       <code className="text-[10px] text-cyan-500 truncate mr-4">
                          {installCmd}
                       </code>
                       <button 
                         onClick={() => copyToClipboard(installCmd)}
-                        className="p-2 bg-white/5 hover:bg-white/10 rounded-lg transition-all"
+                        className="p-2 bg-white/5 hover:bg-white/10 rounded-sm transition-all"
                       >
-                         {copied ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5 text-slate-400" />}
+                         {copied ? <Check className="w-3.5 h-3.5 text-slate-300" /> : <Copy className="w-3.5 h-3.5 text-slate-400" />}
                       </button>
                    </div>
                 </section>
@@ -130,15 +130,15 @@ export default function IntegrationPage() {
                    </div>
                    <div className="space-y-3">
                       {uplinks.map(uplink => (
-                         <div key={uplink.id} className="p-5 bg-white/[0.01] border border-white/5 rounded-xl flex items-center justify-between hover:bg-white/[0.03] transition-all group">
+                         <div key={uplink.id} className="p-5 bg-white/[0.01] border border-white/5 rounded-sm flex items-center justify-between hover:bg-white/[0.03] transition-all group">
                             <div className="flex items-center gap-4">
-                               <div className="p-2 bg-slate-900 rounded-lg border border-white/5">
+                               <div className="p-2 bg-slate-900 rounded-sm border border-white/5">
                                   <Cpu className="w-4 h-4 text-slate-500 group-hover:text-indigo-400 transition-colors" />
                                </div>
                                <div>
                                   <div className="flex items-center gap-2">
                                      <span className="text-[10px] font-bold text-white uppercase tracking-wider">{uplink.clientId}</span>
-                                     <span className="text-[8px] text-emerald-500 font-black uppercase tracking-tighter">● {uplink.status}</span>
+                                     <span className="text-[8px] text-slate-300 font-black uppercase tracking-tighter">● {uplink.status}</span>
                                   </div>
                                   <div className="text-[7px] text-slate-600 font-bold uppercase tracking-widest mt-1">UDS_ID: {uplink.id} // SECURE_HANDSHAKE: OK</div>
                                </div>
@@ -157,7 +157,7 @@ export default function IntegrationPage() {
              <div className="space-y-8">
                 
                 {/* 3. API Key Management */}
-                <section className="bg-indigo-600/5 border border-indigo-500/20 p-8 rounded-2xl space-y-6">
+                <section className="bg-indigo-600/5 border border-indigo-500/20 p-8 rounded-none space-y-6">
                    <div className="flex items-center gap-3">
                       <Key className="w-4 h-4 text-indigo-400" />
                       <h2 className="text-[11px] font-black text-white uppercase tracking-[0.2em]">Sovereign Uplink Keys</h2>
@@ -166,7 +166,7 @@ export default function IntegrationPage() {
                       Issue master keys to authorize your platform nodes. Treat these as highly sensitive mission-critical assets.
                    </p>
                    {apiKey ? (
-                      <div className="bg-black/40 border border-indigo-500/30 p-3 rounded-lg flex items-center justify-between">
+                      <div className="bg-black/40 border border-indigo-500/30 p-3 rounded-sm flex items-center justify-between">
                          <span className="text-[9px] text-indigo-400 truncate mr-2">{apiKey}</span>
                          <button onClick={() => copyToClipboard(apiKey)} className="text-slate-500 hover:text-white transition-colors">
                             <Copy className="w-3 h-3" />
@@ -176,7 +176,7 @@ export default function IntegrationPage() {
                       <button 
                         onClick={handleGenerateKey}
                         disabled={isGenerating}
-                        className="w-full py-3 bg-indigo-600 hover:bg-indigo-500 text-black text-[10px] font-black uppercase tracking-[0.2em] rounded-xl transition-all shadow-[0_0_20px_rgba(79,70,229,0.3)] disabled:opacity-50"
+                        className="w-full py-3 bg-indigo-600 hover:bg-indigo-500 text-black text-[10px] font-black uppercase tracking-[0.2em] rounded-sm transition-all disabled:opacity-50"
                       >
                          {isGenerating ? 'GENERATING...' : 'Generate Master Key'}
                       </button>
@@ -193,7 +193,7 @@ export default function IntegrationPage() {
                         { title: 'mTLS Handshake Guide', icon: ShieldCheck },
                         { title: 'Telemetry Node Config', icon: Settings }
                       ].map((item, idx) => (
-                         <div key={idx} className="p-4 bg-white/[0.01] border border-white/5 rounded-xl flex items-center justify-between group hover:bg-white/[0.02] cursor-pointer transition-all">
+                         <div key={idx} className="p-4 bg-white/[0.01] border border-white/5 rounded-sm flex items-center justify-between group hover:bg-white/[0.02] cursor-pointer transition-all">
                             <div className="flex items-center gap-3">
                                <item.icon className="w-3.5 h-3.5 text-slate-600 group-hover:text-indigo-400 transition-colors" />
                                <span className="text-[9px] font-black text-slate-400 group-hover:text-white uppercase tracking-widest transition-colors">{item.title}</span>

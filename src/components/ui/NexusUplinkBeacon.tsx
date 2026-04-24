@@ -25,9 +25,9 @@ export function NexusUplinkBeacon({ isAuthorized, className }: NexusUplinkBeacon
       whileHover={isAuthorized ? { scale: 1.05 } : {}}
       whileTap={isAuthorized ? { scale: 0.95 } : {}}
       className={cn(
-        "relative flex items-center gap-3 px-4 py-1.5 rounded-lg border font-mono transition-all duration-500",
+        "relative flex items-center gap-3 px-4 py-1.5 rounded-sm border font-mono transition-all duration-500",
         isAuthorized 
-          ? "bg-cyan-950/20 border-cyan-500/40 text-cyan-400 cursor-pointer shadow-[0_0_20px_rgba(6,182,212,0.1)] group"
+          ? "bg-cyan-950/20 border-cyan-500/40 text-cyan-400 cursor-pointer  group"
           : "bg-slate-900/40 border-slate-800 text-slate-600 cursor-not-allowed",
         className
       )}
@@ -35,7 +35,7 @@ export function NexusUplinkBeacon({ isAuthorized, className }: NexusUplinkBeacon
       {/* Pulse Effect for Authorized */}
       {isAuthorized && (
         <motion.div
-          className="absolute inset-0 rounded-lg bg-cyan-500/5 pointer-events-none"
+          className="absolute inset-0 rounded-sm bg-cyan-500/5 pointer-events-none"
           animate={{
             boxShadow: [
               "0 0 0px 0px rgba(6, 182, 212, 0)",
@@ -53,7 +53,7 @@ export function NexusUplinkBeacon({ isAuthorized, className }: NexusUplinkBeacon
 
       <div className="relative flex items-center justify-center">
         {isAuthorized ? (
-          <ShieldCheck className="w-3.5 h-3.5 animate-pulse text-cyan-400" />
+          <ShieldCheck className="w-3.5 h-3.5 text-cyan-400" />
         ) : (
           <Lock className="w-3.5 h-3.5 opacity-40" />
         )}
@@ -76,7 +76,7 @@ export function NexusUplinkBeacon({ isAuthorized, className }: NexusUplinkBeacon
       )}
 
       {/* Industrial Scanlines */}
-      <div className="absolute inset-0 pointer-events-none rounded-lg overflow-hidden opacity-5">
+      <div className="absolute inset-0 pointer-events-none rounded-sm overflow-hidden opacity-5">
         <div className="w-full h-full bg-[repeating-linear-gradient(0deg,white,white_1px,transparent_1px,transparent_2px)]" />
       </div>
     </motion.button>

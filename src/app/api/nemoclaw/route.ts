@@ -39,7 +39,7 @@ export async function POST(request: NextRequest) {
     const canonNodes = await db.memoryNode.findMany({
       where: {
         level: 'L2',
-        status: 'canon'
+        state: 'canonical'
       }
     });
 
@@ -65,13 +65,13 @@ export async function POST(request: NextRequest) {
     }
 
     // Combine Canon Node metadata (Mock semantic check against canon topics)
-    const canonContext = canonNodes.map(n => n.content.toLowerCase()).join(' ');
+    const canonContext = canonNodes.map(n => (n.summary || '').toLowerCase()).join(' ');
     if (activeCommand && canonContext.includes('freeze') && activeCommand.includes('deploy')) {
         violations.push('L2-Violation-09F: Global code freeze policy active in L2 memory.');
     }
 
     // 2. Execution Decision Gate
-    const decision = violations.length > 0 ? 'DENY' : 'PERMIT';
+    const decision = violations.length > 0 ? 'deny' : 'permit';
     
     const interceptId = `int_${Date.now()}_${Math.random().toString(36).substr(2, 6)}`;
     
@@ -85,16 +85,15 @@ export async function POST(request: NextRequest) {
         target: toolSet.join(','),
         decision: decision,
         reason: violations.length > 0 ? violations.join(' | ') : 'Passed all L2 checks.',
-        executed: decision === 'PERMIT',
+        executed: decision === 'permit',
       }
     });
 
     // Also emit a DomainEvent
     const eventRecord = await db.domainEvent.create({
       data: {
-        shortId: `evt_${Date.now()}_${Math.random().toString(36).substr(2, 6)}`,
         eventType: 'runtime.intercepted',
-        aggregateType: 'runtime_intercept',
+        aggregateType: 'policy',
         aggregateId: interceptId,
         actorId: 'nemoclaw_system',
         payload: {
@@ -110,11 +109,12 @@ export async function POST(request: NextRequest) {
 
     if (violations.length > 0) {
       // Activity Log entry for Security Audit
-      await db.activityLog.create({
+      await db.agentIncident.create({
         data: {
-          action: 'nemoclaw_block',
-          target: actionId || 'UnknownAction',
-          detail: `NemoClaw blocked payload. Violations: ${violations.length}`,
+          agentId: 'nemoclaw_system',
+          severity: 'QUARANTINED',
+          category: 'SECURITY',
+          description: `NemoClaw blocked payload. Violations: ${violations.length}`,
         },
       });
 
@@ -161,11 +161,12 @@ export async function POST(request: NextRequest) {
     }
 
     // Auditing the successful execution
-    await db.activityLog.create({
+    await db.agentIncident.create({
         data: {
-          action: 'nemoclaw_exec',
-          target: actionId || 'UnknownAction',
-          detail: `NemoClaw executed [${toolSet.join(',')}] within L2 policy bounds.`,
+          agentId: 'nemoclaw_system',
+          severity: 'INFO',
+          category: 'AUDIT',
+          description: `NemoClaw executed [${toolSet.join(',')}] within L2 policy bounds.`,
         },
     });
 

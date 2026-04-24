@@ -67,7 +67,7 @@ export function CompliancePanel() {
     <GlassPanel 
       variant="strong" 
       glowStrong 
-      className={killSwitchActive ? 'border-red-500 shadow-[0_0_50px_rgba(239,68,68,0.3)] bg-red-950/20' : ''}
+      className={killSwitchActive ? 'border-red-500  bg-red-950/20' : ''}
     >
       {/* Header */}
       <div className="flex items-center justify-between mb-6 border-b border-glass-border pb-4">

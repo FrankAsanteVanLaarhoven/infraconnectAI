@@ -27,7 +27,7 @@ export async function POST(req: Request) {
                await streamProducer.publish("stream:robot.commands", actionPayload);
                
                // Synchronously pass via stream:tasks for tacticalScene bounds seamlessly natively
-               await streamProducer.publish("stream:tasks", {
+               await (streamProducer as any).publish("stream:tasks", {
                    robot_id: actionPayload.robot_id,
                    task_id: `mission-${Date.now()}`,
                    path: actionPayload.path

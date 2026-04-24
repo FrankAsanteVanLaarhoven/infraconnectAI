@@ -21,7 +21,7 @@ export function NemoClawRuntimePanel() {
           <Shield className="w-4 h-4 text-foreground" />
           NemoClaw Runtime
         </h3>
-        <span className="text-[10px] uppercase tracking-widest text-matrix animate-pulse">Enforcing</span>
+        <span className="text-[10px] uppercase tracking-widest text-matrix">Enforcing</span>
       </div>
 
       <div className="flex-1 overflow-y-auto space-y-3">
@@ -45,7 +45,7 @@ export function NemoClawRuntimePanel() {
         {/* Live Execution Grid */}
         <div className="grid grid-cols-2 gap-2 mt-4">
           <div className="bg-foreground/5 border border-border/10 rounded-md p-3 flex flex-col justify-center items-center text-center gap-2">
-            <CheckCircle2 className="w-5 h-5 text-green-500" />
+            <CheckCircle2 className="w-5 h-5 text-slate-300" />
             <span className="text-[10px] uppercase tracking-widest text-muted-foreground/50">Permitted</span>
             <span className="text-sm font-medium text-foreground">{permittedCount}</span>
           </div>
@@ -67,7 +67,7 @@ export function NemoClawRuntimePanel() {
                 <span className="text-foreground truncate">{log.target}</span>
                 <span className={log.action === 'nemoclaw_block' ? 'text-orange-500/80 truncate' : 'text-muted-foreground/50 truncate'}>{log.detail}</span>
               </div>
-              <span className={log.action === 'nemoclaw_block' ? 'text-orange-500 font-bold' : 'text-green-500'}>
+              <span className={log.action === 'nemoclaw_block' ? 'text-orange-500 font-bold' : 'text-slate-300'}>
                 {log.action === 'nemoclaw_block' ? 'DENY' : 'PASS'}
               </span>
             </div>

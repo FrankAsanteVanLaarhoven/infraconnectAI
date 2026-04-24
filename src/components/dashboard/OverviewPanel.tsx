@@ -142,10 +142,10 @@ function StatCard({
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay, duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-      className="glass-subtle rounded-xl p-3 sm:p-4 hover:glass-hover transition-all duration-300 group"
+      className="glass-subtle rounded-sm p-3 sm:p-4 hover:glass-hover transition-all duration-300 group"
     >
       <div className="flex items-center gap-2.5 mb-2">
-        <div className={cn('w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0', iconBg)}>
+        <div className={cn('w-7 h-7 rounded-sm flex items-center justify-center flex-shrink-0', iconBg)}>
           <Icon className={cn('w-3.5 h-3.5', iconColor)} />
         </div>
         <span className="text-[9px] text-premium text-muted-foreground tracking-widest uppercase leading-none">
@@ -200,10 +200,10 @@ function PlaneCard({
       whileHover={{ scale: 1.02, y: -2 }}
       whileTap={{ scale: 0.98 }}
       onClick={onClick}
-      className="glass-subtle rounded-xl p-4 hover:glass-hover transition-all duration-300 text-left w-full group"
+      className="glass-subtle rounded-sm p-4 hover:glass-hover transition-all duration-300 text-left w-full group"
     >
       <div className="flex items-center gap-2.5 mb-3">
-        <div className={cn('w-8 h-8 rounded-lg flex items-center justify-center', PLANE_BG_CLASS[plane])}>
+        <div className={cn('w-8 h-8 rounded-sm flex items-center justify-center', PLANE_BG_CLASS[plane])}>
           <Icon className={cn('w-4 h-4', PLANE_COLOR_CLASS[plane])} />
         </div>
         <div className="flex-1 min-w-0">
@@ -222,9 +222,9 @@ function PlaneCard({
               {(avgHealth * 100).toFixed(0)}%
             </span>
           </div>
-          <div className="h-1.5 rounded-full bg-glass-border overflow-hidden">
+          <div className="h-1.5 rounded-sm bg-glass-border overflow-hidden">
             <motion.div
-              className="h-full rounded-full"
+              className="h-full rounded-sm"
               style={{ background: `var(--${plane}-color)` }}
               initial={{ width: 0 }}
               animate={{ width: `${avgHealth * 100}%` }}
@@ -297,15 +297,15 @@ function StrataBar({
           {animated}
         </motion.span>
       </div>
-      <div className="h-2.5 rounded-full bg-glass-border overflow-hidden">
+      <div className="h-2.5 rounded-sm bg-glass-border overflow-hidden">
         <motion.div
-          className={cn('h-full rounded-full relative', `bg-${level.toLowerCase()}`)}
+          className={cn('h-full rounded-sm relative', `bg-${level.toLowerCase()}`)}
           initial={{ width: 0 }}
           animate={{ width: `${pct}%` }}
           transition={{ duration: 0.8, delay: delay + 0.2, ease: [0.16, 1, 0.3, 1] }}
         >
           {/* Shimmer effect on bar */}
-          <div className="absolute inset-0 rounded-full overflow-hidden">
+          <div className="absolute inset-0 rounded-sm overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent"
               style={{ animation: 'shimmer 3s ease-in-out infinite', backgroundSize: '200% 100%' }}
             />
@@ -343,7 +343,7 @@ function PipelineStep({
     'bg-muted-foreground/30';
 
   const statusPulse =
-    lastRun?.status === 'running' ? 'animate-pulse' : '';
+    lastRun?.status === 'running' ? '' : '';
 
   const timeAgo = useMemo(() => {
     if (!lastRun?.createdAt) return 'never';
@@ -368,13 +368,13 @@ function PipelineStep({
     >
       <div className="relative">
         <div className={cn(
-          'w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300',
+          'w-10 h-10 rounded-sm flex items-center justify-center transition-all duration-300',
           'bg-glass-border/30 group-hover:bg-matrix/15 group-hover:shadow-[0_0_12px_var(--matrix-glow)]'
         )}>
           <Icon className="w-4 h-4 text-muted-foreground/70 group-hover:text-matrix transition-colors" />
         </div>
         <span className={cn(
-          'absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full border-2 border-background',
+          'absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-sm border-2 border-background',
           statusColor, statusPulse
         )} />
       </div>
@@ -433,6 +433,8 @@ export function OverviewPanel() {
   const lastRunsBySkill = useMemo(() => {
     const map: Record<SkillName, { status: string; createdAt: string } | null> = {
       spec: null, plan: null, build: null, test: null, review: null, ship: null,
+      hardware_audit: null,
+      safety_stop: null,
     };
     skillRuns.forEach((r) => {
       if (!map[r.skill] || new Date(r.createdAt) > new Date(map[r.skill]!.createdAt)) {
@@ -503,15 +505,15 @@ export function OverviewPanel() {
         </div>
 
         <div className="flex items-center gap-3">
-          <div className="w-11 h-11 rounded-xl bg-matrix/10 flex items-center justify-center flex-shrink-0">
+          <div className="w-11 h-11 rounded-sm bg-matrix/10 flex items-center justify-center flex-shrink-0">
             <Layers className="w-5 h-5 text-matrix" />
           </div>
           <div className="space-y-1">
             <h2 className="display-md text-gradient-matrix">Memory DevOps</h2>
             {/* Animated gradient underline */}
-            <div className="h-[2px] w-32 rounded-full overflow-hidden bg-glass-border">
+            <div className="h-[2px] w-32 rounded-sm overflow-hidden bg-glass-border">
               <motion.div
-                className="h-full rounded-full"
+                className="h-full rounded-sm"
                 style={{ background: 'linear-gradient(90deg, var(--matrix-dim), var(--matrix), var(--matrix-dim))' }}
                 initial={{ width: '0%', opacity: 0 }}
                 animate={{ width: '100%', opacity: 1 }}
@@ -607,7 +609,7 @@ export function OverviewPanel() {
           delay={0.4}
         >
           <span className={cn(
-            'text-[10px] font-mono font-medium px-2 py-0.5 rounded-full ml-auto',
+            'text-[10px] font-mono font-medium px-2 py-0.5 rounded-sm ml-auto',
             dashboard?.busStatus === 'live' ? 'bg-matrix/15 text-matrix status-indicator-live' : 'bg-destructive/15 text-destructive'
           )}>
             {dashboard?.busStatus?.toUpperCase() ?? 'OFFLINE'}
@@ -678,13 +680,13 @@ export function OverviewPanel() {
 
         <div className="flex items-center gap-4 text-[10px] text-muted-foreground/50">
           <span className="flex items-center gap-1.5">
-            <span className="w-2 h-2 rounded-full bg-l0" /> Raw artifacts
+            <span className="w-2 h-2 rounded-sm bg-l0" /> Raw artifacts
           </span>
           <span className="flex items-center gap-1.5">
-            <span className="w-2 h-2 rounded-full bg-l1" /> Structured wiki
+            <span className="w-2 h-2 rounded-sm bg-l1" /> Structured wiki
           </span>
           <span className="flex items-center gap-1.5">
-            <span className="w-2 h-2 rounded-full bg-l2" /> Canonical
+            <span className="w-2 h-2 rounded-sm bg-l2" /> Canonical
           </span>
         </div>
       </div>
@@ -694,7 +696,7 @@ export function OverviewPanel() {
         <h3 className="text-[10px] text-premium text-muted-foreground tracking-widest uppercase">
           Agent Lifecycle Pipeline
         </h3>
-        <div className="glass-subtle rounded-xl p-4">
+        <div className="glass-subtle rounded-sm p-4">
           <div className="flex items-center justify-between relative">
             {/* Animated dashed connecting line */}
             <div className="absolute top-5 left-5 right-5 h-px border-t border-dashed border-glass-border z-0" />
@@ -714,7 +716,7 @@ export function OverviewPanel() {
       </div>
 
       {/* ═══ Active Context Card ═══ */}
-      <div className="glass-frost rounded-xl p-4 space-y-3">
+      <div className="glass-frost rounded-sm p-4 space-y-3">
         <div className="flex items-center gap-2">
           <Zap className="w-3.5 h-3.5 text-execution" />
           <span className="text-xs font-semibold">Agent Lifecycle Management</span>
@@ -723,19 +725,19 @@ export function OverviewPanel() {
 
         {/* Key metrics row */}
         <div className="grid grid-cols-4 gap-2">
-          <div className="text-center p-2 rounded-lg bg-glass-border/20">
+          <div className="text-center p-2 rounded-sm bg-glass-border/20">
             <div className="text-sm font-semibold tabular-nums">{l0Count}</div>
             <div className="text-[8px] text-muted-foreground/50 font-mono">L0</div>
           </div>
-          <div className="text-center p-2 rounded-lg bg-glass-border/20">
+          <div className="text-center p-2 rounded-sm bg-glass-border/20">
             <div className="text-sm font-semibold tabular-nums">{l1Count}</div>
             <div className="text-[8px] text-muted-foreground/50 font-mono">L1</div>
           </div>
-          <div className="text-center p-2 rounded-lg bg-glass-border/20">
+          <div className="text-center p-2 rounded-sm bg-glass-border/20">
             <div className="text-sm font-semibold tabular-nums">{l2Count}</div>
             <div className="text-[8px] text-muted-foreground/50 font-mono">L2</div>
           </div>
-          <div className="text-center p-2 rounded-lg bg-glass-border/20">
+          <div className="text-center p-2 rounded-sm bg-glass-border/20">
             <div className="text-sm font-semibold tabular-nums">{activePolicies}</div>
             <div className="text-[8px] text-muted-foreground/50 font-mono">POLICIES</div>
           </div>
@@ -759,7 +761,7 @@ export function OverviewPanel() {
                   className="flex items-start gap-2 p-1.5 rounded-md hover:bg-glass-border/20 transition-colors group"
                 >
                   <span className={cn(
-                    'w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0',
+                    'w-1.5 h-1.5 rounded-sm mt-1.5 flex-shrink-0',
                     `bg-${node.level.toLowerCase()}`
                   )} />
                   <div className="min-w-0 flex-1">

@@ -37,11 +37,11 @@ export function EconomicThreatRadar({ isEmbedded = false }: { isEmbedded?: boole
   }, []);
 
   return (
-    <div className="w-full h-full bg-black/60 backdrop-blur-3xl border border-amber-500/30 rounded-xl overflow-hidden flex flex-col font-mono select-none">
+    <div className="w-full h-full bg-black/60 backdrop-blur-3xl border border-amber-500/30 rounded-sm overflow-hidden flex flex-col font-mono select-none">
       {/* Header */}
       <div className="p-4 border-b border-amber-500/20 bg-amber-950/10 flex items-center justify-between">
          <div className="flex items-center gap-3">
-            <AlertTriangle className={`w-5 h-5 ${threatLevel > 7.5 ? 'text-red-500 animate-pulse' : 'text-amber-500'}`} />
+            <AlertTriangle className={`w-5 h-5 ${threatLevel > 7.5 ? 'text-red-500 ' : 'text-amber-500'}`} />
             <div>
                <h3 className="text-[10px] font-black text-amber-500 uppercase tracking-[0.2em]">Economic Threat Radar</h3>
                <p className="text-[8px] text-amber-900 font-bold uppercase tracking-widest">Oil vs Debt Velocity Engine</p>
@@ -106,11 +106,11 @@ export function EconomicThreatRadar({ isEmbedded = false }: { isEmbedded?: boole
             <span className="text-[10px] text-slate-300 uppercase tracking-widest font-black">System Weighted Risk Pulse</span>
             <span className={`text-xs font-black ${threatLevel > 8 ? 'text-red-500' : 'text-amber-500'}`}>{(threatLevel * 10).toFixed(1)}%</span>
          </div>
-         <div className="w-full h-2 bg-slate-900 rounded-full overflow-hidden border border-slate-800">
+         <div className="w-full h-2 bg-slate-900 rounded-sm overflow-hidden border border-slate-800">
             <motion.div 
                initial={{ width: 0 }}
                animate={{ width: `${threatLevel * 10}%` }}
-               className={`h-full transition-colors duration-1000 ${threatLevel > 8 ? 'bg-red-500 shadow-[0_0_15px_#ef4444]' : 'bg-amber-500 shadow-[0_0_15px_#f59e0b]'}`}
+               className={`h-full transition-colors duration-1000 ${threatLevel > 8 ? 'bg-red-500 ' : 'bg-amber-500 '}`}
             />
          </div>
          
@@ -143,7 +143,7 @@ export function EconomicThreatRadar({ isEmbedded = false }: { isEmbedded?: boole
                         <span className="text-[8px] text-slate-300 leading-tight">{pulse.headline}</span>
                      </div>
                      <span className={`text-[8px] font-black px-1 rounded-sm ${
-                        pulse.sentiment === 'BULLISH' ? 'text-emerald-500 bg-emerald-500/10' :
+                        pulse.sentiment === 'BULLISH' ? 'text-slate-300 bg-slate-800' :
                         pulse.sentiment === 'BEARISH' ? 'text-red-500 bg-red-500/10' :
                         'text-slate-400 bg-slate-400/10'
                      }`}>

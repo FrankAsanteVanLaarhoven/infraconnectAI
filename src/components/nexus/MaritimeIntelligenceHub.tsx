@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Satellite, Ship, AlertCircle, Radio, MapPin, Eye, SatelliteEye } from 'lucide-react';
+import { Satellite, Ship, AlertCircle, Radio, MapPin, Eye } from 'lucide-react';
 import { fetchChokepointIntel, MaritimeAlert } from '@/lib/nexus/osint-fusion';
 
 export function MaritimeIntelligenceHub({ isEmbedded = false }: { isEmbedded?: boolean }) {
@@ -14,7 +14,7 @@ export function MaritimeIntelligenceHub({ isEmbedded = false }: { isEmbedded?: b
   }, []);
 
   return (
-    <div className="w-full h-full bg-black/60 backdrop-blur-3xl border border-cyan-500/30 rounded-xl overflow-hidden flex flex-col font-mono select-none">
+    <div className="w-full h-full bg-black/60 backdrop-blur-3xl border border-cyan-500/30 rounded-sm overflow-hidden flex flex-col font-mono select-none">
       {/* Header */}
       <div className="p-4 border-b border-cyan-500/20 bg-cyan-950/10 flex items-center justify-between">
          <div className="flex items-center gap-3">
@@ -25,8 +25,8 @@ export function MaritimeIntelligenceHub({ isEmbedded = false }: { isEmbedded?: b
             </div>
          </div>
          <div className="flex items-center gap-2">
-            <span className="text-[8px] text-cyan-500 font-black animate-pulse">SAR ACTIVE</span>
-            <div className="w-2 h-2 rounded-full bg-cyan-500" />
+            <span className="text-[8px] text-cyan-500 font-black">SAR ACTIVE</span>
+            <div className="w-2 h-2 rounded-sm bg-cyan-500" />
          </div>
       </div>
 
@@ -93,7 +93,7 @@ export function MaritimeIntelligenceHub({ isEmbedded = false }: { isEmbedded?: b
                   <MapPin className="w-3 h-3 text-red-500" />
                   <span className="text-[9px] text-white font-black uppercase">Strait of Hormuz</span>
                </div>
-               <span className="text-[9px] text-red-500 font-black animate-pulse uppercase">CLOSED (92%)</span>
+               <span className="text-[9px] text-red-500 font-black uppercase">CLOSED (92%)</span>
             </div>
             <div className="flex items-center justify-between p-2 bg-amber-950/10 border border-amber-900/20 rounded">
                <div className="flex items-center gap-2">

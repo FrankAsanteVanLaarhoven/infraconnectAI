@@ -39,7 +39,7 @@ export function MultiverseSim() {
     }, []);
 
     return (
-        <div className="w-full h-full bg-slate-950/90 backdrop-blur-3xl border border-slate-800 rounded-2xl p-6 flex flex-col font-mono relative overflow-hidden group">
+        <div className="w-full h-full bg-slate-950/90 backdrop-blur-3xl border border-slate-800 rounded-none p-6 flex flex-col font-mono relative overflow-hidden group">
             {/* Header */}
             <div className="flex items-center justify-between mb-8 border-b border-slate-800 pb-4">
                 <div className="flex items-center gap-3">
@@ -50,7 +50,7 @@ export function MultiverseSim() {
                     </div>
                 </div>
                 <div className="flex items-center gap-2">
-                    <Eye className="w-3 h-3 text-cyan-400 animate-pulse" />
+                    <Eye className="w-3 h-3 text-cyan-400" />
                     <span className="text-[8px] text-cyan-400 font-black uppercase tracking-widest">Observing Branches</span>
                 </div>
             </div>
@@ -91,14 +91,14 @@ export function MultiverseSim() {
                         <motion.div 
                             key={reality.id}
                             onClick={() => setSelectedReality(reality.id)}
-                            className={`p-4 rounded-xl border cursor-pointer transition-all flex items-center justify-between ${
+                            className={`p-4 rounded-sm border cursor-pointer transition-all flex items-center justify-between ${
                                 selectedReality === reality.id 
-                                ? 'bg-slate-900 border-indigo-500/50 shadow-[0_0_30px_rgba(99,102,241,0.1)] scale-105' 
+                                ? 'bg-slate-900 border-indigo-500/50  scale-105' 
                                 : 'bg-slate-950/50 border-slate-900 opacity-40 hover:opacity-70'
                             }`}
                         >
                             <div className="flex items-center gap-4">
-                                <div className={`w-1 h-8 rounded-full`} style={{ background: reality.color }} />
+                                <div className={`w-1 h-8 rounded-sm`} style={{ background: reality.color }} />
                                 <div>
                                     <h3 className="text-[10px] font-black text-white uppercase tracking-widest">{reality.label}</h3>
                                     <p className="text-[8px] text-slate-500 font-mono italic">{reality.delta}</p>
@@ -121,7 +121,7 @@ export function MultiverseSim() {
                     <span className="text-[8px] text-slate-600 uppercase font-black">Reality Timeline Scrub</span>
                     <span className="text-[8px] text-indigo-400 font-mono tracking-widest">T-ZERO: COLLAPSE PENDING</span>
                 </div>
-                <div className="h-1 bg-slate-900 rounded-full overflow-hidden relative">
+                <div className="h-1 bg-slate-900 rounded-sm overflow-hidden relative">
                     <motion.div 
                         className="h-full bg-white shadow-[0_0_10px_white]"
                         style={{ width: '2px', marginLeft: `${scannedPos}%` }}
@@ -134,7 +134,7 @@ export function MultiverseSim() {
                         <Share2 className="w-3 h-3 text-slate-600" />
                         <span className="text-[8px] text-slate-600 uppercase font-black italic">Parallel Convergence: STABLE</span>
                     </div>
-                    <button className="flex items-center gap-2 px-4 py-2 bg-indigo-600 border border-indigo-400 rounded-lg group hover:bg-indigo-500 transition-all shadow-[0_0_20px_rgba(99,102,241,0.3)]">
+                    <button className="flex items-center gap-2 px-4 py-2 bg-indigo-600 border border-indigo-400 rounded-sm group hover:bg-indigo-500 transition-all">
                         <Target className="w-3 h-3 text-white" />
                         <span className="text-[9px] text-white font-black uppercase tracking-[0.2em] group-hover:tracking-[0.3em] transition-all">Select Reality</span>
                     </button>

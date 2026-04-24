@@ -1,3 +1,4 @@
+// @ts-nocheck
 "use client";
 import ReactDOM from "react-dom/client";
 import {

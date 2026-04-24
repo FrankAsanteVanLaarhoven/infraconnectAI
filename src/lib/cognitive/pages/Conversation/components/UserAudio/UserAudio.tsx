@@ -11,7 +11,7 @@ type UserAudioProps = {
 export const UserAudio: FC<UserAudioProps> = ({theme}) => {
   const [analyser, setAnalyser] = useState<AnalyserNode | null>(null);
   const { sendMessage, socketStatus } = useSocketContext();
-  const containerRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<any>(null);
   const onRecordingStart = useCallback(() => {
     console.log("Recording started");
   }, []);

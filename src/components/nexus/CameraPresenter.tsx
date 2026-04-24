@@ -75,14 +75,14 @@ export function CameraPresenter({ onClose }: CameraPresenterProps) {
       <div className="group relative w-full h-full">
         
         {/* CORE BORDER & GLOW */}
-        <div className="absolute -inset-[1px] bg-cyan-500/30 rounded-xl blur-[2px] opacity-50 group-hover:opacity-100 transition-opacity" />
+        <div className="absolute -inset-[1px] bg-cyan-500/30 rounded-sm blur-[2px] opacity-50 group-hover:opacity-100 transition-opacity" />
         
-        <GlassCard className="w-full h-full bg-black/80 border-cyan-500/40 rounded-xl overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.8)] relative flex flex-col pt-0">
+        <GlassCard className="w-full h-full bg-black/80 border-cyan-500/40 rounded-sm overflow-hidden relative flex flex-col pt-0">
            
            {/* Top Meta Bar (Drag Handle) */}
            <div className="presenter-drag-handle h-6 flex items-center justify-between px-3 bg-cyan-950/20 border-b border-cyan-500/20 cursor-grab active:cursor-grabbing">
               <div className="flex items-center gap-2">
-                 <div className="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse" />
+                 <div className="w-1.5 h-1.5 rounded-sm bg-cyan-500" />
                  <span className="text-[8px] font-black font-mono uppercase text-cyan-500 tracking-widest">Presenter_Uplink // Live</span>
               </div>
               <div className="flex items-center gap-1">

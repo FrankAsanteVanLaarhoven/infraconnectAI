@@ -88,23 +88,23 @@ export function NegotiationWarRoom({ leadEmail }: { leadEmail?: string }) {
   };
 
   if (!leadEmail) return (
-    <div className="w-full h-full bg-black/60 backdrop-blur-3xl border border-slate-800 rounded-xl flex flex-col items-center justify-center p-12 text-center space-y-4">
+    <div className="w-full h-full bg-black/60 backdrop-blur-3xl border border-slate-800 rounded-sm flex flex-col items-center justify-center p-12 text-center space-y-4">
        <Target className="w-12 h-12 text-slate-700 opacity-50" />
        <p className="text-sm text-slate-500 uppercase font-black tracking-widest">Select a lead to enter the War Room</p>
     </div>
   );
 
-  if (!lead && loading) return <div className="p-8 text-center animate-pulse text-blue-500 uppercase font-black tracking-widest">Synchronizing Intelligence...</div>;
+  if (!lead && loading) return <div className="p-8 text-center text-blue-500 uppercase font-black tracking-widest">Synchronizing Intelligence...</div>;
 
   const estimatedSavings = (projectedValue * 2.5) * roiYears;
 
   return (
-    <div className="w-full h-full bg-black/80 backdrop-blur-3xl border border-red-500/30 rounded-xl overflow-hidden flex flex-col font-mono select-none">
+    <div className="w-full h-full bg-black/80 backdrop-blur-3xl border border-red-500/30 rounded-sm overflow-hidden flex flex-col font-mono select-none">
       
       {/* Header */}
       <div className="p-6 border-b border-red-500/20 bg-red-950/10 flex justify-between items-center">
          <div className="flex items-center gap-3">
-            <div className="p-2 bg-red-500/20 rounded-lg border border-red-500/40">
+            <div className="p-2 bg-red-500/20 rounded-sm border border-red-500/40">
                <Target className="w-5 h-5 text-red-500" />
             </div>
             <div>
@@ -119,11 +119,11 @@ export function NegotiationWarRoom({ leadEmail }: { leadEmail?: string }) {
          
          {/* Lead Context Summary */}
          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-slate-900/30 border border-slate-800 p-4 rounded-lg space-y-1">
+            <div className="bg-slate-900/30 border border-slate-800 p-4 rounded-sm space-y-1">
                <p className="text-[8px] text-slate-600 uppercase font-bold">Primary Target</p>
                <p className="text-lg font-black text-white truncate">{lead?.email}</p>
             </div>
-            <div className="bg-slate-900/30 border border-slate-800 p-4 rounded-lg space-y-1 text-center">
+            <div className="bg-slate-900/30 border border-slate-800 p-4 rounded-sm space-y-1 text-center">
                <p className="text-[8px] text-slate-600 uppercase font-bold">Projected Deal Value</p>
                <input 
                  value={projectedValue}
@@ -131,7 +131,7 @@ export function NegotiationWarRoom({ leadEmail }: { leadEmail?: string }) {
                  className="bg-transparent text-xl font-black text-white w-full text-center outline-none border-b border-white/5 focus:border-red-500/50"
                />
             </div>
-            <div className="bg-slate-900/30 border border-slate-800 p-4 rounded-lg space-y-1 text-right">
+            <div className="bg-slate-900/30 border border-slate-800 p-4 rounded-sm space-y-1 text-right">
                <p className="text-[8px] text-slate-600 uppercase font-bold">Mission Score</p>
                <p className="text-2xl font-black text-red-500">{lead?.score}<span className="text-xs text-slate-700">/100</span></p>
             </div>
@@ -143,7 +143,7 @@ export function NegotiationWarRoom({ leadEmail }: { leadEmail?: string }) {
                <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-slate-400">
                   <Calculator className="w-4 h-4 text-blue-500" /> ROI Simulator
                </div>
-               <div className="bg-blue-950/5 border border-blue-900/20 p-6 rounded-xl space-y-6">
+               <div className="bg-blue-950/5 border border-blue-900/20 p-6 rounded-sm space-y-6">
                   <div className="space-y-3">
                      <div className="flex justify-between text-[9px] uppercase font-bold">
                         <span className="text-slate-500">Projection Horizon</span>
@@ -153,7 +153,7 @@ export function NegotiationWarRoom({ leadEmail }: { leadEmail?: string }) {
                        type="range" min="1" max="10" 
                        value={roiYears} 
                        onChange={(e) => setRoiYears(Number(e.target.value))}
-                       className="w-full h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-blue-500" 
+                       className="w-full h-1 bg-slate-800 rounded-sm appearance-none cursor-pointer accent-blue-500" 
                      />
                   </div>
                   <div className="pt-4 border-t border-blue-900/20">
@@ -171,7 +171,7 @@ export function NegotiationWarRoom({ leadEmail }: { leadEmail?: string }) {
                <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-slate-400">
                   <MessageSquare className="w-4 h-4 text-red-500" /> Negotiation Playbook
                </div>
-               <div className="bg-[#0a0b0c] border border-slate-800 rounded-xl overflow-hidden flex flex-col h-[220px]">
+               <div className="bg-[#0a0b0c] border border-slate-800 rounded-sm overflow-hidden flex flex-col h-[220px]">
                   <textarea 
                     value={notes}
                     onChange={(e) => setNotes(e.target.value)}
@@ -195,16 +195,16 @@ export function NegotiationWarRoom({ leadEmail }: { leadEmail?: string }) {
             {/* Tactical Execution / Rebuttals */}
             <div className="space-y-4">
                <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-slate-400">
-                  <Cpu className="w-4 h-4 text-purple-500" /> Tactical Execution Engine
+                  {/* <Cpu className="w-4 h-4 text-slate-400" /> */} Tactical Execution Engine
                </div>
-               <div className="bg-purple-950/5 border border-purple-900/20 p-6 rounded-xl space-y-6">
+               <div className="bg-slate-900/50 border border-slate-800 p-6 rounded-sm space-y-6">
                   <div className="grid grid-cols-2 gap-2">
                      {['COST', 'SECURITY', 'VELOCITY', 'INTEGRATION'].map((type) => (
                         <button 
                           key={type}
                           onClick={() => tacticalConsult(type)}
                           disabled={isConsulting}
-                          className="px-3 py-2 bg-slate-900/50 border border-slate-800 text-[8px] font-black text-slate-400 uppercase hover:border-purple-500 hover:text-white transition-all rounded"
+                          className="px-3 py-2 bg-slate-900/50 border border-slate-800 text-[8px] font-black text-slate-400 uppercase hover:border-slate-800 hover:text-white transition-all rounded"
                         >
                            Objection: {type}
                         </button>
@@ -217,17 +217,17 @@ export function NegotiationWarRoom({ leadEmail }: { leadEmail?: string }) {
                           key="suggestion"
                           initial={{ opacity: 0, scale: 0.95 }}
                           animate={{ opacity: 1, scale: 1 }}
-                          className="p-4 bg-purple-900/20 border border-purple-500/30 rounded-lg space-y-2"
+                          className="p-4 bg-slate-900/50 border border-slate-800 rounded-sm space-y-2"
                         >
-                           <p className="text-[10px] text-purple-400 font-black uppercase">Suggested Rebuttal</p>
+                           <p className="text-[10px] text-slate-400 font-black uppercase">Suggested Rebuttal</p>
                            <p className="text-xs text-white leading-relaxed italic">"{suggestion.rebuttal}"</p>
-                           <div className="pt-2 flex justify-between items-center border-t border-purple-500/20">
+                           <div className="pt-2 flex justify-between items-center border-t border-slate-800">
                               <span className="text-[8px] text-slate-500 uppercase font-black">Tactic: {suggestion.tactic}</span>
-                              <span className="text-[8px] text-emerald-500 font-black">+{suggestion.deltaScore} Magnitude</span>
+                              <span className="text-[8px] text-slate-300 font-black">+{suggestion.deltaScore} Magnitude</span>
                            </div>
                         </motion.div>
                      ) : (
-                        <div className="p-8 text-center text-[9px] text-slate-600 uppercase font-black border border-dashed border-slate-800 rounded-lg">
+                        <div className="p-8 text-center text-[9px] text-slate-600 uppercase font-black border border-dashed border-slate-800 rounded-sm">
                            Consult AI on specific objections to generate tactical leverage.
                         </div>
                      )}
@@ -238,13 +238,13 @@ export function NegotiationWarRoom({ leadEmail }: { leadEmail?: string }) {
             {/* Shadow History / Activity Feed */}
             <div className="space-y-4">
                <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-slate-400">
-                  <History className="w-4 h-4 text-emerald-500" /> Chronological Activity Feed
+                  <History className="w-4 h-4 text-slate-300" /> Chronological Activity Feed
                </div>
-               <div className="bg-slate-900/40 border border-slate-800 rounded-xl p-4 h-[250px] overflow-y-auto custom-scrollbar space-y-4">
+               <div className="bg-slate-900/40 border border-slate-800 rounded-sm p-4 h-[250px] overflow-y-auto custom-scrollbar space-y-4">
                   {activities.length > 0 ? activities.map((act) => (
                      <div key={act.id} className="flex gap-4 items-start border-l-2 border-slate-800 pl-4 py-1">
                         <div className="pt-1">
-                           {act.type === 'tactical_adjustment' ? <Zap className="w-3 h-3 text-purple-400" /> : <Activity className="w-3 h-3 text-slate-600" />}
+                           {act.type === 'tactical_adjustment' ? <Zap className="w-3 h-3 text-slate-400" /> : <Activity className="w-3 h-3 text-slate-600" />}
                         </div>
                         <div className="space-y-1">
                            <p className="text-[10px] text-white font-black uppercase leading-none">{act.type.replace('_', ' ')}</p>

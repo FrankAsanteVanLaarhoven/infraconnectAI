@@ -165,9 +165,9 @@ export function AgentBusPanel() {
         </h3>
         <span className="flex items-center gap-1.5">
           <span className={cn(
-            'w-2 h-2 rounded-full shrink-0',
-            status === 'connected' && 'bg-matrix shadow-[0_0_6px_var(--matrix-glow)] animate-pulse',
-            status === 'reconnecting' && 'bg-yellow-500 animate-pulse',
+            'w-2 h-2 rounded-sm shrink-0',
+            status === 'connected' && 'bg-matrix shadow-[0_0_6px_var(--matrix-glow)] ',
+            status === 'reconnecting' && 'bg-yellow-500 ',
             status === 'disconnected' && 'bg-red-500/60',
           )} />
           <span className={cn(
@@ -190,7 +190,7 @@ export function AgentBusPanel() {
             { icon: BookOpen, label: 'TOPICS', value: String(stats.topics), color: 'text-governance' },
             { icon: Plug, label: 'SUBS', value: String(stats.subscriptions), color: 'text-yellow-500' },
           ].map((s) => (
-            <div key={s.label} className="glass-subtle rounded-lg p-2 text-center">
+            <div key={s.label} className="glass-subtle rounded-sm p-2 text-center">
               <div className={cn('text-xs font-semibold tabular-nums', s.color)}>{s.value}</div>
               <div className="text-[9px] text-muted-foreground/50 tracking-wider">{s.label}</div>
             </div>
@@ -210,7 +210,7 @@ export function AgentBusPanel() {
         <div
           ref={streamContainerRef}
           onScroll={handleStreamScroll}
-          className="flex-1 min-h-0 overflow-y-auto space-y-1 rounded-lg"
+          className="flex-1 min-h-0 overflow-y-auto space-y-1 rounded-sm"
           style={{ maxHeight: '320px' }}
         >
           <AnimatePresence initial={false}>
@@ -259,7 +259,7 @@ export function AgentBusPanel() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 10 }}
             onClick={scrollToBottom}
-            className="absolute bottom-16 right-4 w-7 h-7 rounded-full glass-strong flex items-center justify-center text-matrix hover:glass-glow transition-all duration-200 shadow-lg z-10"
+            className="absolute bottom-16 right-4 w-7 h-7 rounded-sm glass-strong flex items-center justify-center text-matrix hover:glass-glow transition-all duration-200 shadow-lg z-10"
           >
             <ArrowDown className="w-3.5 h-3.5" />
           </motion.button>
@@ -285,7 +285,7 @@ export function AgentBusPanel() {
                   tc.badge
                 )}
               >
-                <span className={cn('w-1.5 h-1.5 rounded-full', tc.dot)} />
+                <span className={cn('w-1.5 h-1.5 rounded-sm', tc.dot)} />
                 {topic}
                 <button
                   onClick={() => handleUnsubscribe(topic)}
@@ -325,7 +325,7 @@ export function AgentBusPanel() {
           <Send className="w-3 h-3" />
           Publish
         </h4>
-        <div className="glass-subtle rounded-lg p-2.5 space-y-2">
+        <div className="glass-subtle rounded-sm p-2.5 space-y-2">
           {/* Topic input */}
           <input
             type="text"

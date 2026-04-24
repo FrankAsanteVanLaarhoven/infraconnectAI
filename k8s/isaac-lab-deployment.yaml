@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: isaac-lab
+  namespace: physical-ai
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: isaac-lab
+  template:
+    metadata:
+      labels:
+        app: isaac-lab
+    spec:
+      containers:
+      - name: isaac-lab
+        image: nvcr.io/nvidia/isaac-lab:latest
+        resources:
+          limits:
+            nvidia.com/gpu: 4
+            memory: "64Gi"
+            cpu: "32"
+          requests:
+            nvidia.com/gpu: 2
+            memory: "32Gi"
+            cpu: "16"
+        env:
+        - name: NUM_ENVS
+          value: "2048"
+        - name: WANDB_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: infra-secrets
+              key: wandb-api-key
+        volumeMounts:
+        - name: assets
+          mountPath: /isaac_assets
+      volumes:
+      - name: assets
+        persistentVolumeClaim:
+          claimName: isaac-assets-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: isaac-lab-service
+spec:
+  selector:
+    app: isaac-lab
+  ports:
+  - port: 8888
+    targetPort: 8888

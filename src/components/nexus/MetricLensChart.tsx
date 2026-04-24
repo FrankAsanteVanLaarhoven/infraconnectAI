@@ -56,7 +56,7 @@ export function MetricLensChart({ title = "PRICE INDEX", unit = "USD/BBL" }) {
           </div>
         </div>
         <div className="text-right">
-          <div className="text-[10px] uppercase tracking-widest text-green-500 flex items-center justify-end gap-1">
+          <div className="text-[10px] uppercase tracking-widest text-slate-300 flex items-center justify-end gap-1">
             <TrendingUp className="w-3 h-3" /> +2.4%
           </div>
           <div className="text-[10px] text-slate-600 uppercase">24H DELTA</div>

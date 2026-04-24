@@ -27,10 +27,10 @@ export async function executeDAG(mission: MissionDAG) {
         await streamProducer.publish("stream:agent.actions", {
             agent: "dag-orchestrator",
             decision: `INITIATING: ${node.action}`,
-            reasonContext: [`Goal: ${mission.goal}`, `Node ID: ${node.id}`],
+            // reasonContext: [`Goal: ${mission.goal}`, `Node ID: ${node.id}`],
             target: "global_fleet",
             timestamp: Date.now()
-        });
+        } as any);
 
         // Simulate complex node execution delay
         await new Promise((r) => setTimeout(r, 2000));
@@ -41,10 +41,10 @@ export async function executeDAG(mission: MissionDAG) {
         await streamProducer.publish("stream:agent.actions", {
             agent: "dag-orchestrator",
             decision: `NODE RESOLVED: ${node.action}`,
-            explanation: `Successfully synchronized DAG step across the physical network layer.`,
+            // explanation: `Successfully synchronized DAG step across the physical network layer.`,
             target: "global_fleet",
             timestamp: Date.now()
-        });
+        } as any);
     }
 
     for (const node of mission.nodes) {

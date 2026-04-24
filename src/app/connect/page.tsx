@@ -7,11 +7,11 @@ export default function ConnectPage() {
     <div className="min-h-screen bg-[#050505] text-white p-8 md:p-16 font-mono flex items-center justify-center">
       <div className="max-w-4xl w-full border border-slate-800 bg-[#0a0b0c] p-10 relative overflow-hidden group">
         {/* Hardware Corner Aesthetics */}
-        <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-green-500 z-10 pointer-events-none" />
-        <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-green-500 z-10 pointer-events-none" />
+        <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-slate-700 z-10 pointer-events-none" />
+        <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-slate-700 z-10 pointer-events-none" />
 
         <div className="flex items-center gap-3 mb-6">
-          <Terminal className="w-8 h-8 text-green-400" />
+          <Terminal className="w-8 h-8 text-slate-300" />
           <h1 className="text-3xl font-bold tracking-widest uppercase">Connect Infrastructure</h1>
         </div>
         
@@ -26,11 +26,11 @@ export default function ConnectPage() {
           <div className="bg-[#111214] border border-slate-700/50 p-6 rounded-md hover:border-slate-500 transition-colors">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-lg font-bold text-slate-200 uppercase">Linux & Cloud VMs</h2>
-              <Badge variant="outline" className="text-green-400 border-green-900 bg-green-900/20">Recommended</Badge>
+              <Badge variant="outline" className="text-slate-300 border-slate-700 bg-slate-800">Recommended</Badge>
             </div>
             <p className="text-xs text-slate-500 mb-4">One-line installer for Debian, Ubuntu, Amazon Linux 2, and RHEL.</p>
             
-            <div className="bg-black border border-slate-800 p-4 rounded text-xs text-green-400 font-mono tracking-wider overflow-x-auto relative group-hover/code:border-green-500/50 transition-colors">
+            <div className="bg-black border border-slate-800 p-4 rounded text-xs text-slate-300 font-mono tracking-wider overflow-x-auto relative group-hover/code:border-slate-700 transition-colors">
               <code className="whitespace-nowrap">curl -fsSL https://connect.infraconnect.ai/install.sh | bash -s -- --token YOUR_INVITE_TOKEN</code>
             </div>
           </div>
@@ -42,7 +42,7 @@ export default function ConnectPage() {
             </div>
             <p className="text-xs text-slate-500 mb-4">PowerShell installer for Windows Server 2016+ with NSSM native backing.</p>
             
-            <div className="bg-black border border-slate-800 p-4 rounded text-xs text-blue-400 font-mono tracking-wider overflow-x-auto relative group-hover/code:border-blue-500/50 transition-colors">
+            <div className="bg-black border border-zinc-800 p-4 rounded text-xs text-white font-mono tracking-wider overflow-x-auto relative group-hover/code:border-zinc-500/50 transition-colors">
               <code className="whitespace-nowrap">Invoke-WebRequest -Uri https://connect.grok.com/install.ps1 -OutFile install.ps1; .\install.ps1 -Token YOUR_INVITE_TOKEN</code>
             </div>
           </div>

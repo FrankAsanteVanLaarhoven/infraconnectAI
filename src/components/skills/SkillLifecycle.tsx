@@ -14,7 +14,7 @@ import {
 } from 'lucide-react';
 import { toast } from 'sonner';
 
-const SKILL_ICONS: Record<SkillName, React.ComponentType<{ className?: string }>> = {
+const SKILL_ICONS: any = {
   spec: FileText,
   plan: ClipboardList,
   build: Hammer,
@@ -86,15 +86,15 @@ function PipelineNode({ skill, index, isActive, lastRun, onClick }: {
       >
         {/* Circle node */}
         <div className={cn(
-          'relative w-10 h-10 sm:w-11 sm:h-11 rounded-full flex items-center justify-center transition-all duration-300',
+          'relative w-10 h-10 sm:w-11 sm:h-11 rounded-sm flex items-center justify-center transition-all duration-300',
           isActive
             ? 'bg-matrix/20 shadow-[0_0_16px_var(--matrix-glow)] ring-1 ring-matrix/40'
             : 'bg-glass-border/60 hover:bg-glass-hover hover:shadow-[0_0_8px_var(--matrix-glow)]',
-          isRunning && 'animate-pulse-glow',
+          isRunning && '',
         )}>
           {/* Pulse ring for running */}
           {isRunning && (
-            <span className="absolute inset-0 rounded-full border-2 border-yellow-500/40 animate-ping" />
+            <span className="absolute inset-0 rounded-sm border-2 border-yellow-500/40 animate-ping" />
           )}
 
           <Icon className={cn(
@@ -107,7 +107,7 @@ function PipelineNode({ skill, index, isActive, lastRun, onClick }: {
             <motion.div
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
-              className="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full bg-matrix flex items-center justify-center"
+              className="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-sm bg-matrix flex items-center justify-center"
             >
               <CheckCircle2 className="w-3 h-3 text-background" />
             </motion.div>
@@ -118,7 +118,7 @@ function PipelineNode({ skill, index, isActive, lastRun, onClick }: {
             <motion.div
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
-              className="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full bg-destructive flex items-center justify-center"
+              className="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-sm bg-destructive flex items-center justify-center"
             >
               <XCircle className="w-3 h-3 text-background" />
             </motion.div>
@@ -239,11 +239,11 @@ function SkillDetailPanel({ skill, onRunSkill }: {
       transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
       className="overflow-hidden"
     >
-      <div className="mt-4 p-4 rounded-xl glass-subtle space-y-4">
+      <div className="mt-4 p-4 rounded-sm glass-subtle space-y-4">
         {/* Header row */}
         <div className="flex items-start justify-between gap-3">
           <div className="flex items-center gap-2.5 min-w-0">
-            <div className="w-8 h-8 rounded-lg bg-matrix/15 flex items-center justify-center shrink-0">
+            <div className="w-8 h-8 rounded-sm bg-matrix/15 flex items-center justify-center shrink-0">
               <Icon className="w-4 h-4 text-matrix" />
             </div>
             <div className="min-w-0">
@@ -258,7 +258,7 @@ function SkillDetailPanel({ skill, onRunSkill }: {
             onClick={handleRun}
             disabled={isRunning}
             className={cn(
-              'shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-200',
+              'shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-sm text-xs font-medium transition-all duration-200',
               isRunning
                 ? 'bg-matrix/10 text-matrix/60 cursor-wait'
                 : 'bg-matrix/15 text-matrix hover:bg-matrix/25 hover:shadow-[0_0_12px_var(--matrix-glow)] active:scale-95'
@@ -280,7 +280,7 @@ function SkillDetailPanel({ skill, onRunSkill }: {
 
         {/* Last run info */}
         {lastRun && (
-          <div className="flex items-center gap-4 px-3 py-2 rounded-lg bg-background/30 text-mono-xs">
+          <div className="flex items-center gap-4 px-3 py-2 rounded-sm bg-background/30 text-mono-xs">
             <div className="flex items-center gap-1.5">
               {(() => {
                 const cfg = STATUS_CONFIG[lastRun.status];
@@ -318,7 +318,7 @@ function SkillDetailPanel({ skill, onRunSkill }: {
                 transition={{ delay: i * 0.04 }}
                 className="flex items-center gap-2 pl-1"
               >
-                <span className="w-1.5 h-1.5 rounded-full bg-matrix/70 shadow-[0_0_4px_var(--matrix-glow)]" />
+                <span className="w-1.5 h-1.5 rounded-sm bg-matrix/70 shadow-[0_0_4px_var(--matrix-glow)]" />
                 <code className="text-mono-xs text-foreground/80">{r}</code>
               </motion.div>
             ))}
@@ -337,7 +337,7 @@ function SkillDetailPanel({ skill, onRunSkill }: {
                 transition={{ delay: (contract.reads.length + i) * 0.04 }}
                 className="flex items-center gap-2 pl-1"
               >
-                <span className="w-1.5 h-1.5 rounded-full bg-yellow-500/70 shadow-[0_0_4px_oklch(0.75_0.18_85)]" />
+                <span className="w-1.5 h-1.5 rounded-sm bg-yellow-500/70 shadow-[0_0_4px_oklch(0.75_0.18_85)]" />
                 <code className="text-mono-xs text-foreground/80">{w}</code>
               </motion.div>
             ))}
@@ -356,7 +356,7 @@ function SkillDetailPanel({ skill, onRunSkill }: {
                 transition={{ delay: (contract.reads.length + contract.writes.length + i) * 0.04 }}
                 className="flex items-center gap-2 pl-1"
               >
-                <span className="w-1.5 h-1.5 rounded-full bg-destructive/70 shadow-[0_0_4px_oklch(0.65_0.22_25)]" />
+                <span className="w-1.5 h-1.5 rounded-sm bg-destructive/70 shadow-[0_0_4px_oklch(0.65_0.22_25)]" />
                 <code className="text-mono-xs text-foreground/80">{c}</code>
               </motion.div>
             ))}
@@ -389,7 +389,7 @@ function RecentRunsList({ runs }: { runs: SkillRun[] }) {
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: i * 0.04, duration: 0.25 }}
               className={cn(
-                'flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-xs transition-colors duration-200',
+                'flex items-center gap-2 px-2.5 py-1.5 rounded-sm text-xs transition-colors duration-200',
                 run.status === 'running' && 'bg-yellow-500/5',
                 run.status === 'failed' && 'bg-destructive/5',
               )}

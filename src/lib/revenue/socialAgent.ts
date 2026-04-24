@@ -18,7 +18,7 @@ export async function runSocialTouchCycle() {
       take: 5
     });
 
-    const results = [];
+    const results: any[] = [];
 
     for (const lead of warmLeads) {
       // Simulate choosing a platform

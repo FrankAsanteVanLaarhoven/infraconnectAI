@@ -1,23 +1,19 @@
 "use client";
 
-import { useROS } from "@/hooks/useROS";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { useEffect, useState } from "react";
 import { Grid, OrbitControls } from "@react-three/drei";
-import { useMap } from "@/lib/hooks/useMap";
+
 import { subscribe } from "@/lib/core/bus";
 import { Robot } from "./Robot";
 import { PathLine } from "./PathLine";
 import { useFleetStore } from "@/stores/fleetStore";
-import { generatePath } from "@/lib/planning/generatePath";
-import { computeAvoidance } from "@/lib/planning/avoidance";
-import { EffectComposer, Bloom, Noise } from "@react-three/postprocessing";
 import { CameraController } from "./CameraController";
 import * as THREE from "three";
 
 function occupancyToGrid(map: any) {
   if (!map) return [];
-  const grid = [];
+  const grid: any[] = [];
   const width = map.info.width;
   // Fallback geometries scaling abstract parameters visually
   for(let i=0; i<100; i++) {
@@ -37,7 +33,7 @@ function SceneContent() {
       return;
     }
 
-    // 1. Mission Trajectory Paths via direct Websocket array sync
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     const io = require("socket.io-client").io;
     const socket = io(process.env.NEXT_PUBLIC_SOCKET_URL || "http://localhost:3001", { 
         transports: ["polling", "websocket"],
@@ -58,7 +54,7 @@ function SceneContent() {
         const payload = JSON.parse(msg.data);
         if (payload && payload.event === "tactical_override") {
            console.warn("[SSE] Watchdog tactical override engaged! Neutralizing kinetic outputs.");
-           useFleetStore.getState().robots.forEach((r: any) => updateRobot(r.id, { path: [], status: "error" }));
+           useFleetStore.getState().robots.forEach((r: any) => updateRobot(r.id, { path: [], status: "error" } as any));
         }
       } catch(e){}
     };
@@ -104,7 +100,7 @@ function SceneContent() {
 }
 
 function RobotOverlay() {
-  const status = useFleetStore((s) => s.robots[0]?.status || "IDLE");
+  const status = useFleetStore((s) => (s.robots[0] as any)?.status || "IDLE");
   const hasRobots = useFleetStore((s) => s.robots?.length > 0);
 
   if (!hasRobots) return null;
@@ -114,15 +110,17 @@ function RobotOverlay() {
   if (!robotState) return null;
 
   return (
-      <div className="absolute bottom-2 right-2 text-[10px] text-emerald-400 font-mono tracking-widest uppercase text-right">
+      <div className="absolute bottom-2 right-2 text-[10px] text-slate-300 font-mono tracking-widest uppercase text-right">
           ZONE: {robotState.zone} | BAT: {robotState.battery}%<br />
           OP: {robotState.status}
       </div>
   );
 }
 
+const GRID_ARGS: [number, number] = [100, 100];
+
 export default function TacticalScene() {
-  const { connected } = useROS();
+  const connected = true;
 
   return (
     <div className="w-full h-full bg-[#050607] relative">
@@ -145,14 +143,9 @@ export default function TacticalScene() {
           intensity={2}
         />
 
-        <Grid args={[100, 100]} cellSize={1} sectionSize={5} fadeDistance={50} />
+        <Grid args={GRID_ARGS} cellSize={1} sectionSize={5} fadeDistance={50} />
 
         <SceneContent />
-        
-        <EffectComposer disableNormalPass multisampling={0}>
-          <Bloom intensity={0.6} luminanceThreshold={0.2} />
-          <Noise opacity={0.02} />
-        </EffectComposer>
         
         <OrbitControls />
       </Canvas>

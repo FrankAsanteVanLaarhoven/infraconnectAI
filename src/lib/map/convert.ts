@@ -9,7 +9,7 @@ export function occupancyToGrid(map: any) {
   }
 
   const { width, height, data } = map.info;
-  const grid = [];
+  const grid: any[] = [];
 
   for (let i = 0; i < data.length; i++) {
     const val = data[i];

@@ -32,7 +32,7 @@ export const SimController = () => {
     }, [isPlaying]);
 
     return (
-        <div className="w-full h-full bg-slate-950/80 backdrop-blur-2xl border border-slate-800 rounded-2xl p-6 flex flex-col font-mono relative overflow-hidden group">
+        <div className="w-full h-full bg-slate-950/80 backdrop-blur-2xl border border-slate-800 rounded-none p-6 flex flex-col font-mono relative overflow-hidden group">
             {/* Header */}
             <div className="flex items-center justify-between mb-6 border-b border-slate-800 pb-4">
                 <div className="flex items-center gap-3">
@@ -52,8 +52,8 @@ export const SimController = () => {
             {/* Sim Visualizer Area */}
             <div className="flex-1 relative overflow-hidden flex items-center justify-center">
                 <div className="absolute inset-0 flex items-center justify-center opacity-10">
-                    <div className="w-[300px] h-[300px] border border-indigo-500 rounded-full animate-ping" />
-                    <div className="absolute w-[200px] h-[200px] border border-cyan-500 rounded-full animate-pulse" />
+                    <div className="w-[300px] h-[300px] border border-indigo-500 rounded-sm animate-ping" />
+                    <div className="absolute w-[200px] h-[200px] border border-cyan-500 rounded-sm" />
                 </div>
 
                 <div className="z-10 text-center">
@@ -78,10 +78,10 @@ export const SimController = () => {
             {/* Controls */}
             <div className="mt-6 space-y-4">
                 {/* Scrubber */}
-                <div className="relative h-1 bg-slate-800 rounded-full flex items-center">
+                <div className="relative h-1 bg-slate-800 rounded-sm flex items-center">
                     <div className="absolute left-1/2 -top-2 w-0.5 h-5 bg-indigo-500/50" /> {/* Zero Point */}
                     <motion.div 
-                        className="absolute w-4 h-4 bg-white rounded-full shadow-[0_0_15px_white] cursor-pointer"
+                        className="absolute w-4 h-4 bg-white rounded-sm shadow-[0_0_15px_white] cursor-pointer"
                         style={{ left: `${(timeCursor + 100) / 2}%`, transform: 'translateX(-50%)' }}
                         drag="x"
                         dragConstraints={{ left: 0, right: 200 }} // Custom mapping would be needed for real slider
@@ -123,7 +123,7 @@ export const SimController = () => {
 
                     <Button 
                         onClick={() => setMode(mode === 'REALTIME' ? 'SIMULATION' : 'REALTIME')}
-                        className={`font-black uppercase text-[9px] px-6 rounded-xl tracking-widest border transition-all ${mode === 'REALTIME' ? 'bg-transparent text-slate-400 border-slate-800' : 'bg-orange-600 text-white border-orange-400 shadow-[0_0_20px_rgba(234,88,12,0.3)]'}`}
+                        className={`font-black uppercase text-[9px] px-6 rounded-sm tracking-widest border transition-all ${mode === 'REALTIME' ? 'bg-transparent text-slate-400 border-slate-800' : 'bg-orange-600 text-white border-orange-400 '}`}
                     >
                         {mode === 'REALTIME' ? 'Enter Sim Mode' : 'Exit Sim Mode'}
                     </Button>

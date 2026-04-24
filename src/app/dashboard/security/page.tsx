@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
-import { ShieldAlert, Trash2, Download, PowerOff, DatabaseAction, Lock } from 'lucide-react';
+import { ShieldAlert, Trash2, Download, PowerOff, Database, Lock } from 'lucide-react';
 
 export default function SecurityDashboard() {
   const [dataMode, setDataMode] = useState("metadata_only");
@@ -31,10 +31,10 @@ export default function SecurityDashboard() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* Data Protection Card */}
-        <div className="glass-frost p-6 rounded-xl border border-indigo-900/30">
+        <div className="glass-frost p-6 rounded-sm border border-indigo-900/30">
           <h2 className="text-sm font-semibold tracking-wide text-white uppercase border-b border-slate-800 pb-3 mb-4 flex items-center justify-between">
              Data Exposure Plane
-             <Lock className="w-4 h-4 text-emerald-400" />
+             <Lock className="w-4 h-4 text-slate-300" />
           </h2>
           <p className="text-xs text-slate-400 mb-6">Select the default PII masking filter engaged before edge agent transmission over mTLS.</p>
           
@@ -58,7 +58,7 @@ export default function SecurityDashboard() {
         </div>
 
         {/* Compliance Card */}
-        <div className="glass-frost p-6 rounded-xl border border-indigo-900/30">
+        <div className="glass-frost p-6 rounded-sm border border-indigo-900/30">
           <h2 className="text-sm font-semibold tracking-wide text-white uppercase border-b border-slate-800 pb-3 mb-4">
              GDPR / Erasure Protocols
           </h2>
@@ -66,7 +66,7 @@ export default function SecurityDashboard() {
           
           <div className="flex flex-col gap-4">
             <button onClick={exportData} className="flex items-center justify-between p-3 border border-slate-800 rounded hover:border-slate-600 transition-colors bg-black/40 text-sm">
-              <div className="flex items-center gap-2"><Download className="w-4 h-4 text-emerald-400"/> Export Processed Data & Logs</div>
+              <div className="flex items-center gap-2"><Download className="w-4 h-4 text-slate-300"/> Export Processed Data & Logs</div>
               <span className="text-[10px] text-slate-500 bg-slate-900 px-2 py-0.5 rounded">Access API</span>
             </button>
 
@@ -75,7 +75,7 @@ export default function SecurityDashboard() {
               <span className="text-[10px] text-slate-500 bg-slate-900 px-2 py-0.5 rounded">Kill Switch</span>
             </button>
             {agentStatus === 'revoked' && (
-              <div className="text-xs text-red-400 mt-[-4px] animate-pulse">Edges Severed. Cryptographic Identity Revoked.</div>
+              <div className="text-xs text-red-400 mt-[-4px]">Edges Severed. Cryptographic Identity Revoked.</div>
             )}
           </div>
         </div>

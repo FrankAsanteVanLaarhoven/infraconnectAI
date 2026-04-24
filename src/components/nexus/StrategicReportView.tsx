@@ -25,14 +25,14 @@ export function StrategicReportView() {
               </p>
            </div>
            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12">
-              <div className="bg-slate-900/60 p-6 rounded-xl border border-slate-800">
+              <div className="bg-slate-900/60 p-6 rounded-sm border border-slate-800">
                  <p className="text-3xl font-black text-red-500 mb-2">{t('report.sales_at_risk')}</p>
                  <p className="text-[10px] text-slate-500 uppercase font-bold tracking-widest">{t('swarm.global_sales_risk')}</p>
                  <p className="text-xs text-slate-400 mt-4 leading-relaxed line-clamp-3">
                     {t('report.sales_risk_desc')}
                  </p>
               </div>
-              <div className="bg-slate-900/60 p-6 rounded-xl border border-slate-800">
+              <div className="bg-slate-900/60 p-6 rounded-sm border border-slate-800">
                  <p className="text-3xl font-black text-indigo-400 mb-2">{t('report.adoption_surge_val')}</p>
                  <p className="text-[10px] text-slate-500 uppercase font-bold tracking-widest">{t('swarm.adoption_surge')}</p>
                  <p className="text-xs text-slate-400 mt-4 leading-relaxed line-clamp-3">
@@ -51,9 +51,9 @@ export function StrategicReportView() {
       content: (
         <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mt-8">
            {FIVE_FACTORS.map((f) => (
-              <div key={f.id} className="bg-slate-900/40 border border-slate-800 p-6 rounded-xl flex flex-col items-center text-center group hover:border-indigo-500/40 transition-all">
+              <div key={f.id} className="bg-slate-900/40 border border-slate-800 p-6 rounded-sm flex flex-col items-center text-center group hover:border-indigo-500/40 transition-all">
                  <div className="text-3xl font-black text-slate-800 group-hover:text-indigo-500/50 transition-colors mb-4">{f.id}</div>
-                 <div className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center mb-4 text-slate-400 group-hover:bg-indigo-500 group-hover:text-white transition-all">
+                 <div className="w-10 h-10 rounded-sm bg-slate-800 flex items-center justify-center mb-4 text-slate-400 group-hover:bg-indigo-500 group-hover:text-white transition-all">
                     {f.id === '01' && <Database className="w-5 h-5" />}
                     {f.id === '02' && <Settings className="w-5 h-5" />}
                     {f.id === '03' && <Users className="w-5 h-5" />}
@@ -64,7 +64,7 @@ export function StrategicReportView() {
                  <p className="text-[10px] text-slate-500 leading-tight">{t(`swarm.factor.${f.id}.desc`) !== `swarm.factor.${f.id}.desc` ? t(`swarm.factor.${f.id}.desc`) : f.desc}</p>
               </div>
            ))}
-           <div className={`col-span-1 md:col-span-5 mt-12 bg-indigo-500/5 border border-indigo-500/20 p-6 rounded-2xl flex flex-col md:flex-row justify-between items-center ${isRtl ? 'md:flex-row-reverse' : ''}`}>
+           <div className={`col-span-1 md:col-span-5 mt-12 bg-indigo-500/5 border border-indigo-500/20 p-6 rounded-none flex flex-col md:flex-row justify-between items-center ${isRtl ? 'md:flex-row-reverse' : ''}`}>
               <div>
                  <p className="text-xl font-black text-indigo-400 mb-1">{t('report.people_process_stat')}</p>
                  <p className="text-xs text-slate-400 uppercase font-bold">{t('report.people_process_desc')}</p>
@@ -91,22 +91,22 @@ export function StrategicReportView() {
                  <p className="text-xs text-slate-400 leading-relaxed">
                     {t('swarm.crisis_desc')}
                  </p>
-                 <div className="bg-red-500/5 border border-red-500/20 p-4 rounded-xl">
+                 <div className="bg-red-500/5 border border-red-500/20 p-4 rounded-sm">
                     <p className="text-[10px] text-red-500 font-black uppercase tracking-widest mb-1">{t('swarm.opportunity_cost')}</p>
                     <p className="text-[10px] text-slate-400">{t('swarm.cost_desc')}</p>
                  </div>
               </div>
               <div className="space-y-4">
                  <h4 className="text-sm font-black text-white uppercase tracking-tight flex items-center gap-2">
-                    <Cpu className="w-4 h-4 text-emerald-500" /> {t('swarm.predictive_shift')}
+                    <Cpu className="w-4 h-4 text-slate-300" /> {t('swarm.predictive_shift')}
                  </h4>
                  <div className="grid grid-cols-1 gap-3">
-                    <div className="bg-slate-900 border border-slate-800 p-4 rounded-xl">
+                    <div className="bg-slate-900 border border-slate-800 p-4 rounded-sm">
                        <span className="text-[9px] text-slate-500 uppercase font-black">{t('swarm.iot_health')}</span>
-                       <p className="text-lg font-black text-emerald-500">{t('report.predictive_accuracy')}</p>
+                       <p className="text-lg font-black text-slate-300">{t('report.predictive_accuracy')}</p>
                        <p className="text-[8px] text-slate-600 mt-1 uppercase">{t('swarm.vibration_signatures')}</p>
                     </div>
-                    <div className="bg-slate-900 border border-slate-800 p-4 rounded-xl">
+                    <div className="bg-slate-900 border border-slate-800 p-4 rounded-sm">
                        <span className="text-[9px] text-slate-500 uppercase font-black">{t('swarm.demand_prediction')}</span>
                        <p className="text-lg font-black text-cyan-500">{t('report.demand_gain')}</p>
                        <p className="text-[8px] text-slate-600 mt-1 uppercase">{t('swarm.weather_social')}</p>
@@ -131,17 +131,17 @@ export function StrategicReportView() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mt-8">
            <div className="space-y-6">
               <div className="flex items-center gap-4 mb-4">
-                 <div className="w-12 h-12 bg-emerald-500/10 rounded-xl flex items-center justify-center border border-emerald-500/20">
-                    <Cpu className="w-6 h-6 text-emerald-500" />
+                 <div className="w-12 h-12 bg-slate-800 rounded-sm flex items-center justify-center border border-slate-700">
+                    <Cpu className="w-6 h-6 text-slate-300" />
                  </div>
                  <h3 className="text-lg font-black text-white uppercase tracking-tight">{t('report.digital_twin_title')}</h3>
               </div>
               <p className="text-xs text-slate-400 leading-relaxed">
                  {t('report.digital_twin_desc')}
               </p>
-              <div className={`p-6 bg-emerald-500/5 ${isRtl ? 'border-r-4' : 'border-l-4'} border-emerald-500 rounded-xl`}>
+              <div className={`p-6 bg-slate-800 ${isRtl ? 'border-r-4' : 'border-l-4'} border-slate-700 rounded-sm`}>
                  <p className="text-2xl font-black text-white mb-1">{t('report.unilever_savings')}</p>
-                 <p className="text-[10px] text-emerald-500 font-black uppercase tracking-widest mb-4">{t('report.unilever_label')}</p>
+                 <p className="text-[10px] text-slate-300 font-black uppercase tracking-widest mb-4">{t('report.unilever_label')}</p>
                  <p className="text-[10px] text-slate-400 leading-tight">
                     {t('report.unilever_desc')}
                  </p>
@@ -150,7 +150,7 @@ export function StrategicReportView() {
            
            <div className="space-y-6">
               <div className="flex items-center gap-4 mb-4">
-                 <div className="w-12 h-12 bg-amber-500/10 rounded-xl flex items-center justify-center border border-amber-500/20">
+                 <div className="w-12 h-12 bg-amber-500/10 rounded-sm flex items-center justify-center border border-amber-500/20">
                     <Factory className="w-6 h-6 text-amber-500" />
                  </div>
                  <h3 className="text-lg font-black text-white uppercase tracking-tight">{t('report.robotics_title')}</h3>
@@ -159,12 +159,12 @@ export function StrategicReportView() {
                  {t('report.robotics_desc')}
               </p>
               <div className="grid grid-cols-2 gap-4">
-                 <div className="p-4 bg-slate-900 border border-slate-800 rounded-xl">
+                 <div className="p-4 bg-slate-900 border border-slate-800 rounded-sm">
                     <p className="text-xl font-black text-amber-500 mb-1">{t('report.ups_savings')}</p>
                     <p className="text-[8px] text-slate-500 uppercase font-black">{t('report.ups_label')}</p>
                     <div className="mt-2 text-[9px] text-slate-400">{t('report.ups_desc')}</div>
                  </div>
-                 <div className="p-4 bg-slate-900 border border-slate-800 rounded-xl">
+                 <div className="p-4 bg-slate-900 border border-slate-800 rounded-sm">
                     <p className="text-xl font-black text-white mb-1">{t('report.defect_rate')}</p>
                     <p className="text-[8px] text-slate-500 uppercase font-black">{t('report.defect_label')}</p>
                     <div className="mt-2 text-[9px] text-slate-400">{t('report.defect_desc')}</div>
@@ -180,7 +180,7 @@ export function StrategicReportView() {
     <div className="w-full h-full bg-slate-950 flex flex-col font-sans select-none overflow-hidden relative" dir={isRtl ? 'rtl' : 'ltr'}>
       
       {/* Cinematic Sidebar Accent */}
-      <div className={`absolute ${isRtl ? 'right-0' : 'left-0'} top-0 w-1 h-full bg-indigo-500/50 shadow-[0_0_20px_#6366f1]`} />
+      <div className={`absolute ${isRtl ? 'right-0' : 'left-0'} top-0 w-1 h-full bg-indigo-500/50 `} />
 
       {/* Header Bar */}
       <div className="p-10 pb-0 flex justify-between items-start z-10">
@@ -197,7 +197,7 @@ export function StrategicReportView() {
          </div>
          <div className="flex items-center gap-2">
             <span className="text-[10px] text-slate-700 font-black">{t('report.header_remark')}</span>
-            <div className="w-2 h-2 rounded-full bg-indigo-500 animate-pulse" />
+            <div className="w-2 h-2 rounded-sm bg-indigo-500" />
          </div>
       </div>
 
@@ -221,7 +221,7 @@ export function StrategicReportView() {
          <div className="flex items-center gap-4">
             <button 
               onClick={() => setCurrentSlide(prev => Math.max(0, prev - 1))}
-              className="p-3 rounded-full border border-slate-800 text-slate-500 hover:text-white hover:border-indigo-500/50 transition-all"
+              className="p-3 rounded-sm border border-slate-800 text-slate-500 hover:text-white hover:border-indigo-500/50 transition-all"
             >
                <ChevronLeft className={`w-5 h-5 ${isRtl ? 'rotate-180' : ''}`} />
             </button>
@@ -229,13 +229,13 @@ export function StrategicReportView() {
                {slides.map((_, i) => (
                   <div 
                     key={i} 
-                    className={`h-1 rounded-full transition-all ${currentSlide === i ? 'w-8 bg-indigo-500' : 'w-2 bg-slate-800'}`} 
+                    className={`h-1 rounded-sm transition-all ${currentSlide === i ? 'w-8 bg-indigo-500' : 'w-2 bg-slate-800'}`} 
                   />
                ))}
             </div>
             <button 
               onClick={() => setCurrentSlide(prev => Math.min(slides.length - 1, prev + 1))}
-              className="p-3 rounded-full border border-slate-800 text-slate-500 hover:text-white hover:border-indigo-500/50 transition-all"
+              className="p-3 rounded-sm border border-slate-800 text-slate-500 hover:text-white hover:border-indigo-500/50 transition-all"
             >
                <ChevronRight className={`w-5 h-5 ${isRtl ? 'rotate-180' : ''}`} />
             </button>

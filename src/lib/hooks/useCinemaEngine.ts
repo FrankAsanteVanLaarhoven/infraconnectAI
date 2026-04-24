@@ -1,4 +1,4 @@
-import { useAnimation, AnimationControls } from "framer-motion";
+import { useAnimation } from "framer-motion";
 
 /**
  * Mappings of Backend Events to specific UI Action Sequences

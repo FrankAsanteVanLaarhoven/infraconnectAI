@@ -10,12 +10,12 @@ import type { MemoryNodeProjection } from '@/lib/projections/memory'
 const STRATUM_COLOR: Record<string, string> = {
   L0: 'text-gray-400 border-gray-600',
   L1: 'text-blue-400 border-blue-600',
-  L2: 'text-green-400 border-green-600',
+  L2: 'text-slate-300 border-slate-700',
 }
 const STATUS_COLOR: Record<string, string> = {
   scratch:  'text-gray-500',
   wiki:     'text-blue-400',
-  canon:    'text-green-400',
+  canon:    'text-slate-300',
   archived: 'text-gray-600',
 }
 
@@ -41,7 +41,7 @@ function NodeRow({
   }
 
   return (
-    <div className="group flex items-start gap-2 p-2 rounded-lg hover:bg-white/3 transition-colors border border-transparent hover:border-white/8">
+    <div className="group flex items-start gap-2 p-2 rounded-sm hover:bg-white/3 transition-colors border border-transparent hover:border-white/8">
       {/* Stratum badge */}
       <span className={`text-xs font-mono px-1.5 py-0.5 rounded border mt-0.5 shrink-0 ${STRATUM_COLOR[node.stratum]}`}>
         {node.stratum}
@@ -171,9 +171,7 @@ export function MemoryExplorer() {
           value={q}
           onChange={e => handleSearch(e.target.value)}
           placeholder="BM25 + semantic search..."
-          className="w-full pl-7 pr-3 py-1.5 rounded-lg bg-white/3 border border-white/10
-                     text-xs font-mono text-gray-300 placeholder:text-gray-600
-                     focus:outline-none focus:border-blue-500/40 transition-colors"
+          className="w-full pl-7 pr-3 py-1.5 rounded-sm bg-white/3 border border-white/10 text-xs font-mono text-gray-300 placeholder:text-gray-600 focus:outline-none focus:border-blue-500/40 transition-colors"
         />
       </div>
 

@@ -120,7 +120,7 @@ export function TacticalSettingsBar({ onReset }: { onReset?: () => void }) {
       <div className="flex flex-col gap-4 relative">
          <div className="flex items-center justify-between px-2">
             <div className="flex items-center gap-3">
-               <div className="w-1 h-3 bg-cyan-500 shadow-[0_0_10px_#22d3ee]" />
+               <div className="w-1 h-3 bg-cyan-500" />
                <span className="text-[11px] uppercase tracking-[0.4em] text-white font-black">{t('panel.command_center')}</span>
             </div>
             <span className={cn("text-[8px] font-black uppercase tracking-widest transition-colors", isSyncing ? "text-cyan-400" : "text-slate-700")}>
@@ -135,11 +135,11 @@ export function TacticalSettingsBar({ onReset }: { onReset?: () => void }) {
                   onClick={() => handleToggle(p.id)}
                   className="relative group outline-none"
                 >
-                   <GlassCard className="p-4 bg-white/[0.02] border-white/5 group-hover:bg-cyan-500/[0.03] group-hover:border-cyan-500/30 transition-all duration-300 flex flex-col items-center justify-center text-center gap-2 rounded-xl group-active:scale-95 overflow-hidden">
+                   <GlassCard className="p-4 bg-white/[0.02] border-white/5 group-hover:bg-cyan-500/[0.03] group-hover:border-cyan-500/30 transition-all duration-300 flex flex-col items-center justify-center text-center gap-2 rounded-sm group-active:scale-95 overflow-hidden">
                       {/* Internal corner markers */}
                       <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-white/10 group-hover:border-cyan-500/50" />
                       
-                      <div className="p-2.5 rounded-lg bg-slate-900/40 border border-white/5 group-hover:border-cyan-500/20 transition-all group-hover:shadow-[0_0_15px_rgba(34,211,238,0.1)]">
+                      <div className="p-2.5 rounded-sm bg-slate-900/40 border border-white/5 group-hover:border-cyan-500/20 transition-all group-hover:">
                         <p.icon className="w-4 h-4 text-cyan-500/60 group-hover:text-cyan-400 group-hover:scale-110 transition-all" />
                       </div>
                       
@@ -148,7 +148,7 @@ export function TacticalSettingsBar({ onReset }: { onReset?: () => void }) {
                               {p.label}
                          </div>
                          <div className="flex items-center justify-center gap-2">
-                             <div className="w-1 h-1 rounded-full bg-slate-800 group-hover:bg-cyan-500 animate-pulse" />
+                             <div className="w-1 h-1 rounded-sm bg-slate-800 group-hover:bg-cyan-500" />
                              <span className="text-[7px] text-slate-600 group-hover:text-cyan-600 font-bold uppercase tracking-tighter">
                                 {p.status}
                              </span>
@@ -168,31 +168,31 @@ export function TacticalSettingsBar({ onReset }: { onReset?: () => void }) {
          <button 
            onClick={handleArmToggle}
            className={cn(
-             "w-full p-4 rounded-2xl border transition-all duration-500 relative overflow-hidden group/arm",
+             "w-full p-4 rounded-none border transition-all duration-500 relative overflow-hidden group/arm",
              isArmed 
-               ? "bg-red-950/20 border-red-500/50 shadow-[0_0_30px_rgba(239,68,68,0.2)]" 
-               : "bg-emerald-950/10 border-emerald-500/30 hover:bg-emerald-500/10"
+               ? "bg-red-950/20 border-red-500/50 " 
+               : "bg-slate-800 border-slate-700 hover:bg-slate-800"
            )}
          >
             <div className="flex items-center justify-between relative z-10">
                <div className="flex items-center gap-3">
-                  <div className={cn("p-1.5 rounded-lg border", isArmed ? "bg-red-500/20 border-red-500/40" : "bg-emerald-500/20 border-emerald-500/40")}>
-                     <Crosshair className={cn("w-4 h-4", isArmed ? "text-red-500 animate-pulse" : "text-emerald-500")} />
+                  <div className={cn("p-1.5 rounded-sm border", isArmed ? "bg-red-500/20 border-red-500/40" : "bg-slate-800 border-slate-700")}>
+                     <Crosshair className={cn("w-4 h-4", isArmed ? "text-red-500 " : "text-slate-300")} />
                   </div>
                   <div className="text-left">
-                     <span className={cn("text-[10px] font-black uppercase tracking-[0.3em]", isArmed ? "text-red-500" : "text-emerald-500")}>
+                     <span className={cn("text-[10px] font-black uppercase tracking-[0.3em]", isArmed ? "text-red-500" : "text-slate-300")}>
                         {isArmed ? 'System Armed' : 'System Disarmed'}
                      </span>
                      <p className="text-[7px] text-slate-500 font-bold uppercase tracking-tighter">Autonomous Engagement Interlock</p>
                   </div>
                </div>
-               <div className={cn("w-2 h-2 rounded-full", isArmed ? "bg-red-500 shadow-[0_0_10px_#ef4444]" : "bg-emerald-900")} />
+               <div className={cn("w-2 h-2 rounded-sm", isArmed ? "bg-red-500 " : "bg-slate-800")} />
             </div>
          </button>
       </div>
 
       {/* 3. AI AGGRESSION (STRATEGIC MODULATOR) */}
-      <div className="flex flex-col bg-black/40 border border-white/5 p-5 rounded-2xl backdrop-blur-md shadow-2xl space-y-5">
+      <div className="flex flex-col bg-black/40 border border-white/5 p-5 rounded-none backdrop-blur-md shadow-2xl space-y-5">
          <div className="flex items-center justify-between mb-1">
             <div className="flex items-center gap-3">
                <Settings2 className="w-4 h-4 text-amber-500" />
@@ -219,12 +219,12 @@ export function TacticalSettingsBar({ onReset }: { onReset?: () => void }) {
       </div>
 
       {/* 3. INTERFACE OVERRIDE */}
-      <div className="flex flex-col bg-slate-900/10 border border-white/5 p-5 rounded-2xl backdrop-blur-md group/profile">
+      <div className="flex flex-col bg-slate-900/10 border border-white/5 p-5 rounded-none backdrop-blur-md group/profile">
          <div className="flex items-center gap-3 mb-5">
             <Cpu className="w-4 h-4 text-slate-600 group-hover/profile:text-cyan-400 transition-colors" />
             <span className="text-[10px] uppercase tracking-[0.3em] text-slate-500 group-hover/profile:text-slate-300 transition-colors">{t('panel.interface_profile')}</span>
          </div>
-         <div className="flex items-center justify-between text-[11px] bg-black/40 border border-white/5 p-3 rounded-xl hover:border-cyan-500/40 transition-all cursor-pointer">
+         <div className="flex items-center justify-between text-[11px] bg-black/40 border border-white/5 p-3 rounded-sm hover:border-cyan-500/40 transition-all cursor-pointer">
             <span className="text-slate-500 font-black uppercase tracking-widest">{t('panel.active_node')}</span>
             <div className="flex items-center gap-3 text-cyan-400 font-black tracking-tighter">
                <span className="uppercase">{activeLayout}</span>
@@ -236,7 +236,7 @@ export function TacticalSettingsBar({ onReset }: { onReset?: () => void }) {
       {/* 4. EMERGENCY HARDWARE RESET */}
       <button 
         onClick={onReset}
-        className="flex flex-col items-center justify-center bg-red-950/5 border border-red-900/20 p-6 rounded-2xl backdrop-blur-md hover:bg-red-900/10 hover:border-red-500/40 transition-all group/reset relative overflow-hidden"
+        className="flex flex-col items-center justify-center bg-red-950/5 border border-red-900/20 p-6 rounded-none backdrop-blur-md hover:bg-red-900/10 hover:border-red-500/40 transition-all group/reset relative overflow-hidden"
       >
          {/* Background Danger Pattern */}
          <div className="absolute inset-0 opacity-[0.03] group-hover/reset:opacity-[0.05] transition-opacity pointer-events-none"

@@ -30,12 +30,12 @@ export function ThemeToggle() {
         else if (current === 'light') /* cycle to system */ setTheme('system');
         else setTheme('dark');
       }}
-      className="relative flex items-center justify-center w-10 h-10 rounded-xl transition-all duration-300 text-muted-foreground hover:text-foreground hover:bg-foreground/5 focus:outline-none focus:ring-2 focus:ring-foreground/20 glass-subtle border border-border/10 shadow-sm"
+      className="relative flex items-center justify-center w-10 h-10 rounded-sm transition-all duration-300 text-muted-foreground hover:text-foreground hover:bg-foreground/5 focus:outline-none focus:ring-2 focus:ring-foreground/20 glass-subtle border border-border/10 shadow-sm"
       title={`Current theme: ${current}. Click to change.`}
       aria-label="Toggle theme"
     >
       {current === 'dark' ? (
-        <Moon className="w-4 h-4 text-emerald-400" />
+        <Moon className="w-4 h-4 text-slate-300" />
       ) : current === 'light' ? (
         <Sun className="w-4 h-4 text-orange-400" />
       ) : (

@@ -4,10 +4,11 @@ import { calculateLeadROI } from "@/lib/revenue/roiEngine";
 
 export async function GET(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { id } = params;
+    const { id } = await params;
+
 
     const lead = await db.lead.findUnique({
       where: { id }

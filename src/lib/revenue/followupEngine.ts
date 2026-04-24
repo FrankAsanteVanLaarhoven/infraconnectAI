@@ -24,7 +24,7 @@ export async function runFollowupCycle() {
     take: 10 // Limit per cycle for safety
   });
 
-  const results = [];
+  const results: any[] = [];
 
   for (const lead of targetLeads) {
     try {

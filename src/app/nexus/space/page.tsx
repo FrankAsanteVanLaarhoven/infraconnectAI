@@ -38,13 +38,13 @@ export default function SpacePage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#020202] text-slate-300 font-mono flex flex-col overflow-hidden selection:bg-cyan-500/30">
+    <div className="min-h-full bg-[#020202] text-slate-300 font-mono flex flex-col overflow-hidden selection:bg-cyan-500/30">
        
        {/* Space Header */}
        <header className="h-20 border-b border-white/5 bg-white/[0.02] flex items-center justify-between px-8 relative z-50">
           <div className="flex items-center gap-6">
              <div className="flex items-center gap-3">
-                <div className="p-2 bg-indigo-500/10 border border-indigo-500/30 rounded-lg shadow-[0_0_20px_rgba(99,102,241,0.1)]">
+                <div className="p-2 bg-indigo-500/10 border border-indigo-500/30 rounded-sm">
                    <Satellite className="w-5 h-5 text-indigo-400" />
                 </div>
                 <div>
@@ -69,8 +69,8 @@ export default function SpacePage() {
              <button 
                onClick={triggerSweep}
                disabled={scanning}
-               className={`px-6 py-2 rounded-xl text-[9px] font-black uppercase tracking-widest transition-all flex items-center gap-3 ${
-                  scanning ? 'bg-indigo-500/20 text-indigo-400 animate-pulse' : 'bg-indigo-600 text-black hover:bg-indigo-500 shadow-[0_0_15px_#6366f1]'
+               className={`px-6 py-2 rounded-sm text-[9px] font-black uppercase tracking-widest transition-all flex items-center gap-3 ${
+                  scanning ? 'bg-indigo-500/20 text-indigo-400 ' : 'bg-indigo-600 text-black hover:bg-indigo-500 '
                }`}
              >
                 <Radar className={`w-3.5 h-3.5 ${scanning ? 'animate-spin' : ''}`} />
@@ -94,13 +94,13 @@ export default function SpacePage() {
                    
                    {/* Abstract Globe Grid */}
                    <div className="relative w-[500px] h-[500px]">
-                      <div className="absolute inset-0 border border-indigo-500/10 rounded-full animate-[spin_20s_linear_infinite]" />
-                      <div className="absolute inset-0 border border-indigo-500/5 rounded-full scale-110 animate-[spin_30s_linear_infinite_reverse]" />
+                      <div className="absolute inset-0 border border-indigo-500/10 rounded-sm animate-[spin_20s_linear_infinite]" />
+                      <div className="absolute inset-0 border border-indigo-500/5 rounded-sm scale-110 animate-[spin_30s_linear_infinite_reverse]" />
                       <Globe className="absolute inset-0 m-auto w-32 h-32 text-indigo-500/20 group-hover:text-indigo-500/40 transition-all duration-1000" />
                       
                       {/* Detection Rings */}
                       <div className="absolute inset-0 flex items-center justify-center">
-                         <div className="w-80 h-80 border border-indigo-500/20 rounded-full animate-ping opacity-20" />
+                         <div className="w-80 h-80 border border-indigo-500/20 rounded-sm animate-ping opacity-20" />
                       </div>
 
                       {/* Active Signals */}
@@ -111,8 +111,8 @@ export default function SpacePage() {
                            className="absolute flex flex-col items-center gap-2 cursor-pointer group/node"
                            onClick={() => setActiveSignal(s)}
                          >
-                            <div className={`w-3 h-3 rounded-full transition-all ${
-                               s.isAnomaly ? 'bg-amber-500 animate-pulse' : 'bg-indigo-500 group-hover/node:scale-150'
+                            <div className={`w-3 h-3 rounded-sm transition-all ${
+                               s.isAnomaly ? 'bg-amber-500 ' : 'bg-indigo-500 group-hover/node:scale-150'
                             }`} />
                             <div className="hidden group-hover/node:block absolute top-full mt-2 px-2 py-1 bg-black/80 border border-indigo-500/30 rounded text-[7px] font-black text-white whitespace-nowrap uppercase">
                                {s.target}
@@ -129,13 +129,13 @@ export default function SpacePage() {
                             animate={{ top: '100%' }}
                             exit={{ opacity: 0 }}
                             transition={{ duration: 2, ease: 'linear' }}
-                            className="absolute left-0 right-0 h-1 bg-indigo-500 shadow-[0_0_20px_#6366f1] blur-sm z-30"
+                            className="absolute left-0 right-0 h-1 bg-indigo-500 blur-sm z-30"
                          />
                       )}
                    </AnimatePresence>
 
                    {/* Visual Data Overlays */}
-                   <div className="absolute top-8 left-8 p-4 bg-white/[0.02] border border-white/5 rounded-2xl backdrop-blur-md">
+                   <div className="absolute top-8 left-8 p-4 bg-white/[0.02] border border-white/5 rounded-none backdrop-blur-md">
                       <div className="flex items-center gap-3 mb-2">
                          <Radar className="w-4 h-4 text-indigo-400" />
                          <span className="text-[10px] font-black text-white uppercase tracking-widest">Active Scan Hub</span>
@@ -148,7 +148,7 @@ export default function SpacePage() {
                    </div>
 
                    <div className="absolute bottom-8 right-8 flex flex-col items-end gap-3 text-right">
-                      <div className="bg-black/60 border border-white/10 px-4 py-2 rounded-xl backdrop-blur-md">
+                      <div className="bg-black/60 border border-white/10 px-4 py-2 rounded-sm backdrop-blur-md">
                          <span className="text-[8px] text-slate-600 block mb-1 font-black uppercase tracking-widest">Orbital Pass</span>
                          <span className="text-xs font-black text-white uppercase">IC-SAT-4 @ T-22:42</span>
                       </div>
@@ -163,7 +163,7 @@ export default function SpacePage() {
                 <div className="grid grid-cols-2 gap-6">
                    <div className="p-8 bg-white/[0.02] border border-white/5 rounded-3xl flex flex-col gap-6 group hover:border-white/10 transition-all">
                       <div className="flex items-center gap-4">
-                         <div className="p-3 bg-amber-500/10 border border-amber-500/20 rounded-xl">
+                         <div className="p-3 bg-amber-500/10 border border-amber-500/20 rounded-sm">
                             <Layers className="w-5 h-5 text-amber-500" />
                          </div>
                          <div>
@@ -178,7 +178,7 @@ export default function SpacePage() {
 
                    <div className="p-8 bg-indigo-500/5 border border-indigo-500/20 rounded-3xl flex flex-col gap-6 group hover:border-indigo-500/40 transition-all">
                       <div className="flex items-center gap-4">
-                         <div className="p-3 bg-indigo-500/10 border border-indigo-500/20 rounded-xl">
+                         <div className="p-3 bg-indigo-500/10 border border-indigo-500/20 rounded-sm">
                             <Crosshair className="w-5 h-5 text-indigo-400" />
                          </div>
                          <div>
@@ -200,7 +200,7 @@ export default function SpacePage() {
              {/* 1. Signals Feed */}
              <div className="p-6 border-b border-white/5 bg-white/[0.02] flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                   <Activity className="w-4 h-4 text-indigo-400 shadow-[0_0_10px_#6366f1]" />
+                   <Activity className="w-4 h-4 text-indigo-400" />
                    <h2 className="text-[11px] font-black text-white uppercase tracking-[0.2em]">Orbital Signals</h2>
                 </div>
                 <span className="text-[8px] text-slate-700 font-black uppercase tracking-widest">Live_SATA_NET</span>
@@ -211,7 +211,7 @@ export default function SpacePage() {
                    <div 
                       key={s.id} 
                       onClick={() => setActiveSignal(s)}
-                      className={`p-5 bg-white/[0.02] border transition-all rounded-2xl flex flex-col gap-3 group cursor-pointer ${
+                      className={`p-5 bg-white/[0.02] border transition-all rounded-none flex flex-col gap-3 group cursor-pointer ${
                          activeSignal?.id === s.id ? 'border-indigo-500/50 bg-indigo-500/5' : 'border-white/5 hover:border-white/10'
                       }`}
                    >
@@ -237,7 +237,7 @@ export default function SpacePage() {
                 
                 {activeSignal ? (
                    <div className="space-y-6">
-                      <div className="p-4 bg-indigo-500/5 border border-indigo-500/20 rounded-xl relative overflow-hidden">
+                      <div className="p-4 bg-indigo-500/5 border border-indigo-500/20 rounded-sm relative overflow-hidden">
                          <div className="absolute top-0 right-0 p-3 opacity-10">
                             <Layers className="w-12 h-12 text-indigo-500" />
                          </div>
@@ -247,13 +247,13 @@ export default function SpacePage() {
                       </div>
                       
                       <div className="grid grid-cols-2 gap-4">
-                         <div className="p-4 bg-white/[0.02] border border-white/5 rounded-xl">
+                         <div className="p-4 bg-white/[0.02] border border-white/5 rounded-sm">
                             <span className="text-[8px] text-slate-600 uppercase font-black block mb-2">Type</span>
                             <span className="text-[10px] font-black text-white uppercase">{activeSignal.type}</span>
                          </div>
-                         <div className="p-4 bg-white/[0.02] border border-white/5 rounded-xl">
+                         <div className="p-4 bg-white/[0.02] border border-white/5 rounded-sm">
                             <span className="text-[8px] text-slate-600 uppercase font-black block mb-2">Anomaly</span>
-                            <span className={`text-[10px] font-black uppercase ${activeSignal.isAnomaly ? 'text-amber-500' : 'text-emerald-500'}`}>
+                            <span className={`text-[10px] font-black uppercase ${activeSignal.isAnomaly ? 'text-amber-500' : 'text-slate-300'}`}>
                                {activeSignal.isAnomaly ? 'TRUE' : 'FALSE'}
                             </span>
                          </div>
@@ -261,7 +261,7 @@ export default function SpacePage() {
 
                       <button className="w-full py-4 bg-black border border-white/10 text-white text-[9px] font-black uppercase tracking-widest hover:border-indigo-500/50 hover:bg-indigo-500/10 transition-all group">
                          <div className="flex items-center justify-center gap-3">
-                            <Database className="w-3.5 h-3.5 text-indigo-500 group-hover:animate-pulse" />
+                            <Database className="w-3.5 h-3.5 text-indigo-500 group-hover:" />
                             Ingest into Autonomous Mission
                          </div>
                       </button>
@@ -281,7 +281,7 @@ export default function SpacePage() {
        {/* Orbital Status Footer */}
        <footer className="h-8 border-t border-white/5 bg-black flex items-center justify-between px-6 text-[8px] font-black text-slate-600 uppercase tracking-widest">
           <div className="flex items-center gap-4">
-             <span className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-indigo-500" /> SPACE_LAYER: CONNECTED</span>
+             <span className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-sm bg-indigo-500" /> SPACE_LAYER: CONNECTED</span>
              <span>SAR_PASSES: 14_DAILY</span>
              <span>GHOST_VESSELS_DETECTED: 12</span>
           </div>

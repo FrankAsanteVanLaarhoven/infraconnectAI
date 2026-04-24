@@ -18,7 +18,7 @@ export async function runCloserCycle(aggressionLevel: number = 0.5) {
     }
   });
 
-  const results = [];
+  const results: any[] = [];
 
   for (const lead of highValueLeads) {
     const darkVessels = vesselFleetEngine.detectDarkVessels().length;

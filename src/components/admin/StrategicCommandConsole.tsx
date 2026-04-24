@@ -56,13 +56,13 @@ export const StrategicCommandConsole = () => {
       {/* Console Header */}
       <div className="px-6 py-4 border-b border-white/[0.05] flex justify-between items-center bg-black/40">
         <div className="flex items-center gap-3">
-          <Activity className={`w-4 h-4 ${isUplinkActive ? 'text-amber-500 animate-pulse' : 'text-slate-500'}`} />
+          <Activity className={`w-4 h-4 ${isUplinkActive ? 'text-amber-500 ' : 'text-slate-500'}`} />
           <span className="text-[10px] font-black text-slate-400 tracking-[0.3em] uppercase">Tactical Uplink // ACTIVE</span>
         </div>
         <div className="flex items-center gap-4">
            <div className="flex items-center gap-2">
-              <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse shadow-[0_0_8px_rgba(34,197,94,0.5)]" />
-              <span className="text-[8px] text-green-500 font-black">ENCRYPTED</span>
+              <div className="w-1.5 h-1.5 rounded-sm bg-slate-800" />
+              <span className="text-[8px] text-slate-300 font-black">ENCRYPTED</span>
            </div>
         </div>
       </div>
@@ -80,8 +80,8 @@ export const StrategicCommandConsole = () => {
                 <div className="flex justify-between items-center mb-1">
                    <span className="text-[8px] text-slate-600 font-bold">{log.ts}</span>
                    <span className={`text-[8px] font-black px-2 py-0.5 rounded ${
-                     log.status === 'SUCCESS' ? 'text-green-500 bg-green-500/10' :
-                     log.status === 'PENDING' ? 'text-amber-500 bg-amber-500/10 animate-pulse' :
+                     log.status === 'SUCCESS' ? 'text-slate-300 bg-slate-800' :
+                     log.status === 'PENDING' ? 'text-amber-500 bg-amber-500/10 ' :
                      'text-cyan-500 bg-cyan-500/10'
                    }`}>
                      {log.status}
@@ -105,7 +105,7 @@ export const StrategicCommandConsole = () => {
               value={input}
               onChange={e => setInput(e.target.value)}
               onKeyDown={e => e.key === 'Enter' && handleSendCommand()}
-              className="w-full bg-white/[0.02] border border-white/5 rounded-2xl px-12 py-4 text-[11px] font-black text-white placeholder:text-slate-700 outline-none focus:border-cyan-500/30 transition-all uppercase tracking-widest shadow-inner"
+              className="w-full bg-white/[0.02] border border-white/5 rounded-none px-12 py-4 text-[11px] font-black text-white placeholder:text-slate-700 outline-none focus:border-cyan-500/30 transition-all uppercase tracking-widest shadow-inner"
             />
             <Send className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-700 group-hover:text-cyan-500 transition-colors" />
             <div className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center gap-2">
@@ -117,7 +117,7 @@ export const StrategicCommandConsole = () => {
          <div className="flex items-center justify-between mt-6">
             <div className="flex gap-4">
                {[Zap, ShieldCheck, Cpu].map((Icon, i) => (
-                 <button key={i} onMouseEnter={() => playHov()} className="p-2 border border-white/5 rounded-xl text-slate-600 hover:text-cyan-400 hover:bg-white/5 transition-all">
+                 <button key={i} onMouseEnter={() => playHov()} className="p-2 border border-white/5 rounded-sm text-slate-600 hover:text-cyan-400 hover:bg-white/5 transition-all">
                     <Icon className="w-3.5 h-3.5" />
                  </button>
                ))}

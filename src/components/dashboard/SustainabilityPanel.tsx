@@ -37,15 +37,15 @@ export function SustainabilityPanel() {
       
       {/* Decorative Natural Backdrop */}
       <div className="absolute inset-0 z-0 opacity-10 pointer-events-none flex items-center justify-center">
-        <div className="w-[300px] h-[300px] bg-emerald-600 rounded-full blur-3xl mix-blend-screen" />
+        <div className="w-[300px] h-[300px] bg-slate-800 rounded-sm blur-3xl mix-blend-screen" />
       </div>
 
       <div className="relative z-10 flex items-center justify-between p-4 border-b border-border/5">
         <h3 className="text-sm font-semibold tracking-wider flex items-center gap-2 uppercase text-foreground/80">
-          <Leaf className="w-4 h-4 text-emerald-500" />
+          <Leaf className="w-4 h-4 text-slate-300" />
           ESG Sustainability Audit
         </h3>
-        <div className="flex items-center gap-2 text-[10px] uppercase font-mono tracking-widest text-emerald-500/80 bg-emerald-500/10 px-2 py-1 rounded">
+        <div className="flex items-center gap-2 text-[10px] uppercase font-mono tracking-widest text-slate-300 bg-slate-800 px-2 py-1 rounded">
           {activeStandard}
         </div>
       </div>
@@ -54,8 +54,8 @@ export function SustainabilityPanel() {
         
         {/* Core Metrics Grid */}
         <div className="grid grid-cols-2 gap-3">
-          <div className="bg-foreground/5 border border-emerald-500/20 rounded-md p-3 flex flex-col justify-center items-center text-center gap-2 relative overflow-hidden">
-            <Zap className="w-4 h-4 text-emerald-400 absolute top-2 right-2 opacity-50" />
+          <div className="bg-foreground/5 border border-slate-700 rounded-md p-3 flex flex-col justify-center items-center text-center gap-2 relative overflow-hidden">
+            <Zap className="w-4 h-4 text-slate-300 absolute top-2 right-2 opacity-50" />
             <span className="text-[10px] uppercase tracking-widest text-muted-foreground/60 w-full text-left">Energy Draw</span>
             <span className="text-xl font-bold text-foreground w-full text-left">{totalJoules} <span className="text-xs font-normal text-muted-foreground">kJ</span></span>
           </div>
@@ -75,7 +75,7 @@ export function SustainabilityPanel() {
           </div>
           <div className="flex items-center gap-2">
             <Cpu className="w-5 h-5 text-orange-400" />
-            <span className="text-2xl font-bold text-emerald-500">{edgeSavings}%</span>
+            <span className="text-2xl font-bold text-slate-300">{edgeSavings}%</span>
           </div>
         </div>
       </div>

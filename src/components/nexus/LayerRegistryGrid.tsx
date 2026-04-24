@@ -50,17 +50,17 @@ export function LayerRegistryGrid() {
         glowStrong 
         scanline 
         padding="none" 
-        className="w-full h-full flex flex-col font-mono select-none shadow-[0_0_80px_rgba(34,211,238,0.05)] bg-black/40 border-white/5"
+        className="w-full h-full flex flex-col font-mono select-none bg-black/40 border-white/5"
     >
       {/* 1. CINEMATIC TELEMETRY HEADER */}
       <div className="grid grid-cols-3 border-b border-white/5 bg-black/20 backdrop-blur-md relative z-10">
          <div className="p-5 border-r border-white/5 flex flex-col gap-1 hover:bg-cyan-500/5 transition-colors group">
             <span className="text-[8px] text-slate-600 uppercase font-black tracking-widest group-hover:text-cyan-500 transition-colors">Vector_Filtered</span>
-            <span className="text-2xl font-black text-white tabular-nums tracking-tighter drop-shadow-[0_0_10px_rgba(255,255,255,0.05)]">10,317</span>
+            <span className="text-2xl font-black text-white tabular-nums tracking-tighter drop-">10,317</span>
          </div>
          <div className="p-5 border-r border-white/5 flex flex-col gap-1 hover:bg-cyan-500/5 transition-colors group">
             <span className="text-[8px] text-slate-600 uppercase font-black tracking-widest group-hover:text-cyan-500 transition-colors">Active_Nodes</span>
-            <span className="text-2xl font-black text-cyan-500 tabular-nums tracking-tighter drop-shadow-[0_0_15px_rgba(34,211,238,0.2)]">2,544</span>
+            <span className="text-2xl font-black text-cyan-500 tabular-nums tracking-tighter drop-">2,544</span>
          </div>
          <div className="p-5 flex flex-col gap-1 hover:bg-cyan-500/5 transition-colors group">
             <span className="text-[8px] text-slate-600 uppercase font-black tracking-widest group-hover:text-cyan-500 transition-colors">Loaded_Trips</span>
@@ -80,9 +80,9 @@ export function LayerRegistryGrid() {
                   <button 
                     key={p} 
                     className={cn(
-                        "px-4 py-2 rounded-xl border text-[9px] font-black transition-all duration-300 uppercase tracking-widest",
+                        "px-4 py-2 rounded-sm border text-[9px] font-black transition-all duration-300 uppercase tracking-widest",
                         p === 'FULL_QUARTER' 
-                            ? 'bg-cyan-500/10 border-cyan-500/40 text-cyan-400 shadow-[0_0_20px_rgba(34,211,238,0.15)]' 
+                            ? 'bg-cyan-500/10 border-cyan-500/40 text-cyan-400 ' 
                             : 'bg-white/[0.02] border-white/5 text-slate-500 hover:border-white/10 hover:text-white'
                     )}
                   >
@@ -119,7 +119,7 @@ export function LayerRegistryGrid() {
                        <GlassCard className={cn(
                            "p-4 border transition-all duration-300 flex flex-col items-center justify-center text-center gap-1.5 h-16 group-active:scale-95",
                            isActive 
-                                ? 'bg-cyan-500/10 border-cyan-500/40 shadow-[0_0_20px_rgba(34,211,238,0.1)]' 
+                                ? 'bg-cyan-500/10 border-cyan-500/40 ' 
                                 : 'bg-white/[0.02] border-white/5 hover:border-white/10'
                        )}>
                           <span className={cn(
@@ -133,7 +133,7 @@ export function LayerRegistryGrid() {
                                 initial={{ opacity: 0 }} animate={{ opacity: 1 }}
                                 className="flex items-center gap-2"
                             >
-                                <div className="w-1 h-1 rounded-full bg-cyan-400 animate-pulse" />
+                                <div className="w-1 h-1 rounded-sm bg-cyan-400" />
                                 <span className="text-[7px] text-cyan-500 font-bold uppercase tracking-widest">LIVE_STREAM</span>
                             </motion.div>
                           )}
@@ -170,7 +170,7 @@ export function LayerRegistryGrid() {
          </div>
          <div className="flex items-center gap-6 pr-2">
             <span className="text-[10px] text-white font-black tabular-nums tracking-tighter">124_VISIBLE</span>
-            <div className="w-2.5 h-2.5 rounded-full bg-cyan-500 shadow-[0_0_10px_#22d3ee] animate-pulse" />
+            <div className="w-2.5 h-2.5 rounded-sm bg-cyan-500" />
          </div>
       </div>
     </GlassPanel>

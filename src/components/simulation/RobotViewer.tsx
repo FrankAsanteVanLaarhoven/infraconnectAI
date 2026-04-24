@@ -37,7 +37,7 @@ function SimulationScene({ robotState }: { robotState: any }) {
              position={[robotState.translation.x, robotState.translation.y, robotState.translation.z]}
              rotation={[robotState.rotation.x, robotState.rotation.y, robotState.rotation.z]}
           >
-             <URDFRobot joints={robotState.joints} />
+             <URDFRobot {...{joints: robotState.joints} as any} />
 
              {/* Semantic LiDAR Point Cloud Wave Overlay */}
              <mesh ref={ringRef} rotation={[-Math.PI/2, 0, 0]} position={[0, 0.65, 0]}>
@@ -95,7 +95,7 @@ export function RobotViewer() {
   };
 
   return (
-    <div className="flex flex-col h-full w-full bg-[#030405] rounded-xl border border-white/10 overflow-hidden relative group">
+    <div className="flex flex-col h-full w-full bg-[#030405] rounded-sm border border-white/10 overflow-hidden relative group">
       
       {/* Primary WebGL Fiber Interactive Mount */}
       <div className="flex-1 w-full h-full relative z-0">
@@ -112,9 +112,9 @@ export function RobotViewer() {
             {status === "connecting" ? (
                 <Loader2 className="w-3 h-3 text-yellow-500 animate-spin" />
             ) : status === "connected" ? (
-                <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                <div className="w-2 h-2 rounded-sm bg-slate-800" />
             ) : (
-                <div className="w-2 h-2 rounded-full bg-red-500" />
+                <div className="w-2 h-2 rounded-sm bg-red-500" />
             )}
             <span className="text-[10px] font-mono font-bold text-white tracking-widest uppercase">
               OMNIVERSE ISAAC SIM // WEBGL PROJECTION
@@ -135,7 +135,7 @@ export function RobotViewer() {
          >
             <span className="text-white/40">INTERCONNECT PROTOCOL</span>
             <div className="flex gap-2 items-center">
-                <span className="text-emerald-500 animate-pulse">ACTIVE</span>
+                <span className="text-slate-300">ACTIVE</span>
                 {interconnectExpanded ? <ChevronUp className="w-3 h-3 text-white/40" /> : <ChevronDown className="w-3 h-3 text-white/40" />}
             </div>
          </div>
@@ -150,7 +150,7 @@ export function RobotViewer() {
       <div className="absolute top-12 right-4 flex items-center gap-2 z-10">
         <button 
            onClick={() => setShowAcademy(true)}
-           className="px-3 py-1 flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-mono text-[10px] rounded hover:bg-emerald-500/20 transition-colors pointer-events-auto"
+           className="px-3 py-1 flex items-center gap-2 bg-slate-800 border border-slate-700 text-slate-300 font-mono text-[10px] rounded hover:bg-slate-800 transition-colors pointer-events-auto"
         >
            <GraduationCap className="h-3 w-3" />
            AGENT LEARNING ACADEMY
@@ -174,7 +174,7 @@ export function RobotViewer() {
           {telemetryExpanded && (
               <div className="p-3 flex flex-col gap-1 text-cyan-400">
                   <div><span className="text-white/60">TARGET:</span> {YAHBOOM_M3_PROFILE.name}</div>
-                  <div><span className="text-white/60">BATTERY:</span> {YAHBOOM_M3_PROFILE.control.batteryCapacity} PACK [<span className="text-emerald-500 font-bold">100%</span>]</div>
+                  <div><span className="text-white/60">BATTERY:</span> {YAHBOOM_M3_PROFILE.control.batteryCapacity} PACK [<span className="text-slate-300 font-bold">100%</span>]</div>
                   <div><span className="text-white/60">LATENCY:</span> 2s (DECISION) | 4s (TASK LOAD)</div>
                   <div><span className="text-white/60">PIPELINE:</span> OpenCV / MediaPipe TRACKING [{YAHBOOM_M3_PROFILE.vision.rgbFps}fps]</div>
                   <div><span className="text-white/60">MODELS:</span> LLM / VOICE / VISUAL LLM [RAG ACTIVE]</div>
@@ -200,28 +200,28 @@ export function RobotViewer() {
       </div>
 
       {/* Universal Control Center Desktop Module */}
-      <div className="absolute bottom-4 right-4 bg-black/80 border border-white/10 rounded-xl p-4 shadow-2xl backdrop-blur-md z-10 pointer-events-auto flex flex-col gap-4 min-w-[320px]">
+      <div className="absolute bottom-4 right-4 bg-black/80 border border-white/10 rounded-sm p-4 shadow-2xl backdrop-blur-md z-10 pointer-events-auto flex flex-col gap-4 min-w-[320px]">
          <div className="flex justify-between items-center border-b border-white/10 pb-2">
             <h3 className="text-cyan-400 font-mono text-xs font-bold flex items-center gap-2">
-                <Activity className="w-3 h-3 text-emerald-400" /> REAL-TIME CONTROL CENTER
+                <Activity className="w-3 h-3 text-slate-300" /> REAL-TIME CONTROL CENTER
             </h3>
-            <span className="text-[9px] bg-red-500/20 text-red-500 px-2 py-0.5 rounded uppercase tracking-wider font-mono animate-pulse">Kinematics Priority</span>
+            <span className="text-[9px] bg-red-500/20 text-red-500 px-2 py-0.5 rounded uppercase tracking-wider font-mono">Kinematics Priority</span>
          </div>
 
          <div className="flex gap-6 relative">
             {/* D-Pad Base Movement Array */}
             <div className="flex flex-col items-center gap-1 justify-center flex-1 py-2">
-               <button onClick={() => drive('z', 0.2)} className="bg-white/5 hover:bg-emerald-500/20 p-2 rounded text-white/50 hover:text-emerald-400 transition-colors border border-white/5">
+               <button onClick={() => drive('z', 0.2)} className="bg-white/5 hover:bg-slate-800 p-2 rounded text-white/50 hover:text-slate-300 transition-colors border border-white/5">
                   <ArrowUp className="w-4 h-4" />
                </button>
                <div className="flex gap-1">
-                  <button onClick={() => drive('rot', 0.2)} className="bg-white/5 hover:bg-emerald-500/20 p-2 rounded text-white/50 hover:text-emerald-400 transition-colors border border-white/5">
+                  <button onClick={() => drive('rot', 0.2)} className="bg-white/5 hover:bg-slate-800 p-2 rounded text-white/50 hover:text-slate-300 transition-colors border border-white/5">
                      <ArrowLeft className="w-4 h-4" />
                   </button>
-                  <button onClick={() => drive('z', -0.2)} className="bg-white/5 hover:bg-emerald-500/20 p-2 rounded text-white/50 hover:text-emerald-400 transition-colors border border-white/5">
+                  <button onClick={() => drive('z', -0.2)} className="bg-white/5 hover:bg-slate-800 p-2 rounded text-white/50 hover:text-slate-300 transition-colors border border-white/5">
                      <ArrowDown className="w-4 h-4" />
                   </button>
-                  <button onClick={() => drive('rot', -0.2)} className="bg-white/5 hover:bg-emerald-500/20 p-2 rounded text-white/50 hover:text-emerald-400 transition-colors border border-white/5">
+                  <button onClick={() => drive('rot', -0.2)} className="bg-white/5 hover:bg-slate-800 p-2 rounded text-white/50 hover:text-slate-300 transition-colors border border-white/5">
                      <ArrowRight className="w-4 h-4" />
                   </button>
                </div>
@@ -234,19 +234,19 @@ export function RobotViewer() {
             <div className="flex-1 flex flex-col gap-2 relative">
                <div className="flex flex-col gap-1">
                   <div className="flex justify-between text-[9px] font-mono text-cyan-400"><span>ARM PAN</span> <span>{robotState.joints.base.toFixed(2)}rad</span></div>
-                  <input type="range" min={-Math.PI} max={Math.PI} step={0.1} value={robotState.joints.base} onChange={(e) => updateJoint('base', parseFloat(e.target.value))} className="w-full accent-cyan-500 h-1 bg-white/10 appearance-none rounded-full" />
+                  <input type="range" min={-Math.PI} max={Math.PI} step={0.1} value={robotState.joints.base} onChange={(e) => updateJoint('base', parseFloat(e.target.value))} className="w-full accent-cyan-500 h-1 bg-white/10 appearance-none rounded-sm" />
                </div>
                <div className="flex flex-col gap-1">
                   <div className="flex justify-between text-[9px] font-mono text-cyan-400"><span>SHOULDER</span> <span>{robotState.joints.link1.toFixed(2)}rad</span></div>
-                  <input type="range" min={-Math.PI/2} max={Math.PI/2} step={0.1} value={robotState.joints.link1} onChange={(e) => updateJoint('link1', parseFloat(e.target.value))} className="w-full accent-cyan-500 h-1 bg-white/10 appearance-none rounded-full" />
+                  <input type="range" min={-Math.PI/2} max={Math.PI/2} step={0.1} value={robotState.joints.link1} onChange={(e) => updateJoint('link1', parseFloat(e.target.value))} className="w-full accent-cyan-500 h-1 bg-white/10 appearance-none rounded-sm" />
                </div>
                <div className="flex flex-col gap-1">
                   <div className="flex justify-between text-[9px] font-mono text-cyan-400"><span>ELBOW</span> <span>{robotState.joints.link2.toFixed(2)}rad</span></div>
-                  <input type="range" min={-Math.PI/2} max={Math.PI/2} step={0.1} value={robotState.joints.link2} onChange={(e) => updateJoint('link2', parseFloat(e.target.value))} className="w-full accent-cyan-500 h-1 bg-white/10 appearance-none rounded-full" />
+                  <input type="range" min={-Math.PI/2} max={Math.PI/2} step={0.1} value={robotState.joints.link2} onChange={(e) => updateJoint('link2', parseFloat(e.target.value))} className="w-full accent-cyan-500 h-1 bg-white/10 appearance-none rounded-sm" />
                </div>
                <div className="flex flex-col gap-1">
                   <div className="flex justify-between text-[9px] font-mono text-cyan-400"><span>GRIPPER TILT</span> <span>{robotState.joints.link3.toFixed(2)}rad</span></div>
-                  <input type="range" min={-Math.PI/2} max={Math.PI/2} step={0.1} value={robotState.joints.link3} onChange={(e) => updateJoint('link3', parseFloat(e.target.value))} className="w-full accent-cyan-500 h-1 bg-white/10 appearance-none rounded-full" />
+                  <input type="range" min={-Math.PI/2} max={Math.PI/2} step={0.1} value={robotState.joints.link3} onChange={(e) => updateJoint('link3', parseFloat(e.target.value))} className="w-full accent-cyan-500 h-1 bg-white/10 appearance-none rounded-sm" />
                </div>
             </div>
          </div>
@@ -254,7 +254,7 @@ export function RobotViewer() {
          {/* Core Capabilities */}
          <div className="grid grid-cols-2 gap-2 mt-2 pt-3 border-t border-white/10">
             <button className="bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400 border border-indigo-500/30 text-[9px] font-mono p-1 rounded transition-colors text-center font-bold tracking-widest uppercase">Start SLAM</button>
-            <button className="bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-[9px] font-mono p-1 rounded transition-colors text-center font-bold tracking-widest uppercase">DCW2 FUSION</button>
+            <button className="bg-slate-800 hover:bg-slate-800 text-slate-300 border border-slate-700 text-[9px] font-mono p-1 rounded transition-colors text-center font-bold tracking-widest uppercase">DCW2 FUSION</button>
          </div>
       </div>
     </div>

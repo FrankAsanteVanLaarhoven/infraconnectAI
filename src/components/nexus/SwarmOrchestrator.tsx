@@ -63,13 +63,13 @@ export function SwarmOrchestrator() {
     return () => clearInterval(timer);
   }, []);
 
-  if (phase === 'BOARDROOM') {
+  if ((phase as any) === 'BOARDROOM') {
     return (
        <div className="w-full h-full relative" dir={isRtl ? 'rtl' : 'ltr'}>
           <StrategicReportView />
           <button 
             onClick={() => setPhase('RESEARCH')}
-            className={`absolute top-4 ${isRtl ? 'left-4' : 'right-4'} z-[70] px-4 py-1.5 bg-slate-900/80 border border-slate-700 text-[9px] text-slate-400 rounded-full hover:bg-slate-800 transition-all font-black uppercase tracking-widest`}
+            className={`absolute top-4 ${isRtl ? 'left-4' : 'right-4'} z-[70] px-4 py-1.5 bg-slate-900/80 border border-slate-700 text-[9px] text-slate-400 rounded-sm hover:bg-slate-800 transition-all font-black uppercase tracking-widest`}
           >
              {t('swarm.back_to_orchestrator')}
           </button>
@@ -89,11 +89,11 @@ export function SwarmOrchestrator() {
          <motion.div 
            initial={{ x: isRtl ? -50 : 50, opacity: 0 }}
            animate={{ x: 0, opacity: 1 }}
-           className={`w-96 backdrop-blur-xl p-6 rounded-2xl shadow-2xl transition-all duration-1000 ${risk > 75 ? 'bg-red-500/5 border-red-500/40 shadow-red-500/10' : 'bg-white/5 border border-white/10'}`}
+           className={`w-96 backdrop-blur-xl p-6 rounded-none shadow-2xl transition-all duration-1000 ${risk > 75 ? 'bg-red-500/5 border-red-500/40 shadow-red-500/10' : 'bg-white/5 border border-white/10'}`}
          >
             <div className="flex justify-between items-center mb-2">
                <h4 className="text-[10px] text-slate-500 uppercase tracking-[0.2em] font-black">{t('swarm.overall_plan')}</h4>
-               {risk > 75 && <span className="text-[8px] bg-red-500/20 text-red-500 px-2 py-0.5 rounded font-black animate-pulse uppercase">Defensive Posture Active</span>}
+               {risk > 75 && <span className="text-[8px] bg-red-500/20 text-red-500 px-2 py-0.5 rounded font-black uppercase">Defensive Posture Active</span>}
             </div>
             <p className="text-xs text-slate-200 leading-relaxed">
                {t('swarm.exec_desc')}
@@ -112,7 +112,7 @@ export function SwarmOrchestrator() {
                  initial={{ opacity: 0, scale: 0.9 }}
                  animate={{ opacity: 1, scale: 1 }}
                  transition={{ delay: i * 0.1 }}
-                 className={`relative w-48 p-3 rounded-lg border backdrop-blur-md transition-all ${agent.status === 'completed' ? 'bg-indigo-900/10 border-indigo-500/40 shadow-[0_0_20px_rgba(99,102,241,0.15)]' : 'bg-slate-900/40 border-slate-800'}`}
+                 className={`relative w-48 p-3 rounded-sm border backdrop-blur-md transition-all ${agent.status === 'completed' ? 'bg-indigo-900/10 border-indigo-500/40 ' : 'bg-slate-900/40 border-slate-800'}`}
                >
                   <div className="flex justify-between items-start mb-2">
                      <div className={`p-1.5 rounded-sm ${agent.status === 'completed' ? 'bg-indigo-500/20 text-indigo-400' : 'bg-slate-800 text-slate-500'}`}>
@@ -120,12 +120,12 @@ export function SwarmOrchestrator() {
                      </div>
                      <div className="flex items-center gap-2">
                         {agent.rlOptimized && (
-                           <div className="bg-purple-900/30 text-purple-400 border border-purple-500/30 px-1 py-0.5 rounded text-[6px] font-black tracking-widest uppercase animate-pulse flex items-center gap-1">
+                           <div className="bg-slate-900/50 text-slate-400 border border-slate-800 px-1 py-0.5 rounded text-[6px] font-black tracking-widest uppercase flex items-center gap-1">
                               <Zap className="w-2 h-2" /> RL
                            </div>
                         )}
                         {agent.selfHealing && (
-                           <div className="bg-emerald-900/30 text-emerald-400 border border-emerald-500/30 p-0.5 rounded text-[6px] animate-pulse">
+                           <div className="bg-slate-800 text-slate-300 border border-slate-700 p-0.5 rounded text-[6px]">
                               <ShieldPlus className="w-2 h-2" />
                            </div>
                         )}
@@ -156,10 +156,10 @@ export function SwarmOrchestrator() {
                   </div>
                   
                   {/* Progress Bar */}
-                  <div className="w-full h-1 bg-slate-800 rounded-full overflow-hidden mb-1">
+                  <div className="w-full h-1 bg-slate-800 rounded-sm overflow-hidden mb-1">
                      <motion.div 
                         animate={{ width: `${agent.progress}%` }}
-                        className={`h-full ${agent.status === 'completed' ? 'bg-indigo-500 shadow-[0_0_10px_#6366f1]' : 'bg-slate-600'}`}
+                        className={`h-full ${agent.status === 'completed' ? 'bg-indigo-500 ' : 'bg-slate-600'}`}
                      />
                   </div>
                   <div className="flex justify-between text-[7px] font-bold">
@@ -171,7 +171,7 @@ export function SwarmOrchestrator() {
 
                   {/* Connecting Line to Center (Calculated via logic if needed, here simplified) */}
                   {agent.status === 'completed' && (
-                     <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-4 h-4 text-indigo-500/40 animate-pulse">
+                     <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-4 h-4 text-indigo-500/40">
                         <ChevronRight className="rotate-90 w-full h-full" />
                      </div>
                   )}
@@ -206,12 +206,12 @@ export function SwarmOrchestrator() {
                     animate={{ scale: 1, opacity: 1 }}
                     className="flex flex-col items-center"
                   >
-                     <div className={`p-4 rounded-full border-2 transition-all duration-1000 ${phase === 'SYNTHESIS' ? 'border-indigo-500/50 bg-indigo-500/10 shadow-[0_0_30px_#6366f1]' : 'border-slate-800 bg-slate-900'}`}>
+                     <div className={`p-4 rounded-sm border-2 transition-all duration-1000 ${phase === 'SYNTHESIS' ? 'border-indigo-500/50 bg-indigo-500/10 ' : 'border-slate-800 bg-slate-900'}`}>
                         <Network className={`w-8 h-8 ${phase === 'SYNTHESIS' ? 'text-indigo-400 animate-spin-slow' : 'text-slate-600'}`} />
                      </div>
                      <span className="text-[10px] mt-2 font-black text-indigo-400 tracking-widest uppercase">{t('swarm.synthesize_results')}</span>
                      {phase === 'SYNTHESIS' && (
-                        <div className="mt-1 text-[8px] text-slate-500 animate-pulse uppercase">{t('swarm.correlating_datasets')}</div>
+                        <div className="mt-1 text-[8px] text-slate-500 uppercase">{t('swarm.correlating_datasets')}</div>
                      )}
                   </motion.div>
                )}
@@ -222,7 +222,7 @@ export function SwarmOrchestrator() {
                  initial={{ opacity: 0 }}
                  animate={{ opacity: 1 }}
                  onClick={() => setPhase('BOARDROOM')}
-                 className="px-6 py-2 bg-indigo-500 text-white rounded font-black text-[10px] tracking-widest hover:bg-indigo-400 transition-all shadow-[0_0_20px_rgba(99,102,241,0.4)]"
+                 className="px-6 py-2 bg-indigo-500 text-white rounded font-black text-[10px] tracking-widest hover:bg-indigo-400 transition-all"
                >
                   {t('swarm.initialize_boardroom')}
                </motion.button>
@@ -233,12 +233,12 @@ export function SwarmOrchestrator() {
          <div className="flex gap-4">
             {[t('swarm.agent_research'), t('swarm.system_synthesis'), t('swarm.boardroom_briefing')].map((p, idx) => (
                <div key={p} className="flex items-center gap-2">
-                  <div className={`w-2 h-2 rounded-full ${
-                     (idx === 0 && phase === 'RESEARCH') || (idx === 1 && phase === 'SYNTHESIS') || (idx === 2 && phase === 'BOARDROOM') 
-                     ? 'bg-indigo-500 animate-pulse' : 'bg-slate-800'
+                  <div className={`w-2 h-2 rounded-sm ${
+                     (idx === 0 && phase === 'RESEARCH') || (idx === 1 && phase === 'SYNTHESIS') || (idx === 2 && (phase as any) === 'BOARDROOM') 
+                     ? 'bg-indigo-500 ' : 'bg-slate-800'
                   }`} />
                   <span className={`text-[8px] font-black tracking-widest uppercase ${
-                     (idx === 0 && phase === 'RESEARCH') || (idx === 1 && phase === 'SYNTHESIS') || (idx === 2 && phase === 'BOARDROOM') 
+                     (idx === 0 && phase === 'RESEARCH') || (idx === 1 && phase === 'SYNTHESIS') || (idx === 2 && (phase as any) === 'BOARDROOM') 
                      ? 'text-white' : 'text-slate-600'
                   }`}>
                      {p}

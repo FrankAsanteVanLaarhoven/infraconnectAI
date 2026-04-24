@@ -2,6 +2,7 @@
  * InfraConnect - Edge Agent (GitOps Pull Loop)
  * Run on Jetson / Local Node to simulate real sync.
  */
+/* eslint-disable @typescript-eslint/no-require-imports */
 const fetch = require("node-fetch");
 const { exec } = require("child_process");
 const os = require("os");

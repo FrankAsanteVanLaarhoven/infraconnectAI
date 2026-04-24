@@ -40,8 +40,8 @@ export default function TrustPanel({ isEmbedded = false }: { isEmbedded?: boolea
   return (
     <div className={
       isEmbedded 
-      ? "relative w-full h-auto min-h-[300px] max-h-[500px] bg-[#050505]/95 backdrop-blur-xl border border-slate-800 rounded-2xl shadow-2xl flex flex-col font-mono animate-in slide-in-from-bottom duration-500 overflow-hidden" 
-      : "fixed right-6 top-32 w-[340px] h-auto max-h-[500px] z-[9900] bg-[#050505]/95 backdrop-blur-xl border border-slate-800 rounded-2xl shadow-2xl flex flex-col font-mono animate-in slide-in-from-right duration-500 overflow-hidden"
+      ? "relative w-full h-auto min-h-[300px] max-h-[500px] bg-[#050505]/95 backdrop-blur-xl border border-slate-800 rounded-none shadow-2xl flex flex-col font-mono animate-in slide-in-from-bottom duration-500 overflow-hidden" 
+      : "fixed right-6 top-32 w-[340px] h-auto max-h-[500px] z-[9900] bg-[#050505]/95 backdrop-blur-xl border border-slate-800 rounded-none shadow-2xl flex flex-col font-mono animate-in slide-in-from-right duration-500 overflow-hidden"
     }>
 
       {/* Header */}
@@ -50,8 +50,8 @@ export default function TrustPanel({ isEmbedded = false }: { isEmbedded?: boolea
           Trust Panel
           <Lock className="w-3 h-3 text-slate-500" />
         </div>
-        <div className={`text-[10px] mt-1.5 flex items-center gap-1.5 uppercase tracking-wider font-bold ${verified ? 'text-green-400' : 'text-slate-500 animate-pulse'}`}>
-          <div className={`w-1.5 h-1.5 rounded-full ${verified ? 'bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.8)]' : 'bg-slate-500'}`} />
+        <div className={`text-[10px] mt-1.5 flex items-center gap-1.5 uppercase tracking-wider font-bold ${verified ? 'text-slate-300' : 'text-slate-500 '}`}>
+          <div className={`w-1.5 h-1.5 rounded-sm ${verified ? 'bg-slate-800 ' : 'bg-slate-500'}`} />
           {verified ? "✔ Verified" : "Verification Pending..."}
         </div>
       </div>
@@ -87,7 +87,7 @@ export default function TrustPanel({ isEmbedded = false }: { isEmbedded?: boolea
             {/* Animated Confidence Bar */}
             <div className="w-full h-1 bg-slate-900 rounded mt-2 overflow-hidden border border-slate-800">
               <div
-                className="h-full bg-blue-500 transition-all duration-1000 ease-out shadow-[0_0_8px_rgba(59,130,246,0.8)]"
+                className="h-full bg-blue-500 transition-all duration-1000 ease-out"
                 style={{ width: `${decision.confidence * 100}%` }}
               />
             </div>
@@ -103,9 +103,9 @@ export default function TrustPanel({ isEmbedded = false }: { isEmbedded?: boolea
         
         <div className="space-y-2">
           {logs.map((log, i) => (
-            <div key={i} className="text-[10px] text-slate-400 bg-slate-900/50 border border-slate-800/80 p-2 rounded-lg animate-in slide-in-from-left-2 duration-300">
+            <div key={i} className="text-[10px] text-slate-400 bg-slate-900/50 border border-slate-800/80 p-2 rounded-sm animate-in slide-in-from-left-2 duration-300">
               <div className="text-slate-200 font-bold mb-1">{log.action}</div>
-              <div className="text-green-500/70">{new Date(log.timestamp).toLocaleTimeString()}</div>
+              <div className="text-slate-300">{new Date(log.timestamp).toLocaleTimeString()}</div>
             </div>
           ))}
           {logs.length === 0 && (
@@ -118,7 +118,7 @@ export default function TrustPanel({ isEmbedded = false }: { isEmbedded?: boolea
       <div className="p-4 border-t border-slate-800 bg-slate-950/40">
         <div className="text-[10px] uppercase text-slate-500 mb-1 font-bold tracking-widest">Cryptographic Layer</div>
         
-        <div className={`text-xs font-bold uppercase tracking-widest flex items-center gap-2 ${verified ? 'text-green-400' : 'text-slate-500'}`}>
+        <div className={`text-xs font-bold uppercase tracking-widest flex items-center gap-2 ${verified ? 'text-slate-300' : 'text-slate-500'}`}>
           <ShieldCheck className="w-4 h-4" />
           {verified ? "Hash Validated" : "Pending Origin Check"}
         </div>

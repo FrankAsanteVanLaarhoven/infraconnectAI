@@ -1,5 +1,7 @@
 "use client";
 
+import { signOut } from "next-auth/react";
+
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -13,6 +15,8 @@ import {
   SidebarGroupLabel,
   SidebarGroupContent,
   SidebarSeparator,
+  SidebarTrigger,
+  SidebarFooter,
 } from "@/components/ui/sidebar";
 import {
   LayoutDashboard,
@@ -25,7 +29,8 @@ import {
   Banknote,
   Network,
   Activity,
-  Bot
+  Bot,
+  LogOut
 } from "lucide-react";
 
 const navGroups = [
@@ -35,6 +40,7 @@ const navGroups = [
       { title: "Mission Dashboard", url: "/dashboard", icon: LayoutDashboard },
       { title: "Operator HUD", url: "/dashboard/operator", icon: Activity },
       { title: "Digital Twin (Sim)", url: "/simulation", icon: MonitorPlay },
+      { title: "VLA Workbench", url: "/vla-workbench", icon: Cpu },
     ]
   },
   {
@@ -65,44 +71,46 @@ const navGroups = [
 export function GlobalSidebar() {
   const pathname = usePathname();
 
-  // Hide the sidebar on cinematic presentation pages if needed
-  if (pathname === '/theatre' || pathname === '/live-demo' || pathname?.startsWith('/docs')) {
+  // Hide the sidebar on landing page and cinematic presentation pages
+  if (pathname === '/' || pathname === '/theatre' || pathname === '/live-demo' || pathname?.startsWith('/docs')) {
       return null;
   }
 
   return (
-    <Sidebar variant="inset" className="border-r border-white/5 bg-black/40 backdrop-blur-md">
-      <SidebarHeader className="pt-6 pb-2 px-4 flex flex-row items-center gap-3 border-b border-white/10 mb-2">
-        <div className="w-6 h-6 rounded-md bg-indigo-500/20 border border-indigo-500/50 flex items-center justify-center">
-            <Cpu className="w-3.5 h-3.5 text-indigo-400" />
+    <Sidebar variant="inset" collapsible="icon" className="border-r border-white/5 bg-black/40 backdrop-blur-md">
+      <SidebarHeader className="pt-6 pb-2 px-4 flex flex-row items-center justify-between border-b border-white/10 mb-2 group-data-[collapsible=icon]:px-2 group-data-[collapsible=icon]:flex-col">
+        <div className="flex items-center gap-3">
+          <div className="w-6 h-6 shrink-0 rounded-md bg-zinc-800 border border-zinc-700 flex items-center justify-center">
+              <Cpu className="w-3.5 h-3.5 text-white" />
+          </div>
+          <span className="font-mono text-xs uppercase tracking-widest text-white font-bold truncate group-data-[collapsible=icon]:hidden">
+            Sovereign Core
+          </span>
         </div>
-        <div className="flex flex-col">
-          <span className="text-[11px] font-mono font-bold tracking-widest text-white uppercase">InfraConnect</span>
-          <span className="text-[9px] font-mono text-slate-500 tracking-wider">Plexus Protocol</span>
-        </div>
+        <SidebarTrigger className="text-slate-400 hover:text-white" />
       </SidebarHeader>
 
       <SidebarContent>
         {navGroups.map((group, gIdx) => (
           <SidebarGroup key={group.label}>
-            <SidebarGroupLabel className="text-[10px] uppercase font-mono tracking-widest text-slate-500 mb-1">
+            <SidebarGroupLabel className="text-[10px] uppercase font-mono tracking-widest text-slate-500 mb-1 group-data-[collapsible=icon]:hidden">
               {group.label}
             </SidebarGroupLabel>
             <SidebarGroupContent>
               <SidebarMenu>
                 {group.items.map((item) => {
-                  const isActive = pathname === item.url;
+                  const isActive = pathname === item.url || pathname.startsWith(`${item.url}/`);
                   return (
                     <SidebarMenuItem key={item.title}>
                       <SidebarMenuButton 
                          asChild 
                          isActive={isActive} 
                          tooltip={item.title}
-                         className={`hover:bg-white/5 hover:text-white transition-all text-xs font-mono tracking-wide ${isActive ? 'bg-indigo-500/10 text-indigo-400 border border-indigo-500/20' : 'text-slate-400'}`}
+                         className={`hover:bg-white/5 hover:text-white transition-all text-xs font-mono tracking-wide ${isActive ? 'bg-zinc-800/50 text-white border border-zinc-700' : 'text-slate-400'}`}
                       >
                         <Link href={item.url} className="flex items-center gap-3">
-                          <item.icon className={`w-4 h-4 ${isActive ? 'text-indigo-400' : 'text-slate-500'}`} />
-                          <span>{item.title}</span>
+                          <item.icon className={`w-4 h-4 shrink-0 ${isActive ? 'text-white' : 'text-slate-500'}`} />
+                          <span className="group-data-[collapsible=icon]:hidden">{item.title}</span>
                         </Link>
                       </SidebarMenuButton>
                     </SidebarMenuItem>
@@ -114,6 +122,20 @@ export function GlobalSidebar() {
           </SidebarGroup>
         ))}
       </SidebarContent>
+      <SidebarFooter className="border-t border-white/5 p-4 group-data-[collapsible=icon]:p-2">
+         <button 
+           onClick={() => signOut({ callbackUrl: '/auth/login' })}
+           className="flex items-center gap-3 w-full p-2 rounded-md hover:bg-white/5 hover:text-white transition-all text-xs font-mono tracking-wide text-slate-400 group-data-[collapsible=icon]:justify-center"
+         >
+           <LogOut className="w-4 h-4 shrink-0" />
+           <span className="group-data-[collapsible=icon]:hidden">Sign Out</span>
+         </button>
+      </SidebarFooter>
     </Sidebar>
   );
+}
+
+export function GlobalSidebarTrigger() {
+  // We now embed the SidebarTrigger directly in the GlobalSidebar header.
+  return null;
 }

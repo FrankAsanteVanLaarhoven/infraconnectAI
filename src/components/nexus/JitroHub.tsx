@@ -22,7 +22,7 @@ export function JitroHub() {
     const activeGoal = STRATEGIC_OUTCOMES.find(g => g.id === selectedGoalId);
 
     return (
-        <div className="w-full h-full bg-[#020617] backdrop-blur-3xl border border-slate-800 rounded-2xl p-6 flex flex-col font-mono relative overflow-hidden group">
+        <div className="w-full h-full bg-[#020617] backdrop-blur-3xl border border-slate-800 rounded-none p-6 flex flex-col font-mono relative overflow-hidden group">
             {/* Header */}
             <div className="flex items-center justify-between mb-8 border-b border-slate-800/50 pb-4 relative z-10">
                 <div className="flex items-center gap-3">
@@ -34,7 +34,7 @@ export function JitroHub() {
                 </div>
                 <div className="flex gap-4">
                     <div className="flex items-center gap-2 px-2 py-1 bg-cyan-500/10 border border-cyan-500/20 rounded">
-                        <Activity className="w-3 h-3 text-cyan-400 animate-pulse" />
+                        <Activity className="w-3 h-3 text-cyan-400" />
                         <span className="text-[8px] text-cyan-400 font-black uppercase tracking-widest">Autonomous Goal-Seeking Active</span>
                     </div>
                 </div>
@@ -49,16 +49,16 @@ export function JitroHub() {
                         <motion.div 
                             key={goal.id}
                             onClick={() => setSelectedGoalId(goal.id)}
-                            className={`p-4 rounded-xl border cursor-pointer transition-all flex flex-col gap-3 ${
+                            className={`p-4 rounded-sm border cursor-pointer transition-all flex flex-col gap-3 ${
                                 selectedGoalId === goal.id 
-                                ? 'bg-cyan-500/10 border-cyan-500/50 shadow-[0_0_30px_rgba(34,211,238,0.1)]' 
+                                ? 'bg-cyan-500/10 border-cyan-500/50 ' 
                                 : 'bg-slate-900/40 border-slate-800/50 hover:bg-slate-900 border-indigo-500/10'
                             }`}
                         >
                             <div className="flex justify-between items-center">
                                 <span className="text-[10px] font-black text-white uppercase truncate">{goal.goal}</span>
                                 <div className={`px-1.5 py-0.5 rounded text-[7px] font-black uppercase ${
-                                    goal.status === 'ACHIEVED' ? 'bg-emerald-500/20 text-emerald-400' : 'bg-cyan-500/20 text-cyan-400'
+                                    goal.status === 'ACHIEVED' ? 'bg-slate-800 text-slate-300' : 'bg-cyan-500/20 text-cyan-400'
                                 }`}>
                                     {goal.status}
                                 </div>
@@ -68,7 +68,7 @@ export function JitroHub() {
                                     <span>{goal.kpi}</span>
                                     <span>{((goal.current / goal.target) * 100).toFixed(0)}%</span>
                                 </div>
-                                <div className="h-1 bg-slate-800 rounded-full overflow-hidden">
+                                <div className="h-1 bg-slate-800 rounded-sm overflow-hidden">
                                     <motion.div 
                                         animate={{ width: `${(goal.current / goal.target) * 100}%` }}
                                         className="h-full bg-cyan-500"
@@ -94,7 +94,7 @@ export function JitroHub() {
                                 className="flex-1 flex flex-col gap-6"
                             >
                                 {/* KPI Visualization */}
-                                <div className="bg-slate-900/50 border border-slate-800 rounded-2xl p-6 flex flex-col items-center justify-center relative overflow-hidden">
+                                <div className="bg-slate-900/50 border border-slate-800 rounded-none p-6 flex flex-col items-center justify-center relative overflow-hidden">
                                     <div className="flex flex-col items-center gap-2 z-10">
                                         <TrendingUp className="w-8 h-8 text-cyan-400 opacity-50 mb-2" />
                                         <span className="text-4xl font-black text-white tracking-widest">
@@ -118,7 +118,7 @@ export function JitroHub() {
                                 </div>
 
                                 {/* Autonomous Planning Log */}
-                                <div className="flex-1 p-6 bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden relative">
+                                <div className="flex-1 p-6 bg-slate-900 border border-slate-800 rounded-none overflow-hidden relative">
                                     <div className="flex items-center gap-2 mb-6 border-b border-slate-800 pb-4">
                                         <Network className="w-4 h-4 text-cyan-400" />
                                         <span className="text-[10px] text-white uppercase font-black tracking-widest">Jitro Execution Blueprint</span>
@@ -131,11 +131,11 @@ export function JitroHub() {
                                             { step: 'STABILIZING', desc: 'Calibrating long-horizon goal attainment...', done: false }
                                         ].map((item, i) => (
                                             <div key={i} className="flex items-start gap-4">
-                                                <div className={`mt-1 p-1 rounded-full ${item.done ? 'bg-emerald-500/20' : 'bg-slate-800'}`}>
-                                                    {item.done ? <CheckCircle2 className="w-3 h-3 text-emerald-400" /> : <div className="w-3 h-3" />}
+                                                <div className={`mt-1 p-1 rounded-sm ${item.done ? 'bg-slate-800' : 'bg-slate-800'}`}>
+                                                    {item.done ? <CheckCircle2 className="w-3 h-3 text-slate-300" /> : <div className="w-3 h-3" />}
                                                 </div>
                                                 <div className="flex flex-col">
-                                                    <span className={`text-[9px] font-black uppercase ${item.done ? 'text-slate-400' : 'text-cyan-400 animate-pulse'}`}>
+                                                    <span className={`text-[9px] font-black uppercase ${item.done ? 'text-slate-400' : 'text-cyan-400 '}`}>
                                                         {item.step}
                                                     </span>
                                                     <p className="text-[8px] text-slate-600 font-mono italic">{item.desc}</p>

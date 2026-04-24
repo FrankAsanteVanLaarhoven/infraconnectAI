@@ -66,7 +66,7 @@ export default function SecurityPortal() {
   };
 
   if (loading) return (
-    <div className="min-h-screen bg-black flex flex-col items-center justify-center font-mono text-green-500">
+    <div className="min-h-full bg-black flex flex-col items-center justify-center font-mono text-slate-300">
       <Activity className="w-8 h-8 animate-spin mb-4" />
       <p className="text-xs uppercase tracking-widest">{t('security.accessing')}</p>
     </div>
@@ -77,13 +77,13 @@ export default function SecurityPortal() {
   const subscription = data?.subscription;
 
   return (
-    <div className="min-h-screen bg-[#020202] text-slate-300 font-mono relative overflow-hidden p-8 pt-24">
+    <div className="min-h-full bg-[#020202] text-slate-300 font-mono relative overflow-hidden p-8 pt-24">
       <MatrixRain color="#1e1b4b" className="opacity-10" />
 
       {/* Header */}
       <div className="max-w-6xl mx-auto mb-12 relative z-10">
         <div className="flex items-center gap-4 mb-2">
-          <div className="p-3 bg-red-950/20 border border-red-500/30 rounded-lg">
+          <div className="p-3 bg-red-950/20 border border-red-500/30 rounded-sm">
             <Shield className="w-6 h-6 text-red-500" />
           </div>
           <div>
@@ -111,7 +111,7 @@ export default function SecurityPortal() {
              <InferenceMonitor />
           </div>
 
-          <div className="bg-slate-950/40 backdrop-blur-xl border border-slate-900 p-6 rounded-xl">
+          <div className="bg-slate-950/40 backdrop-blur-xl border border-slate-900 p-6 rounded-sm">
              <div className="flex items-center justify-between mb-8">
                 <div className="flex items-center gap-3">
                   <Smartphone className="w-5 h-5 text-blue-500" />
@@ -129,7 +129,7 @@ export default function SecurityPortal() {
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, scale: 0.95 }}
-                      className="group flex items-center justify-between p-4 bg-slate-900/20 border border-slate-800 hover:border-slate-700 rounded-lg transition-colors"
+                      className="group flex items-center justify-between p-4 bg-slate-900/20 border border-slate-800 hover:border-slate-700 rounded-sm transition-colors"
                     >
                       <div className="flex items-center gap-4">
                         <div className="p-2 bg-slate-800/50 rounded">
@@ -152,14 +152,14 @@ export default function SecurityPortal() {
                           disabled={deauthorizing === device.id}
                           className="p-2 text-slate-600 hover:text-red-500 hover:bg-red-500/10 rounded transition-all"
                         >
-                          <Trash2 className={`w-4 h-4 ${deauthorizing === device.id ? 'animate-pulse' : ''}`} />
+                          <Trash2 className={`w-4 h-4 ${deauthorizing === device.id ? '' : ''}`} />
                         </button>
                       </div>
                     </motion.div>
                   ))}
                 </AnimatePresence>
                 {devices.length === 0 && (
-                  <div className="py-12 text-center border-2 border-dashed border-slate-900 rounded-xl">
+                  <div className="py-12 text-center border-2 border-dashed border-slate-900 rounded-sm">
                     <Smartphone className="w-8 h-8 text-slate-800 mx-auto mb-2" />
                     <p className="text-xs text-slate-600 uppercase">{t('security.no_signatures')}</p>
                   </div>
@@ -167,7 +167,7 @@ export default function SecurityPortal() {
              </div>
           </div>
 
-          <div className="bg-amber-950/10 border border-amber-900/20 p-6 rounded-xl flex gap-4">
+          <div className="bg-amber-950/10 border border-amber-900/20 p-6 rounded-sm flex gap-4">
              <AlertTriangle className="w-6 h-6 text-amber-500 shrink-0" />
              <div>
                 <h3 className="text-sm font-bold text-amber-500 uppercase mb-1">{t('security.protocols_title')}</h3>
@@ -179,19 +179,19 @@ export default function SecurityPortal() {
         </div>
 
         {/* Security Logs Sidebar */}
-        <div className="bg-slate-950/40 backdrop-blur-xl border border-slate-900 flex flex-col rounded-xl overflow-hidden h-fit">
+        <div className="bg-slate-950/40 backdrop-blur-xl border border-slate-900 flex flex-col rounded-sm overflow-hidden h-fit">
            <div className="p-4 bg-red-950/10 border-b border-red-900/20 flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Terminal className="w-4 h-4 text-red-500" />
                 <h2 className="text-xs font-black text-red-500 uppercase">{t('security.intercept_logs')}</h2>
               </div>
-              <Activity className="w-3 h-3 text-red-900 animate-pulse" />
+              <Activity className="w-3 h-3 text-red-900" />
            </div>
            
            <div className="p-4 space-y-4 max-h-[600px] overflow-y-auto custom-scrollbar">
               {/* Cognitive Intercepts (Live AI Security) */}
               {aiData?.incidents?.map((incident: any) => (
-                <div key={incident.id} className="p-3 bg-indigo-950/20 border border-indigo-500/30 rounded-lg">
+                <div key={incident.id} className="p-3 bg-indigo-950/20 border border-indigo-500/30 rounded-sm">
                    <div className="flex items-center justify-between mb-2">
                       <span className="text-[8px] font-black px-1.5 py-0.5 rounded bg-indigo-500 text-white">
                         AI_{incident.type}
@@ -205,7 +205,7 @@ export default function SecurityPortal() {
 
               {/* Hardware Monitoring Logs */}
               {incidents.map((incident: any) => (
-                <div key={incident.id} className="p-3 bg-black/40 border border-red-900/20 rounded-lg">
+                <div key={incident.id} className="p-3 bg-black/40 border border-red-900/20 rounded-sm">
                    <div className="flex items-center justify-between mb-2">
                       <span className={`text-[8px] font-black px-1.5 py-0.5 rounded ${incident.severity === 'high' ? 'bg-red-500 text-white' : 'bg-slate-800 text-slate-400'}`}>
                         {incident.severity.toUpperCase()}
@@ -218,7 +218,7 @@ export default function SecurityPortal() {
               ))}
               {incidents.length === 0 && (
                 <div className="text-center py-8">
-                  <CheckCircle className="w-6 h-6 text-green-900 mx-auto mb-2" />
+                  <CheckCircle className="w-6 h-6 text-slate-300 mx-auto mb-2" />
                   <p className="text-[10px] text-slate-700 uppercase">{t('security.clear_environment')}</p>
                 </div>
               )}

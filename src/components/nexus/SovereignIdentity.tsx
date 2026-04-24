@@ -26,12 +26,12 @@ export function SovereignIdentity() {
     };
 
     return (
-        <div className="w-full h-full bg-[#020617]/90 backdrop-blur-3xl border border-blue-500/20 rounded-3xl p-8 flex flex-col font-mono relative overflow-hidden group shadow-[0_0_100px_rgba(59,130,246,0.1)]">
+        <div className="w-full h-full bg-[#020617]/90 backdrop-blur-3xl border border-blue-500/20 rounded-3xl p-8 flex flex-col font-mono relative overflow-hidden group">
             
             {/* Header */}
             <div className="flex items-center justify-between mb-8 pb-6 border-b border-white/5">
                 <div className="flex items-center gap-4">
-                    <div className="p-3 bg-blue-500/10 border border-blue-500/20 rounded-2xl">
+                    <div className="p-3 bg-blue-500/10 border border-blue-500/20 rounded-none">
                         <User className="w-6 h-6 text-blue-400" />
                     </div>
                     <div>
@@ -39,8 +39,8 @@ export function SovereignIdentity() {
                         <p className="text-[9px] text-slate-500 uppercase font-black tracking-widest mt-1">Operator Profile // Secure Hub</p>
                     </div>
                 </div>
-                <div className="px-4 py-2 bg-slate-900/60 border border-white/10 rounded-xl flex items-center gap-3">
-                    <ShieldCheck className="w-4 h-4 text-emerald-400" />
+                <div className="px-4 py-2 bg-slate-900/60 border border-white/10 rounded-sm flex items-center gap-3">
+                    <ShieldCheck className="w-4 h-4 text-slate-300" />
                     <span className="text-[10px] text-white font-black uppercase">Identity_Verified</span>
                 </div>
             </div>
@@ -50,14 +50,14 @@ export function SovereignIdentity() {
                 <div className="space-y-6">
                     <div className="flex flex-col gap-2">
                         <span className="text-[8px] text-slate-500 uppercase font-black tracking-widest">Operator Email</span>
-                        <div className="p-4 bg-slate-900/40 border border-white/5 rounded-2xl flex items-center gap-4 transition-all hover:border-blue-500/30">
+                        <div className="p-4 bg-slate-900/40 border border-white/5 rounded-none flex items-center gap-4 transition-all hover:border-blue-500/30">
                             <Mail className="w-4 h-4 text-blue-400" />
                             <span className="text-sm text-white font-medium">{SOVEREIGN_IDENTITY.email}</span>
                         </div>
                     </div>
                     <div className="flex flex-col gap-2">
                         <span className="text-[8px] text-slate-500 uppercase font-black tracking-widest">Mobile Substrate</span>
-                        <div className="p-4 bg-slate-900/40 border border-white/5 rounded-2xl flex items-center gap-4 transition-all hover:border-blue-500/30">
+                        <div className="p-4 bg-slate-900/40 border border-white/5 rounded-none flex items-center gap-4 transition-all hover:border-blue-500/30">
                             <Smartphone className="w-4 h-4 text-blue-400" />
                             <span className="text-sm text-white font-medium">{SOVEREIGN_IDENTITY.mobile}</span>
                         </div>
@@ -69,8 +69,8 @@ export function SovereignIdentity() {
                     <span className="text-[9px] text-slate-500 uppercase font-black border-b border-white/5 pb-2">Institutional Platform</span>
                     <div className="flex items-center justify-between">
                         <span className="text-xl font-black text-white">{SOVEREIGN_IDENTITY.preferredPlatform}</span>
-                        <div className="p-2 bg-emerald-500/10 rounded-lg">
-                            <Lock className="w-4 h-4 text-emerald-400" />
+                        <div className="p-2 bg-slate-800 rounded-sm">
+                            <Lock className="w-4 h-4 text-slate-300" />
                         </div>
                     </div>
                     <p className="text-[9px] text-slate-600 italic">Mirror Mode active. Direct API injection disabled for compliance sovereignty.</p>
@@ -89,14 +89,14 @@ export function SovereignIdentity() {
                     ].map((pref, i) => (
                         <div 
                             key={i}
-                            className="p-4 bg-slate-900/40 border border-white/5 rounded-2xl flex items-center justify-between group/pref hover:border-blue-500/20 transition-all cursor-pointer"
+                            className="p-4 bg-slate-900/40 border border-white/5 rounded-none flex items-center justify-between group/pref hover:border-blue-500/20 transition-all cursor-pointer"
                         >
                             <div className="flex items-center gap-3">
                                 <Bell className="w-3.5 h-3.5 text-slate-500 group-hover/pref:text-blue-400 transition-colors" />
                                 <span className="text-[10px] text-white font-black uppercase tracking-tight">{pref.label}</span>
                             </div>
-                            <div className={`w-8 h-4 rounded-full relative transition-all ${pref.value ? 'bg-blue-600' : 'bg-slate-700'}`}>
-                                <div className={`absolute top-1 w-2 h-2 bg-white rounded-full transition-all ${pref.value ? 'right-1' : 'left-1'}`} />
+                            <div className={`w-8 h-4 rounded-sm relative transition-all ${pref.value ? 'bg-blue-600' : 'bg-slate-700'}`}>
+                                <div className={`absolute top-1 w-2 h-2 bg-white rounded-sm transition-all ${pref.value ? 'right-1' : 'left-1'}`} />
                             </div>
                         </div>
                     ))}
@@ -112,9 +112,9 @@ export function SovereignIdentity() {
                 <button 
                     onClick={handleSave}
                     disabled={isSaving}
-                    className="bg-blue-600 hover:bg-blue-500 text-white text-[10px] font-black uppercase px-8 py-3 rounded-2xl flex items-center gap-3 transition-all shadow-[0_0_30px_rgba(37,99,235,0.2)] disabled:opacity-50"
+                    className="bg-blue-600 hover:bg-blue-500 text-white text-[10px] font-black uppercase px-8 py-3 rounded-none flex items-center gap-3 transition-all disabled:opacity-50"
                 >
-                    {isSaving ? <Activity className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
+                    {isSaving ? <span>saving</span> : <Save className="w-4 h-4" />}
                     {isSaving ? 'Synchronizing...' : 'Commit Changes'}
                 </button>
             </div>

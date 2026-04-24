@@ -51,7 +51,7 @@ const PANEL_SHORTCUTS = [
   { label: 'Search', desc: 'Hybrid semantic search', action: 'open_panel' as const, panel: 'search', icon: Search },
   { label: 'Activity', desc: 'Chronological event log', action: 'open_panel' as const, panel: 'activity', icon: Radio },
   { label: 'Agent Bus', desc: 'Real-time message bus', action: 'open_panel' as const, panel: 'agentbus', icon: Radio },
-  { label: 'Theatre', desc: 'Cinematic demo mode', action: 'theatre' as const, icon: MonitorPlay },
+  { label: 'Theatre', desc: 'Cinematic demo mode', action: 'navigate' as const, icon: MonitorPlay },
 ];
 
 // ── Waveform Bars Component ─────────────────────────────────────────────────
@@ -63,7 +63,7 @@ function WaveformBars() {
       {Array.from({ length: bars }).map((_, i) => (
         <motion.div
           key={i}
-          className="w-[3px] rounded-full bg-destructive"
+          className="w-[3px] rounded-sm bg-destructive"
           animate={{
             height: [6, 14, 8, 16, 10, 6],
           }}
@@ -501,7 +501,7 @@ export function IntentBar({ onIntent, isProcessing }: IntentBarProps) {
         <div className="max-w-5xl mx-auto px-3 sm:px-4 py-2.5 flex items-center gap-3">
           {/* ── Left: Branding ── */}
           <div className="hidden sm:flex items-center gap-2 shrink-0">
-            <Brain className="w-4 h-4 text-matrix animate-pulse" />
+            <Brain className="w-4 h-4 text-matrix" />
             <span className="text-premium text-[11px] text-gradient-matrix font-semibold select-none">
               InfraConnect
             </span>
@@ -511,7 +511,7 @@ export function IntentBar({ onIntent, isProcessing }: IntentBarProps) {
           <form onSubmit={handleSubmit} className="relative flex-1">
             <div
               className={cn(
-                'glass rounded-xl flex items-center gap-2 px-3 sm:px-4 h-11 transition-all duration-300',
+                'glass rounded-sm flex items-center gap-2 px-3 sm:px-4 h-11 transition-all duration-300',
                 'focus-within:glass-glow focus-within:border-matrix/30',
                 isRecording && 'ring-2 ring-destructive/40'
               )}
@@ -556,7 +556,7 @@ export function IntentBar({ onIntent, isProcessing }: IntentBarProps) {
                   animate={{ opacity: 1, y: 0, scaleY: 1 }}
                   exit={{ opacity: 0, y: -6, scaleY: 0.96 }}
                   transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-                  className="absolute top-full left-0 right-0 mt-2 glass-strong glass-glow-strong rounded-xl overflow-hidden z-50 origin-top"
+                  className="absolute top-full left-0 right-0 mt-2 glass-strong glass-glow-strong rounded-sm overflow-hidden z-50 origin-top"
                 >
                   {filteredSlashCommands.length > 0 ? (
                     <div className="py-1.5 max-h-72 overflow-y-auto">
@@ -636,7 +636,7 @@ export function IntentBar({ onIntent, isProcessing }: IntentBarProps) {
                 type="button"
                 onClick={toggleRecording}
                 className={cn(
-                  'shrink-0 flex items-center justify-center w-9 h-9 rounded-lg transition-all duration-300',
+                  'shrink-0 flex items-center justify-center w-9 h-9 rounded-sm transition-all duration-300',
                   isRecording
                     ? 'bg-destructive/20 text-destructive hover:bg-destructive/30'
                     : 'text-muted-foreground/60 hover:text-matrix hover:bg-matrix/10'
@@ -682,11 +682,11 @@ export function IntentBar({ onIntent, isProcessing }: IntentBarProps) {
                 );
               }}
               className={cn(
-                'shrink-0 flex items-center justify-center w-9 h-9 rounded-lg transition-all duration-300',
+                'shrink-0 flex items-center justify-center w-9 h-9 rounded-sm transition-all duration-300',
                 isTtsMuted
                   ? 'text-muted-foreground/40 hover:text-muted-foreground/60'
                   : isPlayingTts
-                    ? 'text-matrix animate-pulse'
+                    ? 'text-matrix '
                     : 'text-muted-foreground/60 hover:text-matrix hover:bg-matrix/10'
               )}
               title={isTtsMuted ? 'Unmute voice responses' : 'Mute voice responses'}
@@ -713,7 +713,7 @@ export function IntentBar({ onIntent, isProcessing }: IntentBarProps) {
               type="button"
               onClick={() => router.push('/theatre')}
               className={cn(
-                'hidden md:flex shrink-0 items-center justify-center w-9 h-9 rounded-lg transition-all duration-300',
+                'hidden md:flex shrink-0 items-center justify-center w-9 h-9 rounded-sm transition-all duration-300',
                 'text-muted-foreground/60 hover:text-amber-500 hover:bg-amber-500/10'
               )}
               title="Theatre Mode (Demo)"
@@ -732,7 +732,7 @@ export function IntentBar({ onIntent, isProcessing }: IntentBarProps) {
               }}
               className={cn(
                 'hidden sm:flex shrink-0 items-center justify-center gap-1',
-                'h-8 px-2 rounded-lg border border-glass-border',
+                'h-8 px-2 rounded-sm border border-glass-border',
                 'text-muted-foreground/40 text-mono-xs',
                 'hover:text-muted-foreground/70 hover:border-matrix/20 hover:bg-matrix/5',
                 'transition-all duration-200 cursor-pointer'
@@ -804,14 +804,14 @@ export function IntentBar({ onIntent, isProcessing }: IntentBarProps) {
                 ) : (
                   <>
                     {/* Slash Commands Section */}
-                    {grouped.commands.length > 0 && (
+                    {groupedItems.commands.length > 0 && (
                       <div className="mb-1">
                         <div className="px-3 py-1.5">
                           <span className="text-[10px] text-muted-foreground/40 uppercase tracking-widest font-semibold">
                             Skill Commands
                           </span>
                         </div>
-                        {grouped.commands.map((item) => {
+                        {groupedItems.commands.map((item) => {
                           const IconComp = item.icon;
                           const globalIndex = filteredPaletteItems.indexOf(item);
                           return (
@@ -845,14 +845,14 @@ export function IntentBar({ onIntent, isProcessing }: IntentBarProps) {
                     )}
 
                     {/* Panels Section */}
-                    {grouped.panels.length > 0 && (
+                    {groupedItems.panels.length > 0 && (
                       <div className="mb-1">
                         <div className="px-3 py-1.5">
                           <span className="text-[10px] text-muted-foreground/40 uppercase tracking-widest font-semibold">
                             Panels
                           </span>
                         </div>
-                        {grouped.panels.map((item) => {
+                        {groupedItems.panels.map((item) => {
                           const IconComp = item.icon;
                           const globalIndex = filteredPaletteItems.indexOf(item);
                           return (
@@ -886,14 +886,14 @@ export function IntentBar({ onIntent, isProcessing }: IntentBarProps) {
                     )}
 
                     {/* Recent Actions Section */}
-                    {grouped.recent.length > 0 && (
+                    {groupedItems.recent.length > 0 && (
                       <div className="mb-1">
                         <div className="px-3 py-1.5">
                           <span className="text-[10px] text-muted-foreground/40 uppercase tracking-widest font-semibold">
                             Recent
                           </span>
                         </div>
-                        {grouped.recent.map((item) => {
+                        {groupedItems.recent.map((item) => {
                           const globalIndex = filteredPaletteItems.indexOf(item);
                           return (
                             <button

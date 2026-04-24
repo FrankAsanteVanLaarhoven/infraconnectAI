@@ -77,7 +77,7 @@ export function OTAPipelinePanel() {
       <div className="flex-1 space-y-4">
         
         {/* Trigger form */}
-        <form onSubmit={triggerDeploy} className="bg-black/40 p-4 rounded-lg border border-orange-500/20 shadow-inner flex flex-col gap-3">
+        <form onSubmit={triggerDeploy} className="bg-black/40 p-4 rounded-sm border border-orange-500/20 shadow-inner flex flex-col gap-3">
            <h4 className="text-[10px] uppercase tracking-widest text-orange-300 font-mono mb-1">Trigger Fleet Rollout</h4>
            <div className="flex items-center gap-2">
              <select 
@@ -94,7 +94,7 @@ export function OTAPipelinePanel() {
                disabled={triggering}
                className="bg-orange-500/20 hover:bg-orange-500/30 text-orange-400 p-2 rounded transition-colors disabled:opacity-50"
              >
-               <Send className={`w-4 h-4 ${triggering ? 'animate-pulse' : ''}`} />
+               <Send className={`w-4 h-4 ${triggering ? '' : ''}`} />
              </button>
            </div>
         </form>
@@ -111,11 +111,11 @@ export function OTAPipelinePanel() {
                   <motion.div 
                     initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }}
                     key={dep.id} 
-                    className="p-3 bg-black/60 rounded-lg border-l-2 border-orange-500 flex flex-col gap-1 border-y border-r border-orange-500/10"
+                    className="p-3 bg-black/60 rounded-sm border-l-2 border-orange-500 flex flex-col gap-1 border-y border-r border-orange-500/10"
                   >
                     <div className="flex justify-between items-center text-[10px] font-mono tracking-widest uppercase">
                        <span className="text-orange-400 break-all">{dep.payload?.version}</span>
-                       <span className={dep.status === 'completed' ? 'text-green-500' : 'text-orange-500'}>{dep.status}</span>
+                       <span className={dep.status === 'completed' ? 'text-slate-300' : 'text-orange-500'}>{dep.status}</span>
                     </div>
                     <div className="flex justify-between items-center text-[8px] font-mono text-slate-500 uppercase tracking-widest mt-1">
                        <span>{dep.targetTier} Tier</span>

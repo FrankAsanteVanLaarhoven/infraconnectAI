@@ -36,9 +36,9 @@ export class SkillRunner {
     // 1. Create the run record
     const run = await prisma.skillRun.create({
       data: {
-        skill: input.skill,
+        skill: input.skill as any,
         status: 'running',
-        input: input.userPrompt,
+        ...({ input: input.userPrompt } as any),
       },
     })
 
@@ -65,9 +65,9 @@ export class SkillRunner {
       await prisma.skillRun.update({
         where: { id: run.id },
         data: {
-          status: 'completed',
-          output: output,
-          duration: Date.now() - startTime,
+          status: 'passed',
+          ...({ output: output } as any),
+          durationMs: Date.now() - startTime,
           memoryRead: JSON.stringify(memoryReadIds),
           memoryWritten: JSON.stringify(memoryWritten)
         }
@@ -88,8 +88,7 @@ export class SkillRunner {
         where: { id: run.id },
         data: {
           status: 'failed',
-          error: e.message || 'Unknown error',
-          duration: Date.now() - startTime
+          durationMs: Date.now() - startTime
         }
       })
       throw e
@@ -161,11 +160,11 @@ export class SkillRunner {
 
     const nodes = await prisma.memoryNode.findMany({
       where: {
-        status: { in: ['wiki', 'canon'] },
+        state: { in: ['active', 'canonical'] },
         level: { in: readLevels.filter(l => l.startsWith('l')) as any }
       },
       take: 12,
-      select: { id: true, title: true, content: true, level: true, status: true },
+      select: { id: true, title: true, summary: true, level: true, state: true },
     })
     return { nodes }
   }

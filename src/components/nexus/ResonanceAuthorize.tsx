@@ -38,18 +38,18 @@ export function ResonanceAuthorize() {
     }, [isSynchronizing, isAuthorized]);
 
     return (
-        <div className="w-full h-full bg-slate-950/90 backdrop-blur-3xl border border-slate-800 rounded-2xl p-6 flex flex-col font-mono relative overflow-hidden group">
+        <div className="w-full h-full bg-slate-950/90 backdrop-blur-3xl border border-slate-800 rounded-none p-6 flex flex-col font-mono relative overflow-hidden group">
             {/* Header */}
             <div className="flex items-center justify-between mb-8 border-b border-slate-800 pb-4">
                 <div className="flex items-center gap-3">
-                    <Waves className="w-5 h-5 text-emerald-400" />
+                    <Waves className="w-5 h-5 text-slate-300" />
                     <div>
                         <h2 className="text-xs font-black text-white uppercase tracking-[0.2em]">Neural Resonance Matrix</h2>
                         <p className="text-[9px] text-slate-500 uppercase font-black">Intent-Reality Alignment</p>
                     </div>
                 </div>
                 <div className="flex items-center gap-2">
-                    <div className={`w-2 h-2 rounded-full ${isAuthorized ? 'bg-emerald-500 animate-pulse' : 'bg-slate-800'}`} />
+                    <div className={`w-2 h-2 rounded-sm ${isAuthorized ? 'bg-slate-800 ' : 'bg-slate-800'}`} />
                     <span className="text-[8px] text-slate-500 font-black uppercase tracking-widest">
                         {isAuthorized ? 'Authorized' : 'Sync Pending'}
                     </span>
@@ -69,7 +69,7 @@ export function ResonanceAuthorize() {
                                 border: isAuthorized ? '1px solid #10b981' : '1px solid #6366f1'
                             }}
                             transition={{ duration: 3 / i, repeat: Infinity, ease: "easeInOut" }}
-                            className="absolute inset-0 rounded-full border border-indigo-500/20"
+                            className="absolute inset-0 rounded-sm border border-indigo-500/20"
                         />
                     ))}
 
@@ -80,14 +80,14 @@ export function ResonanceAuthorize() {
                                 animate={{ scale: 1 }}
                                 className="flex flex-col items-center gap-3"
                             >
-                                <div className="w-16 h-16 bg-emerald-500/20 rounded-full flex items-center justify-center border border-emerald-500/50 shadow-[0_0_30px_rgba(16,185,129,0.3)]">
-                                    <Unlock className="w-8 h-8 text-emerald-400" />
+                                <div className="w-16 h-16 bg-slate-800 rounded-sm flex items-center justify-center border border-slate-700">
+                                    <Unlock className="w-8 h-8 text-slate-300" />
                                 </div>
-                                <span className="text-[12px] text-emerald-400 font-black uppercase tracking-[0.3em]">Resonance Locked</span>
+                                <span className="text-[12px] text-slate-300 font-black uppercase tracking-[0.3em]">Resonance Locked</span>
                             </motion.div>
                         ) : (
                             <motion.div className="flex flex-col items-center gap-3">
-                                <Activity className={`w-12 h-12 ${isSynchronizing ? 'text-indigo-400 animate-pulse' : 'text-slate-800'}`} />
+                                <Activity className={`w-12 h-12 ${isSynchronizing ? 'text-indigo-400 ' : 'text-slate-800'}`} />
                                 <span className="text-[14px] text-white font-black tracking-tighter">
                                     {resonance.toFixed(1)}%
                                 </span>
@@ -107,7 +107,7 @@ export function ResonanceAuthorize() {
                 {isAuthorized ? (
                     <Button 
                         onClick={() => window.dispatchEvent(new CustomEvent('infraconnect:timeline-collapse'))}
-                        className="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-black uppercase text-[10px] py-6 rounded-xl tracking-[0.3em] shadow-[0_0_40px_rgba(16,185,129,0.2)] border border-emerald-400/30 group"
+                        className="w-full bg-slate-800 hover:bg-slate-800 text-white font-black uppercase text-[10px] py-6 rounded-sm tracking-[0.3em] border border-slate-700 group"
                     >
                         <Zap className="w-4 h-4 mr-2 group-hover:animate-bounce" />
                         Collapse Timeline into Reality
@@ -116,11 +116,11 @@ export function ResonanceAuthorize() {
                     <Button 
                         onClick={() => setIsSynchronizing(true)}
                         disabled={isSynchronizing}
-                        className="w-full bg-slate-900 hover:bg-slate-800 text-slate-400 font-black uppercase text-[10px] py-6 rounded-xl tracking-[0.3em] border border-slate-800 flex items-center gap-3"
+                        className="w-full bg-slate-900 hover:bg-slate-800 text-slate-400 font-black uppercase text-[10px] py-6 rounded-sm tracking-[0.3em] border border-slate-800 flex items-center gap-3"
                     >
                         {isSynchronizing ? (
                             <>
-                                <Fingerprint className="w-4 h-4 animate-pulse text-indigo-400" />
+                                <Fingerprint className="w-4 h-4 text-indigo-400" />
                                 Synchronizing Intent...
                             </>
                         ) : (

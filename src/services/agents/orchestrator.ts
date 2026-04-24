@@ -1,10 +1,18 @@
-import { TelemetryEvent } from '@/domain/events';
+import { TelemetryEvent, PhysicsTelemetryEvent } from '@/domain/events';
 import { anomalyAgent } from './anomalyAgent';
 import { recoveryAgent } from './recoveryAgent';
+import { physicsAgent } from './physicsAgent';
 
 /**
  * Global Multi-Agent Orchestrator
  * Pipeline controlling sequential event routing across intelligence models.
+ * 
+ * v3.0: Extended with Physics Agent routing for Isaac Lab telemetry.
+ */
+
+/**
+ * Fleet telemetry orchestration (existing pipeline).
+ * Routes robot telemetry through anomaly detection → recovery.
  */
 export async function orchestrator(telemetry: TelemetryEvent) {
    
@@ -18,4 +26,13 @@ export async function orchestrator(telemetry: TelemetryEvent) {
    } else {
        // Optional Phase: Optimization Agent could be wired here for healthy metrics
    }
+}
+
+/**
+ * Isaac Lab physics telemetry orchestration (v3.0 pipeline).
+ * Routes physics episode data through the PhysicsAgent for evaluation.
+ */
+export async function orchestrateIsaacRun(telemetry: PhysicsTelemetryEvent) {
+   // Route to Physics Agent for batch accumulation + curation
+   await physicsAgent(telemetry);
 }

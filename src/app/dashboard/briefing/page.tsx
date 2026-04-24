@@ -50,19 +50,19 @@ export default function BriefingPage() {
 
            <div className="grid grid-cols-1 gap-6">
               {loading ? (
-                 <div className="h-40 bg-slate-900/20 border border-slate-800 rounded-xl animate-pulse" />
+                 <div className="h-40 bg-slate-900/20 border border-slate-800 rounded-sm" />
               ) : highIntentLeads.length > 0 ? highIntentLeads.map((lead, i) => (
                 <motion.div 
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.1 }}
                   key={lead.id}
-                  className="bg-[#0a0b0c] border border-slate-800 p-8 rounded-xl flex items-center justify-between group hover:border-slate-600 transition-colors"
+                  className="bg-[#0a0b0c] border border-slate-800 p-8 rounded-sm flex items-center justify-between group hover:border-slate-600 transition-colors"
                 >
                    <div className="space-y-2">
                       <div className="flex items-center gap-3">
                          <span className="text-2xl font-black text-white">{lead.email.split('@')[1]}</span>
-                         <div className="w-1 h-1 rounded-full bg-slate-700" />
+                         <div className="w-1 h-1 rounded-sm bg-slate-700" />
                          <span className="text-[10px] text-slate-500 uppercase font-black">{lead.company || "Enterprise Target"}</span>
                       </div>
                       <div className="flex items-center gap-4">
@@ -96,7 +96,7 @@ export default function BriefingPage() {
 
         {/* Daily Insights Strip */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-8 border-t border-white/5">
-           <div className="bg-slate-900/20 border border-slate-800 p-6 rounded-xl space-y-4">
+           <div className="bg-slate-900/20 border border-slate-800 p-6 rounded-sm space-y-4">
               <div className="flex items-center gap-3 text-blue-400">
                  <Zap className="w-4 h-4" />
                  <h3 className="text-[9px] uppercase font-black tracking-widest">Recently Automated</h3>
@@ -113,7 +113,7 @@ export default function BriefingPage() {
                  )}
               </div>
            </div>
-           <div className="bg-slate-900/20 border border-slate-800 p-6 rounded-xl space-y-4">
+           <div className="bg-slate-900/20 border border-slate-800 p-6 rounded-sm space-y-4">
               <div className="flex items-center gap-3 text-cyan-400">
                  <TrendingUp className="w-4 h-4" />
                  <h3 className="text-[9px] uppercase font-black tracking-widest">Suggested Actions</h3>

@@ -13,7 +13,7 @@ export default async function FleetPage() {
       orderBy: { lastSeen: "desc" },
       include: {
         anomalies: {
-          orderBy: { detectedAt: "desc" },
+          orderBy: { createdAt: "desc" },
           take: 5,
         },
       },
@@ -30,7 +30,7 @@ export default async function FleetPage() {
       {
         id: "mock2", robotId: "NEMO-A2", alias: "Logistics Chassis Beta", status: "degraded", 
         lastSeen: new Date(), memoryBytes: 2148000, anomalyCount: 2, createdAt: new Date(), updatedAt: new Date(),
-        anomalies: [{ id: "a1", type: "latency_spike", severity: "medium", message: "Kinematic solve delayed", detectedAt: new Date(), resolved: false, fleetNodeId: "mock2", metadata: null }]
+        anomalies: [{ id: "a1", type: "latency_spike", severity: "medium", message: "Kinematic solve delayed", createdAt: new Date(), resolved: false, fleetNodeId: "mock2", metadata: null }]
       }
     ];
   }
@@ -70,11 +70,11 @@ export default async function FleetPage() {
       <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
         {[
           { label: "Total Nodes", value: nodes.length },
-          { label: "Online", value: online, color: "text-emerald-400" },
+          { label: "Online", value: online, color: "text-slate-300" },
           { label: "Degraded / Offline", value: `${degraded} / ${offline}`, color: "text-amber-400" },
           { label: "Total Memory", value: `${totalMemGB} GB` },
         ].map((stat) => (
-          <div key={stat.label} className="bg-white/5 backdrop-blur-2xl border border-white/10 shadow-[0_10px_40px_rgba(0,0,0,0.4)] rounded-xl p-6 transition-all hover:bg-white/10 cursor-default">
+          <div key={stat.label} className="bg-white/5 backdrop-blur-2xl border border-white/10 shadow-[0_10px_40px_rgba(0,0,0,0.4)] rounded-sm p-6 transition-all hover:bg-white/10 cursor-default">
             <p className="text-xs text-white/50 tracking-widest uppercase mb-4">{stat.label}</p>
             <p className={`text-2xl font-medium tracking-tight ${stat.color ? stat.color : "text-white/90"}`}>{stat.value}</p>
           </div>
@@ -95,7 +95,7 @@ export default async function FleetPage() {
         {/* Feed side */}
         <div className="space-y-6">
           <h2 className="text-lg font-medium text-white tracking-tight">Live Anomaly Feed</h2>
-          <div className="bg-white/5 backdrop-blur-2xl border border-white/10 shadow-[0_10px_40px_rgba(0,0,0,0.4)] rounded-xl p-6 h-full min-h-[400px]">
+          <div className="bg-white/5 backdrop-blur-2xl border border-white/10 shadow-[0_10px_40px_rgba(0,0,0,0.4)] rounded-sm p-6 h-full min-h-[400px]">
              <AnomalyFeed />
           </div>
         </div>

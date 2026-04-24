@@ -19,14 +19,14 @@ import {
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { 
-    CognitiveProxy, 
+    PredictionSwarmAgent, 
     INITIAL_PROXIES, 
     DISRUPTOR_SEEDS, 
     simulateSocialEvolution 
 } from '@/lib/nexus/emulation';
 
 export function StrategicRehearsalNexus() {
-    const [proxies, setProxies] = useState<CognitiveProxy[]>(INITIAL_PROXIES);
+    const [proxies, setProxies] = useState<PredictionSwarmAgent[]>(INITIAL_PROXIES);
     const [activeDisruptor, setActiveDisruptor] = useState<string | null>(null);
     const [convergence, setConvergence] = useState(0.92);
     const [simCycle, setSimCycle] = useState(1);
@@ -106,11 +106,11 @@ export function StrategicRehearsalNexus() {
     };
 
     return (
-        <div className="w-full h-full bg-[#050505] border border-slate-900 rounded-3xl p-8 flex flex-col font-mono relative overflow-hidden group shadow-[0_0_100px_rgba(0,0,0,0.8)]">
+        <div className="w-full h-full bg-[#050505] border border-slate-900 rounded-3xl p-8 flex flex-col font-mono relative overflow-hidden group">
             {/* Master Header */}
             <div className="flex items-center justify-between mb-8 border-b border-white/5 pb-6 relative z-10">
                 <div className="flex items-center gap-4">
-                    <div className="p-3 bg-indigo-500/10 border border-indigo-500/20 rounded-2xl">
+                    <div className="p-3 bg-indigo-500/10 border border-indigo-500/20 rounded-none">
                         <Share2 className="w-5 h-5 text-indigo-400" />
                     </div>
                     <div>
@@ -147,9 +147,9 @@ export function StrategicRehearsalNexus() {
                                 key={seed.id}
                                 whileHover={{ x: 4 }}
                                 onClick={() => injectDisruptor(seed.id)}
-                                className={`p-4 rounded-xl border cursor-pointer transition-all flex items-center justify-between ${
+                                className={`p-4 rounded-sm border cursor-pointer transition-all flex items-center justify-between ${
                                     activeDisruptor === seed.id 
-                                    ? 'bg-red-500/10 border-red-500/40 shadow-[0_0_20px_rgba(239,68,68,0.1)]' 
+                                    ? 'bg-red-500/10 border-red-500/40 ' 
                                     : 'bg-slate-900/40 border-slate-800/50 hover:bg-slate-900 border-white/5'
                                 }`}
                             >
@@ -157,25 +157,25 @@ export function StrategicRehearsalNexus() {
                                     <span className="text-[9px] font-black text-white uppercase">{seed.label}</span>
                                     <span className="text-[7px] text-slate-500 font-bold uppercase mt-0.5">{seed.type}</span>
                                 </div>
-                                <Zap className={`w-3.5 h-3.5 ${activeDisruptor === seed.id ? 'text-red-400 animate-pulse' : 'text-slate-700'}`} />
+                                <Zap className={`w-3.5 h-3.5 ${activeDisruptor === seed.id ? 'text-red-400 ' : 'text-slate-700'}`} />
                             </motion.div>
                         ))}
                     </div>
 
-                    <div className="flex-1 bg-slate-900/20 border border-white/5 rounded-2xl p-4 flex flex-col gap-4">
+                    <div className="flex-1 bg-slate-900/20 border border-white/5 rounded-none p-4 flex flex-col gap-4">
                         <span className="text-[9px] text-slate-600 uppercase font-black border-b border-white/5 pb-2 block underline underline-offset-4">Outcome Convergence</span>
                         <div className="space-y-3">
                             {[
                                 { outcome: 'Alpha: Market Stability', prob: 0.12, color: 'bg-indigo-500' },
                                 { outcome: 'Beta: Systemic Drift', prob: 0.78, color: 'bg-red-500' },
-                                { outcome: 'Gamma: Emergent Recovery', prob: 0.10, color: 'bg-emerald-500' }
+                                { outcome: 'Gamma: Emergent Recovery', prob: 0.10, color: 'bg-slate-800' }
                             ].map((res, i) => (
                                 <div key={i} className="space-y-1">
                                     <div className="flex justify-between text-[8px] font-bold text-slate-400">
                                         <span>{res.outcome}</span>
                                         <span>{(res.prob * 100).toFixed(0)}%</span>
                                     </div>
-                                    <div className="h-0.5 w-full bg-slate-800/50 rounded-full overflow-hidden">
+                                    <div className="h-0.5 w-full bg-slate-800/50 rounded-sm overflow-hidden">
                                         <motion.div initial={{ width: 0 }} animate={{ width: `${res.prob * 100}%` }} className={`h-full ${res.color}`} />
                                     </div>
                                 </div>
@@ -195,11 +195,11 @@ export function StrategicRehearsalNexus() {
                     
                     {/* Overlay Diagnostics */}
                     <div className="absolute top-6 left-6 flex flex-col gap-4 pointer-events-none">
-                        <div className="flex items-center gap-2 bg-black/80 border border-white/10 px-3 py-1.5 rounded-lg backdrop-blur-md">
+                        <div className="flex items-center gap-2 bg-black/80 border border-white/10 px-3 py-1.5 rounded-sm backdrop-blur-md">
                             <Eye className="w-3.5 h-3.5 text-indigo-400" />
                             <span className="text-[9px] text-indigo-400 font-black uppercase tracking-[0.2em]">Parallel World #0352</span>
                         </div>
-                        <div className="flex items-center gap-2 bg-black/80 border border-white/10 px-3 py-1.5 rounded-lg backdrop-blur-md">
+                        <div className="flex items-center gap-2 bg-black/80 border border-white/10 px-3 py-1.5 rounded-sm backdrop-blur-md">
                             <Activity className="w-3.5 h-3.5 text-slate-500" />
                             <span className="text-[9px] text-slate-500 font-bold uppercase">Prediction Swarm Agents: {proxies.length}</span>
                         </div>
@@ -207,13 +207,13 @@ export function StrategicRehearsalNexus() {
 
 
                     <div className="absolute bottom-6 right-6 flex items-center gap-4">
-                        <div className="bg-black/60 border border-white/10 p-4 rounded-xl backdrop-blur-md max-w-[240px]">
+                        <div className="bg-black/60 border border-white/10 p-4 rounded-sm backdrop-blur-md max-w-[240px]">
                             <p className="text-[9px] text-slate-400 leading-relaxed font-mono italic">
                                 "The social evolution cycle is accelerating. Predicted systemic shift in T-minus {Math.floor(Math.random() * 60) + 120} cycles."
                             </p>
                             <div className="flex items-center gap-2 mt-2">
-                                <TrendingUp className="w-3 h-3 text-emerald-400" />
-                                <span className="text-[7px] text-emerald-400 font-black uppercase tracking-widest">Emergent Signal Detected</span>
+                                <TrendingUp className="w-3 h-3 text-slate-300" />
+                                <span className="text-[7px] text-slate-300 font-black uppercase tracking-widest">Emergent Signal Detected</span>
                             </div>
                         </div>
                     </div>
@@ -228,7 +228,7 @@ export function StrategicRehearsalNexus() {
                                 className="absolute inset-0 flex items-center justify-center pointer-events-none"
                             >
                                 <div className="bg-red-500/10 border border-red-500/40 p-12 rounded-[4rem] backdrop-blur-sm flex flex-col items-center gap-4">
-                                    <AlertTriangle className="w-12 h-12 text-red-500 animate-pulse" />
+                                    <AlertTriangle className="w-12 h-12 text-red-500" />
                                     <div className="text-center">
                                         <h3 className="text-xl font-black text-white uppercase tracking-[0.4em]">Propagating Disruptor</h3>
                                         <p className="text-[10px] text-red-400 font-bold uppercase tracking-widest mt-2">{DISRUPTOR_SEEDS.find(s => s.id === activeDisruptor)?.label}</p>

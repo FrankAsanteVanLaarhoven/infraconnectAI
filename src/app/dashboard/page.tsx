@@ -68,6 +68,7 @@ type PanelId =
   | 'bus'    | 'log'    | 'search' | 'agent-ops'
   | 'cognitive'| 'nemoclaw' | 'model-perf' | 'ota' | 'sim2real' | 'fleet' | 'trust' | 'compliance' | 'atlas' | 'topology'
   | 'maritime' | 'economic' | 'swarm' | 'asset' | 'energy' | 'legal' | 'strategic-report' | 'validation-report' | 'nexus-core' | 'revenue' | 'audit' | 'robotics'
+  | 'revenue-victory' | 'environment' | 'control-plane' | 'space' | 'simulation' | 'war-room' | 'mesh'
 
 const PANEL_KEYS: Record<string, PanelId> = {
   '1': 'health', '2': 'memory',   '3': 'skills',     '4': 'governance',
@@ -82,7 +83,7 @@ const panelMotion = {
   initial:   { opacity: 0, scale: 0.98, y: 12, filter: "blur(12px)" },
   animate:   { opacity: 1, scale: 1,    y: 0,  filter: "blur(0px)" },
   exit:      { opacity: 0, scale: 0.98, y: 12, filter: "blur(12px)" },
-  transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] },
+  transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] as const },
 }
 
 // ── Status bar ────────────────────────────────────────────────────────────────
@@ -107,7 +108,7 @@ function StatusBar({
   return (
     <div className="flex items-center gap-4 text-[10px] font-mono text-slate-500 px-1 tracking-[0.15em] uppercase opacity-70 hover:opacity-100 transition-opacity">
       <span className="flex items-center gap-2 text-slate-400">
-        <span className={`w-1.5 h-1.5 rounded-full ${pulseColor} animate-pulse shadow-[0_0_8px_currentColor]`} />
+        <span className={`w-1.5 h-1.5 rounded-sm ${pulseColor}  shadow-[0_0_8px_currentColor]`} />
         Secure Mission Link
       </span>
       <span>Knowledge Nodes <span className="text-foreground font-bold">{nodes ?? '—'}</span></span>
@@ -137,7 +138,7 @@ export default function Dashboard() {
   const nodeCount = healthData?.memory?.totalNodes ?? null
   const runCount  = healthData?.skills?.totalRuns ?? null
   
-  const isAuthorized = session?.user?.role === 'superadmin' || (session?.user as any)?.role === 'admin'
+  const isAuthorized = (session?.user as any)?.role === 'superadmin' || (session?.user as any)?.role === 'admin'
 
   const togglePanel = useCallback((id: PanelId) => {
     setActivePanels(prev => {
@@ -216,12 +217,12 @@ export default function Dashboard() {
         <div className="flex items-center gap-1.5 shrink-0 pl-4 border-l border-white/5">
           {(Object.entries(PANEL_KEYS) as [string, PanelId][]).map(([key, id]) => (
             <motion.button
-              key={id}
+              key={`${key}-${id}`}
               onClick={() => setTimeout(() => togglePanel(id), 80)}
               whileHover={{ scale: 1.02, transition: { duration: 0.2, ease: [0.25, 0.8, 0.25, 1] } }}
               whileTap={{ scale: 0.97 }}
               title={`Toggle ${id.replace('-', ' ')} (${key})`}
-              className={`w-8 h-8 rounded-lg text-xs tracking-widest font-mono transition-all border shadow-[0_10px_40px_rgba(0,0,0,0.4)] ${
+              className={`w-8 h-8 rounded-sm text-xs tracking-widest font-mono transition-all border shadow-[0_10px_40px_rgba(0,0,0,0.4)] ${
                 activePanels.has(id)
                   ? 'bg-white/10 backdrop-blur-2xl border-white/20 text-white shadow-[0_10px_40px_rgba(255,255,255,0.1)]'
                   : 'bg-white/5 backdrop-blur-2xl border-white/5 text-white/50 hover:bg-white/10 hover:text-white/80'
@@ -236,7 +237,7 @@ export default function Dashboard() {
       {/* ── Intelligence Grid ── */}
       <motion.main animate={controls} className="flex-1 p-8 overflow-x-hidden overflow-y-auto custom-scrollbar">
         <div className="mb-12 text-sm text-white/50 font-mono tracking-widest uppercase flex items-center gap-2 px-1">
-          <div className="w-2 h-2 rounded-full bg-green-500/80 animate-pulse" />
+          <div className="w-2 h-2 rounded-sm bg-slate-800" />
           Live system connected via InfraConnect Node
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 auto-rows-min max-w-[1800px] mx-auto">
@@ -419,7 +420,7 @@ export default function Dashboard() {
             )}
 
             {activePanels.has('maritime') && (
-              <motion.div key="maritime" layout {...panelMotion}>
+              <motion.div key="maritime-overlay" layout {...panelMotion}>
                 <VesselMapOverlay />
               </motion.div>
             )}
@@ -436,11 +437,7 @@ export default function Dashboard() {
               </motion.div>
             )}
 
-            {activePanels.has('control-plane') && (
-              <motion.div key="control-plane" layout {...panelMotion}>
-                <ControlPlaneGrid />
-              </motion.div>
-            )}
+
 
             {activePanels.has('space') && (
               <motion.div key="space" layout {...panelMotion}>
@@ -462,6 +459,24 @@ export default function Dashboard() {
 
           </AnimatePresence>
         </div>
+
+        {/* Floating Sidebars */}
+        <AnimatePresence>
+          {activePanels.has('control-plane') && (
+            <motion.div
+              key="control-plane"
+              initial={{ x: '100%', opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              exit={{ x: '100%', opacity: 0 }}
+              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+              className="fixed top-[60px] right-0 bottom-[40px] z-[60] pointer-events-none"
+            >
+              <div className="h-full pointer-events-auto drop-shadow-2xl">
+                <ControlPlaneGrid />
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </motion.main>
 
       {/* ── Status Telemetry ── */}

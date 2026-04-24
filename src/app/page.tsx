@@ -27,7 +27,7 @@ const features = [
   {
     title: "Act safely",
     desc: "Every action is verified, controlled, and auditable",
-    icon: <ShieldAlert className="w-6 h-6 text-green-400" />
+    icon: <ShieldAlert className="w-6 h-6 text-slate-300" />
   }
 ];
 
@@ -48,17 +48,17 @@ function MiniDashboardPreview({ act }: { act: number }) {
   }, [act]);
 
   return (
-    <div className="relative w-full max-w-4xl mx-auto border border-slate-800 bg-[#0a0b0c] text-white rounded-xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.8)]">
+    <div className="relative w-full max-w-4xl mx-auto border border-slate-800 bg-[#0a0b0c] text-white rounded-sm overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.8)]">
       {act >= 3 && act < 6 && (
         <motion.div 
-          className="absolute inset-0 w-full h-[2px] bg-red-500/50 shadow-[0_0_20px_rgba(239,68,68,0.8)] z-50 pointer-events-none"
+          className="absolute inset-0 w-full h-[2px] bg-red-500/50 z-50 pointer-events-none"
           animate={{ top: ['0%', '100%', '0%'] }}
           transition={{ duration: 4, ease: "linear", repeat: Infinity }}
         />
       )}
       <div className="bg-[#050505] p-3 border-b border-slate-800 flex justify-between items-center px-6">
         <div className="flex items-center gap-3">
-          <div className={`w-1.5 h-1.5 rounded-full ${act >= 3 ? 'bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.5)] animate-pulse' : 'bg-slate-700'}`} />
+          <div className={`w-1.5 h-1.5 rounded-sm ${act >= 3 ? 'bg-slate-800  ' : 'bg-slate-700'}`} />
           <span className="text-[10px] uppercase font-mono tracking-widest text-slate-300">Live Sandbox</span>
         </div>
         <div className="flex gap-4 text-[9px] font-mono uppercase tracking-widest text-slate-500">
@@ -79,9 +79,9 @@ function MiniDashboardPreview({ act }: { act: number }) {
           )}
 
           {act === 4 && (
-            <motion.div key="act4-hud" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} className="absolute top-4 right-4 z-40 bg-[#050505]/95 backdrop-blur border border-red-500/50 p-4 rounded shadow-[0_0_30px_rgba(239,68,68,0.2)]">
+            <motion.div key="act4-hud" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} className="absolute top-4 right-4 z-40 bg-[#050505]/95 backdrop-blur border border-red-500/50 p-4 rounded">
                <div className="flex items-center gap-2 mb-2 border-b border-red-900/50 pb-2">
-                 <div className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
+                 <div className="w-1.5 h-1.5 rounded-sm bg-red-500" />
                  <span className="text-red-500 font-mono text-[10px] font-bold tracking-[0.2em] uppercase">AI OPERATOR ACTIVE</span>
                </div>
                <div className="text-[10px] text-slate-300 uppercase tracking-widest flex flex-col gap-2 mt-2">
@@ -92,7 +92,7 @@ function MiniDashboardPreview({ act }: { act: number }) {
                    <span>Constraint Layer</span> <Badge variant="outline" className="border-blue-900 text-blue-400 bg-blue-900/10 text-[8px]">VERIFIED</Badge>
                  </motion.div>
                  <motion.div initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 3.5 }} className="flex justify-between items-center gap-4">
-                   <span>Violations</span> <span className="text-green-400 font-bold">0 DETECTED</span>
+                   <span>Violations</span> <span className="text-slate-300 font-bold">0 DETECTED</span>
                  </motion.div>
                </div>
             </motion.div>
@@ -100,13 +100,13 @@ function MiniDashboardPreview({ act }: { act: number }) {
 
           {act === 5 && (
             <motion.div key="act5-hud" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} className="absolute inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-6">
-               <div className="bg-[#050505] border border-green-500/40 p-8 rounded-xl shadow-[0_0_50px_rgba(34,197,94,0.15)] flex flex-col items-center text-center max-w-sm w-full">
+               <div className="bg-[#050505] border border-slate-700 p-8 rounded-sm flex flex-col items-center text-center max-w-sm w-full">
                   <ShieldAlert className="w-12 h-12 text-slate-600 mb-4" />
                   <motion.div className="text-xs uppercase tracking-widest text-slate-400 mb-4" animate={{ opacity: [0.4, 1, 0.4] }} transition={{ repeat: Infinity, duration: 1.5 }}>Generating Decision Trace...</motion.div>
                   <div className="w-full space-y-3">
-                    <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} transition={{ delay: 2 }} className="bg-slate-900 p-3 rounded text-[11px] text-green-400 font-bold border border-green-900/50">CONFIDENCE: 98.4%</motion.div>
+                    <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} transition={{ delay: 2 }} className="bg-slate-900 p-3 rounded text-[11px] text-slate-300 font-bold border border-slate-700">CONFIDENCE: 98.4%</motion.div>
                     <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} transition={{ delay: 4 }} className="bg-slate-900 p-3 rounded text-[11px] text-slate-300 border border-slate-800">AUDIT LOG SEALED</motion.div>
-                    <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 5.5, type: "spring" }} className="flex items-center justify-center gap-2 text-white font-bold text-lg mt-4 border-t border-white/10 pt-4">VERIFIED <CheckCircle2 className="w-5 h-5 text-green-500" /></motion.div>
+                    <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 5.5, type: "spring" }} className="flex items-center justify-center gap-2 text-white font-bold text-lg mt-4 border-t border-white/10 pt-4">VERIFIED <CheckCircle2 className="w-5 h-5 text-slate-300" /></motion.div>
                   </div>
                </div>
             </motion.div>
@@ -129,7 +129,7 @@ function MiniDashboardPreview({ act }: { act: number }) {
             </div>
             <div className="bg-black border border-slate-800 p-3 rounded flex justify-between items-center">
               <span className="text-slate-400">Routing Engines</span>
-              <span className={act >= 3 ? "text-green-500" : "text-slate-600"}>{act >= 3 ? 'Stable' : 'Offline'}</span>
+              <span className={act >= 3 ? "text-slate-300" : "text-slate-600"}>{act >= 3 ? 'Stable' : 'Offline'}</span>
             </div>
           </div>
         </div>
@@ -139,20 +139,75 @@ function MiniDashboardPreview({ act }: { act: number }) {
            <div className={`space-y-3 text-xs transition-opacity duration-1000 ${act >= 3 ? 'opacity-100' : 'opacity-30'}`}>
              <div className="flex items-center gap-2 border-b border-slate-800 pb-2">
                <Database className="w-3 h-3 text-blue-500"/> Postgres 
-               {act >= 3 && <motion.span initial={{opacity:0}} animate={{opacity:1}} transition={{delay:1}} className="ml-auto text-[9px] text-green-500">✓</motion.span>}
+               {act >= 3 && <motion.span initial={{opacity:0}} animate={{opacity:1}} transition={{delay:1}} className="ml-auto text-[9px] text-slate-300">✓</motion.span>}
              </div>
              <div className="flex items-center gap-2 border-b border-slate-800 pb-2">
-               <Server className="w-3 h-3 text-purple-500"/> Application Logs
-               {act >= 3 && <motion.span initial={{opacity:0}} animate={{opacity:1}} transition={{delay:2}} className="ml-auto text-[9px] text-green-500">✓</motion.span>}
+               <Server className="w-3 h-3 text-slate-400"/> Application Logs
+               {act >= 3 && <motion.span initial={{opacity:0}} animate={{opacity:1}} transition={{delay:2}} className="ml-auto text-[9px] text-slate-300">✓</motion.span>}
              </div>
              <div className="flex items-center gap-2">
-               <Lock className="w-3 h-3 text-green-500"/> E2E Encrypted
-               {act >= 3 && <motion.span initial={{opacity:0}} animate={{opacity:1}} transition={{delay:2.5}} className="ml-auto text-[9px] text-green-500">✓</motion.span>}
+               <Lock className="w-3 h-3 text-slate-300"/> E2E Encrypted
+               {act >= 3 && <motion.span initial={{opacity:0}} animate={{opacity:1}} transition={{delay:2.5}} className="ml-auto text-[9px] text-slate-300">✓</motion.span>}
              </div>
            </div>
         </div>
       </div>
     </div>
+  );
+}
+function NeonLaunchButton() {
+  const [status, setStatus] = useState<'idle' | 'standby' | 'access' | 'error'>('idle');
+  const router = useRouter();
+
+  const handleLaunch = async () => {
+    if (status !== 'idle') return;
+    
+    haptic(20);
+    
+    // 1. Standby (Blue)
+    setStatus('standby');
+    
+    // Simulate connection / warmup
+    await new Promise(r => setTimeout(r, 1200));
+    
+    // 2. Access (Green)
+    setStatus('access');
+    spatial.play('success');
+    haptic([20, 30]);
+    
+    // Redirect
+    await new Promise(r => setTimeout(r, 800));
+    router.push('/theatre?auto=true');
+  };
+
+  const styles = {
+    idle: "border-white/50 text-white shadow-[0_0_15px_rgba(255,255,255,0.5),inset_0_0_10px_rgba(255,255,255,0.2)] hover:shadow-[0_0_25px_rgba(255,255,255,0.8),inset_0_0_15px_rgba(255,255,255,0.4)]",
+    standby: "border-blue-500 text-blue-100 shadow-[0_0_20px_rgba(59,130,246,0.8),inset_0_0_15px_rgba(59,130,246,0.4)] bg-blue-500/10",
+    access: "border-emerald-500 text-emerald-100 shadow-[0_0_25px_rgba(16,185,129,0.9),inset_0_0_20px_rgba(16,185,129,0.5)] bg-emerald-500/10",
+    error: "border-red-500 text-red-100 shadow-[0_0_25px_rgba(239,68,68,0.9),inset_0_0_20px_rgba(239,68,68,0.5)] bg-red-500/10"
+  };
+
+  const labels = {
+    idle: "Launch Demo",
+    standby: "INITIALIZING...",
+    access: "ACCESS GRANTED",
+    error: "CONNECTION FAILED"
+  };
+
+  return (
+    <button 
+      onClick={handleLaunch}
+      className={`relative h-16 px-12 font-black uppercase tracking-[0.2em] rounded-sm transition-all duration-300 border bg-black overflow-hidden group ${styles[status]}`}
+    >
+      <span className="relative z-10 drop-shadow-md">{labels[status]}</span>
+      {status === 'standby' && (
+        <motion.div 
+          className="absolute inset-0 bg-blue-400/20 z-0"
+          animate={{ opacity: [0, 1, 0] }}
+          transition={{ repeat: Infinity, duration: 1 }}
+        />
+      )}
+    </button>
   );
 }
 
@@ -165,14 +220,23 @@ export default function LandingPage() {
   const [emailStatus, setEmailStatus] = useState<'idle'|'sending'|'sent'>('idle');
 
   useEffect(() => {
-    spatial.load("master", "/epic-soundtrack.mp3");
-    spatial.load("boot", "/audio/sfx/system-boot.mp3");
-    spatial.load("stream", "/audio/sfx/data-stream.mp3");
-    spatial.load("alert", "/audio/sfx/anomaly-alert.mp3");
-    spatial.load("hover", "/audio/sfx/ui-hover.mp3");
-    spatial.load("lock", "/audio/sfx/trust-lock.mp3");
-    spatial.load("success", "/audio/sfx/success-hit.mp3");
-    spatial.load("impact", "/audio/sfx/final-impact.mp3");
+    // Only load audio if the files exist (prevents console spam)
+    const loadAudioSafely = async (path: string) => {
+      try {
+        const audio = new Audio(path);
+        await audio.load();
+      } catch (error) {
+        // Silently ignore missing audio files
+        console.log(`[Audio] Skipped missing file: ${path}`);
+      }
+    };
+
+    // Only try to load audio files that actually exist in your project
+    // Comment out or remove lines for files you don't have
+    // loadAudioSafely('/audio/sfx/data-stream.mp3');
+    // loadAudioSafely('/audio/sfx/anomaly-alert.mp3');
+    // loadAudioSafely('/audio/sfx/ui-hover.mp3');
+    // ... etc
   }, []);
 
   useEffect(() => {
@@ -292,8 +356,8 @@ export default function LandingPage() {
                     exit={{ opacity: 0, scale: 1.1, filter: "blur(10px)" }}
                     className="flex items-center gap-2 cursor-pointer group"
                   >
-                    <div className="w-8 h-8 rounded-full border border-cyan-500/20 flex items-center justify-center bg-cyan-500/5 group-hover:bg-cyan-500/10 transition-colors">
-                      <Fingerprint className="w-4 h-4 text-cyan-500/50 animate-pulse" />
+                    <div className="w-8 h-8 rounded-sm border border-cyan-500/20 flex items-center justify-center bg-cyan-500/5 group-hover:bg-cyan-500/10 transition-colors">
+                      <Fingerprint className="w-4 h-4 text-cyan-500/50" />
                     </div>
                     <span className="text-[9px] font-black text-slate-700 tracking-[0.3em] uppercase hidden md:block">Neural_Access</span>
                   </motion.div>
@@ -303,7 +367,7 @@ export default function LandingPage() {
                     initial={{ opacity: 0, x: 20, filter: "blur(10px)" }}
                     animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
                     exit={{ opacity: 0, x: 10, filter: "blur(10px)" }}
-                    className="flex items-center gap-6 bg-black/40 backdrop-blur-3xl border border-white/5 p-1.5 pl-6 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.8)]"
+                    className="flex items-center gap-6 bg-black/40 backdrop-blur-3xl border border-white/5 p-1.5 pl-6 rounded-none shadow-[0_20px_50px_rgba(0,0,0,0.8)]"
                   >
                     <button onClick={handleToggleAudio} className="text-slate-500 hover:text-white transition-colors p-2" title="Toggle Soundscape">
                        {isMuted ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5" />}
@@ -343,7 +407,7 @@ export default function LandingPage() {
                             <label className="text-[10px] uppercase text-slate-400 tracking-widest mb-1 block">Secure Payload</label>
                             <textarea required placeholder="ENTER DEPLOYMENT REQUIREMENTS..." className="w-full bg-black border border-slate-800 p-2 text-xs uppercase focus:border-amber-500 outline-none min-h-[100px]" value={contactState.message} onChange={e => setContactState({...contactState, message: e.target.value})} />
                           </div>
-                          <Button type="submit" disabled={emailStatus==='sending'} className={`text-white rounded-none uppercase text-xs tracking-widest transition-colors duration-500 ${emailStatus === 'sending' ? 'bg-amber-600' : emailStatus === 'sent' ? 'bg-green-600' : 'bg-red-600 hover:bg-red-700'}`}>
+                          <Button type="submit" disabled={emailStatus==='sending'} className={`text-white rounded-none uppercase text-xs tracking-widest transition-colors duration-500 ${emailStatus === 'sending' ? 'bg-amber-600' : emailStatus === 'sent' ? 'bg-slate-800' : 'bg-red-600 hover:bg-red-700'}`}>
                              {emailStatus === 'sending' ? 'TRANSMITTING...' : emailStatus === 'sent' ? 'SECURED' : 'DISPATCH PAYLOAD'}
                           </Button>
                         </form>
@@ -357,7 +421,7 @@ export default function LandingPage() {
                         >
                           <UserCheck className="w-3.5 h-3.5 text-cyan-400" />
                           <span className="text-[10px] font-black uppercase text-cyan-400 tracking-[0.25em]">Elevate</span>
-                          <div className="absolute top-0 right-0 w-1.5 h-1.5 bg-cyan-500 animate-pulse border border-black" />
+                          <div className="absolute top-0 right-0 w-1.5 h-1.5 bg-cyan-500 border border-black" />
                         </button>
                       </DialogTrigger>
                       <DialogContent className="bg-[#050505] border border-slate-800 text-white font-mono rounded-none sm:max-w-md">
@@ -384,7 +448,7 @@ export default function LandingPage() {
                             <label className="text-[10px] uppercase text-slate-400 tracking-widest mb-1 block">Justification</label>
                             <textarea required placeholder="WHY DO YOU NEED ELEVATED ACCESS?" className="w-full bg-black border border-slate-800 p-2 text-xs uppercase focus:border-cyan-500 outline-none min-h-[60px]" value={contactState.message} onChange={e => setContactState({...contactState, message: e.target.value})} />
                           </div>
-                          <Button type="submit" disabled={emailStatus==='sending'} className={`text-white rounded-none uppercase text-xs tracking-widest transition-colors duration-500 ${emailStatus === 'sending' ? 'bg-amber-600' : emailStatus === 'sent' ? 'bg-green-600' : 'bg-red-600 hover:bg-red-700'}`}>
+                          <Button type="submit" disabled={emailStatus==='sending'} className={`text-white rounded-none uppercase text-xs tracking-widest transition-colors duration-500 ${emailStatus === 'sending' ? 'bg-amber-600' : emailStatus === 'sent' ? 'bg-slate-800' : 'bg-red-600 hover:bg-red-700'}`}>
                              {emailStatus === 'sending' ? 'VERIFYING...' : emailStatus === 'sent' ? 'PENDING REVIEW' : 'REQUEST ELEVATION'}
                           </Button>
                         </form>
@@ -424,7 +488,7 @@ export default function LandingPage() {
                             <label className="text-[10px] uppercase text-slate-400 tracking-widest mb-1 block">Use Case</label>
                             <textarea required placeholder="HOW WILL YOU USE THE SANDBOX?" className="w-full bg-black border border-slate-800 p-2 text-xs uppercase focus:border-slate-500 outline-none min-h-[60px]" value={contactState.message} onChange={e => setContactState({...contactState, message: e.target.value})} />
                           </div>
-                          <Button type="submit" disabled={emailStatus==='sending'} className={`text-white rounded-none uppercase text-xs tracking-widest transition-colors duration-500 ${emailStatus === 'sending' ? 'bg-amber-600' : emailStatus === 'sent' ? 'bg-green-600' : 'bg-red-600 hover:bg-red-700'}`}>
+                          <Button type="submit" disabled={emailStatus==='sending'} className={`text-white rounded-none uppercase text-xs tracking-widest transition-colors duration-500 ${emailStatus === 'sending' ? 'bg-amber-600' : emailStatus === 'sent' ? 'bg-slate-800' : 'bg-red-600 hover:bg-red-700'}`}>
                              {emailStatus === 'sending' ? 'TRANSMITTING...' : emailStatus === 'sent' ? 'SECURED ON WAITLIST' : 'JOIN WAITLIST'}
                           </Button>
                         </form>
@@ -454,12 +518,12 @@ export default function LandingPage() {
             {act <= 2 && (
               <motion.div key="hero-text" initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20, filter: 'blur(10px)' }} transition={{ duration: 1, ease: "easeOut" }} className="w-full max-w-5xl mx-auto space-y-6 flex flex-col items-center">
                 <Badge variant="outline" className="border-slate-800 text-slate-400 bg-black/40 px-3 py-1 rounded-none text-[10px] uppercase tracking-widest mb-4">
-                  <Activity className="w-3 h-3 mr-2 inline-block animate-pulse text-slate-300" />
+                  <Activity className="w-3 h-3 mr-2 inline-block text-slate-300" />
                   Infrastructure Online
                 </Badge>
                 
                 <div className="w-full flex flex-col items-center justify-center -mt-4 mb-2">
-                  <h1 className="text-white drop-shadow-[0_0_25px_rgba(255,255,255,0.2)] text-5xl leading-tight md:text-[6rem] tracking-tighter font-black max-w-[1200px] uppercase">
+                  <h1 className="text-white drop- text-5xl leading-tight md:text-[6rem] tracking-tighter font-black max-w-[1200px] uppercase">
                     Connect. <br /> See. <br /> Act.
                   </h1>
                 </div>
@@ -470,8 +534,8 @@ export default function LandingPage() {
                 </motion.p>
 
                 <motion.div initial={{ opacity: 0 }} animate={{ opacity: act >= 1 ? 1 : 0 }} transition={{ duration: 1, delay: 0.5 }} className="flex flex-col sm:flex-row items-center justify-center pt-8 w-full max-w-md mx-auto relative z-20 gap-4">
-                    <Button onClick={handleInitiate} disabled={act !== 1} size="lg" className={`flex-1 w-full h-16 rounded-none text-[14px] uppercase tracking-widest font-black transition-all duration-700 ${act === 1 ? 'bg-white text-black hover:bg-slate-300 shadow-[0_0_40px_rgba(255,255,255,0.3)]' : 'bg-green-600 text-white shadow-[0_0_50px_rgba(34,197,94,0.4)] cursor-default'}`}>
-                      {act === 1 ? '▶ Watch Demo' : 'AUTHORISED'}
+                    <Button onClick={handleInitiate} disabled={act !== 1} size="lg" className={`flex-1 w-full h-16 rounded-none text-[14px] uppercase tracking-widest font-black transition-all duration-700 border-2 ${act === 1 ? 'bg-white text-black border-blue-500 shadow-[0_0_20px_rgba(59,130,246,0.6)] hover:shadow-[0_0_30px_rgba(59,130,246,0.9)] hover:bg-slate-100' : 'bg-green-500/10 text-green-400 border-green-500 shadow-[0_0_20px_rgba(34,197,94,0.6)] cursor-default'}`}>
+                      {act === 1 ? '▶ Watch Demo' : 'ACCESS GRANTED'}
                     </Button>
                     
                     <Dialog>
@@ -490,7 +554,7 @@ export default function LandingPage() {
                           <div><label className="text-[10px] uppercase text-slate-400">Enterprise / Company</label><input required type="text" placeholder="COMPANY NAME" className="w-full bg-black border border-slate-800 p-2 text-xs" value={contactState.company} onChange={e => setContactState({...contactState, company: e.target.value})} /></div>
                           <div><label className="text-[10px] uppercase text-slate-400">Role / Title</label><input required type="text" placeholder="YOUR ROLE" className="w-full bg-black border border-slate-800 p-2 text-xs" value={contactState.role} onChange={e => setContactState({...contactState, role: e.target.value})} /></div>
                           <div><label className="text-[10px] uppercase text-slate-400">Secure Payload</label><textarea required placeholder="ENTER REQUIREMENTS..." className="w-full bg-black border border-slate-800 p-2 text-xs min-h-[100px]" value={contactState.message} onChange={e => setContactState({...contactState, message: e.target.value})} /></div>
-                          <Button type="submit" disabled={emailStatus==='sending'} className={`text-white rounded-none uppercase text-xs transition-colors duration-500 h-12 ${emailStatus === 'sending' ? 'bg-amber-600 hover:bg-amber-700' : emailStatus === 'sent' ? 'bg-green-600 hover:bg-green-700' : 'bg-red-600 hover:bg-red-700'}`}>
+                          <Button type="submit" disabled={emailStatus==='sending'} className={`text-white rounded-none uppercase text-xs transition-colors duration-500 h-12 ${emailStatus === 'sending' ? 'bg-amber-600 hover:bg-amber-700' : emailStatus === 'sent' ? 'bg-slate-800 hover:bg-slate-800' : 'bg-red-600 hover:bg-red-700'}`}>
                              {emailStatus === 'sending' ? 'TRANSMITTING...' : emailStatus === 'sent' ? 'SECURED' : 'DISPATCH PAYLOAD'}
                           </Button>
                         </form>
@@ -499,7 +563,7 @@ export default function LandingPage() {
                 </motion.div>
                 
                 {act === 2 && (
-                  <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-[10px] text-slate-500 uppercase tracking-[0.3em] font-mono mt-8 animate-pulse text-center">CONNECTING TO SYSTEMS…</motion.div>
+                  <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-[10px] text-slate-500 uppercase tracking-[0.3em] font-mono mt-8 text-center">CONNECTING TO SYSTEMS…</motion.div>
                 )}
               </motion.div>
             )}
@@ -529,7 +593,7 @@ export default function LandingPage() {
               <section className="text-center py-24 text-2xl md:text-3xl text-slate-500 font-black uppercase tracking-tighter max-w-4xl mx-auto border-t border-white/5">
                 We don’t replace your stack.
                 <br />
-                <span className="text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]">
+                <span className="text-white drop-">
                   We make it intelligent, controllable, and provable.
                 </span>
               </section>
@@ -537,7 +601,7 @@ export default function LandingPage() {
               {/* What We Actually Do (3 Cards) */}
               <section className="grid grid-cols-1 md:grid-cols-3 gap-8 py-24 max-w-6xl mx-auto border-t border-white/5">
                 {features.map((f, i) => (
-                  <div key={i} className="bg-[#0a0b0c]/50 border border-slate-800 p-8 rounded-xl backdrop-blur-sm group hover:border-slate-600 transition-colors">
+                  <div key={i} className="bg-[#0a0b0c]/50 border border-slate-800 p-8 rounded-sm backdrop-blur-sm group hover:border-slate-600 transition-colors">
                     <div className="mb-6">{f.icon}</div>
                     <h3 className="text-xl font-bold text-white uppercase tracking-widest mb-4">{f.title}</h3>
                     <p className="text-sm text-slate-500 leading-relaxed font-mono">{f.desc}</p>
@@ -564,11 +628,7 @@ export default function LandingPage() {
               <section className="text-center py-32 border-t border-white/5">
                  <h2 className="text-4xl font-black uppercase tracking-tighter text-white mb-6">See it in action</h2>
                  <p className="text-slate-500 font-mono tracking-widest uppercase text-sm mb-12">Watch InfraConnect connect to a live system in seconds</p>
-                 <Link href="/theatre?auto=true">
-                   <Button size="lg" className="h-16 px-12 bg-blue-600 hover:bg-blue-500 text-white font-black uppercase tracking-[0.2em] rounded-none shadow-[0_0_30px_rgba(37,99,235,0.3)]">
-                     Launch Demo
-                   </Button>
-                 </Link>
+                 <NeonLaunchButton />
               </section>
 
               {/* Final CTA */}
@@ -585,7 +645,7 @@ export default function LandingPage() {
                     value={contactState.email}
                     onChange={e => setContactState({...contactState, email: e.target.value})}
                   />
-                  <Button onClick={sendEnterpriseRequest} disabled={emailStatus==='sending'} className={`text-white px-8 font-black uppercase text-xs tracking-widest h-14 rounded-none transition-colors duration-500 ${emailStatus === 'sending' ? 'bg-amber-600 hover:bg-amber-700' : emailStatus === 'sent' ? 'bg-green-600 hover:bg-green-700' : 'bg-red-600 hover:bg-red-700'}`}>
+                  <Button onClick={sendEnterpriseRequest} disabled={emailStatus==='sending'} className={`text-white px-8 font-black uppercase text-xs tracking-widest h-14 rounded-none transition-colors duration-500 ${emailStatus === 'sending' ? 'bg-amber-600 hover:bg-amber-700' : emailStatus === 'sent' ? 'bg-slate-800 hover:bg-slate-800' : 'bg-red-600 hover:bg-red-700'}`}>
                     {emailStatus === 'sending' ? 'TRANSMITTING...' : emailStatus === 'sent' ? 'SECURED' : 'DISPATCH PAYLOAD'}
                   </Button>
                 </div>
@@ -598,7 +658,7 @@ export default function LandingPage() {
       {/* CORE FOOTER */}
       <footer className="relative z-10 w-full px-12 py-8 mt-auto border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] uppercase tracking-[0.2em] font-black text-slate-500">
         <div className="flex items-center gap-2">
-          <div className="w-1.5 h-1.5 rounded-full bg-slate-500" />
+          <div className="w-1.5 h-1.5 rounded-sm bg-slate-500" />
           <span>© 2026 INFRACONNECT // INFRA-SYNC SYNDICATE</span>
         </div>
         <div className="flex items-center gap-6 text-slate-500">

@@ -41,8 +41,8 @@ export const Omnibar: React.FC = () => {
         </div>
       </div>
       <div className="flex gap-4 text-[9px] uppercase tracking-widest text-gray-500 font-black">
-        <span className="flex items-center gap-1.5"><div className="w-1.5 h-1.5 bg-[#22C55E] rounded-full animate-pulse blur-[1px]"></div> K3S EDGE: ONLINE</span>
-        <span className="flex items-center gap-1.5"><div className="w-1.5 h-1.5 bg-[#4CC9F0] rounded-full"></div> ROBOT: URDF-1</span>
+        <span className="flex items-center gap-1.5"><div className="w-1.5 h-1.5 bg-[#22C55E] rounded-sm blur-[1px]"></div> K3S EDGE: ONLINE</span>
+        <span className="flex items-center gap-1.5"><div className="w-1.5 h-1.5 bg-[#4CC9F0] rounded-sm"></div> ROBOT: URDF-1</span>
       </div>
       
       {/* Enterprise Demo Override Hook */}

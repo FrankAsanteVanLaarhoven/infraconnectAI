@@ -3,7 +3,7 @@ export function generatePath(event: any) {
   const start = { x: 0, y: 0 };
   const goal = { x: event.target ? event.target[0] : 5, y: event.target ? event.target[2] : 5 };
 
-  const path = [];
+  const path: any[] = [];
 
   let x = start.x;
   let y = start.y;

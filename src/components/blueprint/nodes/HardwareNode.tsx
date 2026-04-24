@@ -6,7 +6,7 @@ export function HardwareNode({ data }: { data: { label: string; robotId: string;
   const isOptimal = (data.svr || 0) < 0.05;
 
   return (
-    <div className="w-72 rounded-lg bg-[#0a0f14] border border-cyan-900/40 shadow-[0_0_25px_rgba(34,211,238,0.1)] relative overflow-hidden group">
+    <div className="w-72 rounded-sm bg-[#0a0f14] border border-cyan-900/40 relative overflow-hidden group">
       {/* Handles */}
       <Handle type="target" position={Position.Left} className="w-3 h-3 bg-cyan-500 border-none left-[-6px]" />
       
@@ -16,7 +16,7 @@ export function HardwareNode({ data }: { data: { label: string; robotId: string;
           <Cpu className="w-4 h-4 text-cyan-400" />
           <span className="font-mono text-[10px] font-black text-slate-200 uppercase tracking-widest">{data.label}</span>
         </div>
-        <div className={`w-2 h-2 rounded-full ${isOptimal ? 'bg-cyan-500 shadow-[0_0_10px_#22d3ee]' : 'bg-red-500 animate-pulse'}`} />
+        <div className={`w-2 h-2 rounded-sm ${isOptimal ? 'bg-cyan-500 ' : 'bg-red-500 '}`} />
       </div>
 
       {/* Body */}
@@ -44,7 +44,7 @@ export function HardwareNode({ data }: { data: { label: string; robotId: string;
         </div>
 
         {/* Real-time pulse bar */}
-        <div className="h-0.5 w-full bg-slate-900 rounded-full overflow-hidden">
+        <div className="h-0.5 w-full bg-slate-900 rounded-sm overflow-hidden">
            <motion.div 
              animate={{ width: ['20%', '100%', '20%'] }}
              transition={{ repeat: Infinity, duration: 3 }}

@@ -68,11 +68,11 @@ export const SovereignDevHub = () => {
     }, [missionState]);
 
     return (
-        <div className="w-full h-full bg-slate-950/80 backdrop-blur-2xl border border-slate-800 rounded-2xl p-6 flex flex-col font-mono relative overflow-hidden">
+        <div className="w-full h-full bg-slate-950/80 backdrop-blur-2xl border border-slate-800 rounded-none p-6 flex flex-col font-mono relative overflow-hidden">
             {/* Header: Mission Context */}
             <div className="flex items-center justify-between mb-6 border-b border-slate-800 pb-4">
                 <div className="flex items-center gap-3">
-                    <div className="bg-indigo-500/20 p-2 rounded-lg">
+                    <div className="bg-indigo-500/20 p-2 rounded-sm">
                         <Binary className="w-5 h-5 text-indigo-400" />
                     </div>
                     <div>
@@ -81,7 +81,7 @@ export const SovereignDevHub = () => {
                     </div>
                 </div>
                 <div className="flex items-center gap-2">
-                    <div className={`px-2 py-1 rounded border text-[9px] font-black uppercase tracking-widest ${missionState === 'AUTHORIZED' ? 'bg-green-500 text-white border-green-400' : 'bg-slate-900 text-slate-500 border-slate-800'}`}>
+                    <div className={`px-2 py-1 rounded border text-[9px] font-black uppercase tracking-widest ${missionState === 'AUTHORIZED' ? 'bg-slate-800 text-white border-slate-700' : 'bg-slate-900 text-slate-500 border-slate-800'}`}>
                         Status: {missionState}
                     </div>
                 </div>
@@ -96,12 +96,12 @@ export const SovereignDevHub = () => {
                         onChange={(e) => setSpec(e.target.value)}
                         placeholder="INPUT MISSION REQUIREMENTS (e.g. 'Deploy Swarm Agent to EDGE Core with Memory Integrity check'...)"
                         disabled={missionState !== 'IDLE'}
-                        className="flex-1 bg-black/40 border border-slate-800 rounded-xl p-4 text-[10px] text-indigo-300 placeholder:text-slate-800 focus:border-indigo-500 outline-none transition-all resize-none custom-scrollbar uppercase leading-relaxed tracking-wider"
+                        className="flex-1 bg-black/40 border border-slate-800 rounded-sm p-4 text-[10px] text-indigo-300 placeholder:text-slate-800 focus:border-indigo-500 outline-none transition-all resize-none custom-scrollbar uppercase leading-relaxed tracking-wider"
                     />
                     {missionState === 'IDLE' && (
                         <Button 
                             onClick={handleInitialize}
-                            className="bg-indigo-600 hover:bg-indigo-500 text-white font-black uppercase text-[10px] py-4 rounded-xl tracking-[0.2em]"
+                            className="bg-indigo-600 hover:bg-indigo-500 text-white font-black uppercase text-[10px] py-4 rounded-sm tracking-[0.2em]"
                         >
                             Initialize Mission Swarm
                         </Button>
@@ -110,7 +110,7 @@ export const SovereignDevHub = () => {
 
                 <div className="flex flex-col gap-4">
                     <p className="text-[10px] text-slate-500 uppercase font-black tracking-widest">Validation Ledger</p>
-                    <div className="flex-1 bg-black/40 border border-slate-800 rounded-xl p-4 overflow-y-auto custom-scrollbar space-y-3">
+                    <div className="flex-1 bg-black/40 border border-slate-800 rounded-sm p-4 overflow-y-auto custom-scrollbar space-y-3">
                         {missionState === 'IDLE' ? (
                             <div className="h-full flex flex-col items-center justify-center opacity-30 gap-3">
                                 <Search className="w-8 h-8 text-slate-600" />
@@ -119,15 +119,15 @@ export const SovereignDevHub = () => {
                         ) : (
                             <>
                                 {gates.map(gate => (
-                                    <div key={gate.id} className="flex justify-between items-center p-3 bg-slate-900/40 border border-slate-800 rounded-lg group hover:border-indigo-500/30 transition-all">
+                                    <div key={gate.id} className="flex justify-between items-center p-3 bg-slate-900/40 border border-slate-800 rounded-sm group hover:border-indigo-500/30 transition-all">
                                         <div className="flex items-center gap-3">
                                             <div className="text-[8px] text-slate-600 font-black">{gate.id}</div>
                                             <div className="text-[10px] font-black text-slate-300 uppercase">{gate.name}</div>
                                         </div>
                                         {gate.status === 'passed' ? (
-                                            <CheckCircle2 className="w-4 h-4 text-green-500" />
+                                            <CheckCircle2 className="w-4 h-4 text-slate-300" />
                                         ) : (
-                                            <Activity className="w-4 h-4 text-indigo-500 animate-pulse" />
+                                            <Activity className="w-4 h-4 text-indigo-500" />
                                         )}
                                     </div>
                                 ))}
@@ -137,10 +137,10 @@ export const SovereignDevHub = () => {
                                         <span>Current Phase: {missionState}</span>
                                         <span>{progress}%</span>
                                     </div>
-                                    <div className="w-full h-1 bg-slate-800 rounded-full overflow-hidden">
+                                    <div className="w-full h-1 bg-slate-800 rounded-sm overflow-hidden">
                                         <motion.div 
                                             animate={{ width: `${progress}%` }}
-                                            className="h-full bg-indigo-500 shadow-[0_0_10px_#6366f1]"
+                                            className="h-full bg-indigo-500"
                                         />
                                     </div>
                                 </div>
@@ -169,7 +169,7 @@ export const SovereignDevHub = () => {
                         animate={{ scale: 1, opacity: 1 }}
                     >
                         <Button 
-                            className="bg-green-600 hover:bg-green-500 text-white font-black uppercase text-[11px] px-8 py-6 rounded-xl tracking-[0.3em] flex items-center gap-3 shadow-[0_0_30px_rgba(34,197,94,0.3)] border border-green-400/50"
+                            className="bg-slate-800 hover:bg-slate-800 text-white font-black uppercase text-[11px] px-8 py-6 rounded-sm tracking-[0.3em] flex items-center gap-3 border border-slate-700"
                             onClick={() => window.dispatchEvent(new CustomEvent('infraconnect:mission-signoff'))}
                         >
                             <Unlock className="w-4 h-4" />

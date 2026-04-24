@@ -8,7 +8,7 @@ function distance(posA: [number, number, number], posB: [number, number, number]
 }
 
 export function allocateTasks(robots: Robot[], tasks: Task[]) {
-  const assignments = [];
+  const assignments: any[] = [];
 
   for (const task of tasks) {
     let bestRobot: Robot | null = null;

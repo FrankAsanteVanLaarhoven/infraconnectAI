@@ -19,14 +19,14 @@ export default function Omnibar() {
   };
 
   return (
-    <div className="absolute top-0 left-0 w-full h-12 bg-black/80 border-b border-[var(--border)] flex items-center px-6 z-50 shadow-glow">
-      <span className="text-cyan font-mono mr-4 font-bold tracking-widest uppercase text-xs">Omnibar_</span>
+    <div className="absolute top-0 left-0 w-full h-12 bg-black/80 border-b border-[var(--border)] flex items-center px-6 z-50">
+      <span className="text-zinc-400 font-mono mr-4 font-bold tracking-widest uppercase text-xs">Omnibar_</span>
       <input
         value={cmd}
         onChange={(e) => setCmd(e.target.value)}
         onKeyDown={(e) => e.key === "Enter" && run()}
         placeholder="Type a mission or > command..."
-        className="w-full bg-transparent outline-none text-sm text-cyan font-mono tracking-wide placeholder:text-cyan/30"
+        className="w-full bg-transparent outline-none text-sm text-zinc-300 font-mono tracking-wide placeholder:text-zinc-600"
       />
     </div>
   );

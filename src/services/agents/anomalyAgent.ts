@@ -11,7 +11,7 @@ export const THRESHOLDS = {
  * Fast, deterministic. Evaluates raw payloads and returns boolean states.
  */
 export async function anomalyAgent(telemetry: TelemetryEvent) {
-  const reasoning = [];
+  const reasoning: any[] = [];
 
   if (telemetry.battery < THRESHOLDS.BATTERY_MIN) {
       reasoning.push(`Battery boundary broken: ${telemetry.battery}% < ${THRESHOLDS.BATTERY_MIN}%`);
@@ -26,7 +26,7 @@ export async function anomalyAgent(telemetry: TelemetryEvent) {
   }
 
   return {
-      hasAnomaly: reasoning.length > 0 || telemetry.status === 'ERROR',
+      hasAnomaly: reasoning.length > 0 || (telemetry.status as any) === 'ERROR',
       reasoningContext: reasoning.length > 0 ? reasoning : ['General Error State Registered'],
   };
 }

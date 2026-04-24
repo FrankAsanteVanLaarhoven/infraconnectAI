@@ -48,7 +48,7 @@ export function AdaptiveSwarmEngine() {
   }, []);
 
   return (
-    <div className="w-full h-full bg-slate-950/80 backdrop-blur-3xl border border-indigo-500/30 rounded-2xl overflow-hidden flex flex-col font-mono select-none relative">
+    <div className="w-full h-full bg-slate-950/80 backdrop-blur-3xl border border-indigo-500/30 rounded-none overflow-hidden flex flex-col font-mono select-none relative">
       {/* Background Grid Pattern */}
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none" 
            style={{ backgroundImage: 'radial-gradient(#6366f1 1px, transparent 1px)', backgroundSize: '24px 24px' }} />
@@ -58,13 +58,13 @@ export function AdaptiveSwarmEngine() {
          <div className="absolute top-4 right-6 flex gap-2">
             <button 
               onClick={() => setViewMode('ORCHESTRATION')}
-              className={`text-[8px] font-black px-2 py-1 rounded transition-all ${viewMode === 'ORCHESTRATION' ? 'bg-indigo-500 text-white shadow-[0_0_10px_rgba(99,102,241,0.5)]' : 'bg-slate-900 text-slate-500'}`}
+              className={`text-[8px] font-black px-2 py-1 rounded transition-all ${viewMode === 'ORCHESTRATION' ? 'bg-indigo-500 text-white ' : 'bg-slate-900 text-slate-500'}`}
             >
               {t('swarm.orchestration')}
             </button>
             <button 
               onClick={() => setViewMode('CHAIN')}
-              className={`text-[8px] font-black px-2 py-1 rounded transition-all ${viewMode === 'CHAIN' ? 'bg-indigo-500 text-white shadow-[0_0_10px_rgba(99,102,241,0.5)]' : 'bg-slate-900 text-slate-500'}`}
+              className={`text-[8px] font-black px-2 py-1 rounded transition-all ${viewMode === 'CHAIN' ? 'bg-indigo-500 text-white ' : 'bg-slate-900 text-slate-500'}`}
             >
               {t('swarm.dependency_chain')}
             </button>
@@ -73,7 +73,7 @@ export function AdaptiveSwarmEngine() {
          <motion.div 
            animate={{ scale: [1, 1.05, 1] }} 
            transition={{ duration: 4, repeat: Infinity }}
-           className="w-12 h-12 bg-indigo-500/10 rounded-full flex items-center justify-center border border-indigo-500/20 mb-2 shadow-[0_0_20px_rgba(99,102,241,0.2)]"
+           className="w-12 h-12 bg-indigo-500/10 rounded-sm flex items-center justify-center border border-indigo-500/20 mb-2"
          >
             <Brain className="w-6 h-6 text-indigo-400" />
          </motion.div>
@@ -98,7 +98,7 @@ export function AdaptiveSwarmEngine() {
               >
                  {/* Master Dispatcher Column */}
                  <div className="w-1/3 flex flex-col items-center space-y-6">
-                    <div className="w-full p-4 bg-indigo-950/20 rounded-xl border border-indigo-500/20 text-center relative">
+                    <div className="w-full p-4 bg-indigo-950/20 rounded-sm border border-indigo-500/20 text-center relative">
                        <div className="absolute top-0 right-0 p-2"><Lock className="w-3 h-3 text-indigo-900" /></div>
                        <h3 className="text-[10px] font-black text-indigo-500 mb-1 uppercase tracking-widest">{t('swarm.master_agent')}</h3>
                        <p className="text-[9px] text-slate-500 font-bold uppercase tracking-widest">{t('swarm.ensures_coherence')}</p>
@@ -107,7 +107,7 @@ export function AdaptiveSwarmEngine() {
                        <div className="mt-4 flex justify-between gap-1">
                           {steps.map((s, idx) => (
                              <div key={s} className="flex flex-col items-center gap-1 flex-1">
-                                <div className={`w-full h-1 rounded-full transition-colors ${idx <= activeStep ? 'bg-indigo-400 shadow-[0_0_8px_rgba(99,102,241,0.5)]' : 'bg-slate-800'}`} />
+                                <div className={`w-full h-1 rounded-sm transition-colors ${idx <= activeStep ? 'bg-indigo-400 ' : 'bg-slate-800'}`} />
                                 <span className={`text-[6px] font-black ${idx === activeStep ? 'text-indigo-400' : 'text-slate-700'}`}>{s}</span>
                              </div>
                           ))}
@@ -121,7 +121,7 @@ export function AdaptiveSwarmEngine() {
                             key={worker.id}
                             initial={{ opacity: 0, x: -20 }}
                             animate={{ opacity: 1, x: 0 }}
-                            className="p-3 bg-slate-900/40 rounded-lg border border-slate-800/50 flex flex-col gap-2 group hover:border-indigo-500/20 transition-all font-mono"
+                            className="p-3 bg-slate-900/40 rounded-sm border border-slate-800/50 flex flex-col gap-2 group hover:border-indigo-500/20 transition-all font-mono"
                           >
                              <div className="flex justify-between items-center">
                                 <div className="flex items-center gap-2">
@@ -130,8 +130,8 @@ export function AdaptiveSwarmEngine() {
                                       {worker.role === 'CODE GEN' && <Code className="w-3 h-3 text-cyan-400" />}
                                       {worker.role === 'WEB SEARCH' && <Search className="w-3 h-3 text-amber-400" />}
                                       {worker.role === 'FILE MGMT' && <FolderLock className="w-3 h-3 text-rose-400" />}
-                                      {worker.role === 'IMAGE GEN' && <ImageIcon className="w-3 h-3 text-purple-400" />}
-                                      {worker.role === 'DEPLOYMENT' && <Globe className="w-3 h-3 text-emerald-400" />}
+                                      {worker.role === 'IMAGE GEN' && <ImageIcon className="w-3 h-3 text-slate-400" />}
+                                      {worker.role === 'DEPLOYMENT' && <Globe className="w-3 h-3 text-slate-300" />}
                                    </div>
                                    <div>
                                       <p className="text-[9px] font-black text-white tracking-widest uppercase flex items-center gap-2">
@@ -143,9 +143,9 @@ export function AdaptiveSwarmEngine() {
                                       <p className="text-[7px] text-slate-500 font-bold uppercase">{worker.capability}</p>
                                    </div>
                                 </div>
-                                <span className="text-[9px] font-black text-indigo-400 animate-pulse">{worker.progress}%</span>
+                                <span className="text-[9px] font-black text-indigo-400">{worker.progress}%</span>
                              </div>
-                             <div className="w-full h-1 bg-slate-800 rounded-full overflow-hidden">
+                             <div className="w-full h-1 bg-slate-800 rounded-sm overflow-hidden">
                                 <motion.div 
                                   initial={{ width: 0 }}
                                   animate={{ width: `${worker.progress}%` }}
@@ -163,7 +163,7 @@ export function AdaptiveSwarmEngine() {
                     </div>
 
                     {/* Live Swarm Terminal */}
-                    <div className="w-full h-40 bg-black/60 border border-indigo-900/40 rounded-xl p-3 font-mono overflow-hidden flex flex-col group">
+                    <div className="w-full h-40 bg-black/60 border border-indigo-900/40 rounded-sm p-3 font-mono overflow-hidden flex flex-col group">
                        <div className="flex items-center justify-between mb-2">
                           <span className="text-[8px] font-black text-indigo-400 uppercase tracking-widest">Live Swarm Trace</span>
                           <span className="text-[7px] text-indigo-900 font-bold uppercase group-hover:text-indigo-600 transition-colors">Verifying IDs...</span>
@@ -191,10 +191,10 @@ export function AdaptiveSwarmEngine() {
 
                     <div className="grid grid-cols-3 gap-4">
                        {SHARED_ARCHITECTURE.map(arch => (
-                          <div key={arch.id} className="p-4 bg-slate-900/60 rounded-xl border border-slate-800 flex flex-col items-center text-center space-y-3 group hover:border-indigo-500/20 transition-all">
-                             <div className="p-3 bg-indigo-500/5 rounded-full border border-indigo-500/10 group-hover:bg-indigo-500/10">
+                          <div key={arch.id} className="p-4 bg-slate-900/60 rounded-sm border border-slate-800 flex flex-col items-center text-center space-y-3 group hover:border-indigo-500/20 transition-all">
+                             <div className="p-3 bg-indigo-500/5 rounded-sm border border-indigo-500/10 group-hover:bg-indigo-500/10">
                                 {arch.icon === 'database' && <Database className="w-6 h-6 text-indigo-400" />}
-                                {arch.icon === 'shield' && <ShieldCheck className="w-6 h-6 text-emerald-400" />}
+                                {arch.icon === 'shield' && <ShieldCheck className="w-6 h-6 text-slate-300" />}
                                 {arch.icon === 'palette' && <Palette className="w-6 h-6 text-amber-400" />}
                              </div>
                              <div>
@@ -207,11 +207,11 @@ export function AdaptiveSwarmEngine() {
 
                     {/* Strategy Ticker */}
                     <div className="grid grid-cols-2 gap-4 mt-auto">
-                       <div className="p-3 bg-slate-900/20 border border-slate-800 rounded-lg">
+                       <div className="p-3 bg-slate-900/20 border border-slate-800 rounded-sm">
                           <p className="text-[8px] font-black text-indigo-400 mb-1 tracking-widest uppercase italic">{t('swarm.planning_metacognition')}</p>
                           <p className="text-[8px] text-slate-500 leading-normal">Thinking about how to think about a problem across novel domains.</p>
                        </div>
-                       <div className="p-3 bg-slate-900/20 border border-slate-800 rounded-lg">
+                       <div className="p-3 bg-slate-900/20 border border-slate-800 rounded-sm">
                           <p className="text-[8px] font-black text-amber-400 mb-1 tracking-widest uppercase italic">{t('swarm.multi_domain_cap')}</p>
                           <p className="text-[8px] text-slate-500 leading-normal">Broad cognitive capability across wildly different problem spaces.</p>
                        </div>
@@ -237,7 +237,7 @@ export function AdaptiveSwarmEngine() {
                          initial={{ scaleX: 0 }}
                          animate={{ scaleX: 1 }}
                          transition={{ duration: 1.5 }}
-                         className="h-10 bg-indigo-500/20 border border-indigo-500/40 rounded-xl origin-left flex items-center justify-end px-4"
+                         className="h-10 bg-indigo-500/20 border border-indigo-500/40 rounded-sm origin-left flex items-center justify-end px-4"
                        >
                           <span className="text-[10px] text-indigo-400 font-black">100%</span>
                        </motion.div>
@@ -249,7 +249,7 @@ export function AdaptiveSwarmEngine() {
                  {/* Synthesis Row */}
                  <div className="flex items-center gap-8 pl-12">
                     <div className="w-48">
-                       <h3 className="text-sm font-black text-emerald-400 tracking-widest">{t('swarm.synthesis')}</h3>
+                       <h3 className="text-sm font-black text-slate-300 tracking-widest">{t('swarm.synthesis')}</h3>
                        <p className="text-[8px] text-slate-600 font-bold uppercase">Waits for Research</p>
                     </div>
                     <div className="flex-1 relative">
@@ -257,12 +257,12 @@ export function AdaptiveSwarmEngine() {
                          initial={{ scaleX: 0 }}
                          animate={{ scaleX: 1 }}
                          transition={{ duration: 1.5, delay: 1.5 }}
-                         className="h-10 bg-emerald-500/20 border border-emerald-500/40 rounded-xl origin-left flex items-center justify-end px-4"
+                         className="h-10 bg-slate-800 border border-slate-700 rounded-sm origin-left flex items-center justify-end px-4"
                        >
-                          <span className="text-[10px] text-emerald-400 font-black">100%</span>
+                          <span className="text-[10px] text-slate-300 font-black">100%</span>
                        </motion.div>
                        {/* Connection Arrow */}
-                       <div className="absolute top-10 right-1/2 w-[2px] h-12 bg-emerald-500/20" />
+                       <div className="absolute top-10 right-1/2 w-[2px] h-12 bg-slate-800" />
                     </div>
                  </div>
 
@@ -277,7 +277,7 @@ export function AdaptiveSwarmEngine() {
                          initial={{ scaleX: 0 }}
                          animate={{ scaleX: 1 }}
                          transition={{ duration: 1.5, delay: 3 }}
-                         className="h-10 bg-amber-500/20 border border-amber-500/40 rounded-xl origin-left flex items-center justify-end px-4"
+                         className="h-10 bg-amber-500/20 border border-amber-500/40 rounded-sm origin-left flex items-center justify-end px-4"
                        >
                           <span className="text-[10px] text-amber-400 font-black">100%</span>
                        </motion.div>
@@ -292,13 +292,13 @@ export function AdaptiveSwarmEngine() {
       <div className="p-4 bg-indigo-950/20 border-t border-indigo-500/10 flex items-center justify-between">
          <div className="flex items-center gap-6">
             <div className="flex items-center gap-2">
-               <ShieldCheck className="w-3 h-3 text-emerald-500" />
-               <span className="text-[9px] text-emerald-400 font-black uppercase">{t('swarm.security_validated')}</span>
+               <ShieldCheck className="w-3 h-3 text-slate-300" />
+               <span className="text-[9px] text-slate-300 font-black uppercase">{t('swarm.security_validated')}</span>
             </div>
             <div className="flex gap-4">
                {['Synthesizer', 'Presenter', 'Scheduler'].map(role => (
                  <span key={role} className="text-[8px] text-slate-600 font-bold uppercase tracking-widest flex items-center gap-1.5">
-                    <div className="w-1 h-1 rounded-full bg-slate-700" /> {role}
+                    <div className="w-1 h-1 rounded-sm bg-slate-700" /> {role}
                  </span>
                ))}
             </div>

@@ -48,14 +48,14 @@ export function InteractiveROICalc() {
 
   return (
     <div className="w-full max-w-4xl mx-auto my-12 relative">
-       <div className="absolute inset-0 bg-blue-500/5 blur-[100px] rounded-full" />
+       <div className="absolute inset-0 bg-blue-500/5 blur-[100px] rounded-sm" />
        
-       <div className="relative glass-subtle border border-blue-500/20 rounded-2xl overflow-hidden flex flex-col md:flex-row h-full font-mono">
+       <div className="relative glass-subtle border border-blue-500/20 rounded-none overflow-hidden flex flex-col md:flex-row h-full font-mono">
           
           {/* Controls Panel */}
           <div className="w-full md:w-1/2 p-8 space-y-8 bg-slate-900/40 border-r border-white/5">
              <div className="flex items-center gap-3">
-                <div className="p-2 bg-blue-500/10 rounded-lg">
+                <div className="p-2 bg-blue-500/10 rounded-sm">
                    <Calculator className="w-5 h-5 text-blue-400" />
                 </div>
                 <h3 className="text-xs font-black uppercase tracking-widest text-white">Magnitude Calculator</h3>
@@ -71,7 +71,7 @@ export function InteractiveROICalc() {
                      type="range" min="5" max="500" step="5"
                      value={teamSize} 
                      onChange={(e) => setTeamSize(Number(e.target.value))}
-                     className="w-full h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-blue-500" 
+                     className="w-full h-1 bg-slate-800 rounded-sm appearance-none cursor-pointer accent-blue-500" 
                    />
                 </div>
 
@@ -84,14 +84,14 @@ export function InteractiveROICalc() {
                      type="range" min="40000" max="250000" step="5000"
                      value={avgSalary} 
                      onChange={(e) => setAvgSalary(Number(e.target.value))}
-                     className="w-full h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-blue-500" 
+                     className="w-full h-1 bg-slate-800 rounded-sm appearance-none cursor-pointer accent-blue-500" 
                    />
                 </div>
              </div>
 
              <div className="pt-8 border-t border-white/5 space-y-4">
                 <div className="flex items-center gap-3 text-[9px] text-slate-500 uppercase font-black">
-                   <ShieldCheck className="w-4 h-4 text-emerald-500" /> Security Risk Avoidance Integrated
+                   <ShieldCheck className="w-4 h-4 text-slate-300" /> Security Risk Avoidance Integrated
                 </div>
                 <div className="flex items-center gap-3 text-[9px] text-slate-500 uppercase font-black">
                    <TrendingUp className="w-4 h-4 text-blue-500" /> Efficiency Gain: 25% (Min)
@@ -129,7 +129,7 @@ export function InteractiveROICalc() {
 
                       <Button 
                         onClick={() => setShowCapture(true)}
-                        className="w-full bg-blue-600 hover:bg-blue-500 text-white text-[10px] font-black uppercase py-6 rounded-none flex gap-3 shadow-[0_0_30px_rgba(37,99,235,0.3)]"
+                        className="w-full bg-blue-600 hover:bg-blue-500 text-white text-[10px] font-black uppercase py-6 rounded-none flex gap-3"
                       >
                          Secure this analysis <ArrowRight className="w-4 h-4" />
                       </Button>

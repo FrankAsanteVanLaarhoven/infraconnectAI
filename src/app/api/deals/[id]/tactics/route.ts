@@ -5,10 +5,10 @@ import { generateTacticalSuggestion, logDealActivity, ObjectionType } from "@/li
 
 export async function POST(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { id } = params;
+    const { id } = await params;
     const body = await req.json();
     const { type, message } = body; // type is ObjectionType
 
@@ -50,11 +50,12 @@ export async function POST(
 // GET Activity Feed
 export async function GET(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const activities = await db.dealActivity.findMany({
-      where: { leadId: params.id },
+      where: { leadId: id },
       orderBy: { timestamp: 'desc' }
     });
     return NextResponse.json({ activities });

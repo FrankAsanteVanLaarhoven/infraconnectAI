@@ -59,7 +59,7 @@ export function TimelineController() {
                <span className="text-[8px] text-slate-500 uppercase tracking-[0.3em] block mb-1">{t('panel.mission_scene')}</span>
                <button 
                  onClick={() => setIsMissionOpen(!isMissionOpen)}
-                 className={`flex items-center gap-3 bg-slate-900/50 border px-4 py-2 rounded-lg transition-all ${isMissionOpen ? 'border-cyan-500 shadow-[0_0_15px_rgba(6,182,212,0.2)]' : 'border-slate-700/50 hover:border-slate-600'}`}
+                 className={`flex items-center gap-3 bg-slate-900/50 border px-4 py-2 rounded-sm transition-all ${isMissionOpen ? 'border-cyan-500 ' : 'border-slate-700/50 hover:border-slate-600'}`}
                >
                   <Monitor className={`w-3 h-3 ${currentMission ? 'text-cyan-400' : 'text-slate-600'}`} />
                   <span className={`text-xs font-black uppercase tracking-widest ${currentMission ? 'text-white' : 'text-slate-500 italic'}`}>
@@ -74,7 +74,7 @@ export function TimelineController() {
                      initial={{ opacity: 0, y: 10 }}
                      animate={{ opacity: 1, y: 0 }}
                      exit={{ opacity: 0, y: 10 }}
-                     className="absolute top-full left-0 mt-2 w-72 bg-slate-900/95 backdrop-blur-2xl border border-slate-700 rounded-xl shadow-2xl z-[100] overflow-hidden"
+                     className="absolute top-full left-0 mt-2 w-72 bg-slate-900/95 backdrop-blur-2xl border border-slate-700 rounded-sm shadow-2xl z-[100] overflow-hidden"
                    >
                      {missions.map(m => (
                        <button 
@@ -120,7 +120,7 @@ export function TimelineController() {
 
             <div className="flex flex-col gap-1">
                <span className="text-[8px] text-slate-500 uppercase tracking-[0.3em]">Map Projection</span>
-               <div className="flex p-0.5 bg-slate-900 border border-slate-800 rounded-lg">
+               <div className="flex p-0.5 bg-slate-900 border border-slate-800 rounded-sm">
                   {['AERIAL', 'TACTICAL', 'ORBITAL'].map(m => (
                      <button 
                         key={m}
@@ -142,13 +142,13 @@ export function TimelineController() {
              whileHover={{ scale: 1.05 }}
              whileTap={{ scale: 0.95 }}
              onClick={() => setIsPlaying(!isPlaying)}
-             className={`p-5 rounded-full border transition-all shadow-2xl ${isPlaying ? 'bg-rose-500/10 border-rose-500/50 text-rose-500' : 'bg-cyan-500/10 border-cyan-500/40 text-cyan-400'}`}
+             className={`p-5 rounded-sm border transition-all shadow-2xl ${isPlaying ? 'bg-rose-500/10 border-rose-500/50 text-rose-500' : 'bg-cyan-500/10 border-cyan-500/40 text-cyan-400'}`}
            >
               {isPlaying ? <Pause className="w-6 h-6 fill-current" /> : <Play className="w-6 h-6 fill-current translate-x-0.5" />}
            </motion.button>
            {isRecording && (
              <div className="flex items-center gap-2">
-               <span className="w-1.5 h-1.5 bg-rose-500 rounded-full animate-pulse" />
+               <span className="w-1.5 h-1.5 bg-rose-500 rounded-sm" />
                <span className="text-[7px] font-black text-rose-500 uppercase tracking-widest">● REC</span>
              </div>
            )}
@@ -158,7 +158,7 @@ export function TimelineController() {
              {/* LIVE SENSOR ARRAY OVERLAY */}
              <div className="absolute -top-6 left-0 flex items-center gap-3">
                 <div className="flex items-center gap-2 px-2 py-0.5 bg-cyan-950/30 border border-cyan-500/30 rounded text-[7px] font-black text-cyan-400 tracking-[0.2em] uppercase">
-                   <Activity className="w-2.5 h-2.5 animate-pulse" /> {t('sensor.live_array')}
+                   <Activity className="w-2.5 h-2.5" /> {t('sensor.live_array')}
                 </div>
                 <div className="text-[7px] text-slate-600 font-bold uppercase tracking-widest">{t('sensor.stream')}: 884.2 Mbps</div>
              </div>
@@ -184,7 +184,7 @@ export function TimelineController() {
                   <motion.div 
                     onHoverStart={() => setHoveredEvent(i)}
                     onHoverEnd={() => setHoveredEvent(null)}
-                    className={`w-3 h-3 rounded-full border-2 border-black cursor-pointer shadow-[0_0_15px_currentColor] ${m.color === 'rose' ? 'bg-rose-500 text-rose-500' : m.color === 'emerald' ? 'bg-emerald-500 text-emerald-500' : 'bg-cyan-500 text-cyan-500'}`}
+                    className={`w-3 h-3 rounded-sm border-2 border-black cursor-pointer shadow-[0_0_15px_currentColor] ${m.color === 'rose' ? 'bg-rose-500 text-rose-500' : m.color === 'emerald' ? 'bg-slate-800 text-slate-300' : 'bg-cyan-500 text-cyan-500'}`}
                   />
                   
                   <AnimatePresence>
@@ -193,13 +193,13 @@ export function TimelineController() {
                           initial={{ opacity: 0, y: 10, scale: 0.9 }}
                           animate={{ opacity: 1, y: 0, scale: 1 }}
                           exit={{ opacity: 0, scale: 0.9 }}
-                          className="absolute bottom-6 left-1/2 -translate-x-1/2 w-48 p-3 bg-slate-900/90 backdrop-blur-xl border border-white/10 rounded-xl shadow-2xl z-50 pointer-events-none"
+                          className="absolute bottom-6 left-1/2 -translate-x-1/2 w-48 p-3 bg-slate-900/90 backdrop-blur-xl border border-white/10 rounded-sm shadow-2xl z-50 pointer-events-none"
                         >
                            <div className="text-[8px] text-slate-500 uppercase tracking-widest mb-1 font-bold">{t('timeline.event_context')}</div>
                            <h4 className={`text-[10px] font-black uppercase mb-1 ${m.color === 'rose' ? 'text-rose-400' : 'text-cyan-400'}`}>{m.requirement}</h4>
                            <p className="text-[8px] text-slate-400 leading-tight uppercase font-medium">{m.detail}</p>
                            <div className="mt-2 flex items-center gap-2">
-                              <div className="w-1 h-1 rounded-full bg-green-500" />
+                              <div className="w-1 h-1 rounded-sm bg-slate-800" />
                               <span className="text-[7px] text-slate-500 uppercase">{t('timeline.sensor_available')}</span>
                            </div>
                         </motion.div>
@@ -210,9 +210,9 @@ export function TimelineController() {
 
             {/* MAIN PLAYHEAD (GOD'S EYE) */}
             <div className="absolute top-1/2 -translate-y-1/2 w-8 h-8 z-30 cursor-pointer pointer-events-none" style={{ left: '68%' }}>
-               <div className="absolute inset-0 bg-cyan-400/20 blur-xl rounded-full animate-pulse" />
-               <div className="absolute inset-1 border-2 border-cyan-400 rounded-full flex items-center justify-center">
-                  <div className="w-2 h-2 bg-white rounded-full shadow-[0_0_10px_#fff]" />
+               <div className="absolute inset-0 bg-cyan-400/20 blur-xl rounded-sm" />
+               <div className="absolute inset-1 border-2 border-cyan-400 rounded-sm flex items-center justify-center">
+                  <div className="w-2 h-2 bg-white rounded-sm" />
                </div>
             </div>
          </div>
@@ -223,7 +223,7 @@ export function TimelineController() {
          {/* Cap 1: Dynamic Playback */}
          <div className="flex flex-col gap-3">
             <span className="text-[9px] text-slate-500 uppercase tracking-[0.3em] font-black">Simulation Rate</span>
-            <div className="flex bg-slate-900/50 p-1 border border-slate-800 rounded-lg">
+            <div className="flex bg-slate-900/50 p-1 border border-slate-800 rounded-sm">
                {speeds.map(s => (
                   <button 
                     key={s} 
@@ -243,7 +243,7 @@ export function TimelineController() {
                <span className="text-[9px] text-cyan-400 font-black">7.4° NADIR</span>
             </div>
             <div className="flex items-center gap-4">
-               <Waves className="w-4 h-4 text-cyan-500 animate-pulse" />
+               <Waves className="w-4 h-4 text-cyan-500" />
                <Slider defaultValue={[4]} max={20} className="flex-1" />
             </div>
          </div>
@@ -253,7 +253,7 @@ export function TimelineController() {
             {[
                { icon: Eye, label: 'SYNDICATED INTEL', active: true, color: 'text-cyan-400' },
                { icon: Target, label: 'KINETIC STRIKES', active: true, color: 'text-rose-500' },
-               { icon: Satellite, label: 'SAR OVERLAYS', active: false, color: 'text-emerald-400' },
+               { icon: Satellite, label: 'SAR OVERLAYS', active: false, color: 'text-slate-300' },
                { icon: Waves, label: 'ENERGY FLOW', active: true, color: 'text-cyan-400' },
                { icon: ShieldOff, label: 'RESTRICTIONS', active: false, color: 'text-rose-500' },
             ].map(cap => (

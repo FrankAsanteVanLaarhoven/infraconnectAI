@@ -25,7 +25,7 @@ function StatusPill({ status }: { status: VerificationGate['status'] }) {
   const cfg = map[status] || map.pending;
   const Icon = cfg.icon
   return (
-    <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] border font-mono tracking-widest uppercase ${cfg.color}`}>
+    <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-sm text-[10px] border font-mono tracking-widest uppercase ${cfg.color}`}>
       <Icon className="w-3 h-3" />{cfg.label}
     </span>
   )
@@ -55,9 +55,9 @@ function HealthGauge({ value, label, color }: { value: number; label: string; co
         <span className="text-[10px] text-muted-foreground font-mono uppercase tracking-wider">{label}</span>
         <span className={`text-xs font-bold font-mono ${color}`}>{pct}%</span>
       </div>
-      <div className="h-1.5 rounded-full bg-border/20 overflow-hidden">
+      <div className="h-1.5 rounded-sm bg-border/20 overflow-hidden">
         <motion.div
-            className={`h-full rounded-full ${
+            className={`h-full rounded-sm ${
             pct > 75 ? 'bg-foreground' : pct > 50 ? 'bg-muted-foreground' : 'bg-muted-foreground/50'
             }`}
             initial={{ width: 0 }}
@@ -109,7 +109,7 @@ export function AgentOperationsCenter() {
     return (
        <GlassPanel glow>
          <div className="flex items-center justify-center h-64 text-muted-foreground text-[10px] font-mono tracking-widest uppercase">
-           <ShieldAlert className="w-4 h-4 mr-2 animate-pulse" /> Signal Drift Detected // Standby
+           <ShieldAlert className="w-4 h-4 mr-2" /> Signal Drift Detected // Standby
          </div>
        </GlassPanel>
     );
@@ -192,7 +192,7 @@ export function AgentOperationsCenter() {
                         <span className="text-sm font-medium tracking-tight text-foreground truncate uppercase">{t.role}</span>
                         <Badge variant="outline" className="text-[9px] bg-foreground/5">{t.status}</Badge>
                       </div>
-                      <div className="h-1 bg-border/20 rounded-full overflow-hidden mb-2 max-w-[100px]">
+                      <div className="h-1 bg-border/20 rounded-sm overflow-hidden mb-2 max-w-[100px]">
                         <motion.div className="h-full bg-foreground" initial={{ width: 0 }} animate={{ width: `${t.progress}%` }} />
                       </div>
                     </div>

@@ -28,7 +28,7 @@ export function ObjectExplorer() {
     const activeObject = ONTOLOGY_REGISTRY.find(obj => obj.urn === selectedUrn);
 
     return (
-        <div className="w-full h-full bg-slate-950/90 backdrop-blur-3xl border border-slate-800 rounded-2xl flex font-mono relative overflow-hidden group">
+        <div className="w-full h-full bg-slate-950/90 backdrop-blur-3xl border border-slate-800 rounded-none flex font-mono relative overflow-hidden group">
             {/* Left Sidebar: Object List */}
             <div className="w-1/3 border-r border-slate-800 p-4 flex flex-col gap-4">
                 <div className="relative">
@@ -38,7 +38,7 @@ export function ObjectExplorer() {
                         placeholder="Search Ontology..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
-                        className="w-full bg-slate-900/50 border border-slate-800 rounded-lg py-2 pl-8 pr-4 text-[10px] text-white focus:outline-none focus:border-indigo-500/50 transition-colors"
+                        className="w-full bg-slate-900/50 border border-slate-800 rounded-sm py-2 pl-8 pr-4 text-[10px] text-white focus:outline-none focus:border-indigo-500/50 transition-colors"
                     />
                 </div>
 
@@ -47,9 +47,9 @@ export function ObjectExplorer() {
                         <div 
                             key={obj.urn}
                             onClick={() => setSelectedUrn(obj.urn)}
-                            className={`p-3 rounded-xl border cursor-pointer transition-all ${
+                            className={`p-3 rounded-sm border cursor-pointer transition-all ${
                                 selectedUrn === obj.urn 
-                                ? 'bg-indigo-500/10 border-indigo-500/50 shadow-[0_0_15px_rgba(99,102,241,0.1)]' 
+                                ? 'bg-indigo-500/10 border-indigo-500/50 ' 
                                 : 'bg-transparent border-transparent hover:bg-slate-900/30'
                             }`}
                         >
@@ -86,7 +86,7 @@ export function ObjectExplorer() {
                                             {activeObject.category}
                                         </div>
                                         <div className={`px-2 py-0.5 rounded text-[7px] font-black border uppercase tracking-widest ${
-                                            activeObject.status === 'SYNCHRONIZED' ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30' : 'bg-red-500/20 text-red-400 border-red-500/30'
+                                            activeObject.status === 'SYNCHRONIZED' ? 'bg-slate-800 text-slate-300 border-slate-700' : 'bg-red-500/20 text-red-400 border-red-500/30'
                                         }`}>
                                             {activeObject.status}
                                         </div>
@@ -94,14 +94,14 @@ export function ObjectExplorer() {
                                     <h2 className="text-xl font-black text-white uppercase tracking-tight mb-1">{activeObject.displayName}</h2>
                                     <p className="text-[9px] text-slate-500 font-mono italic">{activeObject.urn}</p>
                                 </div>
-                                <button className="p-2 bg-slate-900 border border-slate-800 rounded-lg hover:text-indigo-400 transition-colors">
+                                <button className="p-2 bg-slate-900 border border-slate-800 rounded-sm hover:text-indigo-400 transition-colors">
                                     <ExternalLink className="w-4 h-4" />
                                 </button>
                             </div>
 
                             {/* Attributes Grid */}
                             <div className="grid grid-cols-2 gap-4">
-                                <div className="p-4 bg-slate-900/40 border border-slate-800/50 rounded-xl space-y-3">
+                                <div className="p-4 bg-slate-900/40 border border-slate-800/50 rounded-sm space-y-3">
                                     <h3 className="text-[8px] font-black text-slate-500 uppercase tracking-widest">Physical Mapping</h3>
                                     <div className="space-y-2">
                                         <div className="flex justify-between items-center text-[9px]">
@@ -119,7 +119,7 @@ export function ObjectExplorer() {
                                     </div>
                                 </div>
 
-                                <div className="p-4 bg-slate-900/40 border border-slate-800/50 rounded-xl space-y-3">
+                                <div className="p-4 bg-slate-900/40 border border-slate-800/50 rounded-sm space-y-3">
                                     <h3 className="text-[8px] font-black text-slate-500 uppercase tracking-widest">AI Digital Twin</h3>
                                     <div className="space-y-2">
                                         <div className="flex justify-between items-center text-[9px]">
@@ -128,7 +128,7 @@ export function ObjectExplorer() {
                                         </div>
                                         <div className="flex justify-between items-center text-[9px]">
                                             <span className="text-slate-600">Sync State</span>
-                                            <span className="flex items-center gap-1 text-emerald-500 font-bold">
+                                            <span className="flex items-center gap-1 text-slate-300 font-bold">
                                                 <Zap className="w-2.5 h-2.5" /> LIVE
                                             </span>
                                         </div>
@@ -141,19 +141,19 @@ export function ObjectExplorer() {
                             </div>
 
                             {/* Real-time Telemetry (Placeholder) */}
-                            <div className="p-4 bg-slate-950 border border-slate-800 rounded-xl">
+                            <div className="p-4 bg-slate-950 border border-slate-800 rounded-sm">
                                 <div className="flex items-center justify-between mb-4">
                                     <div className="flex items-center gap-2">
-                                        <Activity className="w-3 h-3 text-emerald-500" />
+                                        <Activity className="w-3 h-3 text-slate-300" />
                                         <span className="text-[9px] text-slate-400 uppercase font-black tracking-widest">Sub-Latency Telemetry</span>
                                     </div>
                                     <div className="flex gap-1">
                                         {[1,2,3,4,5,6,7,8].map(i => (
-                                            <div key={i} className={`w-1 h-3 rounded-full ${i % 3 === 0 ? 'bg-indigo-500' : 'bg-slate-800'}`} />
+                                            <div key={i} className={`w-1 h-3 rounded-sm ${i % 3 === 0 ? 'bg-indigo-500' : 'bg-slate-800'}`} />
                                         ))}
                                     </div>
                                 </div>
-                                <div className="h-1 bg-slate-900 rounded-full overflow-hidden">
+                                <div className="h-1 bg-slate-900 rounded-sm overflow-hidden">
                                     <motion.div 
                                         animate={{ width: ['40%', '60%', '45%'] }}
                                         transition={{ duration: 4, repeat: Infinity }}

@@ -69,25 +69,25 @@ export function ModelPerformanceMatrix() {
         
         {/* Metric Overlay */}
         <div className="grid grid-cols-4 gap-2">
-          <div className="bg-cyan-950/20 p-3 rounded-lg border border-cyan-500/20 text-center">
+          <div className="bg-cyan-950/20 p-3 rounded-sm border border-cyan-500/20 text-center">
             <span className="text-xl font-mono text-cyan-400 font-light mb-1 block">
               {experiments.length > 0 ? experiments[0].modelName : 'VLA-1.0-RC'}
             </span>
             <span className="text-[9px] uppercase tracking-wider text-slate-500">Active Model</span>
           </div>
-          <div className="bg-cyan-950/20 p-3 rounded-lg border border-cyan-500/20 text-center">
-            <span className="text-xl font-mono text-green-400 font-light mb-1 block">
+          <div className="bg-cyan-950/20 p-3 rounded-sm border border-cyan-500/20 text-center">
+            <span className="text-xl font-mono text-slate-300 font-light mb-1 block">
               {experiments.length > 0 ? ((1 - experiments[0].svrRate) * 100).toFixed(1) + '%' : '99.0%'}
             </span>
             <span className="text-[9px] uppercase tracking-wider text-slate-500">Safety Compliance</span>
           </div>
-          <div className="bg-cyan-950/20 p-3 rounded-lg border border-cyan-500/20 text-center">
+          <div className="bg-cyan-950/20 p-3 rounded-sm border border-cyan-500/20 text-center">
             <span className="text-xl font-mono text-cyan-400 font-light mb-1 block">
               {experiments.length > 0 ? experiments[0].runTag : 'SIM-EVAL-Alpha'}
             </span>
             <span className="text-[9px] uppercase tracking-wider text-slate-500">Run Tag</span>
           </div>
-          <div className="bg-cyan-950/20 p-3 rounded-lg border border-cyan-500/20 text-center">
+          <div className="bg-cyan-950/20 p-3 rounded-sm border border-cyan-500/20 text-center">
             <span className="text-xl font-mono text-orange-400 font-light mb-1 block">
               {activeData.length}
             </span>
@@ -96,12 +96,12 @@ export function ModelPerformanceMatrix() {
         </div>
 
         {/* Recharts Visualization */}
-        <div className="bg-black/60 p-4 rounded-lg border border-cyan-500/20 h-64 relative">
+        <div className="bg-black/60 p-4 rounded-sm border border-cyan-500/20 h-64 relative">
           <h4 className="text-[10px] uppercase tracking-widest text-slate-400 font-mono mb-4 border-b border-cyan-500/20 pb-2 flex items-center justify-between">
             <span className="flex items-center gap-2"><Terminal className="w-3 h-3 text-cyan-500" /> rl/reward/convergence/</span>
             <div className="flex items-center gap-4">
-              <span className="flex items-center gap-1"><div className="w-2 h-2 bg-cyan-500 rounded-full" /> Reward</span>
-              <span className="flex items-center gap-1"><div className="w-2 h-2 bg-orange-500 rounded-full" /> SVR Rate</span>
+              <span className="flex items-center gap-1"><div className="w-2 h-2 bg-cyan-500 rounded-sm" /> Reward</span>
+              <span className="flex items-center gap-1"><div className="w-2 h-2 bg-orange-500 rounded-sm" /> SVR Rate</span>
             </div>
           </h4>
           

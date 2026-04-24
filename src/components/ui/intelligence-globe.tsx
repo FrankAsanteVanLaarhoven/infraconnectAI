@@ -218,7 +218,7 @@ export function IntelligenceGlobe() {
 
   if (!MAPBOX_TOKEN) {
     return (
-      <div className="w-full h-full flex flex-col items-center justify-center bg-black/90 p-8 text-center border border-red-900/50 rounded-full scale-90">
+      <div className="w-full h-full flex flex-col items-center justify-center bg-black/90 p-8 text-center border border-red-900/50 rounded-sm scale-90">
         <h3 className="text-red-500 font-bold mb-2 tracking-widest text-xs uppercase">Uplink Critical Fallback</h3>
         <p className="text-[10px] text-slate-500 uppercase tracking-widest">Mapbox_Clearance_Missing</p>
       </div>
@@ -235,7 +235,7 @@ export function IntelligenceGlobe() {
       {/* SAR Metadata Indicators */}
       <div className="absolute top-6 left-6 flex flex-col gap-1 pointer-events-none">
         <div className="flex items-center gap-2">
-           <div className="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-ping" />
+           <div className="w-1.5 h-1.5 rounded-sm bg-cyan-500 animate-ping" />
            <span className="text-[9px] font-black text-white tracking-widest uppercase">SAR // Active_Sensing</span>
         </div>
         <span className="text-[7px] font-mono text-cyan-500/60 uppercase">Frequency: 9.6GHz // Ku-Band</span>

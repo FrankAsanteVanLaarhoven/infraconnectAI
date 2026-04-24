@@ -35,12 +35,12 @@ export function CivilizationalPulseLens() {
     ]);
 
     return (
-        <div className="w-full h-full bg-[#020617] border border-emerald-500/20 rounded-3xl p-8 flex flex-col font-mono relative overflow-hidden group shadow-[0_0_80px_rgba(16,185,129,0.05)]">
+        <div className="w-full h-full bg-[#020617] border border-slate-700 rounded-3xl p-8 flex flex-col font-mono relative overflow-hidden group">
             {/* Header */}
             <div className="flex items-center justify-between mb-8 border-b border-white/5 pb-6 relative z-10">
                 <div className="flex items-center gap-4">
-                    <div className="p-3 bg-emerald-500/10 border border-emerald-500/20 rounded-2xl">
-                        <HeartPulse className="w-5 h-5 text-emerald-400" />
+                    <div className="p-3 bg-slate-800 border border-slate-700 rounded-none">
+                        <HeartPulse className="w-5 h-5 text-slate-300" />
                     </div>
                     <div>
                         <h2 className="text-sm font-black text-white uppercase tracking-[0.4em]">Civilizational Pulse</h2>
@@ -51,7 +51,7 @@ export function CivilizationalPulseLens() {
                 <div className="flex gap-8 items-center text-right">
                     <div className="flex flex-col">
                         <span className="text-[8px] text-slate-600 uppercase font-black tracking-[0.2em]">Consumer Health</span>
-                        <span className="text-xl font-black text-emerald-500 tracking-tighter">STABLE_BETA</span>
+                        <span className="text-xl font-black text-slate-300 tracking-tighter">STABLE_BETA</span>
                     </div>
                     <div className="flex flex-col">
                         <span className="text-[8px] text-slate-600 uppercase font-black tracking-[0.2em]">Migration Index</span>
@@ -69,16 +69,16 @@ export function CivilizationalPulseLens() {
                         <motion.div 
                             key={m.id}
                             whileHover={{ x: 4 }}
-                            className="p-5 bg-slate-900/40 border border-white/5 rounded-2xl flex flex-col gap-3 group/metric transition-all hover:bg-slate-900/60 cursor-pointer"
+                            className="p-5 bg-slate-900/40 border border-white/5 rounded-none flex flex-col gap-3 group/metric transition-all hover:bg-slate-900/60 cursor-pointer"
                         >
                             <div className="flex justify-between items-center">
                                 <div className="flex items-center gap-3">
-                                    <div className="p-2 bg-white/5 rounded-lg">
-                                        <m.icon className="w-4 h-4 text-emerald-400" />
+                                    <div className="p-2 bg-white/5 rounded-sm">
+                                        <m.icon className="w-4 h-4 text-slate-300" />
                                     </div>
                                     <span className="text-[10px] font-black text-white uppercase">{m.label}</span>
                                 </div>
-                                <div className={`flex items-center gap-1 text-[8px] font-black ${m.trend === 'UP' ? 'text-emerald-500' : 'text-red-500'}`}>
+                                <div className={`flex items-center gap-1 text-[8px] font-black ${m.trend === 'UP' ? 'text-slate-300' : 'text-red-500'}`}>
                                     {m.trend === 'UP' ? '+' : '-'}{Math.abs(m.change)}%
                                     {m.trend === 'UP' ? <ArrowUpRight className="w-3 h-3" /> : <ArrowUpRight className="w-3 h-3 rotate-90" />}
                                 </div>
@@ -90,7 +90,7 @@ export function CivilizationalPulseLens() {
 
                 {/* World Migration Map (Abstract) */}
                 <div className="lg:col-span-8 bg-black/40 border border-white/5 rounded-3xl relative overflow-hidden flex items-center justify-center p-12">
-                    <Globe className="absolute w-[120%] h-[120%] text-emerald-500/5 -bottom-1/4 -right-1/4" />
+                    <Globe className="absolute w-[120%] h-[120%] text-slate-300 -bottom-1/4 -right-1/4" />
                     
                     <div className="relative w-full h-full flex items-center justify-center">
                         {/* Migration Flow Lines */}
@@ -115,7 +115,7 @@ export function CivilizationalPulseLens() {
                         </svg>
 
                         <div className="text-center z-10 space-y-4">
-                            <Navigation className="w-16 h-16 text-emerald-400 mx-auto animate-pulse" />
+                            <Navigation className="w-16 h-16 text-slate-300 mx-auto" />
                             <h3 className="text-xl font-black text-white uppercase tracking-[0.3em]">Migration Flux: ACTIVE</h3>
                             <p className="text-[10px] text-slate-500 uppercase font-black tracking-widest max-w-[300px] mx-auto leading-relaxed">
                                 Modeling global talent relocation and refugee flows across G20 borders. High sync correlation with energy price shocks.
@@ -126,7 +126,7 @@ export function CivilizationalPulseLens() {
                     {/* Bottom Status Feed */}
                     <div className="absolute bottom-6 left-6 right-6 flex justify-between items-center text-[8px] font-black uppercase tracking-widest text-slate-500">
                         <div className="flex items-center gap-2">
-                            <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-ping" />
+                            <div className="w-1.5 h-1.5 bg-slate-800 rounded-sm animate-ping" />
                             <span>NODE_77_IN_HOME_VELOCITY: 0.94</span>
                         </div>
                         <span>SYNC_STATUS: EARTH_OS_V20</span>
@@ -137,7 +137,7 @@ export function CivilizationalPulseLens() {
             {/* Background Aesthetic */}
             <div className="absolute inset-0 pointer-events-none opacity-[0.01]">
                 {Array.from({ length: 15 }).map((_, i) => (
-                    <div key={i} className="text-[10px] whitespace-nowrap text-emerald-500 font-mono tracking-[1em]">
+                    <div key={i} className="text-[10px] whitespace-nowrap text-slate-300 font-mono tracking-[1em]">
                         CIVILIZATIONAL_PULSE_GLOBAL_HUMAN_SUBSTRATE_
                     </div>
                 ))}

@@ -5,7 +5,7 @@ type ENV = {
 };
 
 const parseEnv = (): ENV => {
-  const VITE_QUEUE_API_PATH = import.meta.env.VITE_QUEUE_API_PATH;
+  const VITE_QUEUE_API_PATH = (import.meta as any).env.VITE_QUEUE_API_PATH;
   
   if (!VITE_QUEUE_API_PATH) {
     throw new Error("VITE_QUEUE_API_PATH is not defined");
@@ -13,7 +13,7 @@ const parseEnv = (): ENV => {
 
   return {
     VITE_QUEUE_API_PATH,
-    VITE_ENV: import.meta.env.DEV ? 'development' : 'production',
+    VITE_ENV: (import.meta as any).env.DEV ? 'development' : 'production',
   };
 };
 

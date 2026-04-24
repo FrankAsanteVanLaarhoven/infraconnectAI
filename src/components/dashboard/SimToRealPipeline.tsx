@@ -80,7 +80,7 @@ export function SimToRealPipeline() {
   const getStageIcon = (stage: string) => {
     if (stage === 'SIM_L0_BASELINE') return <Database className="w-4 h-4 text-cyan-400" />
     if (stage === 'SIM_L1_HIL') return <Server className="w-4 h-4 text-orange-400" />
-    return <Cpu className="w-4 h-4 text-green-400" /> // REAL_FLEET
+    return <Cpu className="w-4 h-4 text-slate-300" /> // REAL_FLEET
   }
 
   return (
@@ -90,12 +90,12 @@ export function SimToRealPipeline() {
           <GitCommit className="w-4 h-4 text-indigo-500" />
           Autonomous Sim-to-Real Cascade
         </h3>
-        <span className="text-[10px] uppercase tracking-widest text-slate-500 flex items-center gap-1"><Activity className="w-3 h-3 text-green-500" /> Governance Validated</span>
+        <span className="text-[10px] uppercase tracking-widest text-slate-500 flex items-center gap-1"><Activity className="w-3 h-3 text-slate-300" /> Governance Validated</span>
       </div>
 
       <div className="flex gap-4 mb-4">
         {/* Trigger form */}
-        <form onSubmit={triggerDeploy} className="w-1/3 bg-black/40 p-4 rounded-lg border border-indigo-500/20 flex flex-col gap-3">
+        <form onSubmit={triggerDeploy} className="w-1/3 bg-black/40 p-4 rounded-sm border border-indigo-500/20 flex flex-col gap-3">
            <h4 className="text-[10px] uppercase tracking-widest text-indigo-300 font-mono mb-2">Configure Cascade</h4>
            
            <label className="text-[9px] uppercase tracking-widest text-slate-400">Hardware Profile</label>
@@ -129,12 +129,12 @@ export function SimToRealPipeline() {
              disabled={triggering}
              className="mt-auto bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-400 p-2 rounded transition-colors disabled:opacity-50 flex items-center justify-center gap-2 uppercase tracking-widest text-[10px] font-bold"
            >
-             <Send className={`w-3 h-3 ${triggering ? 'animate-pulse' : ''}`} /> Initialize Cascade
+             <Send className={`w-3 h-3 ${triggering ? '' : ''}`} /> Initialize Cascade
            </button>
         </form>
 
         {/* History / Stages */}
-        <div className="flex-1 bg-black/60 p-4 rounded-lg border border-indigo-500/10 overflow-hidden flex flex-col">
+        <div className="flex-1 bg-black/60 p-4 rounded-sm border border-indigo-500/10 overflow-hidden flex flex-col">
           <h4 className="text-[10px] uppercase tracking-widest text-slate-400 font-mono mb-4 border-b border-indigo-500/10 pb-2 flex items-center justify-between">
             <span className="flex items-center gap-2"><Terminal className="w-3 h-3 text-indigo-500" /> deploy/cascade/status</span>
           </h4>
@@ -163,7 +163,7 @@ export function SimToRealPipeline() {
                         </div>
                         <div className="flex justify-between items-center text-[9px] font-mono whitespace-nowrap">
                            <span className="text-slate-400 truncate w-32">{dep.payload?.version}</span>
-                           <span className={dep.status === 'completed' ? 'text-green-500 flex items-center gap-1' : 'text-orange-500 flex items-center gap-1'}>
+                           <span className={dep.status === 'completed' ? 'text-slate-300 flex items-center gap-1' : 'text-orange-500 flex items-center gap-1'}>
                              {dep.status === 'completed' && <CheckCircle2 className="w-3 h-3" />}
                              {dep.status}
                            </span>

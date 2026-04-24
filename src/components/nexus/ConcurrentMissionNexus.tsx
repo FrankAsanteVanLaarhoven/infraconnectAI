@@ -62,7 +62,7 @@ export function ConcurrentMissionNexus() {
     }, []);
 
     return (
-        <div className="w-full h-full bg-[#030712] border border-slate-800 rounded-2xl p-6 flex flex-col font-mono relative overflow-hidden group">
+        <div className="w-full h-full bg-[#030712] border border-slate-800 rounded-none p-6 flex flex-col font-mono relative overflow-hidden group">
             {/* Master Header / Performance Ticker */}
             <div className="flex items-center justify-between mb-8 border-b border-slate-800/50 pb-6 relative z-10">
                 <div className="flex items-center gap-6">
@@ -84,13 +84,13 @@ export function ConcurrentMissionNexus() {
                         <span className="text-[9px] text-slate-500 uppercase font-black tracking-[0.3em]">Parallel Swarms</span>
                         <div className="flex items-center gap-2">
                             <span className="text-2xl font-black text-white">{activeAgents}</span>
-                            <span className="text-[10px] text-indigo-400 font-bold uppercase tracking-widest animate-pulse">Running</span>
+                            <span className="text-[10px] text-indigo-400 font-bold uppercase tracking-widest">Running</span>
                         </div>
                     </div>
                 </div>
 
                 <div className="flex gap-4 items-center">
-                    <div className="flex items-center gap-2 px-3 py-1.5 bg-indigo-500/10 border border-indigo-500/20 rounded-lg">
+                    <div className="flex items-center gap-2 px-3 py-1.5 bg-indigo-500/10 border border-indigo-500/20 rounded-sm">
                         <Activity className="w-3 h-3 text-indigo-400" />
                         <span className="text-[8px] text-indigo-400 font-black uppercase tracking-widest">Quantum Link: STABLE</span>
                     </div>
@@ -105,7 +105,7 @@ export function ConcurrentMissionNexus() {
                         key={agent.id}
                         initial={{ opacity: 0, scale: 0.95 }}
                         animate={{ opacity: 1, scale: 1 }}
-                        className="bg-black/40 border border-slate-800/80 rounded-xl overflow-hidden flex flex-col group/terminal hover:border-indigo-500/50 transition-all shadow-[0_0_20px_rgba(0,0,0,0.5)]"
+                        className="bg-black/40 border border-slate-800/80 rounded-sm overflow-hidden flex flex-col group/terminal hover:border-indigo-500/50 transition-all"
                     >
                         {/* Terminal Header */}
                         <div className="p-2 border-b border-slate-800/80 bg-slate-900/40 flex items-center justify-between">
@@ -114,9 +114,9 @@ export function ConcurrentMissionNexus() {
                                 <span className="text-[8px] font-black text-white uppercase">{agent.name} // {agent.model}</span>
                             </div>
                             <div className="flex gap-1">
-                                <span className="w-1.5 h-1.5 rounded-full bg-slate-700" />
-                                <span className="w-1.5 h-1.5 rounded-full bg-slate-700" />
-                                <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse" />
+                                <span className="w-1.5 h-1.5 rounded-sm bg-slate-700" />
+                                <span className="w-1.5 h-1.5 rounded-sm bg-slate-700" />
+                                <span className="w-1.5 h-1.5 rounded-sm bg-indigo-500" />
                             </div>
                         </div>
 

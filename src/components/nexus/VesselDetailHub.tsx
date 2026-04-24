@@ -6,9 +6,9 @@ import { motion } from 'framer-motion';
 
 export function VesselDetailHub({ name = "ADVANTAGE VITAL", type = "VLCC TANKER" }) {
   const specs = [
-    { label: 'STATUS', value: 'UNDERWAY [ENGINE]', color: 'text-green-500' },
+    { label: 'STATUS', value: 'UNDERWAY [ENGINE]', color: 'text-slate-300' },
     { label: 'LOCOMOTION STABILITY', value: '98.42% [OPTIMAL]', color: 'text-cyan-400' },
-    { label: 'SVR BENCHMARK', value: '0.002% [CORE]', color: 'text-emerald-500' },
+    { label: 'SVR BENCHMARK', value: '0.002% [CORE]', color: 'text-slate-300' },
     { label: 'SPEED / COURSE', value: '12.4 KN / 310°', color: 'text-white' },
     { label: 'DESTINATION', value: 'HORMUZ PORT [HAP]', color: 'text-amber-500' },
     { label: 'SAFETY KERNEL', value: 'LOCKED [ORIN-NX]', color: 'text-indigo-400' },
@@ -19,7 +19,7 @@ export function VesselDetailHub({ name = "ADVANTAGE VITAL", type = "VLCC TANKER"
       {/* Vessel Header */}
       <div className="flex items-start justify-between mb-4 border-b border-slate-800 pb-4">
         <div className="flex items-center gap-3">
-          <div className="p-2 bg-slate-900 border border-slate-700 rounded shadow-[0_0_15px_rgba(0,0,0,0.5)]">
+          <div className="p-2 bg-slate-900 border border-slate-700 rounded">
             <Ship className="w-5 h-5 text-cyan-500" />
           </div>
           <div>
@@ -29,7 +29,7 @@ export function VesselDetailHub({ name = "ADVANTAGE VITAL", type = "VLCC TANKER"
         </div>
         <div className="flex -space-x-1">
           {[1,2,3].map(i => (
-             <div key={i} className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+             <div key={i} className="w-1.5 h-1.5 rounded-sm bg-slate-800" />
           ))}
         </div>
       </div>
@@ -52,7 +52,7 @@ export function VesselDetailHub({ name = "ADVANTAGE VITAL", type = "VLCC TANKER"
         </div>
         
         {/* Synthetic Progress View */}
-        <div className="relative h-1 w-full bg-slate-900 rounded-full overflow-hidden">
+        <div className="relative h-1 w-full bg-slate-900 rounded-sm overflow-hidden">
            <motion.div 
              initial={{ width: '0%' }}
              animate={{ width: '75%' }}

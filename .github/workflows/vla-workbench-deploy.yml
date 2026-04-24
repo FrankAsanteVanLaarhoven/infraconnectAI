@@ -1,0 +1,47 @@
+name: VLA Workbench Deploy
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup Bun
+      uses: oven-sh/setup-bun@v1
+
+    - name: Install dependencies
+      run: bun install
+
+    - name: Run Prisma migrations
+      run: bunx prisma migrate deploy
+      env:
+        DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
+    - name: Build Next.js
+      run: bun run build
+
+    - name: Deploy to Vercel
+      uses: amondnet/vercel-action@v25
+      with:
+        vercel-token: ${{ secrets.VERCEL_TOKEN }}
+        vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+        vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+        vercel-args: '--prod'
+
+    - name: Deploy to Kubernetes
+      uses: azure/k8s-deploy@v4
+      with:
+        manifests: |
+          k8s/namespace.yaml
+          k8s/deployment.yaml
+          k8s/service.yaml
+          k8s/ingress.yaml
+          k8s/hpa.yaml
+        images: |
+          nvcr.io/nvidia/isaac-lab:latest

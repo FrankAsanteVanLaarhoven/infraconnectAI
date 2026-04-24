@@ -56,7 +56,7 @@ export function IntelligenceGlobe() {
       {/* ── Cinematic Scanlines Layer ── */}
       <div className="absolute inset-0 bg-[radial-gradient(circle,rgba(6,182,212,0.05)_0%,transparent_70%)] pointer-events-none" />
       
-      <svg viewBox="-200 -200 400 400" className="w-[80%] h-[80%] drop-shadow-[0_0_30px_rgba(6,182,212,0.2)]">
+      <svg viewBox="-200 -200 400 400" className="w-[80%] h-[80%] drop-">
         {/* Globe Wireframe Arcs */}
         <defs>
           <filter id="glow">
@@ -100,7 +100,7 @@ export function IntelligenceGlobe() {
               cx={node.x} cy={node.y}
               r={node.id === selectedNodeId ? 4 : 2}
               fill={node.id === selectedNodeId ? "#06b6d4" : "rgba(6,182,212,0.6)"}
-              className={node.id === selectedNodeId ? "animate-pulse" : ""}
+              className={node.id === selectedNodeId ? "" : ""}
               filter={node.id === selectedNodeId ? "url(#glow)" : ""}
             />
             {node.id === selectedNodeId && node.visible && (
@@ -118,11 +118,11 @@ export function IntelligenceGlobe() {
          <div className="text-[10px] font-black uppercase tracking-[0.4em] text-cyan-500/40">Global Intelligence Atlas</div>
          <div className="flex gap-4 mt-2">
             <div className="flex items-center gap-1.5 font-mono text-[9px] text-muted-foreground/60 uppercase">
-               <div className="w-1.5 h-1.5 rounded-full bg-cyan-500 shadow-[0_0_5px_#06b6d4]" />
+               <div className="w-1.5 h-1.5 rounded-sm bg-cyan-500" />
                {agents.length} Nodes Active
             </div>
             <div className="flex items-center gap-1.5 font-mono text-[9px] text-muted-foreground/60 uppercase">
-               <div className="w-1.5 h-1.5 rounded-full bg-cyan-500/20" />
+               <div className="w-1.5 h-1.5 rounded-sm bg-cyan-500/20" />
                Sub-orbital Sync
             </div>
          </div>

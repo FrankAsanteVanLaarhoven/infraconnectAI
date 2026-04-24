@@ -5,7 +5,7 @@ import { AlertCircle, ArrowUpRight, ArrowDownRight, Minus } from 'lucide-react';
 
 export function RiskMatrix() {
   const assets = [
-    { name: 'OIL [BRENT]', price: '82.40', delta: '+1.2%', risk: 'MODERATE', color: 'text-green-500' },
+    { name: 'OIL [BRENT]', price: '82.40', delta: '+1.2%', risk: 'MODERATE', color: 'text-slate-300' },
     { name: 'NAT GAS [TTF]', price: '28.15', delta: '-4.6%', risk: 'CRITICAL', color: 'text-red-500' },
     { name: 'COPPER [HG]', price: '8910.0', delta: '+0.4%', risk: 'LOW', color: 'text-cyan-400' },
     { name: 'WHEAT [CBOT]', price: '542.4', delta: '0.0%', risk: 'STABLE', color: 'text-slate-400' },
@@ -27,7 +27,7 @@ export function RiskMatrix() {
 
             <div className="flex items-center gap-4 relative z-10">
               <div className="text-right">
-                <div className={`text-[10px] font-bold flex items-center justify-end gap-1 ${asset.delta.startsWith('+') ? 'text-green-500' : asset.delta.startsWith('-') ? 'text-red-500' : 'text-slate-500'}`}>
+                <div className={`text-[10px] font-bold flex items-center justify-end gap-1 ${asset.delta.startsWith('+') ? 'text-slate-300' : asset.delta.startsWith('-') ? 'text-red-500' : 'text-slate-500'}`}>
                   {asset.delta.startsWith('+') ? <ArrowUpRight className="w-3 h-3" /> : asset.delta.startsWith('-') ? <ArrowDownRight className="w-3 h-3" /> : <Minus className="w-3 h-3" />}
                   {asset.delta}
                 </div>

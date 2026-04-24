@@ -85,14 +85,14 @@ export function AssetIntelligenceHub() {
             {/* Header Layer */}
             <div className="flex items-center justify-between p-6 border-b border-white/5 bg-white/[0.02] backdrop-blur-md z-30">
                 <div className="flex items-center gap-4">
-                    <div className="p-2.5 bg-cyan-500/10 border border-cyan-500/20 rounded-xl shadow-[0_0_15px_rgba(34,211,238,0.1)]">
+                    <div className="p-2.5 bg-cyan-500/10 border border-cyan-500/20 rounded-sm">
                         <Target className="w-5 h-5 text-cyan-400" />
                     </div>
                     <div>
                         <h2 className="text-xs font-black text-white uppercase tracking-[0.5em]">Asset Intelligence Hub</h2>
                         <div className="flex items-center gap-2 mt-1">
                             <span className="text-[8px] text-cyan-500/70 uppercase font-bold tracking-widest">Industrial Ground Truth</span>
-                            <div className="w-1 h-1 rounded-full bg-cyan-500/40 animate-pulse" />
+                            <div className="w-1 h-1 rounded-sm bg-cyan-500/40" />
                             <span className="text-[8px] text-slate-500 uppercase font-bold tracking-widest">Core</span>
                         </div>
                     </div>
@@ -108,7 +108,7 @@ export function AssetIntelligenceHub() {
                         disabled={isScanning}
                         className={cn(
                             "relative overflow-hidden transition-all duration-500 group/btn",
-                            "bg-black/40 hover:bg-cyan-500/10 text-white text-[9px] font-black uppercase px-6 py-2 rounded-lg border border-cyan-500/20 shadow-lg",
+                            "bg-black/40 hover:bg-cyan-500/10 text-white text-[9px] font-black uppercase px-6 py-2 rounded-sm border border-cyan-500/20 shadow-lg",
                             isScanning ? "border-amber-500/40" : "hover:border-cyan-500/40 hover:shadow-cyan-500/10"
                         )}
                     >
@@ -165,14 +165,14 @@ export function AssetIntelligenceHub() {
                                     <span className="block text-[7px] text-slate-500 font-black uppercase tracking-widest">{p.type} Sector</span>
                                     <span className={cn(
                                         "text-[8px] font-black uppercase tracking-tighter",
-                                        p.status === 'SPOOF_DETECTED' ? "text-red-500 animate-pulse" : "text-slate-400"
+                                        p.status === 'SPOOF_DETECTED' ? "text-red-500 " : "text-slate-400"
                                     )}>
                                         {p.status}
                                     </span>
                                 </div>
                                 <div className="text-right">
                                     <div className="text-[7px] text-slate-600 font-mono mb-1">CONF // {p.confidence}%</div>
-                                    <div className="w-16 h-0.5 bg-white/5 rounded-full overflow-hidden">
+                                    <div className="w-16 h-0.5 bg-white/5 rounded-sm overflow-hidden">
                                         <motion.div 
                                             className={cn("h-full", p.confidence > 80 ? "bg-cyan-500" : p.confidence > 50 ? "bg-amber-500" : "bg-red-500")}
                                             initial={{ width: 0 }}
@@ -200,13 +200,13 @@ export function AssetIntelligenceHub() {
                                 {isScanning && (
                                     <div className="absolute inset-0 bg-black/60 backdrop-blur-sm z-40 flex flex-col items-center justify-center gap-5">
                                         <div className="relative">
-                                            <div className="w-24 h-24 rounded-full border border-cyan-500/20 animate-[spin_4s_linear_infinite]" />
+                                            <div className="w-24 h-24 rounded-sm border border-cyan-500/20 animate-[spin_4s_linear_infinite]" />
                                             <div className="absolute inset-0 flex items-center justify-center">
-                                                <div className="w-16 h-16 rounded-full border border-cyan-500/40 animate-[spin_2s_linear_infinite_reverse]" />
+                                                <div className="w-16 h-16 rounded-sm border border-cyan-500/40 animate-[spin_2s_linear_infinite_reverse]" />
                                             </div>
-                                            <Search className="absolute inset-0 m-auto w-6 h-6 text-cyan-400 animate-pulse" />
+                                            <Search className="absolute inset-0 m-auto w-6 h-6 text-cyan-400" />
                                         </div>
-                                        <span className="text-[9px] text-white font-black uppercase tracking-[0.6em] animate-pulse">Sovereign Cluster Ingestion...</span>
+                                        <span className="text-[9px] text-white font-black uppercase tracking-[0.6em]">Sovereign Cluster Ingestion...</span>
                                     </div>
                                 )}
 
@@ -221,7 +221,7 @@ export function AssetIntelligenceHub() {
                                     
                                     <div className="flex flex-col items-end gap-1.5">
                                         <div className="bg-cyan-500/5 border border-cyan-500/20 px-3 py-1.5 rounded flex items-center gap-2">
-                                            <div className="w-1 h-1 bg-cyan-400 rounded-full animate-ping" />
+                                            <div className="w-1 h-1 bg-cyan-400 rounded-sm animate-ping" />
                                             <span className="text-[9px] text-cyan-400 font-bold font-mono tracking-widest uppercase">{pulseStamp}</span>
                                         </div>
                                     </div>
@@ -267,10 +267,10 @@ export function AssetIntelligenceHub() {
                                                             <span>Target Exposure Score</span>
                                                             <span className="text-cyan-400">99.2%</span>
                                                         </div>
-                                                        <div className="h-0.5 bg-white/5 rounded-full relative">
+                                                        <div className="h-0.5 bg-white/5 rounded-sm relative">
                                                             <motion.div 
                                                                 animate={{ width: '99.2%' }} 
-                                                                className="h-full bg-cyan-500 shadow-[0_0_10px_rgba(34,211,238,0.5)]" 
+                                                                className="h-full bg-cyan-500" 
                                                             />
                                                         </div>
                                                     </div>
@@ -278,7 +278,7 @@ export function AssetIntelligenceHub() {
                                                         {['GOOGL_INDIRECT_STAKE', 'DXYZ_EXPOSURE', 'RKLB_PROXY'].map((node, i) => (
                                                             <div key={i} className="flex items-center justify-between p-2 rounded bg-white/[0.02] border border-white/5">
                                                                 <span className="text-[8px] text-slate-400 font-mono">NODE :: {node}</span>
-                                                                <div className="w-1.5 h-1.5 rounded-full bg-cyan-500/20 border border-cyan-500 animate-pulse" />
+                                                                <div className="w-1.5 h-1.5 rounded-sm bg-cyan-500/20 border border-cyan-500" />
                                                             </div>
                                                         ))}
                                                     </div>
@@ -291,7 +291,7 @@ export function AssetIntelligenceHub() {
                                                                 <span>EIA Modeling Precision</span>
                                                                 <span className="text-cyan-400">92%</span>
                                                             </div>
-                                                            <div className="h-0.5 bg-white/5 rounded-full overflow-hidden">
+                                                            <div className="h-0.5 bg-white/5 rounded-sm overflow-hidden">
                                                                 <motion.div animate={{ width: '92%' }} className="h-full bg-cyan-500" />
                                                             </div>
                                                         </div>
@@ -300,8 +300,8 @@ export function AssetIntelligenceHub() {
                                                                 <span>Churn Predictor Correlation</span>
                                                                 <span className="text-amber-500">74%</span>
                                                             </div>
-                                                            <div className="h-0.5 bg-white/5 rounded-full overflow-hidden">
-                                                                <motion.div animate={{ width: '74%' }} className="h-full bg-amber-500 shadow-[0_0_10px_rgba(245,158,11,0.2)]" />
+                                                            <div className="h-0.5 bg-white/5 rounded-sm overflow-hidden">
+                                                                <motion.div animate={{ width: '74%' }} className="h-full bg-amber-500" />
                                                             </div>
                                                         </div>
                                                     </div>
@@ -321,8 +321,8 @@ export function AssetIntelligenceHub() {
                         ) : (
                             <div className="flex-1 flex flex-col items-center justify-center text-center opacity-30 gap-6">
                                 <div className="relative">
-                                    <div className="w-20 h-20 rounded-full border border-slate-700 animate-ping" />
-                                    <div className="absolute inset-0 m-auto w-12 h-12 bg-slate-800 rounded-full flex items-center justify-center border border-slate-700">
+                                    <div className="w-20 h-20 rounded-sm border border-slate-700 animate-ping" />
+                                    <div className="absolute inset-0 m-auto w-12 h-12 bg-slate-800 rounded-sm flex items-center justify-center border border-slate-700">
                                         <Search className="w-5 h-5 text-slate-500" />
                                     </div>
                                 </div>
@@ -340,7 +340,7 @@ export function AssetIntelligenceHub() {
             <div className="p-3 bg-black/40 border-t border-white/5 flex items-center justify-between z-30">
                 <div className="flex items-center gap-4">
                     <div className="flex items-center gap-1.5">
-                        <div className="w-1 h-1 bg-cyan-500 rounded-full animate-breathe" />
+                        <div className="w-1 h-1 bg-cyan-500 rounded-sm" />
                         <span className="text-[7px] text-slate-500 uppercase font-bold tracking-widest">System Signal: CRYPTO_SAFE</span>
                     </div>
                     <div className="w-px h-3 bg-white/5" />

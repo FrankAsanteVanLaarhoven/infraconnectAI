@@ -103,7 +103,7 @@ export default function OperatorPanel() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 50, scale: 0.95 }}
             transition={{ duration: 0.2, ease: "easeOut" }}
-            className="fixed right-6 bottom-6 w-[420px] h-[540px] glass-frost rounded-2xl flex flex-col z-[9999] overflow-hidden shadow-2xl"
+            className="fixed right-6 bottom-6 w-[420px] h-[540px] glass-frost rounded-none flex flex-col z-[9999] overflow-hidden shadow-2xl"
           >
             {/* Header */}
             <div className="flex items-center justify-between px-5 py-4 border-b border-white/10 bg-black/20 backdrop-blur-md">
@@ -131,7 +131,7 @@ export default function OperatorPanel() {
                   key={i}
                   className={`flex flex-col gap-1 ${m.role === "user" ? "items-end" : "items-start"}`}
                 >
-                  <div className={`px-4 py-2.5 rounded-xl max-w-[85%] shadow-sm ${m.role === "user" ? "bg-white/5 text-white/90 border border-white/10" : "matrix-border bg-black/40 matrix-text"}`}>
+                  <div className={`px-4 py-2.5 rounded-sm max-w-[85%] shadow-sm ${m.role === "user" ? "bg-white/5 text-white/90 border border-white/10" : "matrix-border bg-black/40 matrix-text"}`}>
                     {m.content}
                     
                     {/* Explainability Layer UI */}
@@ -151,7 +151,7 @@ export default function OperatorPanel() {
                   </div>
                   {m.action && m.action !== "null" && (
                     <div className="text-[10px] uppercase tracking-wider opacity-90 pl-1 flex items-center gap-1.5 mt-1" style={{ color: m.validated === false ? 'rgb(239 68 68)' : 'var(--l2-color)' }}>
-                      <div className={`w-1.5 h-1.5 rounded-full status-indicator-live ${m.validated === false ? 'bg-red-500 shadow-red-500' : ''}`} style={m.validated !== false ? { background: 'var(--l2-color)', boxShadow: '0 0 6px var(--l2-color)' } : {}} />
+                      <div className={`w-1.5 h-1.5 rounded-sm status-indicator-live ${m.validated === false ? 'bg-red-500 shadow-red-500' : ''}`} style={m.validated !== false ? { background: 'var(--l2-color)', boxShadow: '0 0 6px var(--l2-color)' } : {}} />
                       {m.validated === false ? `BLOCKED: ${m.action.replace(/_/g, ' ')}` : `Executed: ${m.action.replace(/_/g, ' ')}`}
                     </div>
                   )}
@@ -159,7 +159,7 @@ export default function OperatorPanel() {
               ))}
               {loading && (
                 <div className="flex items-center gap-3 pl-2 opacity-80" style={{ color: 'var(--matrix)' }}>
-                  <div className="w-2 h-2 rounded-full pulse-ring" style={{ background: 'var(--matrix)' }} />
+                  <div className="w-2 h-2 rounded-sm pulse-ring" style={{ background: 'var(--matrix)' }} />
                   <span className="text-mono-xs uppercase tracking-widest">Processing...</span>
                 </div>
               )}
@@ -173,7 +173,7 @@ export default function OperatorPanel() {
               >
                 <input
                   autoFocus
-                  className="w-full bg-black/40 focus-visible border border-white/10 rounded-xl px-4 py-3 pr-10 text-mono-sm outline-none transition-all placeholder:text-white/30 text-white shadow-inner"
+                  className="w-full bg-black/40 focus-visible border border-white/10 rounded-sm px-4 py-3 pr-10 text-mono-sm outline-none transition-all placeholder:text-white/30 text-white shadow-inner"
                   placeholder="Command the system..."
                   value={input}
                   onChange={(e) => setInput(e.target.value)}

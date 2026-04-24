@@ -5,8 +5,7 @@ import { OrbitControls, Line } from "@react-three/drei";
 import { URDFRobot } from "./URDFRobot";
 import { useEffect, useState } from "react";
 import { handleFollowCamera } from "@/lib/camera/cinematic";
-import { avoidCollisions } from "@/lib/planning/avoidance";
-import { EffectComposer, Bloom } from "@react-three/postprocessing";
+
 
 type RobotState = {
   id: string;
@@ -28,7 +27,7 @@ function FleetSceneContent({ initialRobots }: { initialRobots: RobotState[] }) {
 
       {robots.map((r) => (
         <group key={r.id} position={r.position}>
-          <URDFRobot joints={r.joints} />
+          <URDFRobot />
 
           {/* Visualization of intent path */}
           {r.path && r.path.length > 0 && (
@@ -52,10 +51,6 @@ export function FleetScene({ initialRobots = [] }: { initialRobots?: RobotState[
       <directionalLight position={[10, 10, 5]} intensity={1.2} />
       <pointLight position={[0, 5, 0]} intensity={0.5} color="#4CC9F0" />
       
-      <EffectComposer>
-        <Bloom intensity={0.4} luminanceThreshold={0.2} />
-      </EffectComposer>
-
       <FleetSceneContent initialRobots={initialRobots} />
 
       <OrbitControls />

@@ -31,7 +31,7 @@ export function StabilityVisualizer() {
   if (!metrics) return null;
 
   return (
-    <div className="w-full h-80 bg-slate-950/50 rounded-xl border border-cyan-500/20 p-6 font-mono relative overflow-hidden group shadow-[0_0_50px_rgba(6,182,212,0.05)]">
+    <div className="w-full h-80 bg-slate-950/50 rounded-sm border border-cyan-500/20 p-6 font-mono relative overflow-hidden group">
       {/* Background Grid */}
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none" 
            style={{ backgroundImage: 'radial-gradient(#06b6d4 1px, transparent 1px)', backgroundSize: '20px 20px' }} />
@@ -39,8 +39,8 @@ export function StabilityVisualizer() {
       {/* Header */}
       <div className="flex justify-between items-start relative z-10 mb-8">
         <div className="flex items-center gap-3">
-          <div className="p-2 bg-cyan-500/10 border border-cyan-500/30 rounded-lg">
-             <Activity className="w-4 h-4 text-cyan-400 animate-pulse" />
+          <div className="p-2 bg-cyan-500/10 border border-cyan-500/30 rounded-sm">
+             <Activity className="w-4 h-4 text-cyan-400" />
           </div>
           <div>
             <h3 className="text-[10px] font-black text-cyan-500 uppercase tracking-widest">Kinematic Stability Visualizer</h3>
@@ -55,7 +55,7 @@ export function StabilityVisualizer() {
 
       {/* 3D-ish Vector Visualization */}
       <div className="flex-1 flex items-center justify-center relative min-h-[140px]">
-         <div className="relative w-40 h-40 border border-cyan-500/10 rounded-full flex items-center justify-center">
+         <div className="relative w-40 h-40 border border-cyan-500/10 rounded-sm flex items-center justify-center">
             {/* Axis Vectors */}
             {[0, 120, 240].map((deg, i) => (
                <motion.div 
@@ -72,25 +72,25 @@ export function StabilityVisualizer() {
                 opacity: [0.2, 0.4, 0.2]
               }}
               transition={{ repeat: Infinity, duration: 2 }}
-              className="absolute inset-0 border-2 border-cyan-400/20 rounded-full"
+              className="absolute inset-0 border-2 border-cyan-400/20 rounded-sm"
             />
 
             <div className="z-20 flex flex-col items-center">
-               <ShieldCheck className="w-8 h-8 text-cyan-400 drop-shadow-[0_0_10px_#22d3ee]" />
-               <span className="text-[8px] text-cyan-400 mt-2 font-black uppercase tracking-widest animate-pulse">Kernel Locked</span>
+               <ShieldCheck className="w-8 h-8 text-cyan-400 drop-" />
+               <span className="text-[8px] text-cyan-400 mt-2 font-black uppercase tracking-widest">Kernel Locked</span>
             </div>
          </div>
 
          {/* Stats Overlays */}
          <div className="absolute top-0 right-0 space-y-4 text-right">
-            <div className="bg-slate-900/40 p-3 border border-slate-800 rounded-xl backdrop-blur-md">
+            <div className="bg-slate-900/40 p-3 border border-slate-800 rounded-sm backdrop-blur-md">
                <p className="text-[7px] text-slate-500 font-black uppercase mb-1">Safety Violation Rate (SVR)</p>
                <div className="flex items-center gap-2 justify-end">
-                  <Gauge className="w-3 h-3 text-emerald-400" />
+                  <Gauge className="w-3 h-3 text-slate-300" />
                   <span className="text-xs font-black text-white">{(metrics.metrics[0]?.svr * 100 || 0).toFixed(3)}%</span>
                </div>
             </div>
-            <div className="bg-slate-900/40 p-3 border border-slate-800 rounded-xl backdrop-blur-md">
+            <div className="bg-slate-900/40 p-3 border border-slate-800 rounded-sm backdrop-blur-md">
                <p className="text-[7px] text-slate-500 font-black uppercase mb-1">Disengagement Rate (DMR)</p>
                <div className="flex items-center gap-2 justify-end">
                   <TrendingUp className="w-3 h-3 text-cyan-400" />
