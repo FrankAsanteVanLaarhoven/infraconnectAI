@@ -3,6 +3,8 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
 import { SandboxTerminal } from "@/components/terminal/SandboxTerminal";
 import { CopilotChat } from "@/components/sandbox/CopilotChat";
+import { WorkspaceExplorer } from "@/components/sandbox/WorkspaceExplorer";
+import { AgentManager } from "@/components/sandbox/AgentManager";
 import { InfraConnectLogo } from "@/components/ui/InfraConnectLogo";
 import Link from "next/link";
 import { ShieldAlert, Terminal, Sparkles } from "lucide-react";
@@ -44,13 +46,16 @@ export default async function SandboxPage() {
         </div>
       </nav>
 
-      {/* Main Content Area: Split View */}
+      {/* Main Content Area: 3-Pane Split View */}
       <main className="flex-1 p-6 flex flex-col z-10 relative">
         <div className="flex justify-between items-end mb-4">
           <div>
-            <h1 className="text-2xl font-black uppercase tracking-tighter text-white">Sovereign Sandbox</h1>
-            <p className="text-xs text-slate-400 font-mono mt-1 uppercase tracking-widest">
-              AI Copilot <span className="mx-2 text-slate-600">|</span> Direct PTY Access. <span className="text-red-400">Warning: Actions execute directly on the host node.</span>
+            <h1 className="text-2xl font-black uppercase tracking-tighter text-white">Sovereign Ecosystem</h1>
+            <p className="text-xs text-slate-400 font-mono mt-1 uppercase tracking-widest flex items-center gap-2">
+              Workspace <span className="text-slate-600">|</span> 
+              AI Copilot <span className="text-slate-600">|</span> 
+              PTY Sandbox
+              <span className="text-red-400 ml-4 hidden md:inline">Warning: Live environment.</span>
             </p>
           </div>
           <div className="flex items-center gap-2 text-[10px] uppercase text-slate-500 border border-slate-800 p-2 bg-black/30">
@@ -59,14 +64,24 @@ export default async function SandboxPage() {
           </div>
         </div>
 
-        <div className="flex-1 w-full relative flex gap-6 h-full">
-          {/* Left Pane: AI Copilot */}
-          <div className="w-1/3 h-[calc(100vh-180px)] shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+        <div className="flex-1 w-full relative flex gap-4 h-full">
+          {/* Left Pane: Workspace & Agents (20%) */}
+          <div className="w-[20%] min-w-[250px] h-[calc(100vh-180px)] flex flex-col gap-4">
+            <div className="flex-1 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+              <WorkspaceExplorer />
+            </div>
+            <div className="h-[40%] min-h-[200px] shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+              <AgentManager />
+            </div>
+          </div>
+
+          {/* Middle Pane: AI Copilot (30%) */}
+          <div className="w-[30%] min-w-[350px] h-[calc(100vh-180px)] shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
             <CopilotChat />
           </div>
           
-          {/* Right Pane: Sandbox Terminal */}
-          <div className="w-2/3 h-[calc(100vh-180px)] shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+          {/* Right Pane: Sandbox Terminal (50%) */}
+          <div className="flex-1 h-[calc(100vh-180px)] shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
             <SandboxTerminal />
           </div>
         </div>
