@@ -1,4 +1,4 @@
-import { google } from '@ai-sdk/google';
+import { createGoogleGenerativeAI } from '@ai-sdk/google';
 import { streamText } from 'ai';
 import { NextResponse } from 'next/server';
 
@@ -6,9 +6,12 @@ export async function POST(req: Request) {
   try {
     const { messages, modelId } = await req.json();
 
-    if (!process.env.GOOGLE_API_KEY && !process.env.GEMINI_API_KEY) {
+    const apiKey = process.env.GOOGLE_API_KEY || process.env.GEMINI_API_KEY;
+    if (!apiKey) {
       return NextResponse.json({ error: 'Google API key is missing from environment variables.' }, { status: 500 });
     }
+
+    const google = createGoogleGenerativeAI({ apiKey });
 
     // Map the user's requested strings to valid 2026 API model IDs from their account
     let mappedModelId = 'gemini-pro-latest';
