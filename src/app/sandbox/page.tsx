@@ -24,9 +24,9 @@ export default async function SandboxPage() {
       {/* Navigation */}
       <nav className="relative z-50 flex items-center justify-between p-4 px-6 border-b border-slate-800/80 bg-black/50 backdrop-blur-md">
         <div className="flex items-center gap-6">
-          <Link href="/dashboard" className="flex items-center gap-3">
+          <div className="flex items-center gap-3 scale-90 origin-left">
             <InfraConnectLogo variant="minimal" />
-          </Link>
+          </div>
           <div className="h-6 w-px bg-slate-800" />
           <div className="flex items-center gap-2 text-slate-400">
             <Sparkles className="w-4 h-4 text-emerald-500" />
