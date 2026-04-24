@@ -2,9 +2,10 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
 import { SandboxTerminal } from "@/components/terminal/SandboxTerminal";
+import { CopilotChat } from "@/components/sandbox/CopilotChat";
 import { InfraConnectLogo } from "@/components/ui/InfraConnectLogo";
 import Link from "next/link";
-import { ShieldAlert, Terminal } from "lucide-react";
+import { ShieldAlert, Terminal, Sparkles } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
 export default async function SandboxPage() {
@@ -29,9 +30,9 @@ export default async function SandboxPage() {
           </Link>
           <div className="h-6 w-px bg-slate-800" />
           <div className="flex items-center gap-2 text-slate-400">
-            <Terminal className="w-4 h-4 text-cyan-500" />
-            <span className="text-xs uppercase tracking-widest font-black">Execution Environment</span>
-            <Badge variant="outline" className="border-cyan-900/50 text-cyan-400 bg-cyan-900/10 text-[9px] ml-2">PROD_SHELL</Badge>
+            <Sparkles className="w-4 h-4 text-emerald-500" />
+            <span className="text-xs uppercase tracking-widest font-black">AI Mission Control</span>
+            <Badge variant="outline" className="border-emerald-900/50 text-emerald-400 bg-emerald-900/10 text-[9px] ml-2 animate-pulse">ANTIGRAVITY_MODE</Badge>
           </div>
         </div>
         
@@ -43,13 +44,13 @@ export default async function SandboxPage() {
         </div>
       </nav>
 
-      {/* Main Content Area */}
+      {/* Main Content Area: Split View */}
       <main className="flex-1 p-6 flex flex-col z-10 relative">
         <div className="flex justify-between items-end mb-4">
           <div>
             <h1 className="text-2xl font-black uppercase tracking-tighter text-white">Sovereign Sandbox</h1>
             <p className="text-xs text-slate-400 font-mono mt-1 uppercase tracking-widest">
-              Direct PTY Access. <span className="text-red-400">Warning: Actions execute directly on the host node.</span>
+              AI Copilot <span className="mx-2 text-slate-600">|</span> Direct PTY Access. <span className="text-red-400">Warning: Actions execute directly on the host node.</span>
             </p>
           </div>
           <div className="flex items-center gap-2 text-[10px] uppercase text-slate-500 border border-slate-800 p-2 bg-black/30">
@@ -58,9 +59,16 @@ export default async function SandboxPage() {
           </div>
         </div>
 
-        <div className="flex-1 w-full relative shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
-          {/* The Terminal occupies the remaining space */}
-          <SandboxTerminal />
+        <div className="flex-1 w-full relative flex gap-6 h-full">
+          {/* Left Pane: AI Copilot */}
+          <div className="w-1/3 h-[calc(100vh-180px)] shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+            <CopilotChat />
+          </div>
+          
+          {/* Right Pane: Sandbox Terminal */}
+          <div className="w-2/3 h-[calc(100vh-180px)] shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+            <SandboxTerminal />
+          </div>
         </div>
       </main>
     </div>
